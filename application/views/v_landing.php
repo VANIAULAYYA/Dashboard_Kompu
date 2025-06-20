@@ -70,7 +70,7 @@
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
-                    <a href="#features" class="nav-link text-gray-700 hover:text-orange-600 transition">Features</a>
+                    <a href="#features" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
                     <a href="#pricing" class="nav-link text-gray-700 hover:text-orange-600 transition">Pricing</a>
                     <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Contact</a>
                     <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full hover:shadow-lg transition">Masuk</a>
@@ -87,7 +87,7 @@
         <div id="mobile-menu" class="md:hidden hidden bg-white py-4 px-6 shadow-lg">
             <div class="flex flex-col space-y-4">
                 <a href="#" class="text-gray-700 hover:text-orange-600 transition">Home</a>
-                <a href="#features" class="text-gray-700 hover:text-orange-600 transition">Features</a>
+                <a href="#features" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
                 <a href="#pricing" class="text-gray-700 hover:text-orange-600 transition">Pricing</a>
                 <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Contact</a>
                 <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full text-center hover:shadow-lg transition">Masuk</a>
@@ -111,64 +111,38 @@
     <section id="features" class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Amazing Features</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Discover the powerful features that will take your business to the next level.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">KOMUNIKASI PUBLIK</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Balai Besar Wilayah Sungai Brantas</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
                 <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
                     <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-bolt text-2xl"></i>
+                        <i class="fas fa-chalkboard-teacher text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Lightning Fast</h3>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Layanan Informasi</h3>
                     <p class="text-gray-600">Our optimized infrastructure ensures ultra-fast performance and minimal latency for all your operations.</p>
                 </div>
                 
                 <!-- Feature 2 -->
                 <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
                     <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-shield-alt text-2xl"></i>
+                        <i class="fas fa-envelope-open-text text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Bank-Grade Security</h3>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Informasi Publik</h3>
                     <p class="text-gray-600">Enterprise-level security protocols protect your data with end-to-end encryption and regular audits.</p>
                 </div>
                 
                 <!-- Feature 3 -->
                 <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
                     <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-chart-line text-2xl"></i>
+                        <i class="fas fa-bullhorn text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Real-time Analytics</h3>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Publikasi</h3>
                     <p class="text-gray-600">Gain valuable insights with our comprehensive analytics dashboard that updates in real-time.</p>
                 </div>
-                
-                <!-- Feature 4 -->
-                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
-                    <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-sync-alt text-2xl rotate-icon transition duration-500"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Auto Updates</h3>
-                    <p class="text-gray-600">Our system automatically updates to provide you with the latest features and security patches.</p>
-                </div>
-                
-                <!-- Feature 5 -->
-                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
-                    <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-users text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Team Collaboration</h3>
-                    <p class="text-gray-600">Built-in tools for seamless team collaboration with role-based access and shared workspaces.</p>
-                </div>
-                
-                <!-- Feature 6 -->
-                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
-                    <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-headset text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">24/7 Support</h3>
-                    <p class="text-gray-600">Dedicated support team available round the clock to assist you with any questions or issues.</p>
-                </div>
+            
             </div>
         </div>
     </section>
@@ -178,66 +152,16 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div class="p-6">
-                    <h3 class="textyou're the is-animated text-4xl md:text-5xl font-bold mb-2">10,000+</h3>
-                    <p class="text-lg">Happy Customers</p>
+                    <h3 class="textyou're the is-animated text-4xl md:text-5xl font-bold mb-2">9440</h3>
+                    <p class="text-lg">Kunjungan</p>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-4xl md:text-5xl font-bold mb-2">99.9%</h3>
-                    <p class="text-lg">Uptime Guarantee</p>
+                    <h3 class="text-4xl md:text-5xl font-bold mb-2">90%/h3>
+                    <p class="text-lg">Kepuasan Layanan</p>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-4xl md:text-5xl font-bold mb-2">24/7</h3>
-                    <p class="text-lg">Customer Support</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What Our Customers Say</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Don't just take our word for it. Here's what our clients have to say.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-white p-8 rounded-xl shadow-md">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah Johnson" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Sarah Johnson</h4>
-                            <p class="text-gray-600">CEO, TechSolutions</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700">"This platform has transformed our workflow efficiency. The analytics dashboard alone has helped us increase productivity by 30%. Highly recommended!"</p>
-                    <div class="mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="bg-white p-8 rounded-xl shadow-md">
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Michael Chen</h4>
-                            <p class="text-gray-600">CTO, DigitalWave</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700">"The customer support is exceptional. We've never had to wait more than 15 minutes for a response, even for complex technical queries."</p>
-                    <div class="mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
+                    <h5 class="text-4xl md:text-5xl font-bold mb-2">Senin-Jumat <br>07.30-16.00 WIB</h5>
+                    <p class="text-lg">Waktu Layanan</p>
                 </div>
             </div>
         </div>
@@ -246,11 +170,10 @@
     <!-- CTA Section -->
     <section class="py-20 gradient-bg text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to transform your business?</h2>
-            <p class="text-lg mb-8 max-w-2xl mx-auto">Join thousands of satisfied customers and experience the difference today.</p>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Buku Tamu</h2>
+            <p class="text-lg mb-8 max-w-2xl mx-auto">Silahkan isi Buku Tamu pada tombol dibawah ini</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#" class="bg-white text-blue-600 px-8 py-3 rounded-full text-lg font-medium hover:shadow-lg transition transform hover:scale-105">Start Free Trial</a>
-                <a href="#contact" class="border-2 border-white text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-white/20 transition transform hover:scale-105">Contact Sales</a>
+                <a href="#" class="bg-white text-blue-600 px-8 py-3 rounded-full text-lg font-medium hover:shadow-lg transition transform hover:scale-105">Menuju Formulir</a>
             </div>
         </div>
     </section>
@@ -260,7 +183,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Get In Touch</h2>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Kontak Kompu dan PPID</h2>
                     <p class="text-gray-600 mb-8">Have questions? Our team is here to help. Fill out the form and we'll get back to you within 24 hours.</p>
                     
                     <div class="space-y-4">
