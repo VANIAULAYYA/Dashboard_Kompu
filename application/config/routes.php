@@ -49,32 +49,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'Auth';
+$route['default_controller'] = 'Landing';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
-// Rute untuk autentikasi
-$route['login'] = 'Auth/index';
-$route['logout'] = 'Auth/logout';
-
-// Rute untuk Admin
-$route['admin/dashboard'] = 'Admin/dashboard';
-$route['admin/aduan'] = 'Admin/aduan';
-$route['admin/aduan/edit/(:num)'] = 'Admin/edit_aduan/$1';
-$route['admin/aduan/delete/(:num)'] = 'Admin/delete_aduan/$1';
-$route['admin/users'] = 'Admin/users';
-$route['admin/users/add'] = 'Admin/add_user';
-$route['admin/users/edit/(:num)'] = 'Admin/edit_user/$1';
-$route['admin/users/delete/(:num)'] = 'Admin/delete_user/$1';
-
-
-// Rute untuk Kepala PPID
-$route['kepala_ppid/dashboard'] = 'Kepala_ppid/dashboard';
-$route['kepala_ppid/aduan'] = 'Kepala_ppid/aduan';
-
-// Rute untuk Staff
-$route['staff/dashboard'] = 'Staff/dashboard';
-$route['staff/aduan'] = 'Staff/aduan';
-$route['staff/aduan/add'] = 'Staff/add_aduan';
-$route['staff/aduan/edit/(:num)'] = 'Staff/edit_aduan/$1';
-$route['staff/aduan/delete/(:num)'] = 'Staff/delete_aduan/$1';
