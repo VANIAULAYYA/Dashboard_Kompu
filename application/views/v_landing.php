@@ -21,7 +21,7 @@
         .hero-section {
             height: 100vh;
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2160&q=80');
+                        url('<?php echo base_url();?>assets/Pictures/kantor.png');
             background-size: cover;
             background-position: center;
         }
@@ -65,15 +65,15 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <img src="<?php echo base_url();?>assets/Pictures/logo-pu.png" alt="Girl in a jacket" width="300">
+                        <img src="<?php echo base_url();?>assets/Pictures/logo-pu.png" alt="Girl in a jacket" width="250">
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
                     <a href="#features" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
-                    <a href="#pricing" class="nav-link text-gray-700 hover:text-orange-600 transition">Pricing</a>
-                    <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Contact</a>
-                    <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full hover:shadow-lg transition">Masuk</a>
+                    <a href="#pricing" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Aduan</a>
+                    <!-- <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full hover:shadow-lg transition">Masuk</a> -->
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="text-gray-700 hover:text-orange-600">
@@ -88,8 +88,8 @@
             <div class="flex flex-col space-y-4">
                 <a href="#" class="text-gray-700 hover:text-orange-600 transition">Home</a>
                 <a href="#features" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
-                <a href="#pricing" class="text-gray-700 hover:text-orange-600 transition">Pricing</a>
-                <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Contact</a>
+                <a href="#pricing" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+                <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Aduan</a>
                 <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full text-center hover:shadow-lg transition">Masuk</a>
             </div>
         </div>
@@ -100,10 +100,7 @@
         <div class="text-center px-4 fade-in">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">SELAMAT DATANG</h1>
             <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8">KOMUNIKASI PUBLIK BBWS BRANTAS</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#" class="gradient-bg text-white px-8 py-3 rounded-full text-lg font-medium hover:shadow-lg transition transform hover:scale-105">Start Free Trial</a>
-                <a href="#features" class="bg-white text-blue-600 px-8 py-3 rounded-full text-lg font-medium hover:shadow-lg transition transform hover:scale-105">Learn More</a>
-            </div>
+            
         </div>
     </section>
 
@@ -156,7 +153,7 @@
                     <p class="text-lg">Kunjungan</p>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-4xl md:text-5xl font-bold mb-2">90%/h3>
+                    <h3 class="text-4xl md:text-5xl font-bold mb-2">90%</h3>
                     <p class="text-lg">Kepuasan Layanan</p>
                 </div>
                 <div class="p-6">
@@ -184,28 +181,28 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-800 mb-6">Kontak Kompu dan PPID</h2>
-                    <p class="text-gray-600 mb-8">Have questions? Our team is here to help. Fill out the form and we'll get back to you within 24 hours.</p>
+                    <p class="text-gray-600 mb-8">Kontak KOMPU BBWS Brantas dapat dihubungi di:</p>
                     
                     <div class="space-y-4">
                         <div class="flex items-center">
                             <div class="gradient-bg text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
-                            <p class="text-gray-700">123 Business Ave, Suite 200<br>San Francisco, CA 94107</p>
+                            <p class="text-gray-700">Jl. Raya Menganti No.312<br>Wiyung, Surabaya</p>
                         </div>
                         
                         <div class="flex items-center">
                             <div class="gradient-bg text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">
                                 <i class="fas fa-phone-alt"></i>
                             </div>
-                            <p class="text-gray-700">+1 (555) 123-4567</p>
+                            <p class="text-gray-700">082338417445 (Hanya Chat Whatsapp)</p>
                         </div>
                         
                         <div class="flex items-center">
                             <div class="gradient-bg text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">
                                 <i class="fas fa-envelope"></i>
                             </div>
-                            <p class="text-gray-700">hello@nexus.com</p>
+                            <p class="text-gray-700">bbwsbrantas@pu.go.id</p>
                         </div>
                     </div>
                     
@@ -219,13 +216,13 @@
                         <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition">
+                        <a href="https://www.instagram.com/pu_sda_brantas" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition" target="_blank">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                 </div>
                 
-                <div>
+                <!-- <div>
                     <form class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
@@ -255,7 +252,7 @@
                         
                         <button type="submit" class="gradient-bg text-white px-8 py-3 rounded-lg text-lg font-medium hover:shadow-lg transition w-full">Send Message</button>
                     </form>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
