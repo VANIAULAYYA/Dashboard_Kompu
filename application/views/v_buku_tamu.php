@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KOMPU BBWS BRANTAS</title>
+    <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE/dist/css/adminlte.min.css'); ?>">
+    <title>Buku Tamu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Arial', sans-serif;
             scroll-behavior: smooth;
-        }
-        
-        .gradient-bg {
-           background: linear-gradient(135deg, #1e3a8a);
         }
         
         .hero-section {
@@ -26,260 +23,290 @@
             background-position: center;
         }
         
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
-        
-        .nav-link:hover:after {
-            width: 100%;
+
+        .form-group {
+            margin-bottom: 15px;
         }
-        
-        .nav-link:after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 2px;
-            background: #fff;
-            transition: width .3s;
+
+        .form-group label {
+            font-weight: 500;
         }
-        
-        .fade-in {
-            animation: fadeIn 1.5s ease-in-out;
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
         }
-        
-        .rotate-icon:hover {
-            transform: rotate(360deg);
+
+        nav {
+            position: fixed; /* Pastikan navbar tetap di posisi tetap */
+            top: 0; /* Menempatkan navbar di bagian atas */
+            left: 0; /* Menempatkan navbar di sisi kiri */
+            width: 100%; /* Memastikan navbar mengambil lebar penuh */
+            z-index: 1000; /* Memastikan navbar berada di atas elemen lain */
         }
+        .content {
+            display: flex; /* Menggunakan flexbox untuk grup radio button */
+            flex-direction: row; /* Menempatkan elemen secara vertikal */
+            align-items: center; /* Menempatkan elemen di tengah secara horizontal */
+            justify-content: center;
+        }
+
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <img src="<?php echo base_url();?>assets/Pictures/logo-pu.png" alt="Girl in a jacket" width="250">
-                    </div>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
-                    <a href="#features" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
-                    <a href="#pricing" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
-                    <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Aduan</a>
-                    <!-- <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full hover:shadow-lg transition">Masuk</a> -->
-                </div>
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="text-gray-700 hover:text-orange-600">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <img src="<?php echo base_url();?>assets/Pictures/logo-pu.png" alt="Logo" width="250">
                 </div>
             </div>
-        </div>
-        
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white py-4 px-6 shadow-lg">
-            <div class="flex flex-col space-y-4">
-                <a href="#" class="text-gray-700 hover:text-orange-600 transition">Home</a>
-                <a href="#features" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
-                <a href="#pricing" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
-                <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Aduan</a>
-                <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full text-center hover:shadow-lg transition">Masuk</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
+                <a href="#features" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
+                <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+                <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Aduan</a>
+            </div>
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" class="text-gray-700 hover:text-orange-600">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
             </div>
         </div>
-    </nav>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white py-4 px-6 shadow-lg">
+        <div class="flex flex-col space-y-4">
+            <a href="#" class="text-gray-700 hover:text-orange-600 transition">Home</a>
+            <a href="#features" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
+            <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+            <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Aduan</a>
+        </div>
+    </div>
+</nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section flex items-center justify-center text-white">
-        <div class="text-center px-4 fade-in">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">SELAMAT DATANG</h1>
-            <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8">KOMUNIKASI PUBLIK BBWS BRANTAS</p>
-            
-        </div>
-    </section>
+    <div class="container mx-auto mt-20">
+        <div class="form-container">
+            <form action="<?php echo site_url('feedbackcontroller/submit'); ?>" method="post">
+                <div class="form-group">
+                    <label for="nama">Nama</label>
+                    <input type="text" class="form-control" id="nama" name="nama" required>
+                </div>
+                <div class="form-group">
+                    <label for="jenis_kelamin">Jenis Kelamin</label>
+                    <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="asal_instansi">Asal Instansi/Pribadi</label>
+                    <input type="text" class="form-control" id="asal_instansi" name="asal_instansi" required>
+                </div>
+                <div class="form-group">
+                    <label for="no_handphone">No. Handphone yang bisa dihubungi</label>
+                    <input type="text" class="form-control" id="no_handphone" name="no_handphone" required>
+                </div>
+                <div class="form-group">
+                    <label for="keperluan">Keperluan</label>
+                    <div>
+                        <input type="radio" id="keperluan1" name="keperluan" value="Menemui Pejabat/Staff" required>
+                        <label for="pendapat_pelayanan1">Menemui Pejabat/Staff</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="keperluan2" name="keperluan" value="Rekomendasi Teknis (Rekomtek)">
+                        <label for="pendapat_pelayanan2">Rekomendasi Teknis (Rekomtek)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="keperluan3" name="keperluan" value="Kirim Surat (Promosi/Aduan/Temuan)">
+                        <label for="pendapat_pelayanan3">Kirim Surat (Promosi/Aduan/Temuan)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="keperluan3" name="keperluan" value="Permintaan Data/Informasi">
+                        <label for="pendapat_pelayanan3">Permintaan Data/Informasi</label>
+                    </div>
+                </div>
 
-    <!-- Features Section -->
-    <section id="features" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">KOMUNIKASI PUBLIK</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Balai Besar Wilayah Sungai Brantas</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
-                    <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-chalkboard-teacher text-2xl"></i>
+                <!-- Pertanyaan 1 -->
+                <div class="form-group">
+                    <label>1. Bagaimana pendapat Saudara tentang kesesuaian persyaratan pelayanan dengan jenis pelayanannya?</label><br><br>
+                    <div class="content">
+                        <input type="radio" id="pendapat_pelayanan1" name="pendapat_pelayanan" value="4" required>&nbsp;
+                        <label for="pendapat_pelayanan1">Sangat Sesuai</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_pelayanan2" name="pendapat_pelayanan" value="3">&nbsp;
+                        <label for="pendapat_pelayanan2">Sesuai</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_pelayanan3" name="pendapat_pelayanan" value="2">&nbsp;
+                        <label for="pendapat_pelayanan2">Kurang Sesuai</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_pelayanan4" name="pendapat_pelayanan" value="1">&nbsp;
+                        <label for="pendapat_pelayanan3">Tidak Sesuai</label>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Layanan Informasi</h3>
-                    <p class="text-gray-600">Our optimized infrastructure ensures ultra-fast performance and minimal latency for all your operations.</p>
                 </div>
-                
-                <!-- Feature 2 -->
-                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
-                    <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-envelope-open-text text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Informasi Publik</h3>
-                    <p class="text-gray-600">Enterprise-level security protocols protect your data with end-to-end encryption and regular audits.</p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
-                    <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-bullhorn text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Publikasi</h3>
-                    <p class="text-gray-600">Gain valuable insights with our comprehensive analytics dashboard that updates in real-time.</p>
-                </div>
-            
-            </div>
-        </div>
-    </section>
 
-    <!-- Stats Section -->
-    <section class="gradient-bg py-20 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="p-6">
-                    <h3 class="textyou're the is-animated text-4xl md:text-5xl font-bold mb-2">9440</h3>
-                    <p class="text-lg">Kunjungan</p>
+                <!-- Pertanyaan 2 -->
+                <div class="form-group">
+                    <label>2. Bagaimana pemahaman Saudara tentang kemudahan prosedur pelayanan di unit ini?</label><br><br>
+                    <div class="content">
+                        <input type="radio" id="pemahaman_prosedur1" name="pemahaman_prosedur" value="4" required>&nbsp;
+                        <label for="pemahaman_prosedur1">Sangat Mudah</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pemahaman_prosedur2" name="pemahaman_prosedur" value="3">&nbsp;
+                        <label for="pemahaman_prosedur2">Mudah</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pemahaman_prosedur3" name="pemahaman_prosedur" value="2">&nbsp;
+                        <label for="pemahaman_prosedur3">Kurang Mudah</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pemahaman_prosedur4" name="pemahaman_prosedur" value="1">&nbsp;
+                        <label for="pemahaman_prosedur3">Kurang Mudah</label>
+                    </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-4xl md:text-5xl font-bold mb-2">90%</h3>
-                    <p class="text-lg">Kepuasan Layanan</p>
-                </div>
-                <div class="p-6">
-                    <h5 class="text-4xl md:text-5xl font-bold mb-2">Senin-Jumat <br>07.30-16.00 WIB</h5>
-                    <p class="text-lg">Waktu Layanan</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="py-20 gradient-bg text-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Buku Tamu</h2>
-            <p class="text-lg mb-8 max-w-2xl mx-auto">Silahkan isi Buku Tamu pada tombol dibawah ini</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#" class="bg-white text-blue-600 px-8 py-3 rounded-full text-lg font-medium hover:shadow-lg transition transform hover:scale-105">Menuju Formulir</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Kontak Kompu dan PPID</h2>
-                    <p class="text-gray-600 mb-8">Kontak KOMPU BBWS Brantas dapat dihubungi di:</p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <div class="gradient-bg text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <p class="text-gray-700">Jl. Raya Menganti No.312<br>Wiyung, Surabaya</p>
-                        </div>
-                        
-                        <div class="flex items-center">
-                            <div class="gradient-bg text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <p class="text-gray-700">082338417445 (Hanya Chat Whatsapp)</p>
-                        </div>
-                        
-                        <div class="flex items-center">
-                            <div class="gradient-bg text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <p class="text-gray-700">bbwsbrantas@pu.go.id</p>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-8 flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.instagram.com/pu_sda_brantas" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+                <!-- Pertanyaan 3 -->
+                <div class="form-group">
+                    <label>3. Bagaimana pendapat Saudara tentang kecepatan waktu dalam memberikan pelayanan?</label><br><br>
+                    <div class="content">
+                        <input type="radio" id="pendapat_kecepatan1" name="pendapat_kecepatan" value="4" required>&nbsp;
+                        <label for="pendapat_kecepatan1">Sangat Cepat</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_kecepatan2" name="pendapat_kecepatan" value="3">&nbsp;
+                        <label for="pendapat_kecepatan2">Cepat</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_kecepatan3" name="pendapat_kecepatan" value="2">&nbsp;
+                        <label for="pendapat_kecepatan3">Kurang Cepat</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_kecepatan4" name="pendapat_kecepatan" value="1">&nbsp;
+                        <label for="pendapat_kecepatan3">Tidak Cepat</label>
                     </div>
                 </div>
-                
-                <!-- <div>
-                    <form class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                                <input type="text" id="first-name" name="first-name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="John">
-                            </div>
-                            <div>
-                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                                <input type="text" id="last-name" name="last-name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="Doe">
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="your@email.com">
-                        </div>
-                        
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="+1 (___) ___-____">
-                        </div>
-                        
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="Your message..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="gradient-bg text-white px-8 py-3 rounded-lg text-lg font-medium hover:shadow-lg transition w-full">Send Message</button>
-                    </form>
-                </div> -->
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <span class="text-xl font-bold">KEMENPU BBWS BRANTAS</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">Jl. Raya Menganti No.312 Wiyung Surabaya</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition"><i class="fab fa-instagram"></i></a>
+                <!-- Pertanyaan 4 -->
+                <div class="form-group">
+                    <label>4. Bagaimana pendapat Saudara tentang kewajaran biaya/tarif dalam pelayanan?</label><br><br>
+                    <div class="content">
+                        <input type="radio" id="pendapat_biaya1" name="pendapat_biaya" value="4" required>&nbsp;
+                        <label for="pendapat_biaya1">Gratis</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_biaya2" name="pendapat_biaya" value="3">&nbsp;
+                        <label for="pendapat_biaya2">Murah</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_biaya3" name="pendapat_biaya" value="2">&nbsp;
+                        <label for="pendapat_biaya3">Cukup Mahal</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_biaya4" name="pendapat_biaya" value="1">&nbsp;
+                        <label for="pendapat_biaya3">Sangat Mahal</label>
                     </div>
                 </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 KOMPU BBWS BRANTAS. All rights reserved.</p>
-            </div>
+
+                <!-- Pertanyaan 5 -->
+                <div class="form-group">
+                    <label>5. Bagaimana pendapat Saudara tentang kesesuaian produk pelayanan antara yang tercantum dalam standar pelayanan dengan hasil yang diberikan?</label><br>
+                    <div>
+                        <input type="radio" id="pendapat_produk1" name="pendapat_produk" value="Sangat Sesuai" required>
+                        <label for="pendapat_produk1">Sangat Sesuai</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_produk2" name="pendapat_produk" value="Sesuai">
+                        <label for="pendapat_produk2">Sesuai</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_produk3" name="pendapat_produk" value="Tidak Sesuai">
+                        <label for="pendapat_produk3">Tidak Sesuai</label>
+                    </div>
+                </div>
+
+                <!-- Pertanyaan 6 -->
+                <div class="form-group">
+                    <label>6. Bagaimana pendapat Saudara tentang kompetensi/kemampuan petugas dalam pelayanan?</label><br>
+                    <div>
+                        <input type="radio" id="pendapat_kompetensi1" name="pendapat_kompetensi" value="Sangat Kompeten" required>
+                        <label for="pendapat_kompetensi1">Sangat Kompeten</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_kompetensi2" name="pendapat_kompetensi" value="Kompeten">
+                        <label for="pendapat_kompetensi2">Kompeten</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_kompetensi3" name="pendapat_kompetensi" value="Tidak Kompeten">
+                        <label for="pendapat_kompetensi3">Tidak Kompeten</label>
+                    </div>
+                </div>
+
+                <!-- Pertanyaan 7 -->
+                <div class="form-group">
+                    <label>7. Bagaimana pendapat Saudara tentang perilaku petugas dalam pelayanan terkait kesopanan dan keramahan?</label><br>
+                    <div>
+                        <input type="radio" id="pendapat_perilaku1" name="pendapat_perilaku" value="Sangat Baik" required>
+                        <label for="pendapat_perilaku1">Sangat Baik</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_perilaku2" name="pendapat_perilaku" value="Baik">
+                        <label for="pendapat_perilaku2">Baik</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_perilaku3" name="pendapat_perilaku" value="Buruk">
+                        <label for="pendapat_perilaku3">Buruk</label>
+                    </div>
+                </div>
+
+                <!-- Pertanyaan 8 -->
+                <div class="form-group">
+                    <label>8. Bagaimana pendapat Saudara tentang kualitas sarana dan prasarana?</label><br>
+                    <div>
+                        <input type="radio" id="pendapat_kualitas1" name="pendapat_kualitas" value="Sangat Baik" required>
+                        <label for="pendapat_kualitas1">Sangat Baik</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_kualitas2" name="pendapat_kualitas" value="Baik">
+                        <label for="pendapat_kualitas2">Baik</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_kualitas3" name="pendapat_kualitas" value="Buruk">
+                        <label for="pendapat_kualitas3">Buruk</label>
+                    </div>
+                </div>
+
+                <!-- Pertanyaan 9 -->
+                <div class="form-group">
+                    <label>9. Bagaimana pendapat Saudara tentang penanganan pengaduan pengguna layanan?</label><br>
+                    <div>
+                        <input type="radio" id="pendapat_pengaduan1" name="pendapat_pengaduan" value="Sangat Memuaskan" required>
+                        <label for="pendapat_pengaduan1">Sangat Memuaskan</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_pengaduan2" name="pendapat_pengaduan" value="Memuaskan">
+                        <label for="pendapat_pengaduan2">Memuaskan</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_pengaduan3" name="pendapat_pengaduan" value="Tidak Memuaskan">
+                        <label for="pendapat_pengaduan3">Tidak Memuaskan</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="kritik_saran">Kritik dan Saran Perbaikan</label>
+                    <textarea class="form-control" id="kritik_saran" name="kritik_saran"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Kirim</button>
+            </form>
         </div>
-    </footer>
+    </div>
 
     <!-- Back to Top button -->
     <button id="back-to-top" class="hidden fixed bottom-8 right-8 w-12 h-12 bg-orange-600 text-white rounded-full shadow-lg hover:bg-orange-700 transition">
@@ -315,30 +342,32 @@
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     window.scrollTo({
+                        top: target.offset,
                         top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
+                    behavior: 'smooth'
+                });
+            }
         });
+    });
 
-        // Animate elements when they come into view
-        const animateOnScroll = function() {
-            const elements = document.querySelectorAll('.fade-in');
+    // Animate elements when they come into view
+    const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.fade-in');
+        
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.2;
             
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.2;
-                
-                if (elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        };
+            if (elementPosition < screenPosition) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    };
 
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-    </script>
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+</script>
+<script src="<?php echo base_url('assets/AdminLTE/dist/js/adminlte.min.js'); ?>"></script>
 </body>
 </html>

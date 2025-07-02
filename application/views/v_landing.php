@@ -71,7 +71,7 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
                     <a href="#features" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
-                    <a href="#pricing" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+                    <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
                     <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Aduan</a>
                     <!-- <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full hover:shadow-lg transition">Masuk</a> -->
                 </div>
@@ -88,7 +88,7 @@
             <div class="flex flex-col space-y-4">
                 <a href="#" class="text-gray-700 hover:text-orange-600 transition">Home</a>
                 <a href="#features" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
-                <a href="#pricing" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+                <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
                 <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Aduan</a>
                 <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full text-center hover:shadow-lg transition">Masuk</a>
             </div>
@@ -170,7 +170,7 @@
             <h2 class="text-3xl md:text-4xl font-bold mb-6">Buku Tamu</h2>
             <p class="text-lg mb-8 max-w-2xl mx-auto">Silahkan isi Buku Tamu pada tombol dibawah ini</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#" class="bg-white text-blue-600 px-8 py-3 rounded-full text-lg font-medium hover:shadow-lg transition transform hover:scale-105">Menuju Formulir</a>
+                <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="bg-white text-blue-600 px-8 py-3 rounded-full text-lg font-medium hover:shadow-lg transition transform hover:scale-105">Menuju Formulir</a>
             </div>
         </div>
     </section>
