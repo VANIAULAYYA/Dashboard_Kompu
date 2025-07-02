@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2025 at 10:35 AM
+-- Generation Time: Jul 02, 2025 at 10:59 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -77,26 +77,23 @@ INSERT INTO `aduan` (`id`, `nama_pengadu`, `email`, `telepon`, `isi_aduan`, `tan
 
 CREATE TABLE `buku_tamu` (
   `id` int(11) NOT NULL,
+  `timestamp` datetime DEFAULT current_timestamp(),
   `nama` varchar(100) NOT NULL,
-  `instansi` varchar(100) NOT NULL,
+  `jenis_kelamin` enum('L','P') NOT NULL,
+  `asal_instansi` varchar(100) NOT NULL,
+  `no_handphone` varchar(15) NOT NULL,
   `keperluan` text NOT NULL,
-  `tanggal` date NOT NULL,
-  `jam_masuk` time NOT NULL,
-  `jam_keluar` time DEFAULT NULL,
-  `nilai_kepuasan` int(1) DEFAULT NULL COMMENT 'Skala 1-5',
-  `keterangan` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `pendapat_pelayanan` text DEFAULT NULL,
+  `pemahaman_prosedur` text DEFAULT NULL,
+  `pendapat_kecepatan` text DEFAULT NULL,
+  `pendapat_biaya` text DEFAULT NULL,
+  `pendapat_produk` text DEFAULT NULL,
+  `pendapat_kompetensi` text DEFAULT NULL,
+  `pendapat_perilaku` text DEFAULT NULL,
+  `pendapat_kualitas` text DEFAULT NULL,
+  `pendapat_pengaduan` text DEFAULT NULL,
+  `kritik_saran` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `buku_tamu`
---
-
-INSERT INTO `buku_tamu` (`id`, `nama`, `instansi`, `keperluan`, `tanggal`, `jam_masuk`, `jam_keluar`, `nilai_kepuasan`, `keterangan`, `created_at`) VALUES
-(1, 'John Doe', 'PT. Contoh', 'Konsultasi', '2023-10-01', '08:30:00', '09:45:00', 4, 'Konsultasi produk', '2025-06-23 02:41:04'),
-(2, 'Jane Smith', 'Universitas XYZ', 'Magang', '2023-10-02', '09:00:00', '11:30:00', 5, 'Program magang', '2025-06-23 02:41:04'),
-(3, 'Bob Johnson', 'CV. Makmur', 'Meeting', '2023-10-03', '10:15:00', '11:00:00', 3, 'Rapat kerjasama', '2025-06-23 02:41:04'),
-(4, 'Alice Williams', 'Sekolah ABC', 'Studi Banding', '2023-10-04', '13:00:00', '15:30:00', 5, 'Studi banding program', '2025-06-23 02:41:04');
 
 -- --------------------------------------------------------
 
@@ -192,7 +189,7 @@ ALTER TABLE `aduan`
 -- AUTO_INCREMENT for table `buku_tamu`
 --
 ALTER TABLE `buku_tamu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
