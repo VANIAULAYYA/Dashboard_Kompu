@@ -14,8 +14,12 @@ class Landing extends CI_Controller {
 
     public function index()
     {
-        
         $this->load->view('v_landing');
+    }
+
+    public function bukut_tamu()
+    {
+        $this->load->view('v_form_buku_tamu');
     }
     
     // public function dashboard()
