@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2025 at 10:59 AM
+-- Generation Time: Jul 04, 2025 at 10:26 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `nama_lengkap`, `last_login`) VALUES
-(1, 'admin', '$2y$10$kXvqe/lRc0r/dl8QIp65luq/O4C3fZJ1NhQxdAu3PMkAQoVQq51ZO', 'Administrator', '2025-06-24 10:32:53');
+(1, 'admin', '$2y$10$kXvqe/lRc0r/dl8QIp65luq/O4C3fZJ1NhQxdAu3PMkAQoVQq51ZO', 'Administrator', '2025-07-04 10:22:29');
 
 -- --------------------------------------------------------
 
@@ -83,17 +83,25 @@ CREATE TABLE `buku_tamu` (
   `asal_instansi` varchar(100) NOT NULL,
   `no_handphone` varchar(15) NOT NULL,
   `keperluan` text NOT NULL,
-  `pendapat_pelayanan` text DEFAULT NULL,
-  `pemahaman_prosedur` text DEFAULT NULL,
-  `pendapat_kecepatan` text DEFAULT NULL,
-  `pendapat_biaya` text DEFAULT NULL,
-  `pendapat_produk` text DEFAULT NULL,
-  `pendapat_kompetensi` text DEFAULT NULL,
-  `pendapat_perilaku` text DEFAULT NULL,
-  `pendapat_kualitas` text DEFAULT NULL,
-  `pendapat_pengaduan` text DEFAULT NULL,
+  `pendapat_pelayanan` int(11) NOT NULL,
+  `pemahaman_prosedur` int(11) NOT NULL,
+  `pendapat_kecepatan` int(11) NOT NULL,
+  `pendapat_biaya` int(11) NOT NULL,
+  `pendapat_produk` int(11) NOT NULL,
+  `pendapat_kompetensi` int(11) NOT NULL,
+  `pendapat_perilaku` int(11) NOT NULL,
+  `pendapat_kualitas` int(11) NOT NULL,
+  `pendapat_pengaduan` int(11) NOT NULL,
   `kritik_saran` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `buku_tamu`
+--
+
+INSERT INTO `buku_tamu` (`id`, `timestamp`, `nama`, `jenis_kelamin`, `asal_instansi`, `no_handphone`, `keperluan`, `pendapat_pelayanan`, `pemahaman_prosedur`, `pendapat_kecepatan`, `pendapat_biaya`, `pendapat_produk`, `pendapat_kompetensi`, `pendapat_perilaku`, `pendapat_kualitas`, `pendapat_pengaduan`, `kritik_saran`) VALUES
+(1, '2025-07-04 10:37:20', 'Andre', 'L', 'BBWS Brantas', '028982873901827', 'Rekomendasi Teknis (Rekomtek)', 4, 4, 4, 4, 3, 3, 3, 2, 3, 'sadawdasd'),
+(3, '2025-07-04 15:12:19', 'Coba', 'L', 'pabrik', '028982873901827', 'Antar Makan', 3, 3, 3, 4, 3, 3, 3, 3, 3, '-');
 
 -- --------------------------------------------------------
 
@@ -189,7 +197,7 @@ ALTER TABLE `aduan`
 -- AUTO_INCREMENT for table `buku_tamu`
 --
 ALTER TABLE `buku_tamu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
