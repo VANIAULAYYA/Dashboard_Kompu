@@ -67,8 +67,12 @@
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 3px;
         }
+        #otherInput {
+            display: none; /* Sembunyikan input lainnya */
+        }
 
     </style>
+    
 </head>
 <body>
     <!-- Navigation -->
@@ -129,15 +133,19 @@
                 </div>
                 <div class="form-group">
                 <label for="keperluan" class="block font-semibold mb-2">Keperluan</label>
-                <select id="keperluan" name="keperluan" required class="form-control">
+                <select id="keperluan" name="keperluan" required class="form-control" onchange="toggleOtherInput()">
                     <option value="">-- Pilih Keperluan --</option>
                     <option value="Menemui Pejabat/Staff">Menemui Pejabat/Staff</option>
                     <option value="Rekomendasi Teknis (Rekomtek)">Rekomendasi Teknis (Rekomtek)</option>
                     <option value="Kirim Surat (Promosi/Aduan/Temuan)">Kirim Surat (Promosi/Aduan/Temuan)</option>
                     <option value="Permintaan Data/Informasi">Permintaan Data/Informasi</option>
+                    <option value="lainnya">Lainnya</option>
                 </select>
                 </div>
-
+                <div class="form-group" id="otherInput">
+                    <label for="otherText" class="block font-semibold mb-2">Tuliskan lebih lanjut:</label>
+                    <input type="text" class="form-control" id="otherText" name="kategori_lainnya" placeholder="Berikan detail Keperluan">
+                </div>
 
                 <!-- Pertanyaan 1 -->
                 <div class="form-group">
@@ -370,6 +378,17 @@
     window.addEventListener('scroll', animateOnScroll);
     window.addEventListener('load', animateOnScroll);
 </script>
+<script>
+        function toggleOtherInput() {
+            const select = document.getElementById("keperluan");
+            const otherInput = document.getElementById("otherInput");
+            if (select.value === "lainnya") {
+                otherInput.style.display = "block"; // Tampilkan input lainnya
+            } else {
+                otherInput.style.display = "none"; // Sembunyikan input lainnya
+            }
+        }
+    </script>
 <script src="<?php echo base_url('assets/AdminLTE/dist/js/adminlte.min.js'); ?>"></script>
 </body>
 </html>

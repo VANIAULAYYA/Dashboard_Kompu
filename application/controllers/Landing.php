@@ -24,12 +24,19 @@ class Landing extends CI_Controller {
     }
 
     public function submit() {
+        $kategori_lainnya = $this->input->post('kategori_lainnya');
+        $kategori = $this->input->post('keperluan'); 
+        if ($kategori === 'lainnya' && !empty($kategori_lainnya)) {
+                $kategori = $this->input->post('kategori_lainnya');
+            } else {
+                $kategori = $this->input->post('keperluan');    
+            }
         $data = array(
             'nama' => $this->input->post('nama'),
             'jenis_kelamin' => $this->input->post('jenis_kelamin'),
             'asal_instansi' => $this->input->post('asal_instansi'),
             'no_handphone' => $this->input->post('no_handphone'),
-            'keperluan' => $this->input->post('keperluan'),
+            'keperluan' => $kategori,
             'pendapat_pelayanan' => $this->input->post('pendapat_pelayanan'),
             'pemahaman_prosedur' => $this->input->post('pemahaman_prosedur'),
             'pendapat_kecepatan' => $this->input->post('pendapat_kecepatan'),

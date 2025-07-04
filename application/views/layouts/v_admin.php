@@ -18,7 +18,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url(); ?>assets/Template/assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="<?= base_url(); ?>assets/Template/assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="<?= base_url(); ?>assets/Pictures/Logo_PU_(RGB).jpg">
   <title>
     Dashboard Kompu
   </title>
@@ -37,12 +37,12 @@
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
-<body class="g-sidenav-show dark-version bg-gray-100">
+<body class="g-sidenav-show bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard-pro/pages/dashboards/default.html " target="_blank">
-        <img src="<?= base_url();?>assets/Template/assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+        <img src="<?= base_url();?>assets/Pictures/Logo_PU_(RGB).jpg" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">Dashboard Kompu</span>
       </a>
     </div>
@@ -867,7 +867,7 @@
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur" data-scroll="true">
+     <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur" data-scroll="true">
       <div class="container-fluid py-1 px-3">
         <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none me-2 ">
           <a href="javascript:;" class="nav-link text-body p-0">
@@ -885,7 +885,19 @@
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group">
+              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+              <input type="text" class="form-control" placeholder="Type here...">
+            </div>
+          </div>
           <ul class="navbar-nav  justify-content-end">
+            <li class="nav-item d-flex align-items-center">
+              <a href="<?= base_url("Auth/logout");?>" class="nav-link text-body font-weight-bold px-0" target="_blank">
+                <i class="fa fa-user me-sm-1"></i>
+                <span class="d-sm-inline d-none">Logout</span>
+              </a>
+            </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
