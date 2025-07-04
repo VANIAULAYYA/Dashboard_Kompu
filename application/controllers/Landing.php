@@ -10,6 +10,7 @@ class Landing extends CI_Controller {
         // $this->load->model('Aduan_model');
         // $this->load->model('User_model');
         $this->load->library('form_validation');
+        $this->load->model('M_landing');
     }
 
     public function index()
@@ -40,11 +41,12 @@ class Landing extends CI_Controller {
             'pendapat_pengaduan' => $this->input->post('pendapat_pengaduan'),
             'kritik_saran' => $this->input->post('kritik_saran')
         );
-        $this->load->model('M_Landing');
+        $this->load->model('M_landing');
         $this->M_landing->insert_feedback($data);
         
         // Redirect atau tampilkan pesan sukses
-        echo "Data berhasil dikirim!";
+        // echo "Data berhasil dikirim!";
+        redirect('Landing');
     }
     
     // public function dashboard()

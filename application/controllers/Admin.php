@@ -14,7 +14,7 @@ class Admin extends CI_Controller {
         $data = [
             'title' => 'Dashboard Admin',
             'total_tamu' => $this->M_admin->count_tamu(),
-            'total_kepuasan' => $this->M_admin->avg_kepuasan(),
+            // 'total_kepuasan' => $this->M_admin->avg_kepuasan(),
             'total_aduan' => $this->M_admin->count_aduan(),
             'aduan_proses' => $this->M_admin->count_aduan_proses(),
             'content' => 'admin/dashboard'

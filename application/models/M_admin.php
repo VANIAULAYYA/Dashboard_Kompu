@@ -12,11 +12,11 @@
        }
 
        // Calculate average satisfaction rating
-       public function avg_kepuasan() {
-           $this->db->select_avg('nilai_kepuasan');
-           $query = $this->db->get('buku_tamu');
-           return $query->row()->nilai_kepuasan;
-       }
+    //    public function avg_kepuasan() {
+    //        $this->db->select_avg('nilai_kepuasan');
+    //        $query = $this->db->get('buku_tamu');
+    //        return $query->row()->nilai_kepuasan;
+    //    }
 
        // Count total complaints
        public function count_aduan() {

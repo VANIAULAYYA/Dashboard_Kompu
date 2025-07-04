@@ -62,11 +62,6 @@
             align-items: center; /* Menempatkan elemen di tengah secara horizontal */
             justify-content: center;
         }
-        .radio-group {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 3px;
-        }
 
     </style>
 </head>
@@ -107,7 +102,7 @@
 
     <div class="container mx-auto mt-20">
         <div class="form-container">
-            <form action="<?php echo site_url('Landing/submit'); ?>" method="post">
+            <form action="<?php echo site_url('feedbackcontroller/submit'); ?>" method="post">
                 <div class="form-group">
                     <label for="nama">Nama</label>
                     <input type="text" class="form-control" id="nama" name="nama" required>
@@ -128,181 +123,175 @@
                     <input type="text" class="form-control" id="no_handphone" name="no_handphone" required>
                 </div>
                 <div class="form-group">
-                <label for="keperluan" class="block font-semibold mb-2">Keperluan</label>
-                <select id="keperluan" name="keperluan" required class="form-control">
-                    <option value="">-- Pilih Keperluan --</option>
-                    <option value="Menemui Pejabat/Staff">Menemui Pejabat/Staff</option>
-                    <option value="Rekomendasi Teknis (Rekomtek)">Rekomendasi Teknis (Rekomtek)</option>
-                    <option value="Kirim Surat (Promosi/Aduan/Temuan)">Kirim Surat (Promosi/Aduan/Temuan)</option>
-                    <option value="Permintaan Data/Informasi">Permintaan Data/Informasi</option>
-                </select>
-                </div>
-
-
-                <!-- Pertanyaan 1 -->
-                <div class="form-group">
-                    <label>1. Bagaimana pendapat Saudara tentang kesesuaian persyaratan pelayanan dengan jenis pelayanannya?</label><br><br>
-                    <div class="radio-group">
-                        <input type="radio" id="pendapat_pelayanan1" name="pendapat_pelayanan" value="4" required>
-                        <label for="pendapat_pelayanan1">Sangat Sesuai</label>
-                    
-                        <input type="radio" id="pendapat_pelayanan2" name="pendapat_pelayanan" value="3">
-                        <label for="pendapat_pelayanan2">Sesuai</label>
-                    
-                        <input type="radio" id="pendapat_pelayanan3" name="pendapat_pelayanan" value="2">
-                        <label for="pendapat_pelayanan2">Kurang Sesuai</label>
-                   
-                        <input type="radio" id="pendapat_pelayanan4" name="pendapat_pelayanan" value="1">
-                        <label for="pendapat_pelayanan4">Tidak Sesuai</label>
+                    <label for="keperluan">Keperluan</label>
+                    <div>
+                        <input type="radio" id="keperluan1" name="keperluan" value="Menemui Pejabat/Staff" required>
+                        <label for="pendapat_pelayanan1">Menemui Pejabat/Staff</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="keperluan2" name="keperluan" value="Rekomendasi Teknis (Rekomtek)">
+                        <label for="pendapat_pelayanan2">Rekomendasi Teknis (Rekomtek)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="keperluan3" name="keperluan" value="Kirim Surat (Promosi/Aduan/Temuan)">
+                        <label for="pendapat_pelayanan3">Kirim Surat (Promosi/Aduan/Temuan)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="keperluan3" name="keperluan" value="Permintaan Data/Informasi">
+                        <label for="pendapat_pelayanan3">Permintaan Data/Informasi</label>
                     </div>
                 </div>
 
-                <!-- Pertanyaan 2 -->
+                <!-- Pertanyaan 1 -->
                 <div class="form-group">
-                    <label>2. Bagaimana pemahaman Saudara tentang kemudahan prosedur pelayanan di unit ini?</label><br><br>
-                    <div class="radio-group">
-                        <input type="radio" id="pemahaman_prosedur1" name="pemahaman_prosedur" value="4" required>
+                    <label>1. 
+<div class="form-group">
+  <label class="block font-semibold mb-2">1. Bagaimana pendapat Saudara tentang kesesuaian persyaratan pelayanan dengan jenis pelayanannya?</label>
+  <div class="flex flex-wrap gap-4">
+    <label class="flex items-center gap-1"><input type="radio" name="pertanyaan1" value="Sangat Sesuai"> Sangat Sesuai</label>
+    <label class="flex items-center gap-1"><input type="radio" name="pertanyaan1" value="Sesuai"> Sesuai</label>
+    <label class="flex items-center gap-1"><input type="radio" name="pertanyaan1" value="Kurang Sesuai"> Kurang Sesuai</label>
+    <label class="flex items-center gap-1"><input type="radio" name="pertanyaan1" value="Tidak Sesuai"> Tidak Sesuai</label>
+  </div>
+</div>
+&nbsp;
                         <label for="pemahaman_prosedur1">Sangat Mudah</label>
-                  
-                        <input type="radio" id="pemahaman_prosedur2" name="pemahaman_prosedur" value="3">
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pemahaman_prosedur2" name="pemahaman_prosedur" value="3">&nbsp;
                         <label for="pemahaman_prosedur2">Mudah</label>
-               
-                        <input type="radio" id="pemahaman_prosedur3" name="pemahaman_prosedur" value="2">
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pemahaman_prosedur3" name="pemahaman_prosedur" value="2">&nbsp;
                         <label for="pemahaman_prosedur3">Kurang Mudah</label>
-                   
-                        <input type="radio" id="pemahaman_prosedur4" name="pemahaman_prosedur" value="1">
-                        <label for="pemahaman_prosedur4">Tidak Mudah</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pemahaman_prosedur4" name="pemahaman_prosedur" value="1">&nbsp;
+                        <label for="pemahaman_prosedur3">Kurang Mudah</label>
                     </div>
                 </div>
 
                 <!-- Pertanyaan 3 -->
                 <div class="form-group">
                     <label>3. Bagaimana pendapat Saudara tentang kecepatan waktu dalam memberikan pelayanan?</label><br><br>
-                    <div class="radio-group">
-                        <input type="radio" id="pendapat_kecepatan1" name="pendapat_kecepatan" value="4" required>
+                    <div class="content">
+                        <input type="radio" id="pendapat_kecepatan1" name="pendapat_kecepatan" value="4" required>&nbsp;
                         <label for="pendapat_kecepatan1">Sangat Cepat</label>
-                    
-                        <input type="radio" id="pendapat_kecepatan2" name="pendapat_kecepatan" value="3">
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_kecepatan2" name="pendapat_kecepatan" value="3">&nbsp;
                         <label for="pendapat_kecepatan2">Cepat</label>
-                   
-                        <input type="radio" id="pendapat_kecepatan3" name="pendapat_kecepatan" value="2">
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_kecepatan3" name="pendapat_kecepatan" value="2">&nbsp;
                         <label for="pendapat_kecepatan3">Kurang Cepat</label>
-                    
-                        <input type="radio" id="pendapat_kecepatan4" name="pendapat_kecepatan" value="1">
-                        <label for="pendapat_kecepatan4">Tidak Cepat</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_kecepatan4" name="pendapat_kecepatan" value="1">&nbsp;
+                        <label for="pendapat_kecepatan3">Tidak Cepat</label>
                     </div>
                 </div>
 
                 <!-- Pertanyaan 4 -->
                 <div class="form-group">
                     <label>4. Bagaimana pendapat Saudara tentang kewajaran biaya/tarif dalam pelayanan?</label><br><br>
-                    <div class="radio-group">
-                        <input type="radio" id="pendapat_biaya1" name="pendapat_biaya" value="4" required>
+                    <div class="content">
+                        <input type="radio" id="pendapat_biaya1" name="pendapat_biaya" value="4" required>&nbsp;
                         <label for="pendapat_biaya1">Gratis</label>
-                    
-                        <input type="radio" id="pendapat_biaya2" name="pendapat_biaya" value="3">
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_biaya2" name="pendapat_biaya" value="3">&nbsp;
                         <label for="pendapat_biaya2">Murah</label>
-                    
-                        <input type="radio" id="pendapat_biaya3" name="pendapat_biaya" value="2">
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_biaya3" name="pendapat_biaya" value="2">&nbsp;
                         <label for="pendapat_biaya3">Cukup Mahal</label>
-                    
-                        <input type="radio" id="pendapat_biaya4" name="pendapat_biaya" value="1">
-                        <label for="pendapat_biaya4">Sangat Mahal</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_biaya4" name="pendapat_biaya" value="1">&nbsp;
+                        <label for="pendapat_biaya3">Sangat Mahal</label>
                     </div>
                 </div>
 
                 <!-- Pertanyaan 5 -->
                 <div class="form-group">
-                    <label>5. Bagaimana pendapat Saudara tentang kesesuaian produk pelayanan antara yang tercantum dalam standar pelayanan dengan hasil yang diberikan?</label><br><br>
-                    <div class="radio-group">
-                        <input type="radio" id="pendapat_produk1" name="pendapat_produk" value="4" required>
+                    <label>5. Bagaimana pendapat Saudara tentang kesesuaian produk pelayanan antara yang tercantum dalam standar pelayanan dengan hasil yang diberikan?</label><br>
+                    <div class="content">
+                        <input type="radio" id="pendapat_produk1" name="pendapat_produk" value="4" required>&nbsp;
                         <label for="pendapat_produk1">Sangat Sesuai</label>
-                    
-                        <input type="radio" id="pendapat_produk2" name="pendapat_produk" value="3">
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_produk2" name="pendapat_produk" value="3">&nbsp;
                         <label for="pendapat_produk2">Sesuai</label>
-                    
-                        <input type="radio" id="pendapat_produk3" name="pendapat_produk" value="2">
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_produk3" name="pendapat_produk" value="2">&nbsp;
                         <label for="pendapat_produk3">Kurang Sesuai</label>
-                    
-                        <input type="radio" id="pendapat_produk4" name="pendapat_produk" value="1">
-                        <label for="pendapat_produk4">Tidak Sesuai</label>
+                    &nbsp; &nbsp; &nbsp;
+                        <input type="radio" id="pendapat_produk4" name="pendapat_produk" value="1">&nbsp;
+                        <label for="pendapat_produk3">Tidak Sesuai</label>
                     </div>
                 </div>
 
                 <!-- Pertanyaan 6 -->
                 <div class="form-group">
-                    <label>6. Bagaimana pendapat Saudara tentang kompetensi/kemampuan petugas dalam pelayanan?</label><br><br>
-                    <div class="radio-group">
-                        <input type="radio" id="pendapat_kompetensi1" name="pendapat_kompetensi" value="4" required>
+                    <label>6. Bagaimana pendapat Saudara tentang kompetensi/kemampuan petugas dalam pelayanan?</label><br>
+                    <div>
+                        <input type="radio" id="pendapat_kompetensi1" name="pendapat_kompetensi" value="Sangat Kompeten" required>
                         <label for="pendapat_kompetensi1">Sangat Kompeten</label>
-                    
-                        <input type="radio" id="pendapat_kompetensi2" name="pendapat_kompetensi" value="3">
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_kompetensi2" name="pendapat_kompetensi" value="Kompeten">
                         <label for="pendapat_kompetensi2">Kompeten</label>
-                    
-                        <input type="radio" id="pendapat_kompetensi3" name="pendapat_kompetensi" value="2">
-                        <label for="pendapat_kompetensi3">Kurang Kompeten</label>
-
-                        <input type="radio" id="pendapat_kompetensi4" name="pendapat_kompetensi" value="1">
-                        <label for="pendapat_kompetensi4">Tidak Kompeten</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_kompetensi3" name="pendapat_kompetensi" value="Tidak Kompeten">
+                        <label for="pendapat_kompetensi3">Tidak Kompeten</label>
                     </div>
                 </div>
 
                 <!-- Pertanyaan 7 -->
                 <div class="form-group">
-                    <label>7. Bagaimana pendapat Saudara tentang perilaku petugas dalam pelayanan terkait kesopanan dan keramahan?</label><br><br>
-                    <div class="radio-group">
-                        <input type="radio" id="pendapat_perilaku1" name="pendapat_perilaku" value="4" required>
-                        <label for="pendapat_perilaku1">Sangat Sopan dan Ramah</label>
-                    
-                        <input type="radio" id="pendapat_perilaku2" name="pendapat_perilaku" value="3">
-                        <label for="pendapat_perilaku2">Sopan dan Ramah</label>
-                    
-                        <input type="radio" id="pendapat_perilaku3" name="pendapat_perilaku" value="2">
-                        <label for="pendapat_perilaku3">Kurang Sopan dan Ramah</label>
-
-                        <input type="radio" id="pendapat_perilaku4" name="pendapat_perilaku" value="1">
-                        <label for="pendapat_perilaku4">Tidak Sopan dan Ramah</label>
+                    <label>7. Bagaimana pendapat Saudara tentang perilaku petugas dalam pelayanan terkait kesopanan dan keramahan?</label><br>
+                    <div>
+                        <input type="radio" id="pendapat_perilaku1" name="pendapat_perilaku" value="Sangat Baik" required>
+                        <label for="pendapat_perilaku1">Sangat Baik</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_perilaku2" name="pendapat_perilaku" value="Baik">
+                        <label for="pendapat_perilaku2">Baik</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_perilaku3" name="pendapat_perilaku" value="Buruk">
+                        <label for="pendapat_perilaku3">Buruk</label>
                     </div>
                 </div>
 
                 <!-- Pertanyaan 8 -->
                 <div class="form-group">
-                    <label>8. Bagaimana pendapat Saudara tentang kualitas sarana dan prasarana?</label><br><br>
-                    <div class="radio-group">
-                        <input type="radio" id="pendapat_kualitas1" name="pendapat_kualitas" value="4" required>
+                    <label>8. Bagaimana pendapat Saudara tentang kualitas sarana dan prasarana?</label><br>
+                    <div>
+                        <input type="radio" id="pendapat_kualitas1" name="pendapat_kualitas" value="Sangat Baik" required>
                         <label for="pendapat_kualitas1">Sangat Baik</label>
-                    
-                        <input type="radio" id="pendapat_kualitas2" name="pendapat_kualitas" value="3">
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_kualitas2" name="pendapat_kualitas" value="Baik">
                         <label for="pendapat_kualitas2">Baik</label>
-                    
-                        <input type="radio" id="pendapat_kualitas3" name="pendapat_kualitas" value="2">
-                        <label for="pendapat_kualitas3">Cukup</label>
-                        
-                        <input type="radio" id="pendapat_kualitas4" name="pendapat_kualitas" value="1">
-                        <label for="pendapat_kualitas4">Buruk</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_kualitas3" name="pendapat_kualitas" value="Buruk">
+                        <label for="pendapat_kualitas3">Buruk</label>
                     </div>
                 </div>
 
                 <!-- Pertanyaan 9 -->
                 <div class="form-group">
-                    <label>9. Bagaimana pendapat Saudara tentang penanganan pengaduan pengguna layanan?</label><br><br>
-                    <div class="radio-group">
-                        <input type="radio" id="pendapat_pengaduan1" name="pendapat_pengaduan" value="4" required>
-                        <label for="pendapat_pengaduan1">Dikelola dengan baik</label>
-                    
-                        <input type="radio" id="pendapat_pengaduan2" name="pendapat_pengaduan" value="3">
-                        <label for="pendapat_pengaduan2">Berfungsi tapi kurang</label>
-                    
-                        <input type="radio" id="pendapat_pengaduan3" name="pendapat_pengaduan" value="2">
-                        <label for="pendapat_pengaduan3">Ada tetapi tidak berfungsi</label>
-
-                        <input type="radio" id="pendapat_pengaduan4" name="pendapat_pengaduan" value="1">
-                        <label for="pendapat_pengaduan4">Tidak Ada</label>
+                    <label>9. Bagaimana pendapat Saudara tentang penanganan pengaduan pengguna layanan?</label><br>
+                    <div>
+                        <input type="radio" id="pendapat_pengaduan1" name="pendapat_pengaduan" value="Sangat Memuaskan" required>
+                        <label for="pendapat_pengaduan1">Sangat Memuaskan</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_pengaduan2" name="pendapat_pengaduan" value="Memuaskan">
+                        <label for="pendapat_pengaduan2">Memuaskan</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="pendapat_pengaduan3" name="pendapat_pengaduan" value="Tidak Memuaskan">
+                        <label for="pendapat_pengaduan3">Tidak Memuaskan</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="kritik_saran">10. Kritik dan Saran Perbaikan</label>
+                    <label for="kritik_saran">Kritik dan Saran Perbaikan</label>
                     <textarea class="form-control" id="kritik_saran" name="kritik_saran"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Kirim</button>
