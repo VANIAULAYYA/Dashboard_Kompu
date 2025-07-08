@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KOMPU BBWS BRANTAS</title>
+    <title>LAMPU BRANTAS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -98,8 +98,8 @@
     <!-- Hero Section -->
     <section class="hero-section flex items-center justify-center text-white">
         <div class="text-center px-4 fade-in">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">SELAMAT DATANG</h1>
-            <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8">KOMUNIKASI PUBLIK BBWS BRANTAS</p>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">- LAMPU BRANTAS -</h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8">LAYANAN KOMUNIKASI PUBLIK BBWS BRANTAS</p>
             
         </div>
     </section>
@@ -118,8 +118,7 @@
                     <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
                         <i class="fas fa-chalkboard-teacher text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Layanan Informasi</h3>
-                    <p class="text-gray-600">Our optimized infrastructure ensures ultra-fast performance and minimal latency for all your operations.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Layanan Kepuasan Masyarakat</h3>
                 </div>
                 
                 <!-- Feature 2 -->
@@ -127,8 +126,7 @@
                     <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
                         <i class="fas fa-envelope-open-text text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Informasi Publik</h3>
-                    <p class="text-gray-600">Enterprise-level security protocols protect your data with end-to-end encryption and regular audits.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Layanan Permintaan Data</h3>
                 </div>
                 
                 <!-- Feature 3 -->
@@ -136,8 +134,8 @@
                     <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
                         <i class="fas fa-bullhorn text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Publikasi</h3>
-                    <p class="text-gray-600">Gain valuable insights with our comprehensive analytics dashboard that updates in real-time.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Layanan Pengaduan</h3>
+                    
                 </div>
             
             </div>

@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
+                <a href="<?php echo base_url('Landing'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
                 <a href="#features" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
                 <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
                 <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Aduan</a>
@@ -101,7 +101,7 @@
     <!-- Mobile menu -->
     <div id="mobile-menu" class="md:hidden hidden bg-white py-4 px-6 shadow-lg">
         <div class="flex flex-col space-y-4">
-            <a href="#" class="text-gray-700 hover:text-orange-600 transition">Home</a>
+            <a href="<?php echo base_url('Landing'); ?>" class="text-gray-700 hover:text-orange-600 transition">Home</a>
             <a href="#features" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
             <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
             <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Aduan</a>
