@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LAMPU BRANTAS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
@@ -19,11 +20,30 @@
         }
         
         .hero-section {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('<?php echo base_url();?>assets/Pictures/kantor.png');
-            background-size: cover;
-            background-position: center;
+            /* height: 100vh; */
+            background: url('<?php echo base_url();?>assets/Pictures/Banner.png');
+            background-size: cover;       /* Ensures the image covers the whole section */
+            background-position: center;  /* Keeps the image centered */
+            background-repeat: no-repeat; /* Prevents image from repeating */
+            height: 100vh;                /* Full viewport height */
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;                 /* Or another color that contrasts the background */
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 60vh;
+                padding: 1rem;
+            }
+        }
+
+        .hero-content h1 {
+            font-size: 1.8rem;
         }
         
         .card-hover:hover {
@@ -72,8 +92,9 @@
                     <a href="#" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
                     <a href="#features" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
                     <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
-                    <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Aduan</a>
+                    <!-- <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Aduan</a> -->
                     <!-- <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full hover:shadow-lg transition">Masuk</a> -->
+                     <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Laporan</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="text-gray-700 hover:text-orange-600">
@@ -89,8 +110,8 @@
                 <a href="#" class="text-gray-700 hover:text-orange-600 transition">Home</a>
                 <a href="#features" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
                 <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
-                <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Aduan</a>
-                <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full text-center hover:shadow-lg transition">Masuk</a>
+                <!-- <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Aduan</a> -->
+                <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Laporan</a>
             </div>
         </div>
     </nav>
@@ -98,8 +119,8 @@
     <!-- Hero Section -->
     <section class="hero-section flex items-center justify-center text-white">
         <div class="text-center px-4 fade-in">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6">- LAMPU BRANTAS -</h1>
-            <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8">LAYANAN KOMUNIKASI PUBLIK BBWS BRANTAS</p>
+        <!-- <h1 class="text-4xl md:text-6xl font-bold mb-6" style="font-family: 'Georgia', sans-serif;">LAMPU PETROMAK</h1>
+            <h2 class="md:text-4xl font-bold" style="color: orange;">BBWS BRANTAS</h2> -->
             
         </div>
     </section>
@@ -112,7 +133,7 @@
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Balai Besar Wilayah Sungai Brantas</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
                 <!-- Feature 1 -->
                 <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
                     <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
@@ -137,7 +158,14 @@
                     <h3 class="text-xl font-semibold text-gray-800 mb-4">Layanan Pengaduan</h3>
                     
                 </div>
-            
+                <!-- Feature 4 -->
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition duration-300">
+                    <div class="gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                        <i class="	fa fa-desktop text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Layanan Informasi</h3>
+                    
+                </div>
             </div>
         </div>
     </section>
@@ -368,5 +396,6 @@
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>

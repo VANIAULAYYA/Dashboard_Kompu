@@ -32,9 +32,7 @@
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- CSS Files -->
   <link id="pagestyle" href="<?= base_url();?>assets/Template/assets/css/soft-ui-dashboard.css?v=1.2.0" rel="stylesheet" />
-  <!-- Nepcha Analytics (nepcha.com) -->
-  <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
-  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -992,7 +990,7 @@
     <!-- End Navbar -->
     <div class="container-fluid py-4">
       <div class="row">
-        <h2 class="mb-0">Selamat Datang Admin</h2>
+        <h2 class="mb-0">Dashboard Laporan Survey Kepuasan Masyarakat</h2>
         <p class="mb-4 ms-1">Tetap Semangat dan Selalu Semangat Setiap Hari</p>
         <div>
           <div class="row">
@@ -1002,9 +1000,9 @@
                   <div class="row">
                     <div class="col-8">
                       <div class="numbers">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Responden</p>
+                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Responden Masyarakat</p>
                         <h3 class="font-weight-bolder mb-0">
-                          215
+                          215 Orang
                         </h3>
                       </div>
                     </div>
@@ -1021,7 +1019,7 @@
                   <div class="row">
                     <div class="col-8">
                       <div class="numbers">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Jenis Kelamin Responden</p>
+                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Jenis Kelamin Responden Masyarakat</p>
                         <h3 class="font-weight-bolder mb-0">
                           Pria <span class="text-success text-md font-weight-bolder">120</span> -
                           Wanita <span class="text-danger text-md font-weight-bolder">80</span>
@@ -1043,7 +1041,7 @@
                   <div class="row">
                     <div class="col-8">
                       <div class="numbers">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Grade Mutu Pelayanan</p>
+                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Grade Mutu Pelayanan Kepuasan Masyarakat (PKM)</p>
                         <h3 class="font-weight-bolder mb-0">
                           B
                           <span class="text-success text-sm font-weight-bolder">BAIK</span>
@@ -1063,7 +1061,7 @@
                   <div class="row">
                     <div class="col-8">
                       <div class="numbers">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Nilai IKM</p>
+                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Nilai Indeks Kepuasan Masyarakat (IKM)</p>
                         <h3 class="font-weight-bolder mb-0">
                           3,16
                           <span class="text-success text-sm font-weight-bolder">78,88%</span>
@@ -1090,10 +1088,178 @@
             <!--begin::Row-->
             <div class="row">
               <div class="col-md-6">
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <h4 class="card-title">Unsur Survey Kepuasan Masyarakat (SKM)</h4>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body p-0">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>Unsur SKM</th>
+                          <th>Nilai</th>
+                          <th style="width: 40px">Mutu Pelayanan</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="align-middle">
+                          <td>1.</td>
+                          <td>Persyaratan</td>
+                          <td>3,14</td>
+                          <td><span class="badge text-bg-warning">B</span></td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td>2.</td>
+                          <td>Prosedur</td>
+                          <td>
+                            3,04
+                          </td>
+                          <td><span class="badge text-bg-primary">C</span></td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td>3.</td>
+                          <td>Kecepatan Waktu</td>
+                          <td>2,84</td>
+                          <td><span class="badge text-bg-primary">C</span></td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td>4.</td>
+                          <td>Biaya/Tarif</td>
+                          <td>3,58</td>
+                          <td><span class="badge text-bg-success">A</span></td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td>5.</td>
+                          <td>Kesesuaian Produk Pelayanan</td>
+                          <td>3,10</td>
+                          <td><span class="badge text-bg-warning">B</span></td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td>6.</td>
+                          <td>Kompetensi Petugas</td>
+                          <td>3,15</td>
+                          <td><span class="badge text-bg-warning">B</span></td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td>7.</td>
+                          <td>Perilaku Petugas</td>
+                          <td>3,18</td>
+                          <td><span class="badge text-bg-warning">B</span></td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td>8.</td>
+                          <td>Penanganan Pengaduan</td>
+                          <td>2,88</td>
+                          <td><span class="badge text-bg-primary">C</span></td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td>9.</td>
+                          <td>Kualitas Sarana Prasarana</td>
+                          <td>3,48</td>
+                          <td><span class="badge text-bg-warning">B</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <div class="col-md-6">
+                <!-- Chart Start -->
+                 <div class=" mt-4 mt-lg-0">
+                  <div class="card h-100">
+                      <div class="card-header">
+                    <h4 class="card-title">Grafik Survey Kepuasan Masyarakat (SKM)</h4>
+                  </div>
+                    <div class="card-body p-3">
+                      <div class="row">
+                        <div class="col-lg-5 col-12 text-center">
+                          <div class="chart mt-5">
+                            <canvas id="myDoughnutChart" width="400" height="400"></canvas>
+                          </div>
+                        </div>
+                        <div class="col-lg-7 col-12">
+                          <div class="table-responsive">
+                            <table class="table align-items-center mb-0">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div class="d-flex px-2 py-1">
+                                      <div>
+                                        <span class="badge text-bg-success">A</span>&nbsp;&nbsp;&nbsp;
+                                      </div>
+                                      <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">Sangat Sesuai</h6>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> 11% </span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="d-flex px-2 py-1">
+                                      <div>
+                                        <span class="badge text-bg-warning">B</span>&nbsp;&nbsp;&nbsp;
+                                      </div>
+                                      <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">Sesuai</h6>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> 56% </span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="d-flex px-2 py-1">
+                                      <div>
+                                        <span class="badge text-bg-primary">C</span>&nbsp;&nbsp;&nbsp;
+                                      </div>
+                                      <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">Kurang Sesuai</h6>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> 33% </span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="d-flex px-2 py-1">
+                                      <div>
+                                        <span class="badge text-bg-danger">D</span>&nbsp;&nbsp;&nbsp;
+                                      </div>
+                                      <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">Tidak Sesuai</h6>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> 0% </span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Chart End -->
+              </div>
+              <div class="col-md-6">
                 <!-- /.card -->
                 <div class="card mb-4">
                   <div class="card-header">
-                    <h4 class="card-title">Jenis Keperluan</h4>
+                    <h4 class="card-title">Jenis Keperluan Kunjungan Masyarakat</h4>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body p-0">
@@ -1166,60 +1332,8 @@
                 <!-- /.card -->
               </div>
               <!-- /.col -->
-              <div class="col-md-6">
-                <div class="card mb-4">
-                  <div class="card-header">
-                    <h4 class="card-title">Unsur SKM</h4>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body p-0">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th style="width: 10px">#</th>
-                          <th>Unsur SKM</th>
-                          <th>Nilai</th>
-                          <th style="width: 40px">Mutu Pelayanan</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="align-middle">
-                          <td>1.</td>
-                          <td>Persyaratan</td>
-                          <td>3,14</td>
-                          <td><span class="badge text-bg-warning">B</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>2.</td>
-                          <td>Prosedur</td>
-                          <td>
-                            3,04
-                          </td>
-                          <td><span class="badge text-bg-primary">C</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>3.</td>
-                          <td>Kecepatan Waktu</td>
-                          <td>2,84</td>
-                          <td><span class="badge text-bg-primary">C</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>4.</td>
-                          <td>Biaya/Tarif</td>
-                          <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar text-bg-success" style="width: 90%"></div>
-                            </div>
-                          </td>
-                          <td><span class="badge text-bg-success">90%</span></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-              </div>
+              
+              
               <!-- /.col -->
             </div>
             <!--end::Row-->
@@ -1354,290 +1468,37 @@
   <script src="<?= base_url();?>assets/Template/assets/js/plugins/threejs.js"></script>
   <script src="<?= base_url();?>assets/Template/assets/js/plugins/orbit-controls.js"></script>
   <script>
-    var ctx = document.getElementById("chart-bars").getContext("2d");
-
-    new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Sales",
-          tension: 0.4,
-          borderWidth: 0,
-          borderRadius: 4,
-          borderSkipped: false,
-          backgroundColor: "#fff",
-          data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
-          maxBarThickness: 6
-        }, ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
+        const ctx = document.getElementById('myDoughnutChart').getContext('2d');
+        const myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    'Sangat Sesuai',
+                    'Sesuai',
+                    'Kurang Sesuai',
+                    'Tidak Sesuai',
+                ],
+                datasets: [{
+                    data: [11, 56, 33, 0 ],
+                    backgroundColor: [
+                        '#00ff0f',
+                        '#ffea62',
+                        '#ffb600',
+                        '#ff5900'
+                    ],
+                    hoverOffset: 4
+                }]
             },
-            ticks: {
-              suggestedMin: 0,
-              suggestedMax: 500,
-              beginAtZero: true,
-              padding: 15,
-              font: {
-                size: 14,
-                family: "Inter",
-                style: 'normal',
-                lineHeight: 2
-              },
-              color: "#fff"
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                }
             },
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false
-            },
-            ticks: {
-              display: false
-            },
-          },
-        },
-      },
-    });
-
-
-    var ctx2 = document.getElementById("chart-line").getContext("2d");
-
-    var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, 'rgba(203,108,12,0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(203,108,12,0)');
-    gradientStroke1.addColorStop(0, 'rgba(203,108,12,0)'); //orange colors
-
-    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke2.addColorStop(1, 'rgba(2,2,2,0.2)');
-    gradientStroke2.addColorStop(0.2, 'rgba(2,2,2,0)');
-    gradientStroke2.addColorStop(0, 'rgba(2,2,2,0)'); //orange colors
-
-    new Chart(ctx2, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-            label: "Mobile apps",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            borderColor: "#f97316",
-            borderWidth: 3,
-            backgroundColor: gradientStroke1,
-            fill: true,
-            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-            maxBarThickness: 6
-
-          },
-          {
-            label: "Websites",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            borderColor: "#3A416F",
-            borderWidth: 3,
-            backgroundColor: gradientStroke2,
-            fill: true,
-            data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-            maxBarThickness: 6
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#b2b9bf',
-              font: {
-                size: 11,
-                family: "Inter",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#b2b9bf',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Inter",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
-
-
-    (function() {
-      const container = document.getElementById("globe");
-      const canvas = container.getElementsByTagName("canvas")[0];
-
-      const globeRadius = 100;
-      const globeWidth = 4098 / 2;
-      const globeHeight = 1968 / 2;
-
-      function convertFlatCoordsToSphereCoords(x, y) {
-        let latitude = ((x - globeWidth) / globeWidth) * -180;
-        let longitude = ((y - globeHeight) / globeHeight) * -90;
-        latitude = (latitude * Math.PI) / 180;
-        longitude = (longitude * Math.PI) / 180;
-        const radius = Math.cos(longitude) * globeRadius;
-
-        return {
-          x: Math.cos(latitude) * radius,
-          y: Math.sin(longitude) * globeRadius,
-          z: Math.sin(latitude) * radius
-        };
-      }
-
-      function makeMagic(points) {
-        const {
-          width,
-          height
-        } = container.getBoundingClientRect();
-
-        // 1. Setup scene
-        const scene = new THREE.Scene();
-        // 2. Setup camera
-        const camera = new THREE.PerspectiveCamera(45, width / height);
-        // 3. Setup renderer
-        const renderer = new THREE.WebGLRenderer({
-          canvas,
-          antialias: true
         });
-        renderer.setSize(width, height);
-        // 4. Add points to canvas
-        // - Single geometry to contain all points.
-        const mergedGeometry = new THREE.Geometry();
-        // - Material that the dots will be made of.
-        const pointGeometry = new THREE.SphereGeometry(0.5, 1, 1);
-        const pointMaterial = new THREE.MeshBasicMaterial({
-          color: "#a1a1aa",
-        });
-
-        for (let point of points) {
-          const {
-            x,
-            y,
-            z
-          } = convertFlatCoordsToSphereCoords(
-            point.x,
-            point.y,
-            width,
-            height
-          );
-
-          if (x && y && z) {
-            pointGeometry.translate(x, y, z);
-            mergedGeometry.merge(pointGeometry);
-            pointGeometry.translate(-x, -y, -z);
-          }
-        }
-
-        const globeShape = new THREE.Mesh(mergedGeometry, pointMaterial);
-        scene.add(globeShape);
-
-        container.classList.add("peekaboo");
-
-        // Setup orbital controls
-        camera.orbitControls = new THREE.OrbitControls(camera, canvas);
-        camera.orbitControls.enableKeys = false;
-        camera.orbitControls.enablePan = false;
-        camera.orbitControls.enableZoom = false;
-        camera.orbitControls.enableDamping = false;
-        camera.orbitControls.enableRotate = true;
-        camera.orbitControls.autoRotate = true;
-        camera.position.z = -265;
-
-        function animate() {
-          // orbitControls.autoRotate is enabled so orbitControls.update
-          // must be called inside animation loop.
-          camera.orbitControls.update();
-          requestAnimationFrame(animate);
-          renderer.render(scene, camera);
-        }
-        animate();
-      }
-
-      function hasWebGL() {
-        const gl =
-          canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-        if (gl && gl instanceof WebGLRenderingContext) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-
-      function init() {
-        if (hasWebGL()) {
-          window
-          window.fetch("<?= base_url();?>assets/Template/assets/js/points.json")
-            .then(response => response.json())
-            .then(data => {
-              makeMagic(data.points);
-            });
-        }
-      }
-      init();
-    })();
-  </script>
+    </script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
