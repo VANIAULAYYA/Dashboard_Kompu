@@ -55,6 +55,16 @@ class Landing extends CI_Controller {
         // echo "Data berhasil dikirim!";
         redirect('Landing');
     }
+
+    public function tentang()
+    {
+        $data = array(
+            'page_title' => 'Tentang Kami - BBWS Brantas',
+            'active_menu' => 'tentang'
+        );
+        
+        $this->load->view('v_about', $data);
+    }
     
     // public function dashboard()
     // {
