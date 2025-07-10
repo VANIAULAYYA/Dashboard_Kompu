@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $page_title; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
     <style>
         :root {
             --primary: #3498db;
@@ -49,18 +50,34 @@
         .feature-card {
             border: none;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
         }
         
         .feature-card:hover {
             transform: translateY(-5px);
         }
+
+        .text-primary {
+            color: var(--primary);
+        }
         
         footer {
             background-color: var(--secondary);
             color: white;
             padding: 30px 0;
+        }
+
+        .social-button {
+        width: 100px; /* Set a fixed width for uniformity */
+        color: gray; /* Default color */
+        text-align: center; /* Center text */
+        text-decoration: none; /* Remove underline */
+        transition: color 0.3s; /* Transition for hover effect */
+        }
+        
+        .social-button:hover {
+            color: orange; /* Change color on hover */
         }
     </style>
 </head>
@@ -107,29 +124,47 @@
             <div class="col-lg-8 mx-auto">
                 <section class="mb-5">
                     <h2 class="section-title">Tentang Lampu Petromak</h2>
-                    <p>Balai Besar Wilayah Sungai Brantas (BBWS Brantas) merupakan unit pelaksana teknis dari Direktorat Jenderal Sumber Daya Air Kementerian Pekerjaan Umum dan Perumahan Rakyat yang bertanggung jawab dalam pengelolaan sumber daya air di Wilayah Sungai Brantas.</p>
-                    <p>Wilayah Sungai Brantas merupakan salah satu wilayah sungai strategis nasional yang terletak di Provinsi Jawa Timur dengan luas sekitar 11.800 km2 dan mencakup 15 kabupaten/kota.</p>
+                    <p style="text-align: justify;"><b>LAMPU PETROMAK BBWS BRANTAS</b> merupakan inovasi dari layanan komunikasi publik yang dikembangkan oleh Balai Besar Wilayah Sungai (BBWS) Brantas untuk menjawab kebutuhan informasi yang cepat, transparan, dan mudah diakses oleh masyarakat.</p>
+                    <p style="text-align: justify;"><b>LAMPU: LAyanan koMunikasi PUblik</b> sebagai sistem layanan yang dirancang untuk memperkuat fungsi komunikasi publik di lingkungan BBWS Brantas, agar informasi terkait kebijakan, program, kegiatan, hingga respons pengaduan dapat tersampaikan secara efektif.</p>
+                    <p style="text-align: justify;"><b>PETROMAK: dengan PElayanan yang TRansparan dan Optimal untuk MAsyaraKat</b> sebagai komitmen BBWS Brantas dalam menerangi ruang informasi publik—seperti halnya lampu petromak yang menyala terang di tengah kegelapan—sehingga masyarakat dapat melihat, memahami, dan mengakses segala bentuk layanan informasi secara jelas.</p>
                 </section>
 
                 <section class="mb-5">
-                    <h2 class="section-title">Visi dan Misi</h2>
-                    <div class="row">
-                        <div class="col-md-6 mb-4">
+                    <h2 class="section-title">Apa Sih Kepanjangan LAMPU PETROMAK?</h2>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
                             <div class="card feature-card h-100">
                                 <div class="card-body">
-                                    <h3 class="h5">Visi</h3>
-                                    <p>Menjadi institusi pengelola sumber daya air yang profesional untuk mewujudkan ketahanan air dan kemanfaatan air yang berkelanjutan di Wilayah Sungai Brantas.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="card feature-card h-100">
-                                <div class="card-body">
-                                    <h3 class="h5">Misi</h3>
-                                    <ul>
-                                        <li>Melaksanakan pengelolaan sumber daya air secara terpadu</li>
-                                        <li>Mengoptimalkan pemanfaatan sumber daya air</li>
-                                        <li>Meningkatkan kualitas pelayanan kepada masyarakat</li>
+                                    <h2 class=" text-center">LAMPU PETROMAK</h2>
+                                    <ul class="list-unstyled">
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="fas fa-lightbulb text-primary me-2" style="font-size: 1.5rem;"></i>
+                                            <span><strong>LA</strong> = LAyanan</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="fas fa-comments text-primary me-2" style="font-size: 1.5rem;"></i>
+                                            <span><strong>M</strong> = koMunikasi</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="fas fa-users text-primary me-2" style="font-size: 1.5rem;"></i>
+                                            <span><strong>PU</strong> = PUblik</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="fas fa-hands-helping text-primary me-2" style="font-size: 1.5rem;"></i>
+                                            <span><strong>PE</strong> = dengan PElayanan</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="fas fa-check-circle text-primary me-2" style="font-size: 1.5rem;"></i>
+                                            <span><strong>TR</strong> = TRansparan dan</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="fas fa-star text-primary me-2" style="font-size: 1.5rem;"></i>
+                                            <span><strong>O</strong> = Optimal</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="fas fa-users-cog text-primary me-2" style="font-size: 1.5rem;"></i>
+                                            <span><strong>MAK</strong> = untuk MAsyaraKat</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -137,20 +172,27 @@
                     </div>
                 </section>
 
-                <section class="mb-5">
-                    <h2 class="section-title">Tugas dan Fungsi</h2>
-                    <div class="card feature-card">
-                        <div class="card-body">
-                            <p>BBWS Brantas mempunyai tugas melaksanakan pengelolaan sumber daya air di Wilayah Sungai Brantas yang meliputi:</p>
-                            <ul>
-                                <li>Perencanaan pengelolaan sumber daya air</li>
-                                <li>Pelaksanaan konstruksi dan operasi pemeliharaan</li>
-                                <li>Pemantauan, evaluasi, dan pelaporan</li>
-                                <li>Pelaksanaan administrasi dan koordinasi</li>
-                            </ul>
+                    <section class="mb-5">
+                        <h2 class="section-title text-center">Media Sosial</h2>
+                        <div class="text-center">
+                            <div class="card feature-card">
+                                <div class="card-body">
+                                    <a href="#" class="social-button mx-3">
+                                        <i class="fab fa-instagram fa-3x"></i><br>
+                                        Instagram
+                                    </a>
+                                    <a href="#" class="social-button mx-3">
+                                        <i class="fab fa-youtube fa-3x"></i><br>
+                                        YouTube
+                                    </a>
+                                    <a href="#" class="social-button mx-3">
+                                        <i class="fab fa-whatsapp fa-3x"></i><br>
+                                        WhatsApp
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
             </div>
         </div>
     </div>
