@@ -43,7 +43,7 @@
 <body class="text-center">
     <div class="login-container">
         <form class="form-signin" action="<?php echo site_url('Auth/login_process'); ?>" method="post">
-            <img class="mb-4" src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> <h1 class="h3 mb-3 fw-normal">Silakan Login</h1>
+            <img class="mb-4" src="<?= base_url()?>assets/Pictures/Logo_PU_(RGB).jpg" alt="" width="72" height="72"> <h1 class="h3 mb-3 fw-normal">Silakan Login</h1>
 
             <?php echo $this->session->flashdata('message'); ?>
 

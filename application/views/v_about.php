@@ -79,6 +79,15 @@
         .social-button:hover {
             color: orange; /* Change color on hover */
         }
+
+        .card-body {
+            display: flex;
+            justify-content: center; /* Centers the content horizontally */
+            align-items: center; /* Centers the content vertically (if needed) */
+        }
+        table {
+            margin: 0 auto; /* This ensures the table itself is centered within its container */
+        }
     </style>
 </head>
 <body>
@@ -97,10 +106,10 @@
                         <a class="nav-link <?php echo $active_menu == 'home' ? 'active' : ''; ?>" href="<?php echo base_url(); ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('about'); ?>">Tentang</a>
+                        <a class="nav-link <?php echo $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/about'); ?>">Tentang</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('buku_tamu'); ?>">Buku Tamu</a>
+                        <a class="nav-link" href="<?php echo base_url('Landing/buku_tamu'); ?>">Buku Tamu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url('laporan'); ?>">Laporan</a>
@@ -135,7 +144,7 @@
                         <div class="col-lg-8">
                             <div class="card feature-card h-100">
                                 <div class="card-body">
-                                    <h2 class=" text-center">LAMPU PETROMAK</h2>
+                                    <h2 class=" text-center" style="color:#3498db; font-sytle:bold;">LAMPU<br>PETROMAK</h2>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <ul class="list-unstyled">
                                         <li class="d-flex align-items-center mb-3">
                                             <i class="fas fa-lightbulb text-primary me-2" style="font-size: 1.5rem;"></i>
@@ -173,22 +182,34 @@
                 </section>
 
                     <section class="mb-5">
-                        <h2 class="section-title text-center">Media Sosial</h2>
+                        <h2 class="section-title text-left">Media Sosial</h2>
                         <div class="text-center">
                             <div class="card feature-card">
-                                <div class="card-body">
-                                    <a href="#" class="social-button mx-3">
-                                        <i class="fab fa-instagram fa-3x"></i><br>
-                                        Instagram
-                                    </a>
-                                    <a href="#" class="social-button mx-3">
-                                        <i class="fab fa-youtube fa-3x"></i><br>
-                                        YouTube
-                                    </a>
-                                    <a href="#" class="social-button mx-3">
-                                        <i class="fab fa-whatsapp fa-3x"></i><br>
-                                        WhatsApp
-                                    </a>
+                                <div class="card-body align-center">
+                                    <table style="width: 100%; text-align: center;">
+                                        <tr>
+                                            <td>
+                                                <a href="https://www.instagram.com/pu_sda_brantas" class="social-button mx-3">
+                                                    <i class="fab fa-instagram fa-3x"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="https://www.youtube.com/@sisdabrantas" class="social-button mx-3">
+                                                    <i class="fab fa-youtube fa-3x"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="social-button mx-3">
+                                                    <i class="fab fa-whatsapp fa-3x"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Instagram</b></td>
+                                            <td><b>Youtube</b></td>
+                                            <td><b>Whatsapp</b></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +222,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4 mb-md-0">
-                    <h3 class="h5">Kontak Kami</h3>
+                    <h3 class="h5">Alamat</h3>
                     <p>Jl. Raya Menganti No. 312<br>Surabaya, Jawa Timur</p>
                 </div>
                 <div class="col-md-4 mb-4 mb-md-0">
@@ -211,12 +232,6 @@
                         <li><a href="<?php echo base_url('about'); ?>" class="text-white">Tentang</a></li>
                         <li><a href="<?php echo base_url('buku_tamu'); ?>" class="text-white">Buku Tamu</a></li>
                     </ul>
-                </div>
-                <div class="col-md-4">
-                    <h3 class="h5">Sosial Media</h3>
-                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <hr class="my-4">
