@@ -144,7 +144,7 @@
                         <div class="col-lg-8">
                             <div class="card feature-card h-100">
                                 <div class="card-body">
-                                    <h2 class=" text-center" style="color:#3498db; font-sytle:bold;">LAMPU<br>PETROMAK</h2>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h2 class=" text-center" style="color:#3498db;">LAMPU<br>PETROMAK</h2>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <ul class="list-unstyled">
                                         <li class="d-flex align-items-center mb-3">
                                             <i class="fas fa-lightbulb text-primary me-2" style="font-size: 1.5rem;"></i>
