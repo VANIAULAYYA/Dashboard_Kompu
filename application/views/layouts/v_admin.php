@@ -20,7 +20,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url(); ?>assets/Template/assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="<?= base_url(); ?>assets/Pictures/Logo_PU_(RGB).jpg">
   <title>
-    Dashboard Kompu
+    Dashboard Lampu Petromak
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
@@ -40,8 +40,8 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" <?php echo base_url('Admin'); ?>" target="_blank">
-        <img src="<?= base_url();?>assets/Pictures/Logo_PU_(RGB).jpg" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">Dashboard Kompu</span>
+        <img src="<?= base_url();?>assets/Pictures/Logo_PU_(RGB).jpg" class="navbar-brand-img h-200" alt="main_logo">
+        <span class="ms-1 font-weight-bold">Lampu Petromak</span> <br>
       </a>
     </div>
     <hr class="horizontal dark mt-0">

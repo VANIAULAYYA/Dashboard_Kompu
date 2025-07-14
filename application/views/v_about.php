@@ -189,6 +189,11 @@
                                     <table style="width: 100%; text-align: center;">
                                         <tr>
                                             <td>
+                                                <a href="https://www.sda.pu.go.id/balai/bbwsbrantas" class="social-button mx-3">
+                                                    <i class="fas fa-globe-asia fa-3x"></i>
+                                                </a>
+                                            </td>
+                                            <td>
                                                 <a href="https://www.instagram.com/pu_sda_brantas" class="social-button mx-3">
                                                     <i class="fab fa-instagram fa-3x"></i>
                                                 </a>
@@ -205,6 +210,7 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td><b>Website</b></td>
                                             <td><b>Instagram</b></td>
                                             <td><b>Youtube</b></td>
                                             <td><b>Whatsapp</b></td>
@@ -221,17 +227,9 @@
     <footer class="text-center">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 mb-4 mb-md-0">
+                <div>
                     <h3 class="h5">Alamat</h3>
                     <p>Jl. Raya Menganti No. 312<br>Surabaya, Jawa Timur</p>
-                </div>
-                <div class="col-md-4 mb-4 mb-md-0">
-                    <h3 class="h5">Tautan Cepat</h3>
-                    <ul class="list-unstyled">
-                        <li><a href="<?php echo base_url(); ?>" class="text-white">Home</a></li>
-                        <li><a href="<?php echo base_url('about'); ?>" class="text-white">Tentang</a></li>
-                        <li><a href="<?php echo base_url('buku_tamu'); ?>" class="text-white">Buku Tamu</a></li>
-                    </ul>
                 </div>
             </div>
             <hr class="my-4">
