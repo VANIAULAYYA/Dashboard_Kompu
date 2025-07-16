@@ -112,7 +112,7 @@
                         <a class="nav-link" href="<?php echo base_url('Landing/buku_tamu'); ?>">Buku Tamu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('laporan'); ?>">Laporan</a>
+                        <a class="nav-link" href="<?php echo base_url('Landing/laporan'); ?>">Laporan</a>
                     </li>
                 </ul>
             </div>
