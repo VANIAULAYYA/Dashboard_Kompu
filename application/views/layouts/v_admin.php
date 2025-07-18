@@ -48,7 +48,7 @@
         <div class="collapse navbar-collapse  w-auto h-auto">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a href="<?php echo base_url('Admin'); ?>" class="btn btn-primary btn-lg active">
+          <a href="<?php echo base_url('Admin'); ?>" class="btn btn-primary btn-lg">
               <i class="fas fa-house-user" aria-hidden="true"></i>
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
@@ -66,8 +66,8 @@
           </a>
           <div class="collapse " id="dashboardsExamples">
             <ul class="nav ms-4 ps-3">
-              <li class="nav-item active">
-                <a class="nav-link active" href="../../pages/dashboards/default.html">
+              <li class="nav-item">
+                <a class="nav-link" href="../../pages/dashboards/default.html">
                   <span class="sidenav-mini-icon"> R </span>
                   <span class="sidenav-normal"> Rekap Buku Tamu </span>
                 </a>

@@ -63,7 +63,7 @@ class Landing extends CI_Controller {
             'active_menu' => 'tentang'
         );
         
-        $this->load->view('v_about', $data);
+        $this->load->view('v_about_v2', $data);
     }
     
     // public function dashboard()
