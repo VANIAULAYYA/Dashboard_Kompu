@@ -19,7 +19,25 @@ class Admin extends CI_Controller {
             'aduan_proses' => $this->M_admin->count_aduan_proses(),
             'content' => 'admin/dashboard'
         ];
-        $this->load->view('layouts/v_admin', $data);
+        $this->load->view('admin/v_admin', $data);
+    }
+
+    public function rekap_tamu() {
+        $data = [
+            'title' => 'Kelola Buku Tamu',
+            'tamu' => $this->M_admin->get_tamu(),
+            'content' => 'admin/buku_tamu'
+        ];
+        $this->load->view('admin/v_buku_tamu_2',$data);
+    }
+
+    public function layanan_kepuasan() {
+        $data = [
+            'title' => 'Kelola Buku Tamu',
+            'tamu' => $this->M_admin->get_tamu(),
+            'content' => 'admin/buku_tamu'
+        ];
+        $this->load->view('admin/v_layanan_kepuasan',$data);
     }
 
     public function buku_tamu() {
@@ -28,7 +46,7 @@ class Admin extends CI_Controller {
             'tamu' => $this->M_admin->get_tamu(),
             'content' => 'admin/buku_tamu'
         ];
-        $this->load->view('layouts/v_admin', $data);
+        $this->load->view('admin/v_admin', $data);
     }
 
     public function aduan() {
@@ -37,7 +55,7 @@ class Admin extends CI_Controller {
             'aduan' => $this->M_admin->get_aduan(),
             'content' => 'admin/aduan'
         ];
-        $this->load->view('layouts/v_admin', $data);
+        $this->load->view('admin/v_admin', $data);
     }
 
     public function data_pengguna() {
@@ -45,7 +63,7 @@ class Admin extends CI_Controller {
             'title' => 'Kelola Data',
             'content' => 'admin/data_pengguna'
         ];
-        $this->load->view('layouts/v_admin', $data);
+        $this->load->view('admin/v_admin', $data);
     }
 }
 
