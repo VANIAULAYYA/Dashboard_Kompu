@@ -221,7 +221,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="#" class="social-button mx-3">
+                                                <a href="http://wa.me/+6282338417445" class="social-button mx-3" target="_blank">
                                                     <i class="fab fa-whatsapp fa-3x"></i>
                                                 </a>
                                             </td>
