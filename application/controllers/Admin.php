@@ -18,10 +18,10 @@ class Admin extends CI_Controller {
             'perempuan' => $this->M_admin->count_perempuan(),
             'total_aduan' => $this->M_admin->count_aduan(),
             'aduan_proses' => $this->M_admin->count_aduan_proses(),
-            'keperluan1' => $this->M_admin->keperluan1(),
-            'keperluan2' => $this->M_admin->keperluan2(),
-            'keperluan3' => $this->M_admin->keperluan3(),
-            'keperluan4' => $this->M_admin->keperluan4(),
+            'keperluan1' => $this->M_admin->count_keperluan1(),
+            'keperluan2' => $this->M_admin->count_keperluan2(),
+            'keperluan3' => $this->M_admin->count_keperluan3(),
+            'keperluan4' => $this->M_admin->count_keperluan4(),
             'content' => 'admin/dashboard'
         ];
         // print_r($data);
