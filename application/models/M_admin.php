@@ -11,6 +11,41 @@
            return $this->db->count_all('buku_tamu');
        }
 
+       public function count_laki() {
+          $this->db->where('jenis_kelamin', 'L');
+           return $this->db->count_all_results('buku_tamu');
+       }
+
+       public function count_perempuan() {
+          $this->db->where('jenis_kelamin', 'P');
+           return $this->db->count_all_results('buku_tamu');
+       }
+
+       public function count_keperluan1() {
+          $this->db->where('keperluan', 'Menemui Pejabat/Staf');
+           return $this->db->count_all_results('buku_tamu');
+       }
+       
+       public function count_keperluan2() {
+          $this->db->where('keperluan', 'Rekomendasi Teknis (Rekomtek)');
+           return $this->db->count_all_results('buku_tamu');
+       }
+
+       public function count_keperluan3() {
+          $this->db->where('keperluan', 'Kirim Surat (Promosi/Aduan/Temuan)');
+           return $this->db->count_all_results('buku_tamu');
+       }
+       
+       public function count_keperluan4() {
+          $this->db->where('keperluan', 'Permintaan Data/Informasi');
+           return $this->db->count_all_results('buku_tamu');
+       }
+
+       public function count_keperluan5() {
+          $this->db->where('keperluan', 'Permintaan Data/Informasi');
+           return $this->db->count_all_results('buku_tamu');
+       }
+
        // Calculate average satisfaction rating
     //    public function avg_kepuasan() {
     //        $this->db->select_avg('nilai_kepuasan');

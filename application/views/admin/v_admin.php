@@ -203,7 +203,7 @@
                       <div class="numbers">
                         <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Responden Masyarakat</p>
                         <h3 class="font-weight-bolder mb-0">
-                          215 Orang
+                          <?= $total_tamu; ?>
                         </h3>
                       </div>
                     </div>
@@ -222,8 +222,8 @@
                       <div class="numbers">
                         <p class="text-sm mb-0 text-capitalize font-weight-bold">Jenis Kelamin Responden Masyarakat</p>
                         <h3 class="font-weight-bolder mb-0">
-                          Pria <span class="text-success text-md font-weight-bolder">120</span> -
-                          Wanita <span class="text-danger text-md font-weight-bolder">80</span>
+                          Pria <span class="text-success text-md font-weight-bolder"><?= $laki; ?></span> -
+                          Wanita <span class="text-danger text-md font-weight-bolder"><?= $perempuan; ?></span>
                         </h3>
                       </div>
                     </div>
@@ -397,6 +397,11 @@
                                       </div>
                                     </div>
                                   </td>
+                                  <td>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">4.00 - 3,5324</h6>
+                                      </div>
+                                  </td>
                                   <td class="align-middle text-center text-sm">
                                     <span class="text-xs font-weight-bold"> 11% </span>
                                   </td>
@@ -411,6 +416,11 @@
                                         <h6 class="mb-0 text-sm">Sesuai</h6>
                                       </div>
                                     </div>
+                                  </td>
+                                  <td>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">3,0644 - 3,532</h6>
+                                      </div>
                                   </td>
                                   <td class="align-middle text-center text-sm">
                                     <span class="text-xs font-weight-bold"> 56% </span>
@@ -427,6 +437,11 @@
                                       </div>
                                     </div>
                                   </td>
+                                  <td>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">2,60 - 3,064</h6>
+                                      </div>
+                                  </td>
                                   <td class="align-middle text-center text-sm">
                                     <span class="text-xs font-weight-bold"> 33% </span>
                                   </td>
@@ -441,6 +456,11 @@
                                         <h6 class="mb-0 text-sm">Tidak Sesuai</h6>
                                       </div>
                                     </div>
+                                  </td>
+                                  <td>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">1,00 - 2,5996</h6>
+                                      </div>
                                   </td>
                                   <td class="align-middle text-center text-sm">
                                     <span class="text-xs font-weight-bold"> 0% </span>
