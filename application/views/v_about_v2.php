@@ -127,8 +127,8 @@
       opacity: 1;
     }
     .social-button:hover {
-            color: orange; /* Change color on hover */
-        }
+      color: orange; /* Change color on hover */
+    }
   </style>
 </head>
 <body>
@@ -196,47 +196,47 @@
 
   <!-- Dot Indicators -->
   <div class="dots"></div>
+
   <div class="container my-5 py-5">
     <section class="mb-5 text-center">
-                        
-                        <div class="text-center">
-                            <div class="card feature-card">
-                                <div class="card-body align-center">
-                                  <h2 class="section-title">Media Sosial</h2>
-                                    <table style="width: 100%; text-align: center;">
-                                        <tr>
-                                            <td>
-                                                <a href="https://www.sda.pu.go.id/balai/bbwsbrantas" class="social-button mx-3">
-                                                    <i class="fas fa-globe-asia fa-3x"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="https://www.instagram.com/pu_sda_brantas" class="social-button mx-3">
-                                                    <i class="fab fa-instagram fa-3x"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="https://www.youtube.com/@sisdabrantas" class="social-button mx-3">
-                                                    <i class="fab fa-youtube fa-3x"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="http://wa.me/+6282338417445" class="social-button mx-3" target="_blank">
-                                                    <i class="fab fa-whatsapp fa-3x"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Website</b></td>
-                                            <td><b>Instagram</b></td>
-                                            <td><b>Youtube</b></td>
-                                            <td><b>Whatsapp</b></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+      <div class="text-center">
+        <div class="card feature-card">
+          <div class="card-body align-center">
+            <h2 class="section-title">Media Sosial</h2>
+            <table style="width: 100%; text-align: center;">
+              <tr>
+                <td>
+                  <a href="https://www.sda.pu.go.id/balai/bbwsbrantas" class="social-button mx-3">
+                    <i class="fas fa-globe-asia fa-3x"></i>
+                  </a>
+                </td>
+                <td>
+                  <a href="https://www.instagram.com/pu_sda_brantas" class="social-button mx-3">
+                    <i class="fab fa-instagram fa-3x"></i>
+                  </a>
+                </td>
+                <td>
+                  <a href="https://www.youtube.com/@sisdabrantas" class="social-button mx-3">
+                    <i class="fab fa-youtube fa-3x"></i>
+                  </a>
+                </td>
+                <td>
+                  <a href="http://wa.me/+6282338417445" class="social-button mx-3" target="_blank">
+                    <i class="fab fa-whatsapp fa-3x"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Website</b></td>
+                <td><b>Instagram</b></td>
+                <td><b>Youtube</b></td>
+                <td><b>Whatsapp</b></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- Footer -->
@@ -272,7 +272,6 @@
       dots.push(dot);
     });
 
-    // Atur tinggi wrapper sesuai slide aktif
     function adjustWrapperHeight() {
       const activeSlide = document.querySelector('.slide.active img');
       if (activeSlide) {
@@ -300,7 +299,7 @@
       showSlide(currentSlide);
     }
 
-    // Auto slide
+    // Auto slide tiap 5 detik
     let autoSlide = setInterval(nextSlide, 5000);
 
     function resetAutoSlide() {
@@ -308,7 +307,7 @@
       autoSlide = setInterval(nextSlide, 5000);
     }
 
-    // Event pada panah navigasi
+    // Navigasi manual
     arrowLeft.addEventListener('click', () => {
       prevSlide();
       resetAutoSlide();
@@ -318,10 +317,16 @@
       resetAutoSlide();
     });
 
-    // Sesuaikan tinggi saat load & resize
+    // ✅ PAUSE saat hover mouse di slideshow
+    wrapper.addEventListener("mouseenter", () => {
+      clearInterval(autoSlide);
+    });
+    wrapper.addEventListener("mouseleave", () => {
+      autoSlide = setInterval(nextSlide, 5000);
+    });
+
     window.addEventListener("load", adjustWrapperHeight);
     window.addEventListener("resize", adjustWrapperHeight);
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
