@@ -157,7 +157,7 @@
             <a class="nav-link" href="<?php echo base_url('Landing/laporan'); ?>">Laporan</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Landing/medsos'); ?>">Media Sosial</a>
+            <a class="nav-link" href="<?php echo base_url('Landing/media_sosial'); ?>">Media Sosial</a>
           </li>
         </ul>
       </div>
@@ -169,36 +169,6 @@
     <h1 class="display-4 fw-bold mb-3">TENTANG</h1>
     <p class="lead mb-4">LAMPU PETROMAK BBWS BRANTAS</p>
   </section>
-
-  <!-- Full Width Slideshow -->
-  <div class="slideshow-wrapper">
-    <!-- Slides -->
-    <div class="slide active">
-      <img src="<?php echo base_url('assets/Pictures/Slide/1.png'); ?>" alt="Slide 1">
-    </div>
-    <div class="slide">
-      <img src="<?php echo base_url('assets/Pictures/Slide/2.png'); ?>" alt="Slide 2">
-    </div>
-    <div class="slide">
-      <img src="<?php echo base_url('assets/Pictures/Slide/3.png'); ?>" alt="Slide 3">
-    </div>
-    <div class="slide">
-      <img src="<?php echo base_url('assets/Pictures/Slide/4.png'); ?>" alt="Slide 4">
-    </div>
-    <div class="slide">
-      <img src="<?php echo base_url('assets/Pictures/Slide/5.png'); ?>" alt="Slide 5">
-    </div>
-    <div class="slide">
-      <img src="<?php echo base_url('assets/Pictures/Slide/6.png'); ?>" alt="Slide 6">
-    </div>
-
-    <!-- Arrow Navigation -->
-    <span class="arrow left">&#10094;</span>
-    <span class="arrow right">&#10095;</span>
-  </div>
-
-  <!-- Dot Indicators -->
-  <div class="dots"></div>
 
   <div class="container my-5 py-5">
     <section class="mb-5 text-center">
@@ -303,12 +273,12 @@
     }
 
     // Auto slide tiap 5 detik
-    // let autoSlide = setInterval(nextSlide, 5000);
+    let autoSlide = setInterval(nextSlide, 5000);
 
-    // function resetAutoSlide() {
-    //   clearInterval(autoSlide);
-    //   autoSlide = setInterval(nextSlide, 5000);
-    // }
+    function resetAutoSlide() {
+      clearInterval(autoSlide);
+      autoSlide = setInterval(nextSlide, 5000);
+    }
 
     // Navigasi manual
     arrowLeft.addEventListener('click', () => {

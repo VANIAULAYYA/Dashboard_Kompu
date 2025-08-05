@@ -23,6 +23,11 @@ class Landing extends CI_Controller {
         $this->load->view('v_buku_tamu');
     }
 
+    public function medsos()
+    {
+        $this->load->view('v_media_sosial');
+    }
+
     public function submit() {
         $kategori_lainnya = $this->input->post('kategori_lainnya');
         $kategori = $this->input->post('keperluan'); 

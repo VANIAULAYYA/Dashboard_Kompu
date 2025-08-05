@@ -95,6 +95,7 @@
                     <!-- <a href="#contact" class="nav-link text-gray-700 hover:text-orange-600 transition">Aduan</a> -->
                     <!-- <a href="#" class="gradient-bg text-white px-6 py-2 rounded-full hover:shadow-lg transition">Masuk</a> -->
                      <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Laporan</a>
+                     <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="text-gray-700 hover:text-orange-600">
@@ -112,6 +113,7 @@
                 <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
                 <!-- <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Aduan</a> -->
                 <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Laporan</a>
+                <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
             </div>
         </div>
     </nav>
