@@ -133,36 +133,130 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-    <div class="container">
-      <a class="navbar-brand" href="<?php echo base_url(); ?>">
-        <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" height="30">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link <?php echo $active_menu == 'home' ? 'active' : ''; ?>" href="<?php echo base_url(); ?>">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link <?php echo $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/about'); ?>">Tentang</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Landing/buku_tamu'); ?>">Buku Tamu</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Landing/laporan'); ?>">Laporan</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Landing/media_sosial'); ?>">Media Sosial</a>
-          </li>
-        </ul>
+  <!-- Navigation -->
+<nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <div class="flex-shrink-0 flex items-center">
+          <img src="<?php echo base_url();?>assets/Pictures/logo-pu.png" alt="Logo" width="250">
+        </div>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-8 relative">
+        <a href="<?php echo base_url('Landing'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
+        <a href="<?php echo base_url('Landing/tentang'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
+        <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+
+        <!-- Dropdown (Desktop) -->
+        <!-- Dropdown (Desktop) -->
+<div class="relative" id="desktop-laporan">
+  <button id="desktop-laporan-btn" class="nav-link text-gray-700 hover:text-orange-600 transition inline-flex items-center">
+    Laporan
+    <i id="desktop-laporan-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
+  </button>
+  <div id="desktop-laporan-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48">
+    <a href="<?php echo base_url('Landing/laporan_harian'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan 1</a>
+    <a href="<?php echo base_url('Landing/laporan_bulanan'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan 2</a>
+    <a href="<?php echo base_url('Landing/laporan_tahunan'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan 3</a>
+  </div>
+</div>
+
+        <!-- End Dropdown -->
+
+        <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button id="mobile-menu-button" class="text-gray-700 hover:text-orange-600">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="md:hidden hidden bg-white py-4 px-6 shadow-lg">
+  <div class="flex flex-col space-y-4">
+    <a href="<?php echo base_url('Landing'); ?>" class="text-gray-700 hover:text-orange-600 transition">Home</a>
+    <a href="<?php echo base_url('Landing/tentang'); ?>" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
+    <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+
+    <!-- Dropdown Mobile -->
+    <div>
+      <button id="laporan-dropdown-btn" class="w-full flex justify-between items-center text-gray-700 hover:text-orange-600 transition">
+        Laporan
+        <i id="laporan-icon" class="fas fa-chevron-down ml-2"></i>
+      </button>
+      <div id="laporan-dropdown" class="hidden flex flex-col pl-4 mt-2 space-y-2">
+        <a href="<?php echo base_url('Landing/laporan_harian'); ?>" class="text-gray-700 hover:text-orange-600 transition">Laporan 1</a>
+        <a href="<?php echo base_url('Landing/laporan_bulanan'); ?>" class="text-gray-700 hover:text-orange-600 transition">Laporan 2</a>
+        <a href="<?php echo base_url('Landing/laporan_tahunan'); ?>" class="text-gray-700 hover:text-orange-600 transition">Laporan 3</a>
+      </div>
+    </div>
+    <!-- End Dropdown Mobile -->
+
+    <a href="<?php echo base_url('Landing/medsos'); ?>" class="text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
+  </div>
+</div>
+
+<script>
+  // Toggle mobile menu (hamburger)
+  document.getElementById("mobile-menu-button").addEventListener("click", function() {
+    document.getElementById("mobile-menu").classList.toggle("hidden");
+  });
+
+  // Toggle dropdown laporan di mobile
+  document.getElementById("laporan-dropdown-btn").addEventListener("click", function() {
+    const dropdown = document.getElementById("laporan-dropdown");
+    const icon = document.getElementById("laporan-icon");
+    dropdown.classList.toggle("hidden");
+    icon.classList.toggle("fa-chevron-down");
+    icon.classList.toggle("fa-chevron-up");
+  });
+  // Toggle mobile menu (hamburger)
+  document.getElementById("mobile-menu-button").addEventListener("click", function() {
+    document.getElementById("mobile-menu").classList.toggle("hidden");
+  });
+
+  // Toggle dropdown laporan di mobile
+  document.getElementById("laporan-dropdown-btn").addEventListener("click", function() {
+    const dropdown = document.getElementById("laporan-dropdown");
+    const icon = document.getElementById("laporan-icon");
+    dropdown.classList.toggle("hidden");
+    icon.classList.toggle("fa-chevron-down");
+    icon.classList.toggle("fa-chevron-up");
+  });
+
+  // Toggle dropdown laporan di desktop (klik)
+  document.getElementById("desktop-laporan-btn").addEventListener("click", function(e) {
+    e.preventDefault(); // mencegah scroll ke atas jika button
+    const dropdown = document.getElementById("desktop-laporan-dropdown");
+    const icon = document.getElementById("desktop-laporan-icon");
+    dropdown.classList.toggle("hidden");
+    icon.classList.toggle("fa-chevron-down");
+    icon.classList.toggle("fa-chevron-up");
+  });
+
+  // Optional: klik di luar dropdown untuk menutup
+  document.addEventListener("click", function(e) {
+    const dropdown = document.getElementById("desktop-laporan-dropdown");
+    const btn = document.getElementById("desktop-laporan-btn");
+    const icon = document.getElementById("desktop-laporan-icon");
+
+    if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+      if (!dropdown.classList.contains("hidden")) {
+        dropdown.classList.add("hidden");
+        icon.classList.remove("fa-chevron-up");
+        icon.classList.add("fa-chevron-down");
+      }
+    }
+  });
+</script>
 
   <!-- Hero Section -->
   <section class="hero-section">

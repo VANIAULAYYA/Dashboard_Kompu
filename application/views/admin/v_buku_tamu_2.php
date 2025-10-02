@@ -79,19 +79,19 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link " href="../../pages/dashboards/smart-home.html">
-                  <span class="sidenav-mini-icon"> L </span>
-                  <span class="sidenav-normal"> Layanan Permintaan Data </span>
-                </a>
-              </li>
+  <a class="nav-link " href="<?= base_url('Layanan') ?>">
+    <span class="sidenav-mini-icon"> L </span>
+    <span class="sidenav-normal"> Layanan Permintaan Data </span>
+  </a>
+</li>
               <li class="nav-item ">
-                <a class="nav-link " href="">
+                <a class="nav-link " href="<?= base_url('Pengaduan') ?>">
                   <span class="sidenav-mini-icon"> L </span>
                   <span class="sidenav-normal"> Layanan Pengaduan <b class="caret"></b></span>
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link " href="../../pages/dashboards/crm.html">
+                <a class="nav-link " href="<?= base_url('Informasi') ?>">
                   <span class="sidenav-mini-icon"> L </span>
                   <span class="sidenav-normal"> Layanan Informasi </span>
                 </a>
@@ -120,7 +120,7 @@
                 </a>
               </li>  
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/dashboards/default.html">
+                <a class="nav-link" href="<?= base_url('Monev'); ?>">
                   <span class="sidenav-mini-icon"> M </span>
                   <span class="sidenav-normal"> Monev Permintaan Data</span>
                 </a>
@@ -136,6 +136,49 @@
         </li>
       </ul>
     </div>
+
+    <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a data-bs-toggle="collapse" href="#dashboardsExamples3" class="nav-link active collapsed" aria-controls="dashboardsExamples3" role="button" aria-expanded="false">
+        <div class="icon icon-sm shadow-sm border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2">
+          <i class="far fa-folder-open" aria-hidden="true"></i>
+        </div>
+        <span class="nav-link-text ms-1">Berkas Laporan</span>
+      </a>
+
+      <div class="collapse" id="dashboardsExamples3">
+        <ul class="nav ms-4 ps-3">
+
+          <!-- Laporan PPID -->
+          <li class="nav-item">
+            <a class="nav-link <?= ($this->uri->segment(2) == 'ppid' ? 'active fw-bold text-dark' : '') ?>" 
+               href="<?= site_url('Laporan/ppid') ?>">
+              <span class="nav-link-text ms-1">Laporan PPID</span>
+            </a>
+          </li>
+
+          <!-- Laporan Kompu -->
+          <li class="nav-item">
+            <a class="nav-link <?= ($this->uri->segment(2) == 'kompu' ? 'active fw-bold text-dark' : '') ?>" 
+               href="<?= site_url('Laporan/kompu') ?>">
+              <span class="nav-link-text ms-1">Laporan Kompu</span>
+            </a>
+          </li>
+
+          <!-- Survei Kepuasan Masyarakat -->
+          <li class="nav-item">
+            <a class="nav-link <?= ($this->uri->segment(1) == 'skm' ? 'active fw-bold text-dark' : '') ?>" 
+               href="<?= site_url('Laporan/skm') ?>">
+              <span class="nav-link-text ms-1">Survei Kepuasan Masyarakat</span>
+            </a>
+          </li>
+
+        </ul>
+      </div> <!-- Tutup collapse -->
+    </li>
+  </ul>
+</div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
@@ -189,54 +232,69 @@
       </div>
     </nav>
     <!-- End Navbar -->
-     <div class="container-fluid py-4">
-      
-      <div class="row mt-4">
-        <div class="col-12">
-          <div class="card">
-            <!-- Card header -->
-            <div class="card-header">
-              <h5 class="mb-0">Rekap Buku Tamu</h5>
-              <p class="text-sm mb-0">
-                Daftar Kunjungan Tamu di BBWS Brantas
-              </p>
-            </div>
-            <div class="table-responsive">
-              <table class="table table-flush" id="datatable-search">
-                <thead class="thead-light">
-                  <tr>
-                    <th>No</th>  
-                    <th>Nama</th>
-                    <th>Jenis Kelamin</th>
-                    <th>Asal Instansi</th>
-                    <th>No. Telp</th>
-                    <th>Keperluan</th>
-                    <th>Kritik Saran</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $no = 1; ?>
-                  <?php foreach($tamu as $user){ ?>
-                  <tr>
-                    <td class="text-sm font-weight-normal"><?= $no; ?></td>  
-                    <td class="text-sm font-weight-normal"><?= $user->nama; ?></td>
-                    <td class="text-sm font-weight-normal"><?php 
-                        if($user->jenis_kelamin =="L")
-                          { echo "Laki-Laki"; }
-                          else { echo "Perempuan"; }
-                          ?></td>
-                    <td class="text-sm font-weight-normal"><?= $user->asal_instansi; ?></td>
-                    <td class="text-sm font-weight-normal"><?= $user->no_handphone; ?></td>
-                    <td class="text-sm font-weight-normal"><?= $user->keperluan; ?></td>
-                    <td class="text-sm font-weight-normal"><?= $user->kritik_saran; ?></td>
-                  </tr>
-                  <?php  $no++; }?>
-                </tbody>
-              </table>
-            </div>
+     <div id="divTabel">
+  <div class="container-fluid py-4">
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Rekap Buku Tamu</h5>
+            <p class="text-sm mb-0">Daftar Kunjungan Tamu di BBWS Brantas</p>
+            <button type="button" class="btn btn-primary btn-sm mt-4" id="btnTambah">
+              <i class="fa fa-plus"></i> Tambah Tamu
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-flush" id="datatable-search">
+              <thead class="thead-light">
+                <tr>
+                  <th>No</th>
+                  <th>Nama</th>
+                  <th>Jenis Kelamin</th>
+                  <th>Asal Instansi</th>
+                  <th>No. Telp</th>
+                  <th>Keperluan</th>
+                  <th>Kritik Saran</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php $no=1; foreach($tamu as $t): ?>
+                <tr>
+                  <td class="text-sm font-weight-normal"><?= $no++; ?></td>
+                  <td class="text-sm font-weight-normal"><?= $t->nama; ?></td>
+                  <td class="text-sm font-weight-normal"><?= ($t->jenis_kelamin=="L") ? "Laki-Laki":"Perempuan"; ?></td>
+                  <td class="text-sm font-weight-normal"><?= $t->asal_instansi; ?></td>
+                  <td class="text-sm font-weight-normal"><?= $t->no_handphone; ?></td>
+                  <td class="text-sm font-weight-normal"><?= $t->keperluan; ?></td>
+                  <td class="text-sm font-weight-normal"><?= $t->kritik_saran; ?></td>
+                  <td>
+                    <button type="button" class="btn btn-warning btn-sm btnEdit"
+                      data-id="<?= $t->id ?>"
+                      data-nama="<?= htmlspecialchars($t->nama,ENT_QUOTES) ?>"
+                      data-jenis="<?= htmlspecialchars($t->jenis_kelamin,ENT_QUOTES) ?>"
+                      data-instansi="<?= htmlspecialchars($t->asal_instansi,ENT_QUOTES) ?>"
+                      data-telp="<?= htmlspecialchars($t->no_handphone,ENT_QUOTES) ?>"
+                      data-keperluan="<?= htmlspecialchars($t->keperluan,ENT_QUOTES) ?>"
+                      data-kritik="<?= htmlspecialchars($t->kritik_saran,ENT_QUOTES) ?>">
+                      Edit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#confirmDeleteModal"
+                      data-delete-url="<?= site_url('Admin/delete_tamu/'.$t->id) ?>">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
+    </div>
+
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
@@ -253,6 +311,183 @@
         </div>
       </footer>
     </div>
+     </div>
+
+    <!-- Form Tambah -->
+<div id="divForm" style="display:none;">
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h5 class="mb-0">Tambah Tamu</h5></div>
+        <div class="card-body p-4">
+          <form action="<?= site_url('Admin/simpan_tamu') ?>" method="post">
+            
+            <div class="mb-3">
+              <label>Nama</label>
+              <input type="text" name="nama" class="form-control" required placeholder="Masukkan nama tamu">
+            </div>
+
+            <div class="mb-3">
+              <label>Jenis Kelamin</label>
+              <select name="jenis_kelamin" class="form-select" required>
+                <option value="">-- Pilih Jenis Kelamin --</option>
+                <option value="L">Laki-Laki</option>
+                <option value="P">Perempuan</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label>Asal Instansi</label>
+              <input type="text" name="asal_instansi" class="form-control" placeholder="Contoh: BBWS Brantas">
+            </div>
+
+            <div class="mb-3">
+              <label>No. Telp</label>
+              <input type="text" name="no_handphone" class="form-control" placeholder="08xxxxxxxxxx">
+            </div>
+
+            <div class="mb-3">
+              <label>Keperluan</label>
+              <input type="text" name="keperluan" class="form-control" placeholder="Tuliskan keperluan tamu">
+            </div>
+
+            <div class="mb-3">
+              <label>Kritik Saran</label>
+              <textarea name="kritik_saran" class="form-control" placeholder="Isi kritik atau saran jika ada"></textarea>
+            </div>
+
+            <div class="text-end">
+              <button type="button" class="btn btn-secondary" id="btnKembali">Kembali</button>
+              <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Form Edit -->
+<div id="divFormEdit" style="display:none;">
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h5 class="mb-0">Edit Tamu</h5></div>
+        <div class="card-body p-4">
+          <form action="<?= site_url('Admin/update_tamu') ?>" method="post">
+            <input type="hidden" name="id" id="edit_id">
+            <div class="mb-3">
+              <label>Nama</label>
+              <input type="text" name="nama" id="edit_nama" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Jenis Kelamin</label>
+              <select name="jenis_kelamin" id="edit_jenis" class="form-select" required>
+                <option value="L">Laki-Laki</option>
+                <option value="P">Perempuan</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label>Asal Instansi</label>
+              <input type="text" name="asal_instansi" id="edit_instansi" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>No. Telp</label>
+              <input type="text" name="no_handphone" id="edit_telp" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Keperluan</label>
+              <input type="text" name="keperluan" id="edit_keperluan" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Kritik Saran</label>
+              <textarea name="kritik_saran" id="edit_kritik" class="form-control"></textarea>
+            </div>
+            <div class="text-end">
+              <button type="button" class="btn btn-secondary" id="btnKembaliEdit">Kembali</button>
+              <button type="submit" class="btn btn-warning">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal konfirmasi delete -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Konfirmasi Penghapusan Data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">Apakah Anda yakin ingin menghapus data ini?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <a id="deleteButton" href="#" class="btn btn-danger">Hapus</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script -->
+<script>
+  // Tambah
+  document.getElementById("btnTambah").addEventListener("click", function(){
+    document.getElementById("divTabel").style.display = "none";
+    document.getElementById("divForm").style.display = "block";
+    document.getElementById("divFormEdit").style.display = "none";
+  });
+  document.getElementById("btnKembali").addEventListener("click", function(){
+    document.getElementById("divForm").style.display = "none";
+    document.getElementById("divTabel").style.display = "block";
+  });
+
+  // Edit
+  document.addEventListener("click", function(e){
+    const btn = e.target.closest(".btnEdit");
+    if (!btn) return;
+    document.getElementById("divTabel").style.display = "none";
+    document.getElementById("divForm").style.display = "none";
+    document.getElementById("divFormEdit").style.display = "block";
+
+    document.getElementById("edit_id").value = btn.dataset.id;
+    document.getElementById("edit_nama").value = btn.dataset.nama;
+    document.getElementById("edit_jenis").value = btn.dataset.jenis;
+    document.getElementById("edit_instansi").value = btn.dataset.instansi;
+    document.getElementById("edit_telp").value = btn.dataset.telp;
+    document.getElementById("edit_keperluan").value = btn.dataset.keperluan;
+    document.getElementById("edit_kritik").value = btn.dataset.kritik;
+  });
+  document.getElementById("btnKembaliEdit").addEventListener("click", function(){
+    document.getElementById("divFormEdit").style.display = "none";
+    document.getElementById("divTabel").style.display = "block";
+  });
+
+  // Delete
+  const deleteModal = document.getElementById('confirmDeleteModal');
+  deleteModal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const url = button.getAttribute('data-delete-url');
+    document.getElementById('deleteButton').setAttribute('href', url);
+  });
+
+  document.querySelectorAll("input, textarea").forEach(function(el){
+  el.addEventListener("focus", function(){
+    this.dataset.placeholder = this.placeholder;
+    this.placeholder = "";
+  });
+  el.addEventListener("blur", function(){
+    if(this.value === ""){
+      this.placeholder = this.dataset.placeholder;
+    }
+  });
+});
+
+</script>
+
   </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">

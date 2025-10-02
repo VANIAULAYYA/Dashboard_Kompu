@@ -79,19 +79,19 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link " href="../../pages/dashboards/smart-home.html">
-                  <span class="sidenav-mini-icon"> L </span>
-                  <span class="sidenav-normal"> Layanan Permintaan Data </span>
-                </a>
+                <a class="nav-link " href="<?= base_url('Layanan') ?>">
+    <span class="sidenav-mini-icon"> L </span>
+    <span class="sidenav-normal"> Layanan Permintaan Data </span>
+  </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link " href="">
+                <a class="nav-link " href="<?= base_url('Pengaduan') ?>">
                   <span class="sidenav-mini-icon"> L </span>
                   <span class="sidenav-normal"> Layanan Pengaduan <b class="caret"></b></span>
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link " href="../../pages/dashboards/crm.html">
+                <a class="nav-link " href="<?= base_url('Informasi') ?>">
                   <span class="sidenav-mini-icon"> L </span>
                   <span class="sidenav-normal"> Layanan Informasi </span>
                 </a>
@@ -136,6 +136,69 @@
         </li>
       </ul>
     </div>
+
+    <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a data-bs-toggle="collapse" href="#dashboardsExamples3" class="nav-link active collapsed" aria-controls="dashboardsExamples3" role="button" aria-expanded="false">
+        <div class="icon icon-sm shadow-sm border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2">
+          <i class="far fa-folder-open" aria-hidden="true"></i>
+        </div>
+        <span class="nav-link-text ms-1">Administrator Web</span>
+      </a>
+
+      <div class="collapse" id="dashboardsExamples3">
+        <ul class="nav ms-4 ps-3">
+
+        <!-- Menu 1 -->
+<li class="nav-item">
+  <a data-bs-toggle="collapse" href="#submenu1" class="nav-link" aria-expanded="false">
+    <span class="sidenav-normal">1</span>
+  </a>
+  <div class="collapse" id="submenu1">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="me-3">•</span> Submenu 1
+        </a>
+      </li>
+    </ul>
+  </div>
+</li>
+
+          <!-- Menu 2 -->
+          <li class="nav-item">
+  <a data-bs-toggle="collapse" href="#submenu2" class="nav-link" aria-expanded="false">
+    <span class="sidenav-normal">2</span>
+  </a>
+  <div class="collapse" id="submenu2">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="me-3">•</span> Submenu 2
+        </a>
+      </li>
+    </ul>
+  </div>
+</li>
+
+          <!-- Menu 3 -->
+          <li class="nav-item">
+  <a data-bs-toggle="collapse" href="#submenu3" class="nav-link" aria-expanded="false">
+    <span class="sidenav-normal">3</span>
+  </a>
+  <div class="collapse" id="submenu3">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="me-3">•</span> Submenu 3
+        </a>
+      </li>
+    </ul>
+  </div>
+</li>
+  </ul>
+</div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->

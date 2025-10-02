@@ -10,6 +10,7 @@ class Admin extends CI_Controller {
         }
     }
 
+    // Dashboard
     public function index() {
         $data = [
             'title' => 'Dashboard Admin',
@@ -24,11 +25,10 @@ class Admin extends CI_Controller {
             'keperluan4' => $this->M_admin->count_keperluan4(),
             'content' => 'admin/dashboard'
         ];
-        // print_r($data);
-        // die;
         $this->load->view('admin/v_admin', $data);
     }
 
+    // 📖 Rekap Buku Tamu
     public function rekap_tamu() {
         $data = [
             'title' => 'Kelola Buku Tamu',
@@ -38,6 +38,56 @@ class Admin extends CI_Controller {
         $this->load->view('admin/v_buku_tamu_2',$data);
     }
 
+    // ➕ Form Tambah Tamu
+    public function tambah_tamu() {
+        $this->load->view('admin/v_rekap_tamu_form');
+    }
+
+    // 💾 Simpan Tamu Baru
+    public function simpan_tamu() {
+        $data = [
+            'nama'           => $this->input->post('nama'),
+            'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+            'asal_instansi'  => $this->input->post('asal_instansi'),
+            'no_handphone'   => $this->input->post('no_handphone'),
+            'keperluan'      => $this->input->post('keperluan'),
+            'kritik_saran'   => $this->input->post('kritik_saran'),
+        ];
+        $this->M_admin->insert_tamu($data);
+        redirect('Admin/rekap_tamu');
+    }
+
+    // ✏️ Form Edit Tamu
+    public function edit_tamu($id) {
+        $data['tamu'] = $this->M_admin->get_tamu_by_id($id);
+        $this->load->view('admin/v_rekap_tamu_edit', $data);
+    }
+
+    // 🔄 Update Tamu
+public function update_tamu() {
+    $id = $this->input->post('id'); // ambil dari hidden input
+    
+    $data = [
+        'nama'           => $this->input->post('nama'),
+        'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+        'asal_instansi'  => $this->input->post('asal_instansi'),
+        'no_handphone'   => $this->input->post('no_handphone'),
+        'keperluan'      => $this->input->post('keperluan'),
+        'kritik_saran'   => $this->input->post('kritik_saran'),
+    ];
+    
+    $this->M_admin->update_tamu($id, $data);
+    redirect('Admin/rekap_tamu');
+}
+
+
+    // 🗑️ Delete Tamu
+    public function delete_tamu($id) {
+        $this->M_admin->delete_tamu($id);
+        redirect('Admin/rekap_tamu');
+    }
+
+    // ========= Layanan lain tetap sama =========
     public function layanan_kepuasan() {
         $data = [
             'title' => 'Kelola Buku Tamu',
@@ -72,6 +122,10 @@ class Admin extends CI_Controller {
         ];
         $this->load->view('admin/v_admin', $data);
     }
-}
 
-?>
+    public function monev_data() {
+        $this->load->model('Monev_model');
+        $data['monev'] = $this->Monev_model->getAll(); 
+        $this->load->view('admin/v_monev', $data);
+    }
+}

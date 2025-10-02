@@ -8,161 +8,269 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <style>
-    :root {
-      --primary: #3498db;
-      --secondary: #2c3e50;
-      --accent: #e74c3c;
-    }
+  :root {
+    --primary: #3498db;
+    --secondary: #2c3e50;
+    --accent: #e74c3c;
+    --orange: #f97316; /* Tailwind orange-600 */
+    --orange-light: #ffedd5; /* Tailwind orange-100 */
+    --gray: #374151; /* Tailwind gray-700 */
+  }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #333;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-    }
+  body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
 
-    .navbar {
-      background-color: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+  /* Navbar */
+  .navbar {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    font-family: 'Poppins', sans-serif;
+  }
 
-    .hero-section {
-      background: linear-gradient(rgba(78, 115, 223, 0.8), rgba(26, 26, 46, 0.8));
-      color: white;
-      padding: 80px 0;
-      text-align: center;
-    }
+  .navbar-nav .nav-link {
+    color: var(--gray);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    position: relative;
+    transition: color 0.3s ease;
+  }
 
-    footer {
-      background-color: var(--secondary);
-      color: white;
-      padding: 30px 0;
-      text-align: center;
-    }
+  /* Hover effect dengan animasi underline */
+  .navbar-nav .nav-link:hover {
+    color: var(--orange);
+  }
 
-    /* === FULL WIDTH SLIDESHOW === */
-    .slideshow-wrapper {
-      position: relative;
-      width: 100%;
-      margin: 0;
-      overflow: hidden;
-      transition: height 0.4s ease;
-    }
+  .navbar-nav .nav-link:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: var(--orange);
+    transition: width 0.3s;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
 
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      opacity: 0;
-      transition: opacity 1s ease, transform 1.2s ease;
-      transform: scale(1.05);
-    }
+  .navbar-nav .nav-link:hover:after {
+    width: 100%;
+  }
 
-    .slide.active {
-      opacity: 1;
-      transform: scale(1);
-      z-index: 1;
-    }
+  /* === Dropdown konsisten dengan desain #desktop-laporan-dropdown === */
+.navbar .dropdown-menu {
+  min-width: 16rem !important;          /* samakan lebar */
+  padding: 0.5rem 0 !important;         /* padding vertikal */
+  border-radius: 0.25rem !important;    /* rounded halus */
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important; /* shadow */
+  background-color: #ffffff !important; /* background putih */
+  line-height: 2 !important;          /* spasi lebih lega */
+  font-family: 'Poppins', sans-serif !important; /* konsisten font */
+  top: 100% !important;
+  left: -15% !important;
+  right: auto !important;
+  margin-top: 0.5rem;
+  transform: translateX(15%) !important;
+}
 
-    .slide img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+.navbar .dropdown {
+  position: relative; /* biar acuan dropdown tepat ke tombol Laporan */
+}
 
-    /* === DOT INDICATOR === */
-    .dots {
-      text-align: center;
-      margin-top: 15px;
-    }
+.navbar .dropdown-item {
+  display: block;
+  padding: 0.25rem 1rem;   /* spacing item */
+  font-size: 0.875rem;     /* ukuran font sama */
+  color: #374151;          /* warna abu Tailwind */
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 2;        /* spasi antar item */
+  border-radius: 0;        /* biar tiap item rata */
+  -webkit-text-stroke: 0.2px;    /* tambahin ketebalan tipis */
+}
 
-    .dot {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      margin: 5px;
-      background: #bbb;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+.navbar .dropdown-item:hover {
+  background-color: #ffedd5; /* hover orange-light */
+  color: #f97316;            /* teks orange */
+}
 
-    .dot.active {
-      background: var(--accent);
-    }
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(rgba(78, 115, 223, 0.8), rgba(26, 26, 46, 0.8));
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+  }
 
-    /* === ARROW NAVIGATION === */
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 2rem;
-      color: white;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 10px 15px;
-      border-radius: 50%;
-      cursor: pointer;
-      user-select: none;
-      transition: background 0.3s, opacity 0.4s;
-      z-index: 10;
-      opacity: 0; /* default hidden */
-    }
+  /* Footer */
+  footer {
+    background-color: var(--secondary);
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+  }
 
-    .arrow.left {
-      left: 20px;
-    }
+  /* === FULL WIDTH SLIDESHOW === */
+  .slideshow-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    transition: height 0.4s ease;
+  }
 
-    .arrow.right {
-      right: 20px;
-    }
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease, transform 1.2s ease;
+    transform: scale(1.05);
+  }
 
-    .arrow:hover {
-      background: rgba(0, 0, 0, 0.6);
-    }
+  .slide.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+  }
 
-    /* Munculkan panah saat hover slideshow */
-    .slideshow-wrapper:hover .arrow {
-      opacity: 1;
-    }
-    .social-button:hover {
-      color: orange; /* Change color on hover */
-    }
-  </style>
-</head>
-<body>
+  .slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* === DOT INDICATOR === */
+  .dots {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 5px;
+    background: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .dot.active {
+    background: var(--accent);
+  }
+
+  /* === ARROW NAVIGATION === */
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s, opacity 0.4s;
+    z-index: 10;
+    opacity: 0;
+  }
+
+  .arrow.left { left: 20px; }
+  .arrow.right { right: 20px; }
+
+  .arrow:hover { background: rgba(0, 0, 0, 0.6); }
+
+  .slideshow-wrapper:hover .arrow {
+    opacity: 1;
+  }
+
+  /* Social button hover */
+  .social-button:hover {
+    color: var(--orange);
+  }
+</style>
+
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-    <div class="container">
-      <a class="navbar-brand" href="<?php echo base_url(); ?>">
-        <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" height="30">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link <?php echo $active_menu == 'home' ? 'active' : ''; ?>" href="<?php echo base_url(); ?>">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link <?php echo $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/about'); ?>">Tentang</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Landing/buku_tamu'); ?>">Buku Tamu</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Landing/laporan'); ?>">Laporan</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Landing/medsos'); ?>">Media Sosial</a>
-          </li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light shadow-sm">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand" href="<?php echo base_url(); ?>">
+      <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" style="width: 250px; height: auto;">
+    </a>
+
+    <!-- Toggler/collapse button (mobile) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'home' ? 'active' : ''; ?>" href="<?php echo base_url(); ?>">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/tentang'); ?>">Tentang</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'buku_tamu' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/buku_tamu'); ?>">Buku Tamu</a>
+        </li>
+
+        <!-- Dropdown Laporan -->
+        <li class="nav-item dropdown">
+          <a class="nav-link <?php echo $active_menu == 'laporan' ? 'active' : ''; ?>" 
+             href="#" id="navbarLaporan" role="button" 
+             data-bs-toggle="dropdown" data-bs-display="static" 
+             aria-expanded="false">
+            Laporan <i id="laporan-icon" class="fas fa-chevron-up ms-1"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
+            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_harian'); ?>">Laporan PPID</a></li>
+            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_bulanan'); ?>">Laporan Kompu</a></li>
+            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_tahunan'); ?>">Survei Kepuasan Masyarakat</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Media Sosial</a>
+        </li>
+
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
+
+<!-- JS untuk toggle ikon dropdown -->
+<script>
+  const laporanToggle = document.getElementById('navbarLaporan');
+  const laporanIcon = document.getElementById('laporan-icon');
+
+  // Saat dropdown dibuka
+  laporanToggle.addEventListener('show.bs.dropdown', () => {
+    laporanIcon.classList.remove('fa-chevron-up');
+    laporanIcon.classList.add('fa-chevron-down');
+  });
+
+  // Saat dropdown ditutup
+  laporanToggle.addEventListener('hide.bs.dropdown', () => {
+    laporanIcon.classList.remove('fa-chevron-down');
+    laporanIcon.classList.add('fa-chevron-up');
+  });
+</script>
 
   <!-- Hero Section -->
   <section class="hero-section">
