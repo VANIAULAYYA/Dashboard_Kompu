@@ -27,7 +27,11 @@ class Landing extends CI_Controller {
 
     public function medsos()
     {
-        $this->load->view('v_media_sosial');
+        $data = array(
+            'page_title' => 'Media Sosial - BBWS Brantas',
+            'active_menu' => 'medsos'
+        );
+        $this->load->view('v_media_sosial', $data);
     }
 
     public function tentang()

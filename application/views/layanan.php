@@ -283,49 +283,63 @@
   </section>
 
   <!-- Dot Indicators -->
-  <div class="dots"></div>
+<div class="dots"></div>
 
-  <div class="container my-5 py-5">
-    <section class="mb-5 text-center">
-      <div class="text-center">
-        <div class="card feature-card">
-          <div class="card-body align-center">
-            <h2 class="section-title">Media Sosial</h2>
-            <table style="width: 100%; text-align: center;">
-              <tr>
-                <td>
-                  <a href="https://www.sda.pu.go.id/balai/bbwsbrantas" class="social-button mx-3">
-                    <i class="fas fa-globe-asia fa-3x"></i>
-                  </a>
-                </td>
-                <td>
-                  <a href="https://www.instagram.com/pu_sda_brantas" class="social-button mx-3">
-                    <i class="fab fa-instagram fa-3x"></i>
-                  </a>
-                </td>
-                <td>
-                  <a href="https://www.youtube.com/@sisdabrantas" class="social-button mx-3">
-                    <i class="fab fa-youtube fa-3x"></i>
-                  </a>
-                </td>
-                <td>
-                  <a href="http://wa.me/+6282338417445" class="social-button mx-3" target="_blank">
+<div class="container my-5 py-5">
+  <section class="mb-5 text-center">
+    <div class="text-center">
+      <div class="card feature-card">
+        <div class="card-body text-center">
+          <h2 class="section-title">Media Sosial</h2>
+          <table style="margin: 0 auto; text-align: center;">
+            <tr>
+              <td style="display: flex; justify-content: center; gap: 120px;">
+                
+                <!-- WhatsApp -->
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                  <a href="http://wa.me/+6282338417445" class="social-button" target="_blank">
                     <i class="fab fa-whatsapp fa-3x"></i>
                   </a>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Website</b></td>
-                <td><b>Instagram</b></td>
-                <td><b>Youtube</b></td>
-                <td><b>Whatsapp</b></td>
-              </tr>
-            </table>
-          </div>
+                  <b>Whatsapp</b>
+                </div>
+
+                <!-- SPANLAPOR -->
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <img 
+                      src="<?= base_url('assets/lowongan_kerja_lapor.png') ?>" 
+                      alt="LAPOR" 
+                      width="50" 
+                      height="50"
+                    >
+                    <a 
+                      href="https://wa.me/6282338417445" 
+                      target="_blank" 
+                      style="
+                        color: black;
+                        font-weight: bold;
+                        font-size: 20px;
+                        text-decoration: none;
+                        transition: color 0.3s ease;
+                      "
+                      onmouseover="this.style.color='#f97316'" 
+                      onmouseout="this.style.color='black'"
+                    >
+                      LAPOR!
+                    </a>
+                  </div>
+                  <b>SPANLAPOR</b>
+                </div>
+
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
+</div>
+
 
   <!-- Footer -->
   <footer>

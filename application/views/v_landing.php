@@ -120,12 +120,15 @@
         <a href="<?php echo base_url('Landing'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
         <a href="<?php echo base_url('Landing/tentang'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
         <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+        <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
+        <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Layanan</a>
+
 
         <!-- Dropdown (Desktop) -->
         <!-- Dropdown (Desktop) -->
 <div class="relative" id="desktop-laporan">
   <button id="desktop-laporan-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
-    Laporan
+    Publikasi
     <i id="desktop-laporan-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
   </button>
   <div id="desktop-laporan-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48">
@@ -136,8 +139,6 @@
 </div>
 
         <!-- End Dropdown -->
-
-        <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
       </div>
 
       <!-- Mobile Menu Button -->

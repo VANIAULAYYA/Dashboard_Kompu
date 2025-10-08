@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo $page_title; ?></title>
+  <title>Tentang</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
@@ -230,23 +230,27 @@
           <a class="nav-link <?php echo $active_menu == 'buku_tamu' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/buku_tamu'); ?>">Buku Tamu</a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Media Sosial</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Layanan</a>
+        </li>
+
         <!-- Dropdown Laporan -->
         <li class="nav-item dropdown">
           <a class="nav-link <?php echo $active_menu == 'laporan' ? 'active' : ''; ?>" 
              href="#" id="navbarLaporan" role="button" 
              data-bs-toggle="dropdown" data-bs-display="static" 
              aria-expanded="false">
-            Laporan <i id="laporan-icon" class="fas fa-chevron-up ms-1"></i>
+            Publikasi <i id="laporan-icon" class="fas fa-chevron-up ms-1"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
             <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_harian'); ?>">Laporan PPID</a></li>
             <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_bulanan'); ?>">Laporan Kompu</a></li>
             <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_tahunan'); ?>">Survei Kepuasan Masyarakat</a></li>
           </ul>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link <?php echo $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Media Sosial</a>
         </li>
 
       </ul>
@@ -308,47 +312,7 @@
   <!-- Dot Indicators -->
   <div class="dots"></div>
 
-  <div class="container my-5 py-5">
-    <section class="mb-5 text-center">
-      <div class="text-center">
-        <div class="card feature-card">
-          <div class="card-body align-center">
-            <h2 class="section-title">Media Sosial</h2>
-            <table style="width: 100%; text-align: center;">
-              <tr>
-                <td>
-                  <a href="https://www.sda.pu.go.id/balai/bbwsbrantas" class="social-button mx-3">
-                    <i class="fas fa-globe-asia fa-3x"></i>
-                  </a>
-                </td>
-                <td>
-                  <a href="https://www.instagram.com/pu_sda_brantas" class="social-button mx-3">
-                    <i class="fab fa-instagram fa-3x"></i>
-                  </a>
-                </td>
-                <td>
-                  <a href="https://www.youtube.com/@sisdabrantas" class="social-button mx-3">
-                    <i class="fab fa-youtube fa-3x"></i>
-                  </a>
-                </td>
-                <td>
-                  <a href="http://wa.me/+6282338417445" class="social-button mx-3" target="_blank">
-                    <i class="fab fa-whatsapp fa-3x"></i>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Website</b></td>
-                <td><b>Instagram</b></td>
-                <td><b>Youtube</b></td>
-                <td><b>Whatsapp</b></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+  
 
   <!-- Footer -->
   <footer>

@@ -9,18 +9,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-    font-family: 'Arial', sans-serif;
+body {
+    font-family: 'Poppins', sans-serif;
     scroll-behavior: smooth;
 }
 
 .hero-section {
-    height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                url('<?php echo base_url();?>assets/Pictures/kantor.png');
-    background-size: cover;
-    background-position: center;
+  background: linear-gradient(rgba(78, 115, 223, 0.8), rgba(26, 26, 46, 0.8));
+  color: white;
+  text-align: center;
+  padding: 140px 0 120px;
+  width: 100%;
 }
 
 .form-container {
@@ -50,28 +49,24 @@
 }
 
 nav {
-    position: fixed; /* Navbar tetap */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
 }
 
-/* --- PERBAIKAN RADIO BUTTON --- */
+/* Radio Button Styles */
 .content {
     display: flex;
-    flex-direction: column; /* Agar pertanyaan ke bawah */
-    gap: 15px; /* Jarak antar pertanyaan */
+    flex-direction: column;
+    gap: 15px;
 }
 
-/* Atur wrapper group radio */
-/* Wrapper untuk 1 pertanyaan */
-/* Grid pertanyaan: 2 kolom */
-/* Grid pertanyaan: 2 kolom */
 .radio-group {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 kolom */
-  grid-template-rows: auto auto; /* 2 baris */
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
   gap: 10px 30px;
   margin-top: 10px;
 }
@@ -85,9 +80,8 @@ nav {
   margin: 0;
 }
 
-/* Besarin bullet */
 .radio-group input[type="radio"] {
-  transform: scale(1.3); /* gedein bullet */
+  transform: scale(1.3);
   cursor: pointer;
   margin-left: 20px;
   margin-right: 6px;
@@ -105,39 +99,41 @@ nav {
 }
 
 #otherInput {
-    display: none; /* Sembunyikan input lainnya */
+    display: none;
 }
 
 .form-group {
-  margin-bottom: 25px; /* atur jarak antar pertanyaan */
+  margin-bottom: 25px;
 }
 
+/* Navigation Styles - SAMA SEPERTI KODE PERTAMA */
 .nav-link:hover:after {
-            width: 100%;
-        }
-        
-        .nav-link:after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 2px;
-            background: #e74c3c;
-            transition: width .3s;
-        }
-        
-        .fade-in {
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .rotate-icon:hover {
-            transform: rotate(360deg);
-        }
+    width: 100%;
+}
 
+.nav-link:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #e74c3c;
+    transition: width .3s;
+}
+
+.fade-in {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.rotate-icon:hover {
+    transform: rotate(360deg);
+}
+
+/* DROPDOWN STYLING - PERBAIKAN AGAR TIDAK KEPOTONG */
 #desktop-laporan-dropdown {
     min-width: 16rem !important;
     padding: 0.5rem 0 !important;
@@ -146,16 +142,18 @@ nav {
     background-color: #ffffff !important;
     line-height: 1.5 !important;
     font-family: 'Poppins', sans-serif !important;
+    padding-left: -2 rem !important;
 }
 
 #desktop-laporan-dropdown a {
     display: block;
-    padding: 0.25rem 1rem;
+    padding: 0.5rem 1rem;
     font-size: 0.875rem;
     color: #374151;
     font-weight: 500;
     text-decoration: none;
-    line-height: 1.5;
+    line-height: 1.7;
+    padding: 0.5rem 1rem 0.5rem 0.8rem !important; /* ubah angka terakhir untuk geser kiri-kanan */
 }
 
 #desktop-laporan-dropdown a:hover {
@@ -163,11 +161,15 @@ nav {
     color: #f97316;
 }
 
-    </style>
-    
-</head>
+/* Pastikan parent container tidak memotong dropdown */
+nav .max-w-7xl,
+nav .relative {
+    overflow: visible !important;
+}
+</style>
+
 <body>
-    <!-- Navigation -->
+    <!-- Navigation - SAMA PERSIS DENGAN KODE PERTAMA -->
 <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
@@ -183,24 +185,22 @@ nav {
         <a href="<?php echo base_url('Landing'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
         <a href="<?php echo base_url('Landing/tentang'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
         <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
-
-        <!-- Dropdown (Desktop) -->
-        <!-- Dropdown (Desktop) -->
-<div class="relative" id="desktop-laporan">
-  <button id="desktop-laporan-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
-    Laporan
-    <i id="desktop-laporan-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
-  </button>
-  <div id="desktop-laporan-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48">
-    <a href="<?php echo base_url('Landing/laporan_PPID'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan PPID</a>
-    <a href="<?php echo base_url('Landing/laporan_Kompu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan Kompu</a>
-    <a href="<?php echo base_url('Landing/Survei_Kepuasan_Masyarakat'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Survei Kepuasan Masyarakat</a>
-  </div>
-</div>
-
-        <!-- End Dropdown -->
-
         <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
+        <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Layanan</a>
+
+        <!-- Dropdown (Desktop) -->
+        <div class="relative" id="desktop-laporan">
+          <button id="desktop-laporan-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
+            Publikasi
+            <i id="desktop-laporan-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
+          </button>
+          <div id="desktop-laporan-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48">
+            <a href="<?php echo base_url('Landing/laporan_PPID'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan PPID</a>
+            <a href="<?php echo base_url('Landing/laporan_Kompu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan Kompu</a>
+            <a href="<?php echo base_url('Landing/Survei_Kepuasan_Masyarakat'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Survei Kepuasan Masyarakat</a>
+          </div>
+        </div>
+        <!-- End Dropdown -->
       </div>
 
       <!-- Mobile Menu Button -->
@@ -219,22 +219,22 @@ nav {
     <a href="<?php echo base_url('Landing'); ?>" class="text-gray-700 hover:text-orange-600 transition">Home</a>
     <a href="<?php echo base_url('Landing/tentang'); ?>" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
     <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+    <a href="<?php echo base_url('Landing/medsos'); ?>" class="text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
+    <a href="<?php echo base_url('Landing/medsos'); ?>" class="text-gray-700 hover:text-orange-600 transition">Layanan</a>
 
     <!-- Dropdown Mobile -->
     <div>
       <button id="laporan-dropdown-btn" class="w-full flex justify-between items-center text-gray-700 hover:text-orange-600 transition">
-        Laporan
+        Publikasi
         <i id="laporan-icon" class="fas fa-chevron-down ml-2"></i>
       </button>
       <div id="laporan-dropdown" class="hidden flex flex-col pl-4 mt-2 space-y-2">
-        <a href="<?php echo base_url('Landing/laporan_harian'); ?>" class="text-gray-700 hover:text-orange-600 transition">Laporan PPID</a>
-        <a href="<?php echo base_url('Landing/laporan_bulanan'); ?>" class="text-gray-700 hover:text-orange-600 transition">Laporan Kompu</a>
-        <a href="<?php echo base_url('Landing/laporan_tahunan'); ?>" class="text-gray-700 hover:text-orange-600 transition">Survei Kepuasan Masyarakat</a>
+        <a href="<?php echo base_url('Landing/laporan_PPID'); ?>" class="text-gray-700 hover:text-orange-600 transition">Laporan PPID</a>
+        <a href="<?php echo base_url('Landing/laporan_Kompu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Laporan Kompu</a>
+        <a href="<?php echo base_url('Landing/Survei_Kepuasan_Masyarakat'); ?>" class="text-gray-700 hover:text-orange-600 transition">Survei Kepuasan Masyarakat</a>
       </div>
     </div>
     <!-- End Dropdown Mobile -->
-
-    <a href="<?php echo base_url('Landing/medsos'); ?>" class="text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
   </div>
 </div>
 
@@ -252,23 +252,10 @@ nav {
     icon.classList.toggle("fa-chevron-down");
     icon.classList.toggle("fa-chevron-up");
   });
-  // Toggle mobile menu (hamburger)
-  document.getElementById("mobile-menu-button").addEventListener("click", function() {
-    document.getElementById("mobile-menu").classList.toggle("hidden");
-  });
-
-  // Toggle dropdown laporan di mobile
-  document.getElementById("laporan-dropdown-btn").addEventListener("click", function() {
-    const dropdown = document.getElementById("laporan-dropdown");
-    const icon = document.getElementById("laporan-icon");
-    dropdown.classList.toggle("hidden");
-    icon.classList.toggle("fa-chevron-down");
-    icon.classList.toggle("fa-chevron-up");
-  });
 
   // Toggle dropdown laporan di desktop (klik)
   document.getElementById("desktop-laporan-btn").addEventListener("click", function(e) {
-    e.preventDefault(); // mencegah scroll ke atas jika button
+    e.preventDefault();
     const dropdown = document.getElementById("desktop-laporan-dropdown");
     const icon = document.getElementById("desktop-laporan-icon");
     dropdown.classList.toggle("hidden");
@@ -276,7 +263,7 @@ nav {
     icon.classList.toggle("fa-chevron-up");
   });
 
-  // Optional: klik di luar dropdown untuk menutup
+  // Klik di luar dropdown untuk menutup
   document.addEventListener("click", function(e) {
     const dropdown = document.getElementById("desktop-laporan-dropdown");
     const btn = document.getElementById("desktop-laporan-btn");
@@ -291,6 +278,14 @@ nav {
     }
   });
 </script>
+
+  <!-- Hero Section -->
+<section class="hero-section">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold mb-3">BUKU TAMU</h1>
+    <p class="lead mb-0">LAMPU PETROMAK BBWS BRANTAS</p>
+  </div>
+</section>
 
     <div class="container mx-auto mt-20">
         <div class="form-container">
@@ -435,7 +430,6 @@ nav {
                 </div>
                 <div class="form-group text-right">
     <button type="submit" class="btn btn-primary">Kirim</button>
-    <button type="reset" class="btn btn-secondary">Clear Form</button>
 </div>
             </form>
         </div>
