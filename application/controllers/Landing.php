@@ -43,6 +43,24 @@ class Landing extends CI_Controller {
         $this->load->view('v_about_v2', $data);
     }
 
+    public function layanan()
+    {
+        $data = array(
+            'page_title' => 'Layanan - BBWS Brantas',
+            'active_menu' => 'layanan'
+        );
+        $this->load->view('v_layanan', $data);
+    }
+
+    public function laporan()
+    {
+        $data = array(
+            'page_title' => 'Laporan - BBWS Brantas',
+            'active_menu' => 'laporan'
+        );
+        $this->load->view('v_laporan', $data);
+    }
+
     // ===============================
     // FEEDBACK
     // ===============================

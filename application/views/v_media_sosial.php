@@ -235,7 +235,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link <?php echo $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Layanan</a>
+          <a class="nav-link <?php echo $active_menu == 'layanan' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/layanan'); ?>">Layanan</a>
         </li>
 
         <!-- Dropdown Laporan -->
@@ -310,7 +310,7 @@
                 </td>
                 <td>
                   <a href="http://wa.me/+6282338417445" class="social-button mx-3" target="_blank">
-                    <i class="fab fa-whatsapp fa-3x"></i>
+                    <i class="fab fa-facebook fa-3x"></i>
                   </a>
                 </td>
               </tr>
@@ -318,7 +318,7 @@
                 <td><b>Website</b></td>
                 <td><b>Instagram</b></td>
                 <td><b>Youtube</b></td>
-                <td><b>Whatsapp</b></td>
+                <td><b>Facebook</b></td>
               </tr>
             </table>
           </div>

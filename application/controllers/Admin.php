@@ -74,12 +74,20 @@ public function update_tamu() {
         'no_handphone'   => $this->input->post('no_handphone'),
         'keperluan'      => $this->input->post('keperluan'),
         'kritik_saran'   => $this->input->post('kritik_saran'),
+        'pendapat_pelayanan'  => $this->input->post('pendapat_pelayanan'),
+        'pemahaman_prosedur'  => $this->input->post('pemahaman_prosedur'),
+        'pendapat_kecepatan'   => $this->input->post('pendapat_kecepatan'),
+        'pendapat_biaya'      => $this->input->post('pendapat_biaya'),
+        'pendapat_produk'   => $this->input->post('pendapat_produk'),
+        'pendapat_kompetensi'  => $this->input->post('pendapat_kompetensi'),
+        'pendapat_perilaku'  => $this->input->post('pendapat_perilaku'),
+        'pendapat_pengaduan'   => $this->input->post('pendapat_pengaduan'),
+        'pendapat_kualitas'      => $this->input->post('pendapat_kualitas'),
     ];
     
     $this->M_admin->update_tamu($id, $data);
     redirect('Admin/rekap_tamu');
 }
-
 
     // 🗑️ Delete Tamu
     public function delete_tamu($id) {

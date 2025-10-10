@@ -235,7 +235,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link <?php echo $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Layanan</a>
+          <a class="nav-link <?php echo $active_menu == 'layanan' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/layanan'); ?>">Layanan</a>
         </li>
 
         <!-- Dropdown Laporan -->
@@ -247,7 +247,7 @@
             Publikasi <i id="laporan-icon" class="fas fa-chevron-up ms-1"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
-            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_harian'); ?>">Laporan PPID</a></li>
+            <li><a class="dropdown-item" href="<?php echo base_url('laporan_view'); ?>">Laporan PPID</a></li>
             <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_bulanan'); ?>">Laporan Kompu</a></li>
             <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_tahunan'); ?>">Survei Kepuasan Masyarakat</a></li>
           </ul>

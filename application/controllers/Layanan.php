@@ -28,7 +28,7 @@ class Layanan extends CI_Controller {
     {
         $data = [
             'via'               => $this->input->post('via'),
-            'jenis'             => $this->input->post('jenis'),
+            'status_pemohon'    => $this->input->post('status_pemohon'),
             'pengirim'          => $this->input->post('pengirim'),
             'tanggal_surat'     => $this->input->post('tanggal_surat'),
             'nomor_surat'       => $this->input->post('nomor_surat'),
@@ -68,7 +68,7 @@ class Layanan extends CI_Controller {
 
     $data = [
             'via'               => $this->input->post('via'),
-            'jenis'             => $this->input->post('jenis'),
+            'status_pemohon'    => $this->input->post('status_pemohon'),
             'pengirim'          => $this->input->post('pengirim'),
             'tanggal_surat'     => $this->input->post('tanggal_surat'),
             'nomor_surat'       => $this->input->post('nomor_surat'),

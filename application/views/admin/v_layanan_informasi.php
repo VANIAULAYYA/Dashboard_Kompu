@@ -278,7 +278,7 @@
             Daftar Layanan Informasi di BBWS Brantas
           </p>
           <button type="button" class="btn btn-primary btn-sm mt-4" id="btnTambah">
-            <i class="fa fa-plus"></i> Tambah Informasi
+            <i class="fa fa-plus"></i> Tambah Data
           </button>
         </div>
         <div class="table-responsive">

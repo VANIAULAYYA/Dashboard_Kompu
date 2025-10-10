@@ -20,29 +20,37 @@ class Laporan extends CI_Controller {
 
     public function simpan()
     {
-        $jenis = $this->input->post('jenis_laporan'); // ambil dari form
+        $jenis = $this->input->post('jenis_laporan');
+        $upload_bukti = $this->_upload_file('bukti_file');
+
         $data = [
             'jenis_laporan' => $jenis,
             'periode'       => $this->input->post('periode'),
             'tanggal'       => $this->input->post('tanggal'),
             'nama_file'     => $this->input->post('nama_file'),
-            'bukti_file'    => $this->input->post('bukti_file'),
+            'bukti_file'    => $upload_bukti,
         ];
+
         $this->M_laporan->insert($data);
         redirect('Laporan/' . strtolower($jenis));
     }
 
     public function update()
     {
-        $id = $this->input->post('id');
-        $jenis = $this->input->post('jenis_laporan'); // ambil dari form
+        $id    = $this->input->post('id');
+        $jenis = $this->input->post('jenis_laporan');
+
+        $laporan = $this->M_laporan->get_by_id($id);
+        $upload_bukti = $this->_upload_file('bukti_file', $laporan->bukti_file);
+
         $data = [
             'jenis_laporan' => $jenis,
             'periode'       => $this->input->post('periode'),
             'tanggal'       => $this->input->post('tanggal'),
             'nama_file'     => $this->input->post('nama_file'),
-            'bukti_file'    => $this->input->post('bukti_file'),
+            'bukti_file'    => $upload_bukti,
         ];
+
         $this->M_laporan->update($id, $data);
         redirect('Laporan/' . strtolower($jenis));
     }
@@ -50,10 +58,43 @@ class Laporan extends CI_Controller {
     public function delete($id)
     {
         $laporan = $this->M_laporan->get_by_id($id);
+
+        if ($laporan && !empty($laporan->bukti_file)) {
+            $path = FCPATH . 'uploads/bukti/' . $laporan->bukti_file;
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
+
         $jenis = $laporan->jenis_laporan;
         $this->M_laporan->delete($id);
         redirect('Laporan/' . strtolower($jenis));
     }
+
+    private function _upload_file($field_name, $old_file = null)
+    {
+        if (!empty($_FILES[$field_name]['name'])) {
+            $config['upload_path']   = './uploads/bukti/';
+            $config['allowed_types'] = 'pdf';
+            $config['max_size']      = 2048; // 2MB
+            $config['file_name']     = time() . '_' . $_FILES[$field_name]['name'];
+            $config['overwrite']     = true;
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload($field_name)) {
+                if ($old_file && file_exists('./uploads/bukti/' . $old_file)) {
+                    unlink('./uploads/bukti/' . $old_file);
+                }
+                return $this->upload->data('file_name');
+            } else {
+                log_message('error', $this->upload->display_errors());
+                return $old_file;
+            }
+        }
+        return $old_file;
+    }
+
 
     // ================== LAPORAN KOMPU ==================
     public function kompu()

@@ -9,7 +9,7 @@ class M_laporan extends CI_Model {
         if ($jenis) {
             $this->db->where('jenis_laporan', $jenis);
         }
-        $this->db->order_by('id', 'DESC'); // urutkan data terbaru di atas
+        $this->db->order_by('id', 'ASC'); // urutkan data terbaru di atas
         return $this->db->get('laporan')->result();
     }
 

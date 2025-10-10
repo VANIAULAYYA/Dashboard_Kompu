@@ -252,6 +252,7 @@
               <tr>
                 <th>No</th>
                 <th>Via</th>
+                <th>Status Pengirim</th>
                 <th>Jenis</th>
                 <th>Pengirim</th>
                 <th>Tanggal</th>
@@ -270,6 +271,7 @@
               <tr>
                 <td class="text-sm font-weight-normal"><?= $no++; ?></td>
                 <td class="text-sm font-weight-normal"><?= $p->via; ?></td>
+                <td class="text-sm font-weight-normal"><?= $p->status_pengirim; ?></td>
                 <td class="text-sm font-weight-normal"><?= $p->jenis; ?></td>
                 <td class="text-sm font-weight-normal"><?= $p->pengirim; ?></td>
                 <td class="text-sm font-weight-normal">
@@ -286,6 +288,7 @@
                   <button type="button" class="btn btn-warning btn-sm btnEdit"
     data-id="<?= htmlspecialchars($p->no, ENT_QUOTES) ?>"
     data-via="<?= htmlspecialchars($p->via, ENT_QUOTES) ?>"
+    data-status_pengirim="<?= htmlspecialchars($p->status_pengirim, ENT_QUOTES) ?>"
     data-jenis="<?= htmlspecialchars($p->jenis, ENT_QUOTES) ?>"
     data-pengirim="<?= htmlspecialchars($p->pengirim, ENT_QUOTES) ?>"
     data-tanggal="<?= htmlspecialchars($p->tanggal, ENT_QUOTES) ?>"
@@ -349,28 +352,28 @@
                 <label>Via</label>
                 <select name="via" class="form-select" required>
                   <option value="">-- Pilih Via --</option>
+                  <option value="TNDE">TNDE</option>
                   <option value="Surat">Surat</option>
                   <option value="Email">Email</option>
                   <option value="SPANLAPOR">SPANLAPOR</option>
                   <option value="Instagram">Instagram</option>
                   <option value="WhatsApp">WhatsApp</option>
-                  <option value="Tidak Ada Keterangan">Tidak Ada Keterangan</option>
+                  <option value="Website">Website</option>
                 </select>
               </div>
               <div class="col-md-6 mb-3">
-                <label>Jenis</label>
+                <label>Jenis Pelanggaran</label>
                 <select name="jenis" class="form-select" required>
                   <option value="">-- Pilih Jenis --</option>
-                  <option value="Permintaan Informasi Data">Permintaan Informasi Data</option>
-                  <option value="Pengaduan">Pengaduan</option>
-                  <option value="Lainnya">Lainnya</option>
+                  <option value="Pelanggaran SDA">Pelanggaran SDA</option>
+                  <option value="Pembangunan SDA">Pembangunan SDA</option>
                 </select>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Pengirim</label>
+                <label>Nama Pengirim</label>
                 <input type="text" name="pengirim" class="form-control" placeholder="Nama instansi atau perorangan" required>
               </div>
               <div class="col-md-6 mb-3">
@@ -378,6 +381,18 @@
                 <input type="date" name="tanggal" class="form-control" required>
               </div>
             </div>
+
+            <div class="mb-3">
+                <label>Status Pengirim</label>
+                <select name="status_pengirim" class="form-select" required>
+                <option value="">-- Pilih Status Pengirim --</option>
+                <option value="Mahasiswa (Instansi)">Mahasiswa (Instansi)</option>
+                <option value="Media">Media</option>
+                <option value="Instansi">Instansi</option>
+                <option value="LSM">LSM</option>
+                <option value="Perseorangan">Perseorangan</option>
+                </select>
+              </div>
 
             <div class="mb-3">
               <label>Nomor Surat</label>
@@ -414,7 +429,7 @@
               <label>Status</label>
               <select name="status" class="form-select" required>
                 <option value="">-- Pilih Status --</option>
-                <option value="Telah Diterima">Telah Diterima</option>
+                <option value="Telah Disampaikan">Telah Disampaikan</option>
                 <option value="Dalam Proses">Dalam Proses</option>
                 <option value="Selesai">Selesai</option>
               </select>
@@ -448,28 +463,28 @@
                 <label>Via</label>
                 <select name="via" id="edit_via" class="form-select" required>
                   <option value="" disabled selected hidden>-- Pilih Via --</option>
+                  <option value="TNDE">TNDE</option>
                   <option value="Surat">Surat</option>
                   <option value="Email">Email</option>
                   <option value="SPANLAPOR">SPANLAPOR</option>
                   <option value="Instagram">Instagram</option>
                   <option value="WhatsApp">WhatsApp</option>
-                  <option value="Tidak Ada Keterangan">Tidak Ada Keterangan</option>
+                  <option value="Website">Website</option>
                 </select>
               </div>
               <div class="col-md-6 mb-3">
-                <label>Jenis</label>
+                <label>Jenis Pelanggaran</label>
                 <select name="jenis" id="edit_jenis" class="form-select" required>
                   <option value="" disabled selected hidden>-- Pilih Jenis --</option>
-                  <option value="Permintaan Informasi Data">Permintaan Informasi Data</option>
-                  <option value="Pengaduan">Pengaduan</option>
-                  <option value="Lainnya">Lainnya</option>
+                  <option value="Pelanggaran SDA">Pelanggaran SDA</option>
+                  <option value="Pembangunan SDA">Pembangunan SDA</option>
                 </select>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Pengirim</label>
+                <label>Nama Pengirim</label>
                 <input type="text" name="pengirim" id="edit_pengirim" class="form-control" 
                        placeholder="Masukkan nama pengirim" required>
               </div>
@@ -477,6 +492,18 @@
                 <label>Tanggal</label>
                 <input type="date" name="tanggal" id="edit_tanggal" class="form-control" required>
               </div>
+            </div>
+
+            <div class="mb-3">
+              <label>Status Pengirim</label>
+              <select name="status_pengirin" id="edit_status_pengirim" class="form-select" required>
+                <option value="">-- Pilih Status Pengirim --</option>
+                <option value="Mahasiswa (Instansi)">Mahasiswa (Instansi)</option>
+                <option value="Media">Media</option>
+                <option value="Instansi">Instansi</option>
+                <option value="LSM">LSM</option>
+                <option value="Perseorangan">Perseorangan</option>
+              </select>
             </div>
 
             <div class="mb-3">
@@ -519,7 +546,7 @@
               <label>Status</label>
               <select name="status" id="edit_status" class="form-select" required>
                 <option value="" disabled selected hidden>-- Pilih Status --</option>
-                <option value="Telah Diterima">Telah Diterima</option>
+                <option value="Telah Disampaikan">Telah Disampaikan</option>
                 <option value="Dalam Proses">Dalam Proses</option>
                 <option value="Selesai">Selesai</option>
               </select>
@@ -563,6 +590,7 @@ document.addEventListener("click", function(e) {
   document.getElementById("edit_jenis").value       = btn.dataset.jenis || '';
   document.getElementById("edit_pengirim").value    = btn.dataset.pengirim || '';
   document.getElementById("edit_tanggal").value     = btn.dataset.tanggal || '';
+  document.getElementById("edit_status_pengirim").value = btn.dataset.status_pengirim || '';
   document.getElementById("edit_nomor_surat").value = btn.dataset.nomor_surat || '';
   document.getElementById("edit_perihal").value     = btn.dataset.perihal || '';
   document.getElementById("edit_diterima").value    = btn.dataset.diterima || '';

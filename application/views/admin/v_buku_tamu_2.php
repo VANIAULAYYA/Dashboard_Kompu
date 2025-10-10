@@ -337,23 +337,30 @@
             </div>
 
             <div class="mb-3">
-              <label>Asal Instansi</label>
-              <input type="text" name="asal_instansi" class="form-control" placeholder="Contoh: BBWS Brantas">
+              <label>Asal Instansi?Pribadi</label>
+              <input type="text" name="asal_instansi" class="form-control" placeholder="Masukkan asal instansi/pribadi tamu">
             </div>
 
             <div class="mb-3">
-              <label>No. Telp</label>
-              <input type="text" name="no_handphone" class="form-control" placeholder="08xxxxxxxxxx">
+              <label>No. Handphone yang bisa dihubungi</label>
+              <input type="text" name="no_handphone" class="form-control" placeholder="Masukkan no. handphone tamu">
             </div>
 
             <div class="mb-3">
               <label>Keperluan</label>
-              <input type="text" name="keperluan" class="form-control" placeholder="Tuliskan keperluan tamu">
+              <select name="keperluan" class="form-select" required>
+                <option value="">-- Pilih Keperluan --</option>
+                <option value="Menemui Pejabat/Staff">Menemui Pejabat/Staff</option>
+                <option value="Rekomendasi Teknis (Rekomtek)">Rekomendasi Teknis (Rekomtek)</option>
+                <option value="Kirim Surat (Promosi/Aduan/Temuan)">Kirim Surat (Promosi/Aduan/Temuan)</option>
+                <option value="Permintaan Data/Informasi">Permintaan Data/Informasi</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
             </div>
 
             <div class="mb-3">
-              <label>Kritik Saran</label>
-              <textarea name="kritik_saran" class="form-control" placeholder="Isi kritik atau saran jika ada"></textarea>
+              <label>Kritik dan Saran Perbaikan</label>
+              <textarea name="kritik_saran" class="form-control" placeholder="Isi kritik atau saran tamu"></textarea>
             </div>
 
             <div class="text-end">
@@ -377,10 +384,12 @@
         <div class="card-body p-4">
           <form action="<?= site_url('Admin/update_tamu') ?>" method="post">
             <input type="hidden" name="id" id="edit_id">
+
             <div class="mb-3">
               <label>Nama</label>
               <input type="text" name="nama" id="edit_nama" class="form-control" required>
             </div>
+
             <div class="mb-3">
               <label>Jenis Kelamin</label>
               <select name="jenis_kelamin" id="edit_jenis" class="form-select" required>
@@ -388,22 +397,34 @@
                 <option value="P">Perempuan</option>
               </select>
             </div>
+
             <div class="mb-3">
-              <label>Asal Instansi</label>
+              <label>Asal Instansi/Pribadi</label>
               <input type="text" name="asal_instansi" id="edit_instansi" class="form-control">
             </div>
+
             <div class="mb-3">
-              <label>No. Telp</label>
+              <label>No. Handphone yang bisa dihubungi</label>
               <input type="text" name="no_handphone" id="edit_telp" class="form-control">
             </div>
+
             <div class="mb-3">
               <label>Keperluan</label>
-              <input type="text" name="keperluan" id="edit_keperluan" class="form-control">
+              <select name="keperluan" id="edit_keperluan" class="form-select" required>
+                <option value="">-- Pilih Keperluan --</option>
+                <option value="Menemui Pejabat/Staff">Menemui Pejabat/Staff</option>
+                <option value="Rekomendasi Teknis (Rekomtek)">Rekomendasi Teknis (Rekomtek)</option>
+                <option value="Kirim Surat (Promosi/Aduan/Temuan)">Kirim Surat (Promosi/Aduan/Temuan)</option>
+                <option value="Permintaan Data/Informasi">Permintaan Data/Informasi</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
             </div>
+
             <div class="mb-3">
-              <label>Kritik Saran</label>
+              <label>Kritik dan Saran Perbaikan</label>
               <textarea name="kritik_saran" id="edit_kritik" class="form-control"></textarea>
             </div>
+
             <div class="text-end">
               <button type="button" class="btn btn-secondary" id="btnKembaliEdit">Kembali</button>
               <button type="submit" class="btn btn-warning">Update</button>

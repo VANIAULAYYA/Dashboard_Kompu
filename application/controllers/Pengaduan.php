@@ -28,6 +28,7 @@ class Pengaduan extends CI_Controller {
     {
         $data = [
             'via'          => $this->input->post('via'),
+            'status_pengirim'          => $this->input->post('status_pengirim'),
             'jenis'        => $this->input->post('jenis'),
             'pengirim'     => $this->input->post('pengirim'),
             'tanggal'      => $this->input->post('tanggal'),
@@ -63,6 +64,7 @@ class Pengaduan extends CI_Controller {
 
     $data = [
         'via'          => $this->input->post('via'),
+        'status_pengirim'          => $this->input->post('status_pengirim'),
         'jenis'        => $this->input->post('jenis'),
         'pengirim'     => $this->input->post('pengirim'),
         'tanggal'      => $this->input->post('tanggal'),

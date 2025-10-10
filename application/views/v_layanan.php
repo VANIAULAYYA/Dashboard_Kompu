@@ -235,7 +235,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link <?php echo $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Layanan</a>
+          <a class="nav-link <?php echo $active_menu == 'layanan' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/layanan'); ?>">Layanan</a>
         </li>
 
         <!-- Dropdown Laporan -->
@@ -278,7 +278,7 @@
 
   <!-- Hero Section -->
   <section class="hero-section">
-    <h1 class="display-4 fw-bold mb-3">MEDIA SOSIAL</h1>
+    <h1 class="display-4 fw-bold mb-3">LAYANAN</h1>
     <p class="lead mb-4">LAMPU PETROMAK BBWS BRANTAS</p>
   </section>
 
@@ -290,20 +290,11 @@
     <div class="text-center">
       <div class="card feature-card">
         <div class="card-body text-center">
-          <h2 class="section-title">Media Sosial</h2>
           <table style="margin: 0 auto; text-align: center;">
             <tr>
-              <td style="display: flex; justify-content: center; gap: 120px;">
+              <td style="display: flex; justify-content: center; gap: 200px;">
                 
-                <!-- WhatsApp -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                  <a href="http://wa.me/+6282338417445" class="social-button" target="_blank">
-                    <i class="fab fa-whatsapp fa-3x"></i>
-                  </a>
-                  <b>Whatsapp</b>
-                </div>
-
-                <!-- SPANLAPOR -->
+                <!-- SPANLAPOR (kiri) -->
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <img 
@@ -313,7 +304,7 @@
                       height="50"
                     >
                     <a 
-                      href="https://wa.me/6282338417445" 
+                      href="https://www.lapor.go.id/" 
                       target="_blank" 
                       style="
                         color: black;
@@ -329,6 +320,16 @@
                     </a>
                   </div>
                   <b>SPANLAPOR</b>
+                  <p style="margin: 0; font-size: 14px; color: #555;">Layanan pengaduan masyarakat</p>
+                </div>
+
+                <!-- WhatsApp (kanan) -->
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                  <a href="http://wa.me/+6282338417445" class="social-button" target="_blank">
+                    <i class="fab fa-whatsapp fa-3x"></i>
+                  </a>
+                  <b>Whatsapp</b>
+                  <p style="margin: 0; font-size: 14px; color: #555;">Layanan informasi</p>
                 </div>
 
               </td>
@@ -339,7 +340,6 @@
     </div>
   </section>
 </div>
-
 
   <!-- Footer -->
   <footer>

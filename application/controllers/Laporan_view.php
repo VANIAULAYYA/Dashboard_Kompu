@@ -9,34 +9,110 @@ class Laporan_view extends CI_Controller {
         $this->load->helper('url');
     }
 
-    // Halaman laporan umum
-    public function laporan_PPID() {
-        $data['laporan'] = $this->M_laporan_view->get_laporan('PPID'); // PPID = harian
-        $data['page_title'] = "Laporan PPID";
-        $data['active_menu'] = 'laporan';
+    // Halaman utama view laporan
+    public function index() {
+        $data['page_title'] = 'Sistem Informasi Layanan Publik - PPID';
+        $data['laporan'] = $this->M_laporan_view->get_all_pdfs();
+        
         $this->load->view('v_laporan', $data);
     }
 
-    public function laporan_Kompu() {
-        $data['laporan'] = $this->M_laporan_view->get_laporan('KOMPU'); // KOMPU = bulanan
-        $data['page_title'] = "Laporan Kompu";
-        $data['active_menu'] = 'laporan';
+    // View laporan spesifik berdasarkan ID
+    public function view($id = null) {
+        if (!$id) {
+            redirect('laporan_view');
+        }
+
+        $laporan = $this->M_laporan_view->get_pdf_by_id($id);
+        
+        if (!$laporan) {
+            show_404();
+        }
+
+        $data['page_title'] = 'View Laporan - ' . $laporan['nama_file'];
+        $data['laporan'] = array((object)$laporan); // Format sebagai array of objects untuk view
+        
         $this->load->view('v_laporan', $data);
     }
 
-    public function Survei_Kepuasan_Masyarakat() {
-        $data['laporan'] = $this->M_laporan_view->get_laporan('SKM'); // SKM = tahunan
-        $data['page_title'] = "Survei Kepuasan Masyarakat";
-        $data['active_menu'] = 'laporan';
+    // AJAX endpoint untuk filter periode
+    public function get_ppid_periode() {
+        $periode = $this->input->post('periode');
+        
+        if($periode == 'all') {
+            $laporan = $this->M_laporan_view->get_all_pdfs();
+        } else {
+            $laporan = $this->M_laporan_view->get_pdf_by_kategori($periode);
+        }
+        
+        // Format data untuk view v_laporan
+        $formatted_data = array();
+        foreach($laporan as $item) {
+            $formatted_data[] = (object) array(
+                'id' => $item['id'],
+                'jenis_laporan' => $item['jenis_laporan'],
+                'periode' => $item['periode'],
+                'nama_file' => $item['nama_file'],
+                'bukti_file' => $item['bukti_file'],
+                'tanggal' => $item['tanggal']
+            );
+        }
+        
+        echo json_encode($formatted_data);
+    }
+
+    // Search laporan
+    public function search() {
+        $keyword = $this->input->get('q');
+        $kategori = $this->input->get('kategori');
+
+        $data['page_title'] = 'Hasil Pencarian: ' . $keyword;
+        
+        // Gunakan method search dari model
+        $result = $this->M_laporan_view->search_pdf($keyword, $kategori);
+        
+        // Format data untuk view
+        $formatted_data = array();
+        foreach($result as $item) {
+            $formatted_data[] = (object) array(
+                'id' => $item['id'],
+                'jenis_laporan' => $item['jenis_laporan'],
+                'periode' => $item['periode'],
+                'nama_file' => $item['nama_file'],
+                'bukti_file' => $item['bukti_file'],
+                'tanggal' => $item['tanggal']
+            );
+        }
+        
+        $data['laporan'] = $formatted_data;
+        $data['keyword'] = $keyword;
+
         $this->load->view('v_laporan', $data);
     }
 
-    // AJAX untuk ambil laporan berdasarkan periode
-    public function get_laporan_periode() {
-        $periode = $this->input->post('periode'); 
-        $laporan = $this->M_laporan_view->get_laporan_periode($periode);
-        echo json_encode($laporan);
+    // Get laporan by jenis (PPID, Kompu, SKM)
+    public function jenis($jenis = null) {
+        if (!$jenis) {
+            redirect('laporan_view');
+        }
+
+        $data['page_title'] = 'Laporan ' . $jenis;
+        $result = $this->M_laporan_view->get_pdf_by_jenis($jenis);
+        
+        // Format data untuk view
+        $formatted_data = array();
+        foreach($result as $item) {
+            $formatted_data[] = (object) array(
+                'id' => $item['id'],
+                'jenis_laporan' => $item['jenis_laporan'],
+                'periode' => $item['periode'],
+                'nama_file' => $item['nama_file'],
+                'bukti_file' => $item['bukti_file'],
+                'tanggal' => $item['tanggal']
+            );
+        }
+        
+        $data['laporan'] = $formatted_data;
+        $this->load->view('v_laporan', $data);
     }
-
-
 }

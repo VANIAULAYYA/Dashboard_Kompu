@@ -72,8 +72,8 @@
                   <span class="sidenav-normal"> Rekap Buku Tamu </span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../../pages/dashboards/automotive.html">
+              <li class="nav-item active">
+                <a class="nav-link " href="<?php echo base_url('Admin/layanan_kepuasan'); ?>">
                   <span class="sidenav-mini-icon"> L </span>
                   <span class="sidenav-normal"> Layanan Kepuasan Masyarakat </span>
                 </a>
@@ -144,59 +144,39 @@
         <div class="icon icon-sm shadow-sm border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2">
           <i class="far fa-folder-open" aria-hidden="true"></i>
         </div>
-        <span class="nav-link-text ms-1">Administrator Web</span>
+        <span class="nav-link-text ms-1">Berkas Laporan</span>
       </a>
 
       <div class="collapse" id="dashboardsExamples3">
         <ul class="nav ms-4 ps-3">
 
-        <!-- Menu 1 -->
-<li class="nav-item">
-  <a data-bs-toggle="collapse" href="#submenu1" class="nav-link" aria-expanded="false">
-    <span class="sidenav-normal">1</span>
-  </a>
-  <div class="collapse" id="submenu1">
-    <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span class="me-3">•</span> Submenu 1
-        </a>
-      </li>
-    </ul>
-  </div>
-</li>
-
-          <!-- Menu 2 -->
+          <!-- Laporan PPID -->
           <li class="nav-item">
-  <a data-bs-toggle="collapse" href="#submenu2" class="nav-link" aria-expanded="false">
-    <span class="sidenav-normal">2</span>
-  </a>
-  <div class="collapse" id="submenu2">
-    <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span class="me-3">•</span> Submenu 2
-        </a>
-      </li>
-    </ul>
-  </div>
-</li>
+            <a class="nav-link <?= ($this->uri->segment(2) == 'ppid' ? 'active fw-bold text-dark' : '') ?>" 
+               href="<?= site_url('Laporan/ppid') ?>">
+              <span class="nav-link-text ms-1">Laporan PPID</span>
+            </a>
+          </li>
 
-          <!-- Menu 3 -->
+          <!-- Laporan Kompu -->
           <li class="nav-item">
-  <a data-bs-toggle="collapse" href="#submenu3" class="nav-link" aria-expanded="false">
-    <span class="sidenav-normal">3</span>
-  </a>
-  <div class="collapse" id="submenu3">
-    <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span class="me-3">•</span> Submenu 3
-        </a>
-      </li>
-    </ul>
-  </div>
-</li>
+            <a class="nav-link <?= ($this->uri->segment(2) == 'kompu' ? 'active fw-bold text-dark' : '') ?>" 
+               href="<?= site_url('Laporan/kompu') ?>">
+              <span class="nav-link-text ms-1">Laporan Kompu</span>
+            </a>
+          </li>
+
+          <!-- Survei Kepuasan Masyarakat -->
+          <li class="nav-item">
+            <a class="nav-link <?= ($this->uri->segment(2) == 'skm' ? 'active fw-bold text-dark' : '') ?>" 
+               href="<?= site_url('Laporan/skm') ?>">
+              <span class="nav-link-text ms-1">Survei Kepuasan Masyarakat</span>
+            </a>
+          </li>
+
+        </ul>
+      </div> <!-- Tutup collapse -->
+    </li>
   </ul>
 </div>
   </aside>

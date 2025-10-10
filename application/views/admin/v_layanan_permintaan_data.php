@@ -252,8 +252,8 @@
                 <tr>
                   <th>Nomor</th>
                   <th>Via</th>
-                  <th>Jenis</th>
-                  <th>Pengirim</th>
+                  <th>Status Pemohon</th>
+                  <th>Nama Pengirim</th>
                   <th>Tanggal Surat</th>
                   <th>Nomor Surat</th>
                   <th>Perihal</th>
@@ -270,7 +270,7 @@
                 <tr>
                   <td class="text-sm font-weight-normal"><?= $no++; ?></td>
                   <td class="text-sm font-weight-normal"><?= $p->via; ?></td>
-                  <td class="text-sm font-weight-normal"><?= $p->jenis; ?></td>
+                  <td class="text-sm font-weight-normal"><?= $p->status_pemohon; ?></td>
                   <td class="text-sm font-weight-normal"><?= $p->pengirim; ?></td>
                   <td class="text-sm font-weight-normal">
       <?= date('d F Y', strtotime($p->tanggal_surat)); ?>
@@ -284,20 +284,20 @@
                   <td class="text-sm font-weight-normal"><a href="<?= $p->link_bukti_surat_penyelesaian ?>" target="_blank">Lihat</a></td>
                   <td>
   <button type="button" class="btn btn-warning btn-sm btnEdit"
-    data-id="<?= $p->nomor ?>"
-    data-via="<?= $p->via ?>"
-    data-jenis="<?= $p->jenis ?>"
-    data-pengirim="<?= $p->pengirim ?>"
-    data-tanggal="<?= $p->tanggal_surat ?>"
-    data-nomor_surat="<?= $p->nomor_surat ?>"
-    data-perihal="<?= $p->perihal ?>"
-    data-diterima="<?= $p->diterima_ppid ?>"
-    data-tindak="<?= $p->tindak_lanjut ?>"
-    data-status="<?= $p->status ?>"
-    data-link1="<?= $p->link_bukti_surat ?>"
-    data-link2="<?= $p->link_bukti_surat_penyelesaian ?>">
-    Edit
-  </button>
+  data-id="<?= htmlspecialchars($p->nomor, ENT_QUOTES) ?>"
+  data-via="<?= htmlspecialchars($p->via, ENT_QUOTES) ?>"
+  data-status_pemohon="<?= htmlspecialchars($p->status_pemohon, ENT_QUOTES) ?>"
+  data-pengirim="<?= htmlspecialchars($p->pengirim, ENT_QUOTES) ?>"
+  data-tanggal="<?= htmlspecialchars($p->tanggal_surat, ENT_QUOTES) ?>"
+  data-nomor_surat="<?= htmlspecialchars($p->nomor_surat, ENT_QUOTES) ?>"
+  data-perihal="<?= htmlspecialchars($p->perihal, ENT_QUOTES) ?>"
+  data-diterima="<?= htmlspecialchars($p->diterima_ppid, ENT_QUOTES) ?>"
+  data-tindak="<?= htmlspecialchars($p->tindak_lanjut, ENT_QUOTES) ?>"
+  data-status="<?= htmlspecialchars($p->status, ENT_QUOTES) ?>"
+  data-link1="<?= htmlspecialchars($p->link_bukti_surat, ENT_QUOTES) ?>"
+  data-link2="<?= htmlspecialchars($p->link_bukti_surat_penyelesaian, ENT_QUOTES) ?>">
+  Edit
+</button>
 
   <button type="button" class="btn btn-danger btn-sm" 
     data-bs-toggle="modal" 
@@ -347,19 +347,35 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label>Via</label>
-                <input type="text" name="via" class="form-control" required placeholder="Contoh: Email, Surat, dll">
+                <select name="via" class="form-select" required>
+                <option value="">-- Pilih Via --</option>
+                <option value="TNDE">TNDE</option>
+                <option value="Email">Email</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Website">Website</option>
+              </select>
               </div>
+
               <div class="col-md-6 mb-3">
-                <label>Jenis</label>
-                <input type="text" name="jenis" class="form-control" required placeholder="Contoh: Permintaan Data, Informasi">
+                <label>Status Pemohon</label>
+                <select name="status_pemohon" class="form-select" required>
+                <option value="">-- Pilih Status Pemohon --</option>
+                <option value="Mahasiswa (Instansi)">Mahasiswa (Instansi)</option>
+                <option value="Media">Media</option>
+                <option value="Instansi">Instansi</option>
+                <option value="LSM">LSM</option>
+                <option value="Perseorangan">Perseorangan</option>
+              </select>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Pengirim</label>
+                <label>Nama Pengirim</label>
                 <input type="text" name="pengirim" class="form-control" required placeholder="Nama instansi atau perorangan">
               </div>
+
               <div class="col-md-6 mb-3">
                 <label>Tanggal Surat</label>
                 <input type="date" name="tanggal_surat" class="form-control" required>
@@ -381,6 +397,7 @@
                 <label>Diterima PPID</label>
                 <input type="date" name="diterima_ppid" class="form-control" required>
               </div>
+
               <div class="col-md-6 mb-3">
                 <label>Tindak Lanjut</label>
                 <input type="text" name="tindak_lanjut" class="form-control" placeholder="Tuliskan tindak lanjut (opsional)">
@@ -391,9 +408,9 @@
               <label>Status</label>
               <select name="status" class="form-select" required>
                 <option value="">-- Pilih Status --</option>
-                <option value="Telah Diterima">Telah Diterima</option>
+                <option value="Ditolak">Ditolak</option>
                 <option value="Dalam Proses">Dalam Proses</option>
-                <option value="Selesai">Selesai</option>
+                <option value="Terpenuhi">Terpenuhi</option>
               </select>
             </div>
 
@@ -402,6 +419,7 @@
                 <label for="link_bukti_surat" class="form-label">Tautan Bukti Surat</label>
                 <input type="text" id="link_bukti_surat" name="link_bukti_surat" class="form-control" placeholder="https://contoh.com/surat.pdf">
               </div>
+
               <div class="col-md-6 mb-3">
                 <label for="link_bukti_surat_penyelesaian" class="form-label">Tautan Bukti Surat Penyelesaian</label>
                 <input type="text" id="link_bukti_surat_penyelesaian" name="link_bukti_surat_penyelesaian" class="form-control" placeholder="https://contoh.com/penyelesaian.pdf">
@@ -434,19 +452,31 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label>Via</label>
-                <input type="text" name="via" id="edit_via" class="form-control" 
-                       placeholder="Masukkan via pengiriman" required>
+                <select name="via" id="edit_via" class="form-select" required>
+                <option value="">-- Pilih Status --</option>
+                <option value="TNDE">TNDE</option>
+                <option value="Email">Email</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Website">Website</option>
+              </select>
               </div>
               <div class="col-md-6 mb-3">
-                <label>Jenis</label>
-                <input type="text" name="jenis" id="edit_jenis" class="form-control" 
-                       placeholder="Masukkan jenis layanan" required>
+                <label>Status Pemohon</label>
+                <select name="status_pemohon" id="edit_status_pemohon" class="form-select" required> 
+                <option value="">-- Pilih Status Pemohon --</option>
+                <option value="Mahasiswa (Instansi)">Mahasiswa (Instansi)</option>
+                <option value="Media">Media</option>
+                <option value="Instansi">Instansi</option>
+                <option value="LSM">LSM</option>
+                <option value="Perseorangan">Perseorangan</option>
+              </select>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Pengirim</label>
+                <label>Nama Pengirim</label>
                 <input type="text" name="pengirim" id="edit_pengirim" class="form-control" 
                        placeholder="Masukkan nama pengirim" required>
               </div>
@@ -483,9 +513,10 @@
             <div class="mb-3">
               <label>Status</label>
               <select name="status" id="edit_status" class="form-select" required>
-                <option value="Telah Diterima">Telah Diterima</option>
+                <option value="">-- Pilih Status --</option>
+                <option value="Ditolak">Ditolak</option>
                 <option value="Dalam Proses">Dalam Proses</option>
-                <option value="Selesai">Selesai</option>
+                <option value="Terpenuhi">Terpenuhi</option>
               </select>
             </div>
 
@@ -542,7 +573,7 @@
     // isi field edit dari data-attribute tombol
     document.getElementById("edit_nomor").value       = btn.dataset.id || "";
     document.getElementById("edit_via").value         = btn.dataset.via || "";
-    document.getElementById("edit_jenis").value       = btn.dataset.jenis || "";
+    document.getElementById("edit_status_pemohon").value       = btn.dataset.status_pemohon || "";
     document.getElementById("edit_pengirim").value    = btn.dataset.pengirim || "";
     document.getElementById("edit_tanggal").value     = btn.dataset.tanggal || "";
     document.getElementById("edit_nomor_surat").value = btn.dataset.nomor_surat || "";

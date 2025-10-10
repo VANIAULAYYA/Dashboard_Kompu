@@ -3,31 +3,128 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_laporan_view extends CI_Model {
 
+    private $table_laporan = 'laporan';
+
     public function __construct() {
         parent::__construct();
+        $this->load->database();
     }
 
-    // Ambil semua laporan PPID
-    public function get_ppid() {
-        $this->db->select('*');
-        $this->db->from('laporan');
-        $this->db->where('jenis_laporan', 'PPID');
+    // Get semua laporan
+    public function get_all_pdfs($limit = null, $offset = 0) {
+        $this->db->from($this->table_laporan);
+        $this->db->order_by('urutan', 'ASC');
         $this->db->order_by('tanggal', 'DESC');
-        return $this->db->get()->result();
+        
+        if ($limit) {
+            $this->db->limit($limit, $offset);
+        }
+
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
-    // Ambil laporan PPID berdasarkan periode (Triwulan, Semester, Tahunan)
-    public function get_ppid_periode($periode) {
-        $this->db->select('*');
-        $this->db->from('laporan');
-        $this->db->where('jenis_laporan', 'PPID');
-        $this->db->like('periode', $periode);
+    // Get laporan by ID
+    public function get_pdf_by_id($id) {
+        $this->db->where('id', $id);
+        $query = $this->db->get($this->table_laporan);
+        return $query->row_array();
+    }
+
+    // Get laporan by kategori (periode)
+    public function get_pdf_by_kategori($kategori, $limit = null) {
+        $this->db->where('periode', $kategori);
+        $this->db->order_by('urutan', 'ASC');
         $this->db->order_by('tanggal', 'DESC');
-        return $this->db->get('laporan')->result();
+        
+        if ($limit) {
+            $this->db->limit($limit);
+        }
+
+        $query = $this->db->get($this->table_laporan);
+        return $query->result_array();
     }
 
-    public function get_laporan_by_jenis($jenis) {
-        return $this->db->get_where('laporan', ['jenis_laporan' => $jenis])->result();
+    // Get laporan by jenis laporan
+    public function get_pdf_by_jenis($jenis, $limit = null) {
+        $this->db->where('jenis_laporan', $jenis);
+        $this->db->order_by('urutan', 'ASC');
+        $this->db->order_by('tanggal', 'DESC');
+        
+        if ($limit) {
+            $this->db->limit($limit);
+        }
+
+        $query = $this->db->get($this->table_laporan);
+        return $query->result_array();
     }
 
+    // Search laporan
+    public function search_pdf($keyword, $kategori = null) {
+        $this->db->from($this->table_laporan);
+        
+        if ($keyword) {
+            $this->db->group_start();
+            $this->db->like('nama_file', $keyword);
+            $this->db->or_like('jenis_laporan', $keyword);
+            $this->db->group_end();
+        }
+
+        if ($kategori) {
+            $this->db->where('periode', $kategori);
+        }
+
+        $this->db->order_by('urutan', 'ASC');
+        $this->db->order_by('tanggal', 'DESC');
+        
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // Insert laporan
+    public function insert_pdf($data) {
+        $this->db->insert($this->table_laporan, $data);
+        return $this->db->insert_id();
+    }
+
+    // Update laporan
+    public function update_pdf($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update($this->table_laporan, $data);
+    }
+
+    // Delete laporan
+    public function delete_pdf($id) {
+        $this->db->where('id', $id);
+        return $this->db->delete($this->table_laporan);
+    }
+
+    // Count total laporan
+    public function count_all_pdfs() {
+        return $this->db->count_all($this->table_laporan);
+    }
+
+    // Get popular laporan (berdasarkan urutan)
+    public function get_popular_pdfs($limit = 10) {
+        $this->db->order_by('urutan', 'ASC');
+        $this->db->order_by('tanggal', 'DESC');
+        $this->db->limit($limit);
+        
+        $query = $this->db->get($this->table_laporan);
+        return $query->result_array();
+    }
+
+    // Get recent laporan
+    public function get_recent_pdfs($limit = 10) {
+        $this->db->order_by('tanggal', 'DESC');
+        $this->db->limit($limit);
+        
+        $query = $this->db->get($this->table_laporan);
+        return $query->result_array();
+    }
+
+    // Untuk thumbnails - return array kosong karena tidak ada tabel thumbnails
+    public function get_pdf_thumbnails($pdf_id) {
+        return array(); // Tidak ada tabel thumbnails, return array kosong
+    }
 }
