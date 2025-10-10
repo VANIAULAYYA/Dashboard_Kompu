@@ -369,7 +369,7 @@
               <select name="jenis_laporan" class="form-control" required>
                 <option value="">-- Pilih Jenis Laporan --</option>
                 <option value="PPID">PPID</option>
-                <option value="Kompu">Kompu</option>
+                <option value="KOMPU">Kompu</option>
                 <option value="SKM">SKM</option>
               </select>
             </div>
@@ -452,18 +452,28 @@
             </div>
 
             <div class="mb-3">
-  <label>Bukti File (PDF)</label>
-  <input type="file" name="bukti_file" id="edit_bukti" class="form-control" accept=".pdf">
-  <input type="hidden" name="old_bukti" id="old_bukti">
+              <label>Bukti File (PDF)</label>
+              <input type="file" name="bukti_file" id="edit_bukti" class="form-control" accept=".pdf">
+              <input type="hidden" name="old_bukti" id="old_bukti">
 
-  <!-- Preview PDF -->
-  <div id="pdfPreview" class="mt-3" style="display: none;">
-    <p class="fw-semibold">Preview Dokumen:</p>
-    <iframe id="pdfFrame" src="" width="100%" height="400px" style="border: 1px solid #ccc; border-radius: 6px;"></iframe>
-  </div>
+              <!-- Info File Saat Ini -->
+              <div id="currentFileInfo" class="mt-2">
+                <small class="text-info">
+                  <i class="fas fa-file-pdf"></i> File saat ini: 
+                  <span id="currentFileName" class="fw-bold"></span>
+                  <a href="#" id="downloadCurrentFile" class="ms-2" target="_blank">
+                  </a>
+                </small>
+              </div>
 
-  <small class="text-muted">Kosongkan jika tidak ingin mengganti file</small>
-</div>
+              <!-- Preview PDF -->
+              <div id="pdfPreview" class="mt-3" style="display: none;">
+                <p class="fw-semibold">Preview Dokumen:</p>
+                <iframe id="pdfFrame" src="" width="100%" height="400px" style="border: 1px solid #ccc; border-radius: 6px;"></iframe>
+              </div>
+
+              <small class="text-muted">Kosongkan jika tidak ingin mengganti file</small>
+            </div>
 
             <div class="d-flex justify-content-end gap-2 mt-4">
               <button type="button" class="btn btn-secondary" id="btnKembaliEdit">Kembali</button>
@@ -528,15 +538,31 @@ document.getElementById("datatable-search").addEventListener("click", function(e
     // Set hidden input old_bukti
     document.getElementById("old_bukti").value = btn.dataset.bukti;
 
-    // Tampilkan preview jika ada file bukti
+    // Tampilkan info file saat ini
+    const currentFileInfo = document.getElementById("currentFileInfo");
+    const currentFileName = document.getElementById("currentFileName");
+    const downloadLink = document.getElementById("downloadCurrentFile");
     const previewDiv = document.getElementById("pdfPreview");
     const iframe = document.getElementById("pdfFrame");
+
     if (btn.dataset.bukti && btn.dataset.bukti.trim() !== "") {
+      // Tampilkan nama file
+      currentFileName.textContent = btn.dataset.bukti;
+      
+      // Set link download
+      downloadLink.href = "<?= base_url('uploads/bukti/') ?>" + btn.dataset.bukti;
+      
+      // Tampilkan preview PDF
       iframe.src = "<?= base_url('uploads/bukti/') ?>" + btn.dataset.bukti;
       previewDiv.style.display = "block";
+      currentFileInfo.style.display = "block";
     } else {
+      // Sembunyikan jika tidak ada file
+      currentFileName.textContent = "Tidak ada file";
+      downloadLink.style.display = "none";
       iframe.src = "";
       previewDiv.style.display = "none";
+      currentFileInfo.style.display = "block";
     }
   }
 });

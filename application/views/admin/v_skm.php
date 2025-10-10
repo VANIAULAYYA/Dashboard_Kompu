@@ -300,12 +300,12 @@
       <td class="text-sm font-weight-normal"><?= date('d F Y', strtotime($row->tanggal)); ?></td>
       <td class="text-sm font-weight-normal"><?= $row->nama_file ?></td>
       <td class="text-sm font-weight-normal">
-        <?php if($row->bukti_file): ?>
-          <a href="<?= $row->bukti_file ?>" target="_blank">Lihat</a>
-        <?php else: ?>
-          -
-        <?php endif; ?>
-      </td>
+  <?php if($row->bukti_file): ?>
+    <a href="<?= base_url('uploads/bukti/'.$row->bukti_file) ?>" target="_blank">Lihat</a>
+  <?php else: ?>
+    -
+  <?php endif; ?>
+</td>
       <td class="text-sm font-weight-normal"><?= $row->periode ?></td>
       <td>
         <!-- Tombol Edit -->
@@ -362,14 +362,14 @@
       <div class="card">
         <div class="card-header"><h5 class="mb-0">Tambah Laporan</h5></div>
         <div class="card-body p-4">
-          <form id="formTambah" action="<?= site_url('Laporan/simpan') ?>" method="post">
+          <form id="formTambah" action="<?= site_url('Laporan/simpan') ?>" method="post" enctype="multipart/form-data">
 
             <div class="mb-3">
               <label>Jenis Laporan</label>
               <select name="jenis_laporan" class="form-control" required>
                 <option value="">-- Pilih Jenis Laporan --</option>
                 <option value="PPID">PPID</option>
-                <option value="Kompu">Kompu</option>
+                <option value="KOMPU">Kompu</option>
                 <option value="SKM">SKM</option>
               </select>
             </div>
@@ -395,9 +395,10 @@
             </div>
 
             <div class="mb-3">
-              <label>Bukti File (URL)</label>
-              <input type="text" name="bukti_file" class="form-control" placeholder="Masukkan link bukti file">
-            </div>
+  <label>Bukti File (PDF)</label>
+  <input type="file" name="bukti_file" class="form-control" accept=".pdf" required>
+  <small class="text-muted">Unggah file PDF (maks. 2MB)</small>
+</div>
 
             <div class="text-end">
               <button type="button" class="btn btn-secondary" id="btnKembali">Kembali</button>
@@ -418,7 +419,8 @@
       <div class="card">
         <div class="card-header"><h5 class="mb-0">Edit Laporan</h5></div>
         <div class="card-body p-4">
-          <form action="<?= site_url('Laporan/update') ?>" method="post">
+          <form action="<?= site_url('Laporan/update') ?>" method="post" enctype="multipart/form-data">
+            
             <input type="hidden" name="id" id="edit_id">
 
             <div class="mb-3">
@@ -450,8 +452,27 @@
             </div>
 
             <div class="mb-3">
-              <label>Bukti File (URL)</label>
-              <input type="text" name="bukti_file" id="edit_bukti" class="form-control" placeholder="Masukkan link bukti file">
+              <label>Bukti File (PDF)</label>
+              <input type="file" name="bukti_file" id="edit_bukti" class="form-control" accept=".pdf">
+              <input type="hidden" name="old_bukti" id="old_bukti">
+
+              <!-- Info File Saat Ini -->
+              <div id="currentFileInfo" class="mt-2">
+                <small class="text-info">
+                  <i class="fas fa-file-pdf"></i> File saat ini: 
+                  <span id="currentFileName" class="fw-bold"></span>
+                  <a href="#" id="downloadCurrentFile" class="ms-2" target="_blank">
+                  </a>
+                </small>
+              </div>
+
+              <!-- Preview PDF -->
+              <div id="pdfPreview" class="mt-3" style="display: none;">
+                <p class="fw-semibold">Preview Dokumen:</p>
+                <iframe id="pdfFrame" src="" width="100%" height="400px" style="border: 1px solid #ccc; border-radius: 6px;"></iframe>
+              </div>
+
+              <small class="text-muted">Kosongkan jika tidak ingin mengganti file</small>
             </div>
 
             <div class="d-flex justify-content-end gap-2 mt-4">
@@ -484,40 +505,67 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Tombol edit
-  document.getElementById("datatable-search").addEventListener("click", function(e) {
-    if (e.target.classList.contains("btnEdit")) {
-      let btn = e.target;
-      document.getElementById("divTabel").style.display = "none";
-      document.getElementById("divForm").style.display = "none";
-      document.getElementById("divFormEdit").style.display = "block";
+document.getElementById("datatable-search").addEventListener("click", function(e) {
+  if (e.target.classList.contains("btnEdit")) {
+    let btn = e.target;
+    document.getElementById("divTabel").style.display = "none";
+    document.getElementById("divForm").style.display = "none";
+    document.getElementById("divFormEdit").style.display = "block";
 
-      // Set value hidden id
-      document.getElementById("edit_id").value = btn.dataset.id;
+    // Isi data form
+    document.getElementById("edit_id").value = btn.dataset.id;
+    document.getElementById("edit_tanggal").value = btn.dataset.tanggal;
+    document.getElementById("edit_nama").value = btn.dataset.nama;
 
-      // Set jenis_laporan
-      const selectJenis = document.getElementById("edit_jenis");
-      for (let i = 0; i < selectJenis.options.length; i++) {
-        if (selectJenis.options[i].value.trim().toLowerCase() === btn.dataset.jenis.trim().toLowerCase()) {
-          selectJenis.selectedIndex = i;
-          break;
-        }
+    // Pilih jenis laporan
+    const selectJenis = document.getElementById("edit_jenis");
+    for (let i = 0; i < selectJenis.options.length; i++) {
+      if (selectJenis.options[i].value.trim().toLowerCase() === btn.dataset.jenis.trim().toLowerCase()) {
+        selectJenis.selectedIndex = i;
+        break;
       }
-
-      // Set periode
-      const selectPeriode = document.getElementById("edit_periode");
-      for (let i = 0; i < selectPeriode.options.length; i++) {
-        if (selectPeriode.options[i].value.trim().toLowerCase() === btn.dataset.periode.trim().toLowerCase()) {
-          selectPeriode.selectedIndex = i;
-          break;
-        }
-      }
-
-      // Set tanggal, nama, bukti
-      document.getElementById("edit_tanggal").value = btn.dataset.tanggal;
-      document.getElementById("edit_nama").value = btn.dataset.nama;
-      document.getElementById("edit_bukti").value = btn.dataset.bukti;
     }
-  });
+
+    // Pilih periode
+    const selectPeriode = document.getElementById("edit_periode");
+    for (let i = 0; i < selectPeriode.options.length; i++) {
+      if (selectPeriode.options[i].value.trim().toLowerCase() === btn.dataset.periode.trim().toLowerCase()) {
+        selectPeriode.selectedIndex = i;
+        break;
+      }
+    }
+
+    // Set hidden input old_bukti
+    document.getElementById("old_bukti").value = btn.dataset.bukti;
+
+    // Tampilkan info file saat ini
+    const currentFileInfo = document.getElementById("currentFileInfo");
+    const currentFileName = document.getElementById("currentFileName");
+    const downloadLink = document.getElementById("downloadCurrentFile");
+    const previewDiv = document.getElementById("pdfPreview");
+    const iframe = document.getElementById("pdfFrame");
+
+    if (btn.dataset.bukti && btn.dataset.bukti.trim() !== "") {
+      // Tampilkan nama file
+      currentFileName.textContent = btn.dataset.bukti;
+      
+      // Set link download
+      downloadLink.href = "<?= base_url('uploads/bukti/') ?>" + btn.dataset.bukti;
+      
+      // Tampilkan preview PDF
+      iframe.src = "<?= base_url('uploads/bukti/') ?>" + btn.dataset.bukti;
+      previewDiv.style.display = "block";
+      currentFileInfo.style.display = "block";
+    } else {
+      // Sembunyikan jika tidak ada file
+      currentFileName.textContent = "Tidak ada file";
+      downloadLink.style.display = "none";
+      iframe.src = "";
+      previewDiv.style.display = "none";
+      currentFileInfo.style.display = "block";
+    }
+  }
+});
 
   // Tombol kembali (edit)
   document.getElementById("btnKembaliEdit").addEventListener("click", function(){

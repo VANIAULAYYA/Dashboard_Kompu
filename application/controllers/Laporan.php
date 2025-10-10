@@ -32,7 +32,9 @@ class Laporan extends CI_Controller {
         ];
 
         $this->M_laporan->insert($data);
-        redirect('Laporan/' . strtolower($jenis));
+        
+        // Redirect menggunakan base_url() untuk memastikan path benar
+        redirect(base_url('Laporan/' . strtolower($jenis)));
     }
 
     public function update()
@@ -51,8 +53,14 @@ class Laporan extends CI_Controller {
             'bukti_file'    => $upload_bukti,
         ];
 
-        $this->M_laporan->update($id, $data);
-        redirect('Laporan/' . strtolower($jenis));
+        if ($this->M_laporan->update($id, $data)) {
+            $this->session->set_flashdata('success', 'Data berhasil diupdate');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal mengupdate data');
+        }
+
+        // Redirect menggunakan base_url()
+        redirect(base_url('Laporan/' . strtolower($jenis)));
     }
 
     public function delete($id)
@@ -67,34 +75,16 @@ class Laporan extends CI_Controller {
         }
 
         $jenis = $laporan->jenis_laporan;
-        $this->M_laporan->delete($id);
-        redirect('Laporan/' . strtolower($jenis));
-    }
-
-    private function _upload_file($field_name, $old_file = null)
-    {
-        if (!empty($_FILES[$field_name]['name'])) {
-            $config['upload_path']   = './uploads/bukti/';
-            $config['allowed_types'] = 'pdf';
-            $config['max_size']      = 2048; // 2MB
-            $config['file_name']     = time() . '_' . $_FILES[$field_name]['name'];
-            $config['overwrite']     = true;
-
-            $this->load->library('upload', $config);
-
-            if ($this->upload->do_upload($field_name)) {
-                if ($old_file && file_exists('./uploads/bukti/' . $old_file)) {
-                    unlink('./uploads/bukti/' . $old_file);
-                }
-                return $this->upload->data('file_name');
-            } else {
-                log_message('error', $this->upload->display_errors());
-                return $old_file;
-            }
+        
+        if ($this->M_laporan->delete($id)) {
+            $this->session->set_flashdata('success', 'Data berhasil dihapus');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menghapus data');
         }
-        return $old_file;
+        
+        // Redirect berdasarkan jenis laporan
+        redirect(base_url('Laporan/' . strtolower($jenis)));
     }
-
 
     // ================== LAPORAN KOMPU ==================
     public function kompu()
@@ -107,38 +97,67 @@ class Laporan extends CI_Controller {
     public function simpan_kompu()
     {
         $jenis = $this->input->post('jenis_laporan');
+        $upload_bukti = $this->_upload_file('bukti_file');
+
         $data = [
             'jenis_laporan' => $jenis,
             'periode'       => $this->input->post('periode'),
             'tanggal'       => $this->input->post('tanggal'),
             'nama_file'     => $this->input->post('nama_file'),
-            'bukti_file'    => $this->input->post('bukti_file'),
+            'bukti_file'    => $upload_bukti,
         ];
+
         $this->M_laporan->insert($data);
-        redirect('Laporan/' . strtolower($jenis));
+        
+        // Redirect menggunakan base_url() untuk memastikan path benar
+        redirect(base_url('Laporan/kompu'));
     }
 
     public function update_kompu()
     {
         $id = $this->input->post('id');
         $jenis = $this->input->post('jenis_laporan');
+
+        $laporan = $this->M_laporan->get_by_id($id);
+        $upload_bukti = $this->_upload_file('bukti_file', $laporan->bukti_file);
+
         $data = [
             'jenis_laporan' => $jenis,
             'periode'       => $this->input->post('periode'),
             'tanggal'       => $this->input->post('tanggal'),
             'nama_file'     => $this->input->post('nama_file'),
-            'bukti_file'    => $this->input->post('bukti_file'),
+            'bukti_file'    => $upload_bukti,
         ];
-        $this->M_laporan->update($id, $data);
-        redirect('Laporan/' . strtolower($jenis));
+
+        if ($this->M_laporan->update($id, $data)) {
+            $this->session->set_flashdata('success', 'Data berhasil diupdate');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal mengupdate data');
+        }
+
+        // Redirect ke kompu
+        redirect(base_url('Laporan/kompu'));
     }
 
     public function delete_kompu($id)
     {
         $laporan = $this->M_laporan->get_by_id($id);
-        $jenis = $laporan->jenis_laporan;
-        $this->M_laporan->delete($id);
-        redirect('Laporan/' . strtolower($jenis));
+
+        if ($laporan && !empty($laporan->bukti_file)) {
+            $path = FCPATH . 'uploads/bukti/' . $laporan->bukti_file;
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
+        
+        if ($this->M_laporan->delete($id)) {
+            $this->session->set_flashdata('success', 'Data berhasil dihapus');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menghapus data');
+        }
+        
+        // Redirect ke kompu
+        redirect(base_url('Laporan/kompu'));
     }
 
     // ===================== SKM =====================
@@ -152,37 +171,110 @@ class Laporan extends CI_Controller {
     public function simpan_skm()
     {
         $jenis = $this->input->post('jenis_laporan');
+        $upload_bukti = $this->_upload_file('bukti_file');
+
         $data = [
             'jenis_laporan' => $jenis,
             'periode'       => $this->input->post('periode'),
             'tanggal'       => $this->input->post('tanggal'),
             'nama_file'     => $this->input->post('nama_file'),
-            'bukti_file'    => $this->input->post('bukti_file'),
+            'bukti_file'    => $upload_bukti,
         ];
+
         $this->M_laporan->insert($data);
-        redirect('Laporan/' . strtolower($jenis));
+        
+        // Redirect menggunakan base_url() untuk memastikan path benar
+        redirect(base_url('Laporan/skm'));
     }
 
     public function update_skm()
     {
         $id = $this->input->post('id');
         $jenis = $this->input->post('jenis_laporan');
+
+        $laporan = $this->M_laporan->get_by_id($id);
+        $upload_bukti = $this->_upload_file('bukti_file', $laporan->bukti_file);
+
         $data = [
             'jenis_laporan' => $jenis,
             'periode'       => $this->input->post('periode'),
             'tanggal'       => $this->input->post('tanggal'),
             'nama_file'     => $this->input->post('nama_file'),
-            'bukti_file'    => $this->input->post('bukti_file'),
+            'bukti_file'    => $upload_bukti,
         ];
-        $this->M_laporan->update($id, $data);
-        redirect('Laporan/' . strtolower($jenis));
+
+        if ($this->M_laporan->update($id, $data)) {
+            $this->session->set_flashdata('success', 'Data berhasil diupdate');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal mengupdate data');
+        }
+
+        // Redirect ke skm
+        redirect(base_url('Laporan/skm'));
     }
 
     public function delete_skm($id)
     {
         $laporan = $this->M_laporan->get_by_id($id);
-        $jenis = $laporan->jenis_laporan;
-        $this->M_laporan->delete($id);
-        redirect('Laporan/' . strtolower($jenis));
+
+        if ($laporan && !empty($laporan->bukti_file)) {
+            $path = FCPATH . 'uploads/bukti/' . $laporan->bukti_file;
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
+        
+        if ($this->M_laporan->delete($id)) {
+            $this->session->set_flashdata('success', 'Data berhasil dihapus');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menghapus data');
+        }
+        
+        // Redirect ke skm
+        redirect(base_url('Laporan/skm'));
+    }
+
+    private function _upload_file($field_name, $old_file = null)
+    {
+        if (!empty($_FILES[$field_name]['name'])) {
+            // Pastikan folder uploads/bukti ada
+            $upload_path = FCPATH . 'uploads/bukti/';
+            if (!is_dir($upload_path)) {
+                mkdir($upload_path, 0777, true);
+            }
+
+            $original_name = $_FILES[$field_name]['name'];
+            
+            // Jika file dengan nama yang sama sudah ada, tambahkan timestamp
+            if (file_exists($upload_path . $original_name)) {
+                $file_extension = pathinfo($original_name, PATHINFO_EXTENSION);
+                $file_name_without_ext = pathinfo($original_name, PATHINFO_FILENAME);
+                $new_file_name = $file_name_without_ext . '_' . time() . '.' . $file_extension;
+            } else {
+                $new_file_name = $original_name;
+            }
+
+            $config['upload_path']   = $upload_path;
+            $config['allowed_types'] = 'pdf';
+            $config['max_size']      = 2048; // 2MB
+            $config['file_name']     = $new_file_name;
+            $config['overwrite']     = false;
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload($field_name)) {
+                // Hapus file lama jika ada
+                if ($old_file && file_exists($upload_path . $old_file)) {
+                    unlink($upload_path . $old_file);
+                }
+                return $this->upload->data('file_name');
+            } else {
+                $error = $this->upload->display_errors();
+                log_message('error', 'Upload Error: ' . $error);
+                $this->session->set_flashdata('error', 'Gagal upload file: ' . $error);
+                return $old_file;
+            }
+        }
+        return $old_file;
     }
 }

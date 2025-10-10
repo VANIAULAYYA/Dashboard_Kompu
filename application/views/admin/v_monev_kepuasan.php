@@ -25,52 +25,28 @@
                     </button>
                 </div>
                 
-                <!-- Form Periode -->
-<!-- Form Periode -->
+
+<!-- Form Periode (2 Dropdown) -->
 <form method="GET" action="<?= site_url('monev_kepuasan') ?>" class="flex items-center gap-3 no-print">
     <label class="text-gray-700 font-medium">Periode:</label>
-    <select name="periode" onchange="this.form.submit()" 
-        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <!-- Opsi Bulanan -->
-        <optgroup label="Bulanan">
-            <option value="januari" <?= $periode_selected == 'januari' ? 'selected' : '' ?>>Januari</option>
-            <option value="februari" <?= $periode_selected == 'februari' ? 'selected' : '' ?>>Februari</option>
-            <option value="maret" <?= $periode_selected == 'maret' ? 'selected' : '' ?>>Maret</option>
-            <option value="april" <?= $periode_selected == 'april' ? 'selected' : '' ?>>April</option>
-            <option value="mei" <?= $periode_selected == 'mei' ? 'selected' : '' ?>>Mei</option>
-            <option value="juni" <?= $periode_selected == 'juni' ? 'selected' : '' ?>>Juni</option>
-            <option value="juli" <?= $periode_selected == 'juli' ? 'selected' : '' ?>>Juli</option>
-            <option value="agustus" <?= $periode_selected == 'agustus' ? 'selected' : '' ?>>Agustus</option>
-            <option value="september" <?= $periode_selected == 'september' ? 'selected' : '' ?>>September</option>
-            <option value="oktober" <?= $periode_selected == 'oktober' ? 'selected' : '' ?>>Oktober</option>
-            <option value="november" <?= $periode_selected == 'november' ? 'selected' : '' ?>>November</option>
-            <option value="desember" <?= $periode_selected == 'desember' ? 'selected' : '' ?>>Desember</option>
-        </optgroup>
-        
-        <!-- Opsi Triwulan -->
-        <optgroup label="Triwulan">
-            <option value="triwulan1" <?= $periode_selected == 'triwulan1' ? 'selected' : '' ?>>Triwulan I (Jan-Mar)</option>
-            <option value="triwulan2" <?= $periode_selected == 'triwulan2' ? 'selected' : '' ?>>Triwulan II (Apr-Jun)</option>
-            <option value="triwulan3" <?= $periode_selected == 'triwulan3' ? 'selected' : '' ?>>Triwulan III (Jul-Sep)</option>
-            <option value="triwulan4" <?= $periode_selected == 'triwulan4' ? 'selected' : '' ?>>Triwulan IV (Okt-Des)</option>
-        </optgroup>
-        
-        <!-- Opsi Semester -->
-        <optgroup label="Semester">
-            <option value="semester1" <?= $periode_selected == 'semester1' ? 'selected' : '' ?>>Semester I (Jan-Jun)</option>
-            <option value="semester2" <?= $periode_selected == 'semester2' ? 'selected' : '' ?>>Semester II (Jul-Des)</option>
-        </optgroup>
-        
-        <!-- Opsi Tahunan -->
-        <optgroup label="Tahunan">
-            <option value="tahunan" <?= $periode_selected == 'tahunan' ? 'selected' : '' ?>>Tahunan (Jan-Des)</option>
-        </optgroup>
-        
-        <!-- Opsi Semua Data -->
-        <optgroup label="Lainnya">
-            <option value="semua" <?= $periode_selected == 'semua' ? 'selected' : '' ?>>Semua Data</option>
-        </optgroup>
+
+    <!-- Dropdown Jenis Periode -->
+    <select name="jenis_periode" id="jenis_periode"
+        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        onchange="updatePeriodeOptions()">
+        <option value="bulanan" <?= $jenis_periode == 'bulanan' ? 'selected' : '' ?>>Bulanan</option>
+        <option value="triwulan" <?= $jenis_periode == 'triwulan' ? 'selected' : '' ?>>Triwulan</option>
+        <option value="semester" <?= $jenis_periode == 'semester' ? 'selected' : '' ?>>Semester</option>
+        <option value="tahunan" <?= $jenis_periode == 'tahunan' ? 'selected' : '' ?>>Tahunan</option>
+        <option value="semua" <?= $jenis_periode == 'semua' ? 'selected' : '' ?>>Semua Data</option>
     </select>
+
+    <!-- Dropdown Nilai Periode -->
+    <select name="periode" id="periode"
+        onchange="this.form.submit()"
+        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </select>
+
     <span class="text-sm text-gray-600">
         Periode: <strong><?= $periode_label ?></strong>
     </span>
@@ -195,52 +171,60 @@
                 </div>
 
                 <!-- Grafik Survey SKM -->
-<div class="bg-white rounded-lg shadow p-6">
-    <h2 class="text-xl font-semibold text-gray-700 mb-4">Grafik Survey Kepuasan Masyarakat (SKM)</h2>
+<div class="bg-white rounded-lg shadow p-6 relative">
+  <h2 class="text-xl font-semibold text-gray-700 mb-4">Grafik Survey Kepuasan Masyarakat (SKM)</h2>
+
+  <?php 
+  $total = $grafik_distribusi['sangat_sesuai'] + $grafik_distribusi['sesuai'] + 
+           $grafik_distribusi['kurang_sesuai'] + $grafik_distribusi['tidak_sesuai'];
+  ?>
+
+  <?php if($total > 0): ?>
+  <?php
+    $sangat = ($grafik_distribusi['sangat_sesuai'] / $total) * 100;
+    $sesuai = ($grafik_distribusi['sesuai'] / $total) * 100;
+    $kurang = ($grafik_distribusi['kurang_sesuai'] / $total) * 100;
+    $tidak = ($grafik_distribusi['tidak_sesuai'] / $total) * 100;
     
-    <?php 
-    $total = $grafik_distribusi['sangat_sesuai'] + $grafik_distribusi['sesuai'] + 
-             $grafik_distribusi['kurang_sesuai'] + $grafik_distribusi['tidak_sesuai'];
-    ?>
-    
-    <?php if($total > 0): ?>
-        <!-- Donut Chart -->
-        <div class="flex justify-center mb-6">
-            <div class="relative w-64 h-64">
-                <?php
-                $sangat = ($grafik_distribusi['sangat_sesuai'] / $total) * 100;
-                $sesuai = ($grafik_distribusi['sesuai'] / $total) * 100;
-                $kurang = ($grafik_distribusi['kurang_sesuai'] / $total) * 100;
-                $tidak = ($grafik_distribusi['tidak_sesuai'] / $total) * 100;
-                
-                $offset1 = 0;
-                $offset2 = $sangat * 5.03;
-                $offset3 = ($sangat + $sesuai) * 5.03;
-                $offset4 = ($sangat + $sesuai + $kurang) * 5.03;
-                ?>
-                <svg viewBox="0 0 200 200" class="transform -rotate-90">
-                    <?php if($sangat > 0): ?>
-                    <circle cx="100" cy="100" r="80" fill="none" stroke="#10b981" stroke-width="40" 
-                        stroke-dasharray="<?= $sangat * 5.03 ?> 502" stroke-dashoffset="0" />
-                    <?php endif; ?>
-                    
-                    <?php if($sesuai > 0): ?>
-                    <circle cx="100" cy="100" r="80" fill="none" stroke="#fbbf24" stroke-width="40" 
-                        stroke-dasharray="<?= $sesuai * 5.03 ?> 502" stroke-dashoffset="-<?= $offset2 ?>" />
-                    <?php endif; ?>
-                    
-                    <?php if($kurang > 0): ?>
-                    <circle cx="100" cy="100" r="80" fill="none" stroke="#f97316" stroke-width="40" 
-                        stroke-dasharray="<?= $kurang * 5.03 ?> 502" stroke-dashoffset="-<?= $offset3 ?>" />
-                    <?php endif; ?>
-                    
-                    <?php if($tidak > 0): ?>
-                    <circle cx="100" cy="100" r="80" fill="none" stroke="#ef4444" stroke-width="40" 
-                        stroke-dasharray="<?= $tidak * 5.03 ?> 502" stroke-dashoffset="-<?= $offset4 ?>" />
-                    <?php endif; ?>
-                </svg>
-            </div>
-        </div>
+    $offset2 = $sangat * 5.03;
+    $offset3 = ($sangat + $sesuai) * 5.03;
+    $offset4 = ($sangat + $sesuai + $kurang) * 5.03;
+  ?>
+
+  <div class="flex justify-center mb-6">
+    <div class="relative w-64 h-64">
+      <svg viewBox="0 0 200 200" class="transform -rotate-90">
+        <?php if($sangat > 0): ?>
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#10b981" stroke-width="40"
+          stroke-dasharray="<?= $sangat * 5.03 ?> 502" stroke-dashoffset="0"
+          class="hoverable" data-label="Sangat Sesuai: <?= round($sangat, 1) ?>%" />
+        <?php endif; ?>
+
+        <?php if($sesuai > 0): ?>
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#fbbf24" stroke-width="40"
+          stroke-dasharray="<?= $sesuai * 5.03 ?> 502" stroke-dashoffset="-<?= $offset2 ?>"
+          class="hoverable" data-label="Sesuai: <?= round($sesuai, 1) ?>%" />
+        <?php endif; ?>
+
+        <?php if($kurang > 0): ?>
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#f97316" stroke-width="40"
+          stroke-dasharray="<?= $kurang * 5.03 ?> 502" stroke-dashoffset="-<?= $offset3 ?>"
+          class="hoverable" data-label="Kurang Sesuai: <?= round($kurang, 1) ?>%" />
+        <?php endif; ?>
+
+        <?php if($tidak > 0): ?>
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#ef4444" stroke-width="40"
+          stroke-dasharray="<?= $tidak * 5.03 ?> 502" stroke-dashoffset="-<?= $offset4 ?>"
+          class="hoverable" data-label="Tidak Sesuai: <?= round($tidak, 1) ?>%" />
+        <?php endif; ?>
+      </svg>
+
+      <!-- Tooltip -->
+      <div id="tooltip"
+        class="hidden absolute bg-gray-800 text-white text-sm px-3 py-2 rounded-lg pointer-events-none transform -translate-x-1/2 -translate-y-10">
+      </div>
+    </div>
+  </div>
 
         <!-- Legend -->
         <div class="space-y-3">
@@ -295,17 +279,17 @@
 </div>
 
             <!-- Jenis Keperluan -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Jenis Keperluan Kunjungan Masyarakat</h2>
+            <div class="bg-white rounded-lg shadow p-6 w-[1280px] mx-auto">
+                <h2 class="text-center text-xl font-semibold text-gray-700 mb-4">Jenis Keperluan Kunjungan Masyarakat</h2>
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead>
-                            <tr class="border-b">
-                                <th class="text-left py-3 px-2 text-gray-600 text-sm">#</th>
-                                <th class="text-left py-3 px-2 text-gray-600 text-sm">Keperluan</th>
-                                <th class="text-left py-3 px-2 text-gray-600 text-sm">Jumlah</th>
-                                <th class="text-left py-3 px-2 text-gray-600 text-sm">Jumlah(Angka)</th>
-                            </tr>
+                             <tr class="border-b">
+    <th class="text-left py-3 px-2 text-gray-600 text-sm w-1/12">#</th>
+    <th class="text-left py-3 px-2 text-gray-600 text-sm w-4/12">Keperluan</th>
+    <th class="text-center py-3 px-2 text-gray-600 text-sm w-5/12">Jumlah</th>
+    <th class="text-center py-3 px-2 text-gray-600 text-sm w-2/12">Jumlah (Angka)</th>
+  </tr>
                         </thead>
                         <tbody>
                             <?php if(!empty($keperluan)): ?>
@@ -325,7 +309,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="py-3 px-2">
+                                    <td class="text-center py-3 px-2">
                                         <?php
                                         $badge_color = $item['persen'] >= 80 ? 'bg-green-500' : 
                                                       ($item['persen'] >= 60 ? 'bg-yellow-500' : 'bg-orange-500');
@@ -345,32 +329,151 @@
                     </table>
                 </div>
             </div>
-
-            <!-- Footer -->
-            <div class="mt-8 text-center text-gray-500 text-sm">
-                <p>© <?= date('Y') ?> Dashboard Kepuasan Masyarakat - Dibuat dengan CodeIgniter</p>
-            </div>
         </div>
     </div>
+    
+    <footer class="footer pt-3  ">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>,
+                made by KOMPU BBWS BRANTAS
+                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">IT Tim</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </footer>
 
     <script>
-        // Auto refresh setiap 5 menit (opsional)
-        // setTimeout(function(){ location.reload(); }, 300000);
+window.addEventListener('load', function() {
+    const periodeOptions = {
+        bulanan: [
+            { value: 'januari', label: 'Januari' },
+            { value: 'februari', label: 'Februari' },
+            { value: 'maret', label: 'Maret' },
+            { value: 'april', label: 'April' },
+            { value: 'mei', label: 'Mei' },
+            { value: 'juni', label: 'Juni' },
+            { value: 'juli', label: 'Juli' },
+            { value: 'agustus', label: 'Agustus' },
+            { value: 'september', label: 'September' },
+            { value: 'oktober', label: 'Oktober' },
+            { value: 'november', label: 'November' },
+            { value: 'desember', label: 'Desember' }
+        ],
+        triwulan: [
+            { value: 'triwulan1', label: 'Triwulan I (Jan–Mar)' },
+            { value: 'triwulan2', label: 'Triwulan II (Apr–Jun)' },
+            { value: 'triwulan3', label: 'Triwulan III (Jul–Sep)' },
+            { value: 'triwulan4', label: 'Triwulan IV (Okt–Des)' }
+        ],
+        semester: [
+            { value: 'semester1', label: 'Semester I (Jan–Jun)' },
+            { value: 'semester2', label: 'Semester II (Jul–Des)' }
+        ],
+        tahunan: [
+            { value: 'tahunan', label: 'Tahunan (Jan–Des)' }
+        ]
+        // HAPUS "semua" dari sini karena tidak perlu opsi periode untuk "semua"
+    };
+
+    const jenisSelect = document.getElementById('jenis_periode');
+    const periodeSelect = document.getElementById('periode');
+
+    function updatePeriodeOptions() {
+        const jenis = jenisSelect.value;
+        const selectedPeriode = '<?= $periode_selected ?>'; // Ambil dari PHP
         
-        // Animasi saat halaman load
-        window.addEventListener('load', function() {
-            document.querySelectorAll('.bg-white').forEach((el, index) => {
-                setTimeout(() => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(20px)';
-                    el.style.transition = 'all 0.5s ease';
-                    setTimeout(() => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                    }, 50);
-                }, index * 100);
+        console.log('Updating options for:', jenis, 'Selected:', selectedPeriode);
+        
+        // Kosongkan dropdown periode
+        periodeSelect.innerHTML = '<option value="">-- Pilih Periode --</option>';
+
+        // Jika pilih "semua", disable dropdown periode
+        if (jenis === 'semua') {
+            periodeSelect.disabled = true;
+            return;
+        }
+
+        // Enable dropdown dan isi opsi
+        periodeSelect.disabled = false;
+        
+        if (periodeOptions[jenis]) {
+            periodeOptions[jenis].forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt.value;
+                option.textContent = opt.label;
+                
+                // Set selected berdasarkan periode yang aktif
+                if (opt.value === selectedPeriode) {
+                    option.selected = true;
+                }
+                
+                periodeSelect.appendChild(option);
             });
-        });
-    </script>
+        }
+    }
+
+    // Event listener untuk jenis periode
+    jenisSelect.addEventListener('change', function() {
+        if (this.value === 'semua') {
+            // Jika pilih "Semua Data", submit langsung
+            window.location.href = '<?= site_url('monev_kepuasan') ?>?jenis_periode=semua';
+        } else {
+            updatePeriodeOptions();
+            // Reset pilihan periode
+            periodeSelect.value = '';
+        }
+    });
+
+    // Event listener untuk periode (auto-submit)
+    periodeSelect.addEventListener('change', function() {
+        if (this.value) {
+            const jenisPeriode = jenisSelect.value;
+            window.location.href = '<?= site_url('monev_kepuasan') ?>?jenis_periode=' + jenisPeriode + '&periode=' + this.value;
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const tooltip = document.getElementById("tooltip");
+
+    document.querySelectorAll(".hoverable").forEach(circle => {
+      circle.addEventListener("mousemove", e => {
+        tooltip.textContent = circle.getAttribute("data-label");
+        tooltip.style.left = e.offsetX + "px";
+        tooltip.style.top = e.offsetY + "px";
+        tooltip.classList.remove("hidden");
+      });
+
+      circle.addEventListener("mouseleave", () => {
+        tooltip.classList.add("hidden");
+      });
+    });
+    
+
+    // Inisialisasi saat halaman load
+    updatePeriodeOptions();
+
+    // Animasi tampilan elemen
+    document.querySelectorAll('.bg-white').forEach((el, index) => {
+        setTimeout(() => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.5s ease';
+            setTimeout(() => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, 50);
+        }, index * 100);
+    });
+});
+</script>
+
+
 </body>
 </html>
