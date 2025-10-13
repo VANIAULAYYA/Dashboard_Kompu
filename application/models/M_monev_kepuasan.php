@@ -13,182 +13,180 @@ class M_monev_kepuasan extends CI_Model {
      * Get total responden berdasarkan periode
      */
     public function get_total_responden($date_range) {
-    // Jika date_range null, tidak pakai filter
-    if ($date_range['start'] !== null && $date_range['end'] !== null) {
-        $this->db->where('DATE(timestamp) >=', $date_range['start']);
-        $this->db->where('DATE(timestamp) <=', $date_range['end']);
+        // Jika date_range null, tidak pakai filter
+        if ($date_range['start'] !== null && $date_range['end'] !== null) {
+            $this->db->where('DATE(timestamp) >=', $date_range['start']);
+            $this->db->where('DATE(timestamp) <=', $date_range['end']);
+        }
+        // Jika null, query tanpa where clause (ambil semua data)
+        return $this->db->count_all_results($this->table);
     }
-    return $this->db->count_all_results($this->table);
-}
 
     /**
      * Get jumlah responden berdasarkan jenis kelamin
      */
     public function get_jenis_kelamin($date_range) {
-    $this->db->select('jenis_kelamin, COUNT(*) as jumlah');
-    
-    // Filter hanya jika date_range tidak kosong
-    if (!empty($date_range['start']) && !empty($date_range['end'])) {
-        $this->db->where('DATE(timestamp) >=', $date_range['start']);
-        $this->db->where('DATE(timestamp) <=', $date_range['end']);
-    }
-    
-    $this->db->group_by('jenis_kelamin');
-    $query = $this->db->get($this->table);
-    
-    $result = [
-        'pria' => 0,
-        'wanita' => 0
-    ];
-    
-    foreach ($query->result() as $row) {
-        if (strtolower($row->jenis_kelamin) == 'l' || strtolower($row->jenis_kelamin) == 'pria') {
-            $result['pria'] = $row->jumlah;
-        } else {
-            $result['wanita'] = $row->jumlah;
+        $this->db->select('jenis_kelamin, COUNT(*) as jumlah');
+        
+        // Filter hanya jika date_range tidak null
+        if ($date_range['start'] !== null && $date_range['end'] !== null) {
+            $this->db->where('DATE(timestamp) >=', $date_range['start']);
+            $this->db->where('DATE(timestamp) <=', $date_range['end']);
         }
+        
+        $this->db->group_by('jenis_kelamin');
+        $query = $this->db->get($this->table);
+        
+        $result = [
+            'pria' => 0,
+            'wanita' => 0
+        ];
+        
+        foreach ($query->result() as $row) {
+            if (strtolower($row->jenis_kelamin) == 'l' || strtolower($row->jenis_kelamin) == 'pria') {
+                $result['pria'] = $row->jumlah;
+            } else {
+                $result['wanita'] = $row->jumlah;
+            }
+        }
+        
+        return $result;
     }
-    
-    return $result;
-}
 
     /**
      * Get nilai rata-rata IKM (Indeks Kepuasan Masyarakat)
      */
     public function get_nilai_ikm($date_range) {
-    $this->db->select('
-        AVG(pendapat_pelayanan) as avg1,
-        AVG(pemahaman_prosedur) as avg2,
-        AVG(pendapat_kecepatan) as avg3,
-        AVG(pendapat_biaya) as avg4,
-        AVG(pendapat_produk) as avg5,
-        AVG(pendapat_kompetensi) as avg6,
-        AVG(pendapat_perilaku) as avg7,
-        AVG(pendapat_pengaduan) as avg8,
-        AVG(pendapat_kualitas) as avg9
-    ');
-    
-    // Filter hanya jika date_range tidak kosong
-    if (!empty($date_range['start']) && !empty($date_range['end'])) {
-        $this->db->where('DATE(timestamp) >=', $date_range['start']);
-        $this->db->where('DATE(timestamp) <=', $date_range['end']);
+        $this->db->select('
+            AVG(pendapat_pelayanan) as avg1,
+            AVG(pemahaman_prosedur) as avg2,
+            AVG(pendapat_kecepatan) as avg3,
+            AVG(pendapat_biaya) as avg4,
+            AVG(pendapat_produk) as avg5,
+            AVG(pendapat_kompetensi) as avg6,
+            AVG(pendapat_perilaku) as avg7,
+            AVG(pendapat_pengaduan) as avg8,
+            AVG(pendapat_kualitas) as avg9
+        ');
+        
+        // Filter hanya jika date_range tidak null
+        if ($date_range['start'] !== null && $date_range['end'] !== null) {
+            $this->db->where('DATE(timestamp) >=', $date_range['start']);
+            $this->db->where('DATE(timestamp) <=', $date_range['end']);
+        }
+        
+        $query = $this->db->get($this->table);
+        $result = $query->row();
+        
+        // Handle case ketika tidak ada data
+        if (!$result || ($result->avg1 === null && $result->avg2 === null)) {
+            return 0;
+        }
+        
+        // Hitung total rata-rata
+        $total = ($result->avg1 + $result->avg2 + $result->avg3 + $result->avg4 + 
+                  $result->avg5 + $result->avg6 + $result->avg7 + $result->avg8 + 
+                  $result->avg9) / 9;
+        
+        return round($total, 2);
     }
-    
-    $query = $this->db->get($this->table);
-    $result = $query->row();
-    
-    // Hitung total rata-rata
-    $total = ($result->avg1 + $result->avg2 + $result->avg3 + $result->avg4 + 
-              $result->avg5 + $result->avg6 + $result->avg7 + $result->avg8 + 
-              $result->avg9) / 9;
-    
-    return round($total, 2);
-}
+
     /**
      * Get rata-rata nilai pendapat untuk kolom tertentu
      */
     public function get_rata_pendapat($date_range, $kolom) {
-    $this->db->select("AVG($kolom) as rata");
-    
-    // Filter hanya jika date_range tidak kosong
-    if (!empty($date_range['start']) && !empty($date_range['end'])) {
-        $this->db->where('DATE(timestamp) >=', $date_range['start']);
-        $this->db->where('DATE(timestamp) <=', $date_range['end']);
+        $this->db->select("AVG($kolom) as rata");
+        
+        // Filter hanya jika date_range tidak null
+        if ($date_range['start'] !== null && $date_range['end'] !== null) {
+            $this->db->where('DATE(timestamp) >=', $date_range['start']);
+            $this->db->where('DATE(timestamp) <=', $date_range['end']);
+        }
+        
+        $query = $this->db->get($this->table);
+        $result = $query->row();
+        
+        return $result->rata ? round($result->rata, 2) : 0;
     }
-    
-    $query = $this->db->get($this->table);
-    $result = $query->row();
-    
-    return $result->rata ? round($result->rata, 2) : 0;
-}
 
     /**
      * Get distribusi kepuasan (untuk grafik donut)
      */
     public function get_distribusi_kepuasan($date_range) {
-    // DEBUG: Log the date range
-    // error_log("Date Range: " . print_r($date_range, true));
-    
-    $this->db->select('
-        id,
-        (pendapat_pelayanan + pemahaman_prosedur + pendapat_kecepatan + 
-         pendapat_biaya + pendapat_produk + pendapat_kompetensi + 
-         pendapat_perilaku + pendapat_pengaduan + pendapat_kualitas) / 9 as rata_total
-    ');
-    
-    // Filter hanya jika date_range tidak null
-    if ($date_range['start'] !== null && $date_range['end'] !== null) {
-        $this->db->where('DATE(timestamp) >=', $date_range['start']);
-        $this->db->where('DATE(timestamp) <=', $date_range['end']);
-    }
-    
-    $query = $this->db->get($this->table);
-    
-    // DEBUG: Log query results
-    // error_log("Query results: " . $query->num_rows() . " rows");
-    
-    $distribusi = [
-        'sangat_sesuai' => 0,
-        'sesuai' => 0,
-        'kurang_sesuai' => 0,
-        'tidak_sesuai' => 0
-    ];
-    
-    foreach ($query->result() as $row) {
-        // DEBUG: Log each calculation
-        // error_log("ID: " . $row->id . ", Rata Total: " . $row->rata_total);
+        $this->db->select('
+            id,
+            (pendapat_pelayanan + pemahaman_prosedur + pendapat_kecepatan + 
+             pendapat_biaya + pendapat_produk + pendapat_kompetensi + 
+             pendapat_perilaku + pendapat_pengaduan + pendapat_kualitas) / 9 as rata_total
+        ');
         
-        if ($row->rata_total >= 3.5324) {
-            $distribusi['sangat_sesuai']++;
-        } elseif ($row->rata_total >= 3.0644) {
-            $distribusi['sesuai']++;
-        } elseif ($row->rata_total >= 2.60) {
-            $distribusi['kurang_sesuai']++;
-        } else {
-            $distribusi['tidak_sesuai']++;
+        // Filter hanya jika date_range tidak null
+        if ($date_range['start'] !== null && $date_range['end'] !== null) {
+            $this->db->where('DATE(timestamp) >=', $date_range['start']);
+            $this->db->where('DATE(timestamp) <=', $date_range['end']);
         }
+        
+        $query = $this->db->get($this->table);
+        
+        $distribusi = [
+            'sangat_sesuai' => 0,
+            'sesuai' => 0,
+            'kurang_sesuai' => 0,
+            'tidak_sesuai' => 0
+        ];
+        
+        foreach ($query->result() as $row) {
+            // Handle null values
+            if ($row->rata_total === null) continue;
+            
+            if ($row->rata_total >= 3.5324) {
+                $distribusi['sangat_sesuai']++;
+            } elseif ($row->rata_total >= 3.0644) {
+                $distribusi['sesuai']++;
+            } elseif ($row->rata_total >= 2.60) {
+                $distribusi['kurang_sesuai']++;
+            } else {
+                $distribusi['tidak_sesuai']++;
+            }
+        }
+        
+        return $distribusi;
     }
-    
-    // DEBUG: Log final distribution
-    // error_log("Final Distribution: " . print_r($distribusi, true));
-    
-    return $distribusi;
-}
 
     /**
      * Get data keperluan kunjungan
      */
     public function get_keperluan_kunjungan($date_range) {
-    $this->db->select('keperluan, COUNT(*) as jumlah');
-    
-    // Filter hanya jika date_range tidak null
-    if ($date_range['start'] !== null && $date_range['end'] !== null) {
-        $this->db->where('DATE(timestamp) >=', $date_range['start']);
-        $this->db->where('DATE(timestamp) <=', $date_range['end']);
+        $this->db->select('keperluan, COUNT(*) as jumlah');
+        
+        // Filter hanya jika date_range tidak null
+        if ($date_range['start'] !== null && $date_range['end'] !== null) {
+            $this->db->where('DATE(timestamp) >=', $date_range['start']);
+            $this->db->where('DATE(timestamp) <=', $date_range['end']);
+        }
+        
+        $this->db->group_by('keperluan');
+        $query = $this->db->get($this->table);
+        
+        $total = $this->get_total_responden($date_range);
+        $result = [];
+        
+        foreach ($query->result() as $row) {
+            $persen = $total > 0 ? round(($row->jumlah / $total) * 100) : 0;
+            $result[] = [
+                'nama' => $row->keperluan ?: 'Tidak diisi',
+                'jumlah' => $row->jumlah,
+                'persen' => $persen
+            ];
+        }
+        
+        // Urutkan berdasarkan jumlah (descending)
+        usort($result, function($a, $b) {
+            return $b['jumlah'] - $a['jumlah'];
+        });
+        
+        return $result;
     }
-    
-    $this->db->group_by('keperluan');
-    $query = $this->db->get($this->table);
-    
-    $total = $this->get_total_responden($date_range);
-    $result = [];
-    
-    foreach ($query->result() as $row) {
-        $persen = $total > 0 ? round(($row->jumlah / $total) * 100) : 0;
-        $result[] = [
-            'nama' => $row->keperluan,
-            'jumlah' => $row->jumlah,
-            'persen' => $persen
-        ];
-    }
-    
-    // Urutkan berdasarkan jumlah (descending)
-    usort($result, function($a, $b) {
-        return $b['jumlah'] - $a['jumlah'];
-    });
-    
-    return $result;
-}
 
     /**
      * Get detail data untuk export atau keperluan lain
@@ -243,9 +241,13 @@ class M_monev_kepuasan extends CI_Model {
     }
 
     /**
-     * Get statistik per bulan (untuk chart tahunan)
+     * Get statistik per bulan (untuk chart tahunan) - MODIFIED
      */
-    public function get_statistik_bulanan($tahun) {
+    public function get_statistik_bulanan($tahun = null) {
+        if ($tahun === null) {
+            $tahun = date('Y');
+        }
+        
         $this->db->select('
             MONTH(timestamp) as bulan,
             COUNT(*) as total_responden,
@@ -260,6 +262,7 @@ class M_monev_kepuasan extends CI_Model {
         
         return $query->result();
     }
+
 
     /**
      * Get top keperluan
@@ -469,5 +472,29 @@ class M_monev_kepuasan extends CI_Model {
 
     return $data;
 }
+
+ public function get_available_years() {
+        $this->db->select('YEAR(timestamp) as tahun');
+        $this->db->distinct();
+        $this->db->from($this->table);
+        $this->db->where('timestamp IS NOT NULL');
+        $this->db->order_by('tahun', 'DESC');
+        $query = $this->db->get();
+        
+        $years = [];
+        foreach ($query->result() as $row) {
+            if (!empty($row->tahun)) {
+                $years[] = $row->tahun;
+            }
+        }
+        
+        // Jika tidak ada data, default ke tahun sekarang
+        if (empty($years)) {
+            $years[] = date('Y');
+        }
+        
+        return $years;
+    }
+
 
 }

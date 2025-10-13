@@ -18,30 +18,45 @@ class Monev_kepuasan extends CI_Controller {
      * Halaman utama dashboard
      */
     public function index() {
-        // Ambil parameter dari GET
-        $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'triwulan';
-        $periode = $this->input->get('periode') ? $this->input->get('periode') : 'triwulan1';
-        
-        // Jika pilih "semua data", set periode ke null
-        if ($jenis_periode == 'semua') {
-            $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
-            $periode = 'semua';
-        } else {
-            // Hitung tanggal range berdasarkan periode
-            $date_range = $this->get_date_range($periode);
-        }
-        
-        // Ambil data dari model
+    // Ambil parameter dari GET
+    $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'triwulan';
+    $periode = $this->input->get('periode') ? $this->input->get('periode') : 'triwulan1';
+    
+    // Ambil tahun yang tersedia dari database
+    $tahun_available = $this->M_monev_kepuasan->get_available_years();
+    
+    // Set tahun default (gunakan tahun terbaru dari array yang tersedia)
+    $tahun_selected = $this->input->get('tahun') ? $this->input->get('tahun') : $tahun_available[0];
+    
+    // Validasi tahun yang dipilih
+    if (!in_array($tahun_selected, $tahun_available)) {
+        $tahun_selected = $tahun_available[0];
+    }
+    
+    // Jika pilih "semua data", set periode ke null
+    if ($jenis_periode == 'semua') {
+        $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+        $periode = 'semua';
+        $tahun_selected = 'semua'; // Set tahun ke 'semua' juga
+    } else {
+        // Hitung tanggal range berdasarkan periode dan tahun
+        $date_range = $this->get_date_range($periode, $tahun_selected);
+    }
+    
+    // Ambil data dari model dengan error handling
+    try {
+        $data['tahun_available'] = $tahun_available;
+        $data['tahun_selected'] = $tahun_selected;
         $data['jenis_periode'] = $jenis_periode;
         $data['periode_selected'] = $periode;
-        $data['periode_label'] = $date_range['label']; // Untuk ditampilkan di view
+        $data['periode_label'] = $date_range['label'];
         $data['total_responden'] = $this->M_monev_kepuasan->get_total_responden($date_range);
         $data['jenis_kelamin'] = $this->M_monev_kepuasan->get_jenis_kelamin($date_range);
         $data['nilai_ikm'] = $this->M_monev_kepuasan->get_nilai_ikm($date_range);
         $data['persentase_ikm'] = ($data['nilai_ikm'] / 4) * 100;
         $data['grade_pkm'] = $this->get_grade($data['nilai_ikm']);
         
-        // Data unsur SKM
+        // Data unsur SKM dengan error handling
         $data['unsur_skm'] = [
             ['nama' => 'Persyaratan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_pelayanan'), 'grade' => ''],
             ['nama' => 'Prosedur', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pemahaman_prosedur'), 'grade' => ''],
@@ -65,9 +80,15 @@ class Monev_kepuasan extends CI_Controller {
         // Keperluan kunjungan
         $data['keperluan'] = $this->M_monev_kepuasan->get_keperluan_kunjungan($date_range);
         
-        // Load view
-        $this->load->view('admin/v_monev_kepuasan', $data);
+    } catch (Exception $e) {
+        // Handle error gracefully
+        log_message('error', 'Error in Monev_kepuasan: ' . $e->getMessage());
+        show_error('Terjadi kesalahan dalam memuat data. Silakan coba lagi.');
     }
+    
+    // Load view
+    $this->load->view('admin/v_monev_kepuasan', $data);
+}
     
     /**
      * Halaman detail data buku tamu
@@ -266,17 +287,26 @@ class Monev_kepuasan extends CI_Controller {
     // ... (method-method lainnya: api_chart_trend, get_date_range, get_grade tetap sama)
 
     /**
-     * Fungsi untuk mendapatkan range tanggal berdasarkan periode
+     * Fungsi untuk mendapatkan range tanggal berdasarkan periode dan tahun
      */
-    private function get_date_range($periode) {
-        $tahun = 2024; // Tahun berjalan
+    private function get_date_range($periode, $tahun = null) {
+        // Default tahun sekarang jika tidak ada data
+        if ($tahun === null) {
+            $tahun = date('Y');
+        }
+        
+        // Validasi tahun (minimal 2020, maksimal tahun sekarang + 1)
+        $current_year = date('Y');
+        $tahun = max(2020, min($tahun, $current_year + 5)); // Beri buffer 5 tahun ke depan
         
         switch ($periode) {
             // Bulanan
             case 'januari':
                 return ['start' => $tahun.'-01-01', 'end' => $tahun.'-01-31', 'label' => 'Januari '.$tahun];
             case 'februari':
-                return ['start' => $tahun.'-02-01', 'end' => $tahun.'-02-'.date('t', strtotime($tahun.'-02-01')), 'label' => 'Februari '.$tahun];
+                // Handle tahun kabisat untuk Februari
+                $end_day = date('t', strtotime($tahun.'-02-01'));
+                return ['start' => $tahun.'-02-01', 'end' => $tahun.'-02-'.$end_day, 'label' => 'Februari '.$tahun];
             case 'maret':
                 return ['start' => $tahun.'-03-01', 'end' => $tahun.'-03-31', 'label' => 'Maret '.$tahun];
             case 'april':
@@ -324,6 +354,7 @@ class Monev_kepuasan extends CI_Controller {
                 return ['start' => null, 'end' => null, 'label' => 'Semua Data'];
         }
     }
+
     
     /**
      * Fungsi untuk mendapatkan grade berdasarkan nilai
