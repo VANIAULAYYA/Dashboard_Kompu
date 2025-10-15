@@ -12,15 +12,20 @@ class M_monev_kepuasan extends CI_Model {
     /**
      * Get total responden berdasarkan periode
      */
-    public function get_total_responden($date_range) {
-        // Jika date_range null, tidak pakai filter
-        if ($date_range['start'] !== null && $date_range['end'] !== null) {
-            $this->db->where('DATE(timestamp) >=', $date_range['start']);
-            $this->db->where('DATE(timestamp) <=', $date_range['end']);
-        }
-        // Jika null, query tanpa where clause (ambil semua data)
-        return $this->db->count_all_results($this->table);
+   public function get_total_responden($date_range) {
+    $this->db->from('buku_tamu_backup');
+    
+    // Filter berdasarkan tanggal range
+    if ($date_range['start'] && $date_range['end']) {
+        $this->db->where('timestamp >=', $date_range['start']);
+        $this->db->where('timestamp <=', $date_range['end']);
     }
+    
+    // JANGAN tambahkan filter tahun lagi jika sudah pakai date_range
+    // Karena date_range['start'] dan date_range['end'] sudah include tahun
+    
+    return $this->db->count_all_results();
+}
 
     /**
      * Get jumlah responden berdasarkan jenis kelamin
@@ -473,28 +478,46 @@ class M_monev_kepuasan extends CI_Model {
     return $data;
 }
 
- public function get_available_years() {
-        $this->db->select('YEAR(timestamp) as tahun');
-        $this->db->distinct();
-        $this->db->from($this->table);
-        $this->db->where('timestamp IS NOT NULL');
-        $this->db->order_by('tahun', 'DESC');
-        $query = $this->db->get();
-        
-        $years = [];
-        foreach ($query->result() as $row) {
-            if (!empty($row->tahun)) {
-                $years[] = $row->tahun;
-            }
-        }
-        
-        // Jika tidak ada data, default ke tahun sekarang
-        if (empty($years)) {
-            $years[] = date('Y');
-        }
-        
-        return $years;
+public function get_available_years() {
+    $this->db->select('YEAR(timestamp) as tahun');
+    $this->db->from('buku_tamu_backup');
+    $this->db->group_by('YEAR(timestamp)');
+    $this->db->order_by('tahun', 'DESC');
+    
+    $query = $this->db->get();
+    $years = [];
+    
+    foreach ($query->result() as $row) {
+        $years[] = $row->tahun;
     }
+    
+    return $years;
+}
 
+/**
+ * Get distribusi nilai untuk grafik donut per unsur
+ */
+public function get_distribusi_unsur($date_range, $kolom) {
+    // Query untuk distribusi nilai berdasarkan grade
+    $this->db->select("
+        SUM(CASE WHEN $kolom >= 3.5324 THEN 1 ELSE 0 END) as sangat_puas,
+        SUM(CASE WHEN $kolom >= 3.0644 AND $kolom < 3.5324 THEN 1 ELSE 0 END) as puas,
+        SUM(CASE WHEN $kolom >= 2.60 AND $kolom < 3.0644 THEN 1 ELSE 0 END) as cukup,
+        SUM(CASE WHEN $kolom < 2.60 THEN 1 ELSE 0 END) as kurang_puas,
+        COUNT(*) as total_responden,
+        AVG($kolom) as rata_rata
+    ");
+    
+    // Filter berdasarkan date_range
+    if ($date_range['start'] !== null && $date_range['end'] !== null) {
+        $this->db->where('DATE(timestamp) >=', $date_range['start']);
+        $this->db->where('DATE(timestamp) <=', $date_range['end']);
+    }
+    
+    $this->db->where("$kolom IS NOT NULL");
+    
+    $query = $this->db->get($this->table);
+    return $query->row();
+}
 
 }

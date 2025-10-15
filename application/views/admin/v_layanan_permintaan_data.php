@@ -114,11 +114,11 @@
           <div class="collapse" id="dashboardsExamples2">
             <ul class="nav ms-4 ps-3">
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/dashboards/default.html">
-                  <span class="sidenav-mini-icon"> M </span>
-                  <span class="sidenav-normal"> Monev Kepuasan Masyarakat</span>
-                </a>
-              </li>  
+    <a class="nav-link" href="<?php echo base_url('Monev_kepuasan'); ?>">
+        <span class="sidenav-mini-icon"> M </span>
+        <span class="sidenav-normal"> Monev Kepuasan Masyarakat</span>
+    </a>
+</li>    
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('Monev'); ?>">
                   <span class="sidenav-mini-icon"> M </span>

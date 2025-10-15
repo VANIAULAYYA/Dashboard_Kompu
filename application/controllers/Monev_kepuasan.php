@@ -18,77 +18,88 @@ class Monev_kepuasan extends CI_Controller {
      * Halaman utama dashboard
      */
     public function index() {
-    // Ambil parameter dari GET
-    $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'triwulan';
-    $periode = $this->input->get('periode') ? $this->input->get('periode') : 'triwulan1';
-    
-    // Ambil tahun yang tersedia dari database
-    $tahun_available = $this->M_monev_kepuasan->get_available_years();
-    
-    // Set tahun default (gunakan tahun terbaru dari array yang tersedia)
-    $tahun_selected = $this->input->get('tahun') ? $this->input->get('tahun') : $tahun_available[0];
-    
-    // Validasi tahun yang dipilih
-    if (!in_array($tahun_selected, $tahun_available)) {
-        $tahun_selected = $tahun_available[0];
-    }
-    
-    // Jika pilih "semua data", set periode ke null
-    if ($jenis_periode == 'semua') {
-        $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
-        $periode = 'semua';
-        $tahun_selected = 'semua'; // Set tahun ke 'semua' juga
-    } else {
-        // Hitung tanggal range berdasarkan periode dan tahun
-        $date_range = $this->get_date_range($periode, $tahun_selected);
-    }
-    
-    // Ambil data dari model dengan error handling
-    try {
-        $data['tahun_available'] = $tahun_available;
-        $data['tahun_selected'] = $tahun_selected;
-        $data['jenis_periode'] = $jenis_periode;
-        $data['periode_selected'] = $periode;
-        $data['periode_label'] = $date_range['label'];
-        $data['total_responden'] = $this->M_monev_kepuasan->get_total_responden($date_range);
-        $data['jenis_kelamin'] = $this->M_monev_kepuasan->get_jenis_kelamin($date_range);
-        $data['nilai_ikm'] = $this->M_monev_kepuasan->get_nilai_ikm($date_range);
-        $data['persentase_ikm'] = ($data['nilai_ikm'] / 4) * 100;
-        $data['grade_pkm'] = $this->get_grade($data['nilai_ikm']);
+        // Ambil parameter dari GET
+        $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'triwulan';
+        $periode = $this->input->get('periode') ? $this->input->get('periode') : 'triwulan1';
         
-        // Data unsur SKM dengan error handling
-        $data['unsur_skm'] = [
-            ['nama' => 'Persyaratan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_pelayanan'), 'grade' => ''],
-            ['nama' => 'Prosedur', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pemahaman_prosedur'), 'grade' => ''],
-            ['nama' => 'Kecepatan Waktu', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kecepatan'), 'grade' => ''],
-            ['nama' => 'Biaya/Tarif', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_biaya'), 'grade' => ''],
-            ['nama' => 'Kesesuaian Produk Pelayanan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_produk'), 'grade' => ''],
-            ['nama' => 'Kompetensi Petugas', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kompetensi'), 'grade' => ''],
-            ['nama' => 'Perilaku Petugas', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_perilaku'), 'grade' => ''],
-            ['nama' => 'Penanganan Pengaduan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_pengaduan'), 'grade' => ''],
-            ['nama' => 'Kualitas Sarana Prasarana', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kualitas'), 'grade' => '']
-        ];
+        // Ambil tahun yang tersedia dari database
+        $tahun_available = $this->M_monev_kepuasan->get_available_years();
         
-        // Tambahkan grade untuk setiap unsur
-        foreach ($data['unsur_skm'] as &$item) {
-            $item['grade'] = $this->get_grade($item['nilai']);
+        // Set tahun default (gunakan tahun terbaru dari array yang tersedia)
+        $tahun_selected = $this->input->get('tahun') ? $this->input->get('tahun') : $tahun_available[0];
+        
+        // PERBAIKAN: Jika tahun selected tidak ada di list, tambahkan ke array
+        if ($tahun_selected != 'semua' && !in_array($tahun_selected, $tahun_available)) {
+            $tahun_available[] = $tahun_selected;
+            // Sort descending
+            rsort($tahun_available);
         }
         
-        // Grafik distribusi
-        $data['grafik_distribusi'] = $this->M_monev_kepuasan->get_distribusi_kepuasan($date_range);
+        // PERBAIKAN: Handle jenis periode
+        if ($jenis_periode == 'semua') {
+            $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+            $periode = 'semua';
+            $tahun_selected = 'semua';
+        } elseif ($jenis_periode == 'tahunan') {
+            // UNTUK TAHUNAN, set periode ke 'tahunan' dan gunakan tahun yang dipilih
+            $periode = 'tahunan';
+            $tahun_for_range = ($tahun_selected == 'semua') ? null : $tahun_selected;
+            $date_range = $this->get_date_range($periode, $tahun_for_range);
+        } else {
+            // Untuk bulanan, triwulan, semester
+            $tahun_for_range = ($tahun_selected == 'semua') ? null : $tahun_selected;
+            $date_range = $this->get_date_range($periode, $tahun_for_range);
+        }
         
-        // Keperluan kunjungan
-        $data['keperluan'] = $this->M_monev_kepuasan->get_keperluan_kunjungan($date_range);
+        // TAMBAHKAN PARAMETER TAHUN KE DATE_RANGE
+        $date_range['tahun'] = $tahun_selected;
         
-    } catch (Exception $e) {
-        // Handle error gracefully
-        log_message('error', 'Error in Monev_kepuasan: ' . $e->getMessage());
-        show_error('Terjadi kesalahan dalam memuat data. Silakan coba lagi.');
+        // Ambil data dari model dengan error handling
+        try {
+            $data['tahun_available'] = $tahun_available;
+            $data['tahun_selected'] = $tahun_selected;
+            $data['jenis_periode'] = $jenis_periode;
+            $data['periode_selected'] = $periode;
+            $data['periode_label'] = $date_range['label'];
+            $data['total_responden'] = $this->M_monev_kepuasan->get_total_responden($date_range);
+            $data['jenis_kelamin'] = $this->M_monev_kepuasan->get_jenis_kelamin($date_range);
+            $data['nilai_ikm'] = $this->M_monev_kepuasan->get_nilai_ikm($date_range);
+            $data['persentase_ikm'] = ($data['nilai_ikm'] / 4) * 100;
+            $data['grade_pkm'] = $this->get_grade($data['nilai_ikm']);
+            
+            // Data unsur SKM dengan error handling
+            $data['unsur_skm'] = [
+                ['nama' => 'Persyaratan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_pelayanan'), 'grade' => ''],
+                ['nama' => 'Prosedur', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pemahaman_prosedur'), 'grade' => ''],
+                ['nama' => 'Kecepatan Waktu', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kecepatan'), 'grade' => ''],
+                ['nama' => 'Biaya/Tarif', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_biaya'), 'grade' => ''],
+                ['nama' => 'Kesesuaian Produk Pelayanan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_produk'), 'grade' => ''],
+                ['nama' => 'Kompetensi Petugas', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kompetensi'), 'grade' => ''],
+                ['nama' => 'Perilaku Petugas', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_perilaku'), 'grade' => ''],
+                ['nama' => 'Penanganan Pengaduan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_pengaduan'), 'grade' => ''],
+                ['nama' => 'Kualitas Sarana Prasarana', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kualitas'), 'grade' => '']
+            ];
+            
+            // Tambahkan grade untuk setiap unsur
+            foreach ($data['unsur_skm'] as &$item) {
+                $item['grade'] = $this->get_grade($item['nilai']);
+            }
+            
+            // Grafik distribusi
+            $data['grafik_distribusi'] = $this->M_monev_kepuasan->get_distribusi_kepuasan($date_range);
+            
+            // Keperluan kunjungan
+            $data['keperluan'] = $this->M_monev_kepuasan->get_keperluan_kunjungan($date_range);
+            
+        } catch (Exception $e) {
+            // Handle error gracefully
+            log_message('error', 'Error in Monev_kepuasan: ' . $e->getMessage());
+            show_error('Terjadi kesalahan dalam memuat data. Silakan coba lagi.');
+        }
+        
+        // Load view
+        $this->load->view('admin/v_monev_kepuasan', $data);
     }
-    
-    // Load view
-    $this->load->view('admin/v_monev_kepuasan', $data);
-}
     
     /**
      * Halaman detail data buku tamu
@@ -240,71 +251,89 @@ class Monev_kepuasan extends CI_Controller {
         fclose($output);
     }
 
-    /**
-     * Cetak/Print laporan
-     */
-    public function print_laporan() {
-        $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'triwulan';
-        $periode = $this->input->get('periode') ? $this->input->get('periode') : 'triwulan1';
-        
-        // Jika pilih "semua data", set periode ke null
-        if ($jenis_periode == 'semua') {
-            $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
-            $periode = 'semua';
-        } else {
-            $date_range = $this->get_date_range($periode);
+/**
+ * Cetak/Print laporan
+ */
+public function print_laporan() {
+    $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'triwulan';
+    $periode = $this->input->get('periode') ? $this->input->get('periode') : 'triwulan1';
+    $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
+    
+    // Jika pilih "semua data", set periode ke null
+    if ($jenis_periode == 'semua') {
+        $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+        $periode = 'semua';
+        $tahun = 'semua';
+    } else {
+        // Untuk jenis periode tahunan, otomatis set periode ke tahunan
+        if ($jenis_periode == 'tahunan') {
+            $periode = 'tahunan';
         }
-        
-        // Ambil semua data untuk laporan
-        $data['jenis_periode'] = $jenis_periode;
-        $data['periode_selected'] = $periode;
-        $data['date_range'] = $date_range;
-        $data['total_responden'] = $this->M_monev_kepuasan->get_total_responden($date_range);
-        $data['nilai_ikm'] = $this->M_monev_kepuasan->get_nilai_ikm($date_range);
-        $data['grade_pkm'] = $this->get_grade($data['nilai_ikm']);
-        $data['ringkasan'] = $this->M_monev_kepuasan->get_ringkasan_statistik($date_range);
-        $data['unsur_skm'] = [
-            ['nama' => 'Persyaratan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_pelayanan')],
-            ['nama' => 'Prosedur', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pemahaman_prosedur')],
-            ['nama' => 'Kecepatan Waktu', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kecepatan')],
-            ['nama' => 'Biaya/Tarif', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_biaya')],
-            ['nama' => 'Kesesuaian Produk Pelayanan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_produk')],
-            ['nama' => 'Kompetensi Petugas', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kompetensi')],
-            ['nama' => 'Perilaku Petugas', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_perilaku')],
-            ['nama' => 'Penanganan Pengaduan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_pengaduan')],
-            ['nama' => 'Kualitas Sarana Prasarana', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kualitas')]
-        ];
-        
-        foreach ($data['unsur_skm'] as &$item) {
-            $item['grade'] = $this->get_grade($item['nilai']);
-        }
-        
-        $data['keperluan'] = $this->M_monev_kepuasan->get_keperluan_kunjungan($date_range);
-        
-        $this->load->view('admin/v_monev_print', $data);
+        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+        $date_range = $this->get_date_range($periode, $tahun_for_range);
     }
+    
+    // Ambil data sama seperti di index
+    $data['jenis_periode'] = $jenis_periode;
+    $data['periode_selected'] = $periode;
+    $data['tahun_selected'] = $tahun;
+    $data['date_range'] = $date_range;
+    $data['periode_label'] = $date_range['label'];
+    $data['total_responden'] = $this->M_monev_kepuasan->get_total_responden($date_range);
+    $data['jenis_kelamin'] = $this->M_monev_kepuasan->get_jenis_kelamin($date_range);
+    $data['nilai_ikm'] = $this->M_monev_kepuasan->get_nilai_ikm($date_range);
+    $data['persentase_ikm'] = ($data['nilai_ikm'] / 4) * 100;
+    $data['grade_pkm'] = $this->get_grade($data['nilai_ikm']);
+    
+    // Data unsur SKM
+    $data['unsur_skm'] = [
+        ['nama' => 'Persyaratan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_pelayanan'), 'grade' => ''],
+        ['nama' => 'Prosedur', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pemahaman_prosedur'), 'grade' => ''],
+        ['nama' => 'Kecepatan Waktu', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kecepatan'), 'grade' => ''],
+        ['nama' => 'Biaya/Tarif', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_biaya'), 'grade' => ''],
+        ['nama' => 'Kesesuaian Produk Pelayanan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_produk'), 'grade' => ''],
+        ['nama' => 'Kompetensi Petugas', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kompetensi'), 'grade' => ''],
+        ['nama' => 'Perilaku Petugas', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_perilaku'), 'grade' => ''],
+        ['nama' => 'Penanganan Pengaduan', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_pengaduan'), 'grade' => ''],
+        ['nama' => 'Kualitas Sarana Prasarana', 'nilai' => $this->M_monev_kepuasan->get_rata_pendapat($date_range, 'pendapat_kualitas'), 'grade' => '']
+    ];
+    
+    // Tambahkan grade untuk setiap unsur
+    foreach ($data['unsur_skm'] as &$item) {
+        $item['grade'] = $this->get_grade($item['nilai']);
+    }
+    
+    // Grafik distribusi
+    $data['grafik_distribusi'] = $this->M_monev_kepuasan->get_distribusi_kepuasan($date_range);
+    
+    // Keperluan kunjungan
+    $data['keperluan'] = $this->M_monev_kepuasan->get_keperluan_kunjungan($date_range);
+    
+    $this->load->view('admin/v_monev_kepuasan', $data);
+}
 
     // ... (method-method lainnya: api_chart_trend, get_date_range, get_grade tetap sama)
 
     /**
-     * Fungsi untuk mendapatkan range tanggal berdasarkan periode dan tahun
+     * Fungsi untuk mendapatkan range tanggal berdasarkan periode
      */
-    private function get_date_range($periode, $tahun = null) {
+      private function get_date_range($periode, $tahun = null) {
         // Default tahun sekarang jika tidak ada data
         if ($tahun === null) {
             $tahun = date('Y');
         }
         
-        // Validasi tahun (minimal 2020, maksimal tahun sekarang + 1)
-        $current_year = date('Y');
-        $tahun = max(2020, min($tahun, $current_year + 5)); // Beri buffer 5 tahun ke depan
+        // PENTING: HAPUS VALIDASI INI!
+        // $tahun = max(2020, min($tahun, $current_year + 5)); <-- HAPUS BARIS INI
+        
+        // Hanya pastikan tahun adalah integer yang valid
+        $tahun = intval($tahun);
         
         switch ($periode) {
             // Bulanan
             case 'januari':
                 return ['start' => $tahun.'-01-01', 'end' => $tahun.'-01-31', 'label' => 'Januari '.$tahun];
             case 'februari':
-                // Handle tahun kabisat untuk Februari
                 $end_day = date('t', strtotime($tahun.'-02-01'));
                 return ['start' => $tahun.'-02-01', 'end' => $tahun.'-02-'.$end_day, 'label' => 'Februari '.$tahun];
             case 'maret':
@@ -353,8 +382,7 @@ class Monev_kepuasan extends CI_Controller {
             default:
                 return ['start' => null, 'end' => null, 'label' => 'Semua Data'];
         }
-    }
-
+      }
     
     /**
      * Fungsi untuk mendapatkan grade berdasarkan nilai
@@ -370,4 +398,138 @@ class Monev_kepuasan extends CI_Controller {
             return 'D';
         }
     }
+    
+    /**
+ * AJAX endpoint untuk get detail unsur
+ */
+/**
+ * AJAX endpoint untuk get detail unsur
+ */
+public function get_detail_unsur() {
+    // Enable CORS jika perlu
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
+    
+    try {
+        $jenis_periode = $this->input->get('jenis_periode');
+        $periode = $this->input->get('periode');
+        $tahun = $this->input->get('tahun');
+        $unsur_index = $this->input->get('unsur_index');
+        
+        log_message('debug', 'get_detail_unsur called with params: ' . json_encode([
+            'jenis_periode' => $jenis_periode,
+            'periode' => $periode,
+            'tahun' => $tahun,
+            'unsur_index' => $unsur_index
+        ]));
+
+        // Mapping kolom database berdasarkan index unsur
+        $kolom_mapping = [
+            'pendapat_pelayanan',      // Persyaratan
+            'pemahaman_prosedur',      // Prosedur
+            'pendapat_kecepatan',      // Kecepatan Waktu
+            'pendapat_biaya',          // Biaya/Tarif
+            'pendapat_produk',         // Kesesuaian Produk Pelayanan
+            'pendapat_kompetensi',     // Kompetensi Petugas
+            'pendapat_perilaku',       // Perilaku Petugas
+            'pendapat_pengaduan',      // Penanganan Pengaduan
+            'pendapat_kualitas'        // Kualitas Sarana Prasarana
+        ];
+
+        $nama_unsur_mapping = [
+            'Persyaratan',
+            'Prosedur',
+            'Kecepatan Waktu', 
+            'Biaya/Tarif',
+            'Kesesuaian Produk Pelayanan',
+            'Kompetensi Petugas',
+            'Perilaku Petugas',
+            'Penanganan Pengaduan',
+            'Kualitas Sarana Prasarana'
+        ];
+
+        if (!isset($kolom_mapping[$unsur_index])) {
+            throw new Exception('Unsur tidak valid: ' . $unsur_index);
+        }
+
+        $kolom = $kolom_mapping[$unsur_index];
+        $nama_unsur = $nama_unsur_mapping[$unsur_index];
+
+        // DATA DUMMY SEMENTARA - HAPUS INI SETELAH DATABASE FIX
+        $dummy_data = $this->generate_dummy_data($nama_unsur, $unsur_index);
+        
+        // Format response
+        $response = [
+            'success' => true,
+            'unsur' => $nama_unsur,
+            'kolom' => $kolom,
+            'distribusi' => $dummy_data['distribusi'],
+            'statistik' => $dummy_data['statistik'],
+            'komentar' => $dummy_data['komentar']
+        ];
+
+        echo json_encode($response);
+
+    } catch (Exception $e) {
+        log_message('error', 'Error in get_detail_unsur: ' . $e->getMessage());
+        
+        $error_response = [
+            'success' => false,
+            'error' => $e->getMessage(),
+            'unsur' => 'Unknown',
+            'distribusi' => [
+                'sangat_puas' => 0,
+                'puas' => 0,
+                'cukup' => 0,
+                'kurang_puas' => 0
+            ],
+            'statistik' => [
+                'rata_rata' => 0,
+                'total_responden' => 0
+            ],
+            'komentar' => []
+        ];
+        
+        echo json_encode($error_response);
+    }
+}
+
+/**
+ * Generate dummy data untuk testing
+ */
+private function generate_dummy_data($unsur_name, $index) {
+    // Data dummy yang berbeda untuk setiap unsur
+    $base_value = 20 + ($index * 2);
+    
+    return [
+        'distribusi' => [
+            'sangat_puas' => $base_value + rand(5, 15),
+            'puas' => $base_value + rand(10, 20),
+            'cukup' => $base_value + rand(3, 8),
+            'kurang_puas' => rand(1, 5)
+        ],
+        'statistik' => [
+            'rata_rata' => round(3.0 + (rand(0, 20) / 10), 2),
+            'total_responden' => $base_value + rand(20, 40)
+        ],
+        'komentar' => [
+            [
+                'kritik_saran' => 'Pelayanan ' . $unsur_name . ' sangat memuaskan',
+                'nama' => 'Responden ' . chr(65 + $index),
+                'timestamp' => date('Y-m-d H:i:s', strtotime('-' . rand(1, 30) . ' days'))
+            ],
+            [
+                'kritik_saran' => $unsur_name . ' perlu ditingkatkan lagi',
+                'nama' => 'Responden ' . chr(66 + $index),
+                'timestamp' => date('Y-m-d H:i:s', strtotime('-' . rand(1, 15) . ' days'))
+            ],
+            [
+                'kritik_saran' => 'Sangat puas dengan ' . $unsur_name . ' yang diberikan',
+                'nama' => 'Responden ' . chr(67 + $index),
+                'timestamp' => date('Y-m-d H:i:s', strtotime('-' . rand(1, 10) . ' days'))
+            ]
+        ]
+    ];
+}
+
 }
