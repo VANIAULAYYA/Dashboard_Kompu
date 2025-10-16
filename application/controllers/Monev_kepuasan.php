@@ -405,9 +405,10 @@ public function print_laporan() {
 /**
  * AJAX endpoint untuk get detail unsur
  */
+/**
+ * AJAX endpoint untuk get detail unsur - DATA REAL dari database
+ */
 public function get_detail_unsur() {
-    // Enable CORS jika perlu
-    header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
     
     try {
@@ -415,25 +416,18 @@ public function get_detail_unsur() {
         $periode = $this->input->get('periode');
         $tahun = $this->input->get('tahun');
         $unsur_index = $this->input->get('unsur_index');
-        
-        log_message('debug', 'get_detail_unsur called with params: ' . json_encode([
-            'jenis_periode' => $jenis_periode,
-            'periode' => $periode,
-            'tahun' => $tahun,
-            'unsur_index' => $unsur_index
-        ]));
 
         // Mapping kolom database berdasarkan index unsur
         $kolom_mapping = [
-            'pendapat_pelayanan',      // Persyaratan
-            'pemahaman_prosedur',      // Prosedur
-            'pendapat_kecepatan',      // Kecepatan Waktu
-            'pendapat_biaya',          // Biaya/Tarif
-            'pendapat_produk',         // Kesesuaian Produk Pelayanan
-            'pendapat_kompetensi',     // Kompetensi Petugas
-            'pendapat_perilaku',       // Perilaku Petugas
-            'pendapat_pengaduan',      // Penanganan Pengaduan
-            'pendapat_kualitas'        // Kualitas Sarana Prasarana
+            'pendapat_pelayanan',      // 0 - Persyaratan
+            'pemahaman_prosedur',      // 1 - Prosedur
+            'pendapat_kecepatan',      // 2 - Kecepatan Waktu
+            'pendapat_biaya',          // 3 - Biaya/Tarif
+            'pendapat_produk',         // 4 - Kesesuaian Produk Pelayanan
+            'pendapat_kompetensi',     // 5 - Kompetensi Petugas
+            'pendapat_perilaku',       // 6 - Perilaku Petugas
+            'pendapat_pengaduan',      // 7 - Penanganan Pengaduan
+            'pendapat_kualitas'        // 8 - Kualitas Sarana Prasarana
         ];
 
         $nama_unsur_mapping = [
@@ -455,18 +449,62 @@ public function get_detail_unsur() {
         $kolom = $kolom_mapping[$unsur_index];
         $nama_unsur = $nama_unsur_mapping[$unsur_index];
 
-        // DATA DUMMY SEMENTARA - HAPUS INI SETELAH DATABASE FIX
-        $dummy_data = $this->generate_dummy_data($nama_unsur, $unsur_index);
+        // Buat date_range sama seperti di index
+        if ($jenis_periode == 'semua') {
+            $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+        } else {
+            if ($jenis_periode == 'tahunan') {
+                $periode = 'tahunan';
+            }
+            $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+            $date_range = $this->get_date_range($periode, $tahun_for_range);
+        }
+
+        // Get data REAL dari database
+        $distribusi_data = $this->M_monev_kepuasan->get_distribusi_unsur($date_range, $kolom);
         
-        // Format response
-        $response = [
-            'success' => true,
-            'unsur' => $nama_unsur,
-            'kolom' => $kolom,
-            'distribusi' => $dummy_data['distribusi'],
-            'statistik' => $dummy_data['statistik'],
-            'komentar' => $dummy_data['komentar']
-        ];
+        // Jika tidak ada data, beri response kosong
+        if (!$distribusi_data || $distribusi_data->total_responden == 0) {
+            $response = [
+                'success' => true,
+                'unsur' => $nama_unsur,
+                'kolom' => $kolom,
+                'distribusi' => [
+                    'sangat_puas' => 0,
+                    'puas' => 0,
+                    'cukup' => 0,
+                    'kurang_puas' => 0
+                ],
+                'statistik' => [
+                    'rata_rata' => 0,
+                    'total_responden' => 0,
+                    'min_nilai' => 0,
+                    'max_nilai' => 0
+                ]
+            ];
+        } else {
+            // Format response dengan data REAL
+            $response = [
+                'success' => true,
+                'unsur' => $nama_unsur,
+                'kolom' => $kolom,
+                'distribusi' => [
+                    'sangat_puas' => intval($distribusi_data->sangat_puas),
+                    'puas' => intval($distribusi_data->puas),
+                    'cukup' => intval($distribusi_data->cukup),
+                    'kurang_puas' => intval($distribusi_data->kurang_puas)
+                ],
+                'statistik' => [
+                    'rata_rata' => round(floatval($distribusi_data->rata_rata), 2),
+                    'total_responden' => intval($distribusi_data->total_responden),
+                    'min_nilai' => round(floatval($distribusi_data->min_nilai), 2),
+                    'max_nilai' => round(floatval($distribusi_data->max_nilai), 2)
+                ]
+            ];
+        }
+
+        // Log untuk debugging
+        log_message('debug', "Response untuk $kolom: " . json_encode($response));
 
         echo json_encode($response);
 
@@ -475,19 +513,7 @@ public function get_detail_unsur() {
         
         $error_response = [
             'success' => false,
-            'error' => $e->getMessage(),
-            'unsur' => 'Unknown',
-            'distribusi' => [
-                'sangat_puas' => 0,
-                'puas' => 0,
-                'cukup' => 0,
-                'kurang_puas' => 0
-            ],
-            'statistik' => [
-                'rata_rata' => 0,
-                'total_responden' => 0
-            ],
-            'komentar' => []
+            'error' => $e->getMessage()
         ];
         
         echo json_encode($error_response);

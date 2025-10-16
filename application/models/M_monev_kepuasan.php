@@ -7,13 +7,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class M_monev_kepuasan extends CI_Model {
 
-    private $table = 'buku_tamu_backup';
+    private $table = 'buku_tamu';
 
     /**
      * Get total responden berdasarkan periode
      */
    public function get_total_responden($date_range) {
-    $this->db->from('buku_tamu_backup');
+    $this->db->from('buku_tamu');
     
     // Filter berdasarkan tanggal range
     if ($date_range['start'] && $date_range['end']) {
@@ -480,7 +480,7 @@ class M_monev_kepuasan extends CI_Model {
 
 public function get_available_years() {
     $this->db->select('YEAR(timestamp) as tahun');
-    $this->db->from('buku_tamu_backup');
+    $this->db->from('buku_tamu');
     $this->db->group_by('YEAR(timestamp)');
     $this->db->order_by('tahun', 'DESC');
     
@@ -497,6 +497,9 @@ public function get_available_years() {
 /**
  * Get distribusi nilai untuk grafik donut per unsur
  */
+/**
+ * Get distribusi nilai untuk grafik donut per unsur
+ */
 public function get_distribusi_unsur($date_range, $kolom) {
     // Query untuk distribusi nilai berdasarkan grade
     $this->db->select("
@@ -505,19 +508,27 @@ public function get_distribusi_unsur($date_range, $kolom) {
         SUM(CASE WHEN $kolom >= 2.60 AND $kolom < 3.0644 THEN 1 ELSE 0 END) as cukup,
         SUM(CASE WHEN $kolom < 2.60 THEN 1 ELSE 0 END) as kurang_puas,
         COUNT(*) as total_responden,
-        AVG($kolom) as rata_rata
+        AVG($kolom) as rata_rata,
+        MIN($kolom) as min_nilai,
+        MAX($kolom) as max_nilai
     ");
     
     // Filter berdasarkan date_range
     if ($date_range['start'] !== null && $date_range['end'] !== null) {
-        $this->db->where('DATE(timestamp) >=', $date_range['start']);
-        $this->db->where('DATE(timestamp) <=', $date_range['end']);
+        $this->db->where('timestamp >=', $date_range['start'] . ' 00:00:00');
+        $this->db->where('timestamp <=', $date_range['end'] . ' 23:59:59');
     }
     
     $this->db->where("$kolom IS NOT NULL");
+    $this->db->where("$kolom >", 0); // Hanya yang ada nilainya
     
     $query = $this->db->get($this->table);
-    return $query->row();
+    $result = $query->row();
+    
+    // Log untuk debugging
+    log_message('debug', "Distribusi untuk $kolom: " . json_encode($result));
+    
+    return $result;
 }
 
 }

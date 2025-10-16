@@ -349,28 +349,33 @@
         <div class="card-body p-4">
           <form action="<?= site_url('Admin/simpan_tamu') ?>" method="post">
             
-            <div class="mb-3">
-              <label>Nama</label>
-              <input type="text" name="nama" class="form-control" required placeholder="Masukkan nama tamu">
+            <!-- Data Diri -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>Nama</label>
+                <input type="text" name="nama" class="form-control" required placeholder="Masukkan nama tamu">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label>Jenis Kelamin</label>
+                <select name="jenis_kelamin" class="form-select" required>
+                  <option value="">-- Pilih Jenis Kelamin --</option>
+                  <option value="L">Laki-Laki</option>
+                  <option value="P">Perempuan</option>
+                </select>
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label>Jenis Kelamin</label>
-              <select name="jenis_kelamin" class="form-select" required>
-                <option value="">-- Pilih Jenis Kelamin --</option>
-                <option value="L">Laki-Laki</option>
-                <option value="P">Perempuan</option>
-              </select>
-            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>Asal Instansi/Pribadi</label>
+                <input type="text" name="asal_instansi" class="form-control" placeholder="Masukkan asal instansi/pribadi tamu">
+              </div>
 
-            <div class="mb-3">
-              <label>Asal Instansi?Pribadi</label>
-              <input type="text" name="asal_instansi" class="form-control" placeholder="Masukkan asal instansi/pribadi tamu">
-            </div>
-
-            <div class="mb-3">
-              <label>No. Handphone yang bisa dihubungi</label>
-              <input type="text" name="no_handphone" class="form-control" placeholder="Masukkan no. handphone tamu">
+              <div class="col-md-6 mb-3">
+                <label>No. Handphone</label>
+                <input type="text" name="no_handphone" class="form-control" placeholder="Masukkan no. handphone tamu">
+              </div>
             </div>
 
             <div class="mb-3">
@@ -385,108 +390,123 @@
               </select>
             </div>
 
-            <div class="mb-3">
-              <label>Persyaratan</label>
-              <select name="pendapat_pelayanan" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+            <!-- Form Keterangan Lainnya (Awalnya Disembunyikan) -->
+            <div class="mb-3" id="keteranganLainnyaGroup" style="display: none;">
+              <label>Keterangan Keperluan Lainnya</label>
+              <input type="text" id="keteranganLainnya" class="form-control" placeholder="Silakan jelaskan keperluan lainnya...">
+              <small class="text-muted">Mohon diisi untuk keperluan selain yang tersedia di atas</small>
             </div>
 
-            <div class="mb-3">
-              <label>Prosedur</label>
-              <select name="pemahaman_prosedur" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+            <div class="row">
+              <!-- Kolom 1 -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="small">Persyaratan</label>
+                  <select name="pendapat_pelayanan" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Kecepatan Waktu</label>
-              <select name="pemahaman_prosedur" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Prosedur</label>
+                  <select name="pemahaman_prosedur" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Biaya/Tarif</label>
-              <select name="pendapat_kecepatan" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Kecepatan Waktu</label>
+                  <select name="pendapat_kecepatan" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Kesesuaian Produk Pelayanan</label>
-              <select name="pendapat_produk" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Biaya/Tarif</label>
+                  <select name="pendapat_biaya" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Kompetensi Petugas</label>
-              <select name="pendapat_kompetensi" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Kesesuaian Produk</label>
+                  <select name="pendapat_produk" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+              </div>
 
-            <div class="mb-3">
-              <label>Perilaku Petugas</label>
-              <select name="pendapat_perilaku" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+              <!-- Kolom 2 -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="small">Kompetensi Petugas</label>
+                  <select name="pendapat_kompetensi" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Penanganan Pengaduan</label>
-              <select name="pendapat_pengaduan" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Perilaku Petugas</label>
+                  <select name="pendapat_perilaku" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Kualitas Sarana Prasarana</label>
-              <select name="pendapat_kualitas" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+                <div class="mb-3">
+                  <label class="small">Penanganan Pengaduan</label>
+                  <select name="pendapat_pengaduan" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label class="small">Kualitas Sarana Prasarana</label>
+                  <select name="pendapat_kualitas" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             <div class="mb-3">
               <label>Kritik dan Saran Perbaikan</label>
-              <textarea name="kritik_saran" class="form-control" placeholder="Isi kritik atau saran tamu"></textarea>
+              <textarea name="kritik_saran" class="form-control" rows="3" placeholder="Isi kritik atau saran tamu"></textarea>
             </div>
 
             <div class="text-end">
@@ -511,27 +531,32 @@
           <form action="<?= site_url('Admin/update_tamu') ?>" method="post">
             <input type="hidden" name="id" id="edit_id">
 
-            <div class="mb-3">
-              <label>Nama</label>
-              <input type="text" name="nama" id="edit_nama" class="form-control" required>
+            <!-- Data Diri -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>Nama</label>
+                <input type="text" name="nama" id="edit_nama" class="form-control" required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label>Jenis Kelamin</label>
+                <select name="jenis_kelamin" id="edit_jenis" class="form-select" required>
+                  <option value="L">Laki-Laki</option>
+                  <option value="P">Perempuan</option>
+                </select>
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label>Jenis Kelamin</label>
-              <select name="jenis_kelamin" id="edit_jenis" class="form-select" required>
-                <option value="L">Laki-Laki</option>
-                <option value="P">Perempuan</option>
-              </select>
-            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>Asal Instansi/Pribadi</label>
+                <input type="text" name="asal_instansi" id="edit_instansi" class="form-control">
+              </div>
 
-            <div class="mb-3">
-              <label>Asal Instansi/Pribadi</label>
-              <input type="text" name="asal_instansi" id="edit_instansi" class="form-control">
-            </div>
-
-            <div class="mb-3">
-              <label>No. Handphone yang bisa dihubungi</label>
-              <input type="text" name="no_handphone" id="edit_telp" class="form-control">
+              <div class="col-md-6 mb-3">
+                <label>No. Handphone</label>
+                <input type="text" name="no_handphone" id="edit_telp" class="form-control">
+              </div>
             </div>
 
             <div class="mb-3">
@@ -546,108 +571,123 @@
               </select>
             </div>
 
-            <div class="mb-3">
-              <label>Persyaratan</label>
-              <select name="pendapat_pelayanan" id="edit_pendapat_pelayanan" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+            <!-- Form Keterangan Lainnya untuk Edit -->
+            <div class="mb-3" id="edit_keteranganLainnyaGroup" style="display: none;">
+              <label>Keterangan Keperluan Lainnya</label>
+              <input type="text" id="edit_keteranganLainnya" class="form-control" placeholder="Silakan jelaskan keperluan lainnya...">
+              <small class="text-muted">Mohon diisi untuk keperluan selain yang tersedia di atas</small>
             </div>
 
-            <div class="mb-3">
-              <label>Prosedur</label>
-              <select name="pemahaman_prosedur" id="edit_pemahaman_prosedur" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+            <div class="row">
+              <!-- Kolom 1 -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="small">Persyaratan</label>
+                  <select name="pendapat_pelayanan" id="edit_pendapat_pelayanan" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Kecepatan Waktu</label>
-              <select name="pendapat_kecepatan" id="edit_pendapat_kecepatan" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Prosedur</label>
+                  <select name="pemahaman_prosedur" id="edit_pemahaman_prosedur" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Biaya/Tarif</label>
-              <select name="pendapat_biaya" id="edit_pendapat_biaya" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Kecepatan Waktu</label>
+                  <select name="pendapat_kecepatan" id="edit_pendapat_kecepatan" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Kesesuaian Produk Pelayanan</label>
-              <select name="pendapat_produk" id="edit_pendapat_produk" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Biaya/Tarif</label>
+                  <select name="pendapat_biaya" id="edit_pendapat_biaya" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Kompetensi Petugas</label>
-              <select name="pendapat_kompetensi" id="edit_pendapat_kompetensi" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Kesesuaian Produk</label>
+                  <select name="pendapat_produk" id="edit_pendapat_produk" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+              </div>
 
-            <div class="mb-3">
-              <label>Perilaku Petugas</label>
-              <select name="pendapat_perilaku" id="edit_pendapat_perilaku" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+              <!-- Kolom 2 -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="small">Kompetensi Petugas</label>
+                  <select name="pendapat_kompetensi" id="edit_pendapat_kompetensi" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Penanganan Pengaduan</label>
-              <select name="pendapat_pengaduan" id="edit_pendapat_pengaduan" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
+                <div class="mb-3">
+                  <label class="small">Perilaku Petugas</label>
+                  <select name="pendapat_perilaku" id="edit_pendapat_perilaku" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label>Kualitas Sarana Prasarana</label>
-              <select name="pendapat_kualitas" id="edit_pendapat_kualitas" class="form-select" required>
-                <option value="">-- Pilih Nilai --</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+                <div class="mb-3">
+                  <label class="small">Penanganan Pengaduan</label>
+                  <select name="pendapat_pengaduan" id="edit_pendapat_pengaduan" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label class="small">Kualitas Sarana Prasarana</label>
+                  <select name="pendapat_kualitas" id="edit_pendapat_kualitas" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             <div class="mb-3">
               <label>Kritik dan Saran Perbaikan</label>
-              <textarea name="kritik_saran" id="edit_kritik" class="form-control"></textarea>
+              <textarea name="kritik_saran" id="edit_kritik" class="form-control" rows="3"></textarea>
             </div>
 
             <div class="text-end">
@@ -686,52 +726,210 @@
     document.getElementById("divForm").style.display = "block";
     document.getElementById("divFormEdit").style.display = "none";
   });
+  
   document.getElementById("btnKembali").addEventListener("click", function () {
     document.getElementById("divForm").style.display = "none";
     document.getElementById("divTabel").style.display = "block";
   });
 
-  // Edit
+  // Edit - VERSI DIPERBAIKI
   document.addEventListener("click", function(e){
     const btn = e.target.closest(".btnEdit");
     if (!btn) return;
+    
+    // Sembunyikan semua div, tampilkan form edit
     document.getElementById("divTabel").style.display = "none";
     document.getElementById("divForm").style.display = "none";
     document.getElementById("divFormEdit").style.display = "block";
 
-    document.getElementById("edit_id").value = btn.dataset.id;
-    document.getElementById("edit_nama").value = btn.dataset.nama;
-    document.getElementById("edit_jenis").value = btn.dataset.jenis;
-    document.getElementById("edit_instansi").value = btn.dataset.instansi;
-    document.getElementById("edit_telp").value = btn.dataset.telp;
-    document.getElementById("edit_keperluan").value = btn.dataset.keperluan;
-    document.getElementById("edit_kritik").value = btn.dataset.kritik;
-    document.getElementById("edit_pendapat_pelayanan").value = btn.dataset.pendapat_pelayanan;
-    document.getElementById("edit_pemahaman_prosedur").value = btn.dataset.pemahaman_prosedur;
-    document.getElementById("edit_pendapat_kecepatan").value = btn.dataset.pendapat_kecepatan;
-    document.getElementById("edit_pendapat_biaya").value = btn.dataset.pendapat_biaya;
-    document.getElementById("edit_pendapat_produk").value = btn.dataset.pendapat_produk;
-    document.getElementById("edit_pendapat_kompetensi").value = btn.dataset.pendapat_kompetensi;
-    document.getElementById("edit_pendapat_perilaku").value = btn.dataset.pendapat_perilaku;
-    document.getElementById("edit_pendapat_kualitas").value = btn.dataset.pendapat_kualitas;
-    document.getElementById("edit_pendapat_pengaduan").value = btn.dataset.pendapat_pengaduan;
+    // Buat object data dari dataset
+    const data = {
+      id: btn.dataset.id,
+      nama: btn.dataset.nama,
+      jenis_kelamin: btn.dataset.jenis,
+      asal_instansi: btn.dataset.instansi,
+      no_handphone: btn.dataset.telp,
+      keperluan: btn.dataset.keperluan,
+      kritik_saran: btn.dataset.kritik,
+      pendapat_pelayanan: btn.dataset.pendapat_pelayanan,
+      pemahaman_prosedur: btn.dataset.pemahaman_prosedur,
+      pendapat_kecepatan: btn.dataset.pendapat_kecepatan,
+      pendapat_biaya: btn.dataset.pendapat_biaya,
+      pendapat_produk: btn.dataset.pendapat_produk,
+      pendapat_kompetensi: btn.dataset.pendapat_kompetensi,
+      pendapat_perilaku: btn.dataset.pendapat_perilaku,
+      pendapat_kualitas: btn.dataset.pendapat_kualitas,
+      pendapat_pengaduan: btn.dataset.pendapat_pengaduan
+    };
+
+    console.log('Data dari button:', data); // Debug
+
+    // Gunakan fungsi fillEditForm yang sudah dibuat
+    fillEditForm(data);
   });
+
   document.getElementById("btnKembaliEdit").addEventListener("click", function(){
     document.getElementById("divFormEdit").style.display = "none";
     document.getElementById("divTabel").style.display = "block";
   });
-  document.querySelectorAll("input, textarea").forEach(function(el){
-  el.addEventListener("focus", function(){
-    this.dataset.placeholder = this.placeholder;
-    this.placeholder = "";
-  });
-  el.addEventListener("blur", function(){
-    if(this.value === ""){
-      this.placeholder = this.dataset.placeholder;
+
+  // Fungsi untuk mengisi form edit dengan data yang ada
+  function fillEditForm(data) {
+    console.log('Mengisi form edit dengan data:', data);
+    
+    // Isi field dasar
+    document.getElementById('edit_id').value = data.id;
+    document.getElementById('edit_nama').value = data.nama;
+    document.getElementById('edit_jenis').value = data.jenis_kelamin;
+    document.getElementById('edit_instansi').value = data.asal_instansi || '';
+    document.getElementById('edit_telp').value = data.no_handphone || '';
+    document.getElementById('edit_kritik').value = data.kritik_saran || '';
+    
+    // Isi field-field pendapat (jika ada di form Anda)
+    if (document.getElementById('edit_pendapat_pelayanan')) {
+      document.getElementById('edit_pendapat_pelayanan').value = data.pendapat_pelayanan || '';
+    }
+    if (document.getElementById('edit_pemahaman_prosedur')) {
+      document.getElementById('edit_pemahaman_prosedur').value = data.pemahaman_prosedur || '';
+    }
+    if (document.getElementById('edit_pendapat_kecepatan')) {
+      document.getElementById('edit_pendapat_kecepatan').value = data.pendapat_kecepatan || '';
+    }
+    if (document.getElementById('edit_pendapat_biaya')) {
+      document.getElementById('edit_pendapat_biaya').value = data.pendapat_biaya || '';
+    }
+    if (document.getElementById('edit_pendapat_produk')) {
+      document.getElementById('edit_pendapat_produk').value = data.pendapat_produk || '';
+    }
+    if (document.getElementById('edit_pendapat_kompetensi')) {
+      document.getElementById('edit_pendapat_kompetensi').value = data.pendapat_kompetensi || '';
+    }
+    if (document.getElementById('edit_pendapat_perilaku')) {
+      document.getElementById('edit_pendapat_perilaku').value = data.pendapat_perilaku || '';
+    }
+    if (document.getElementById('edit_pendapat_kualitas')) {
+      document.getElementById('edit_pendapat_kualitas').value = data.pendapat_kualitas || '';
+    }
+    if (document.getElementById('edit_pendapat_pengaduan')) {
+      document.getElementById('edit_pendapat_pengaduan').value = data.pendapat_pengaduan || '';
+    }
+    
+    // Handle keperluan dengan sistem "Lainnya"
+    const keperluanSelect = document.getElementById('edit_keperluanSelect');
+    const keperluanActual = document.getElementById('edit_keperluanActual');
+    const keteranganGroup = document.getElementById('edit_keteranganLainnyaGroup');
+    const keteranganInput = document.getElementById('edit_keteranganLainnya');
+    
+    // Daftar keperluan utama yang tersedia di dropdown
+    const keperluanUtama = [
+      'Menemui Pejabat/Staff',
+      'Rekomendasi Teknis (Rekomtek)',
+      'Kirim Surat (Promosi/Aduan/Temuan)',
+      'Permintaan Data/Informasi'
+    ];
+    
+    // Reset dulu
+    keperluanSelect.value = '';
+    keteranganGroup.style.display = 'none';
+    keteranganInput.value = '';
+    keteranganInput.required = false;
+    
+    // Cek apakah keperluan ada di daftar utama
+    if (data.keperluan && keperluanUtama.includes(data.keperluan)) {
+      // Jika termasuk keperluan utama, pilih dari dropdown
+      keperluanSelect.value = data.keperluan;
+      keperluanActual.value = data.keperluan;
+      console.log('Keperluan utama dipilih:', data.keperluan);
+    } else if (data.keperluan) {
+      // Jika bukan keperluan utama, pilih "Lainnya" dan isi keterangan
+      keperluanSelect.value = 'other';
+      keperluanActual.value = data.keperluan;
+      keteranganGroup.style.display = 'block';
+      keteranganInput.value = data.keperluan;
+      keteranganInput.required = true;
+      console.log('Keperluan custom dipilih:', data.keperluan);
+    } else {
+      // Jika tidak ada data keperluan
+      keperluanSelect.value = '';
+      keperluanActual.value = '';
+    }
+  }
+
+  // Fungsi toggle untuk form edit
+  function toggleKeteranganLainnyaEdit() {
+    const keperluanSelect = document.getElementById('edit_keperluanSelect');
+    const keteranganGroup = document.getElementById('edit_keteranganLainnyaGroup');
+    const keteranganInput = document.getElementById('edit_keteranganLainnya');
+    const keperluanActual = document.getElementById('edit_keperluanActual');
+    
+    if (keperluanSelect.value === 'other') {
+      // Tampilkan form keterangan
+      keteranganGroup.style.display = 'block';
+      keteranganInput.required = true;
+      // Kosongkan nilai actual sampai user mengisi
+      keperluanActual.value = '';
+    } else {
+      // Sembunyikan form keterangan
+      keteranganGroup.style.display = 'none';
+      keteranganInput.required = false;
+      keteranganInput.value = ''; // Kosongkan input
+      // Set nilai actual dari dropdown
+      keperluanActual.value = keperluanSelect.value;
+    }
+  }
+
+  // Update nilai actual ketika user mengetik di keterangan lainnya (edit)
+  document.addEventListener('DOMContentLoaded', function() {
+    const keteranganInput = document.getElementById('edit_keteranganLainnya');
+    if (keteranganInput) {
+      keteranganInput.addEventListener('input', function(e) {
+        const keperluanActual = document.getElementById('edit_keperluanActual');
+        keperluanActual.value = e.target.value.trim();
+      });
     }
   });
-});
-  </script>
+
+  // Validasi form edit sebelum submit
+  document.addEventListener('DOMContentLoaded', function() {
+    const editForm = document.querySelector('#divFormEdit form');
+    if (editForm) {
+      editForm.addEventListener('submit', function(e) {
+        const keperluanSelect = document.getElementById('edit_keperluanSelect');
+        const keteranganInput = document.getElementById('edit_keteranganLainnya');
+        const keperluanActual = document.getElementById('edit_keperluanActual');
+        
+        if (keperluanSelect.value === 'other') {
+          if (!keteranganInput.value.trim()) {
+            e.preventDefault();
+            alert('Mohon isi keterangan keperluan lainnya');
+            keteranganInput.focus();
+            return;
+          }
+          // Pastikan nilai actual sudah terisi dengan input user
+          keperluanActual.value = keteranganInput.value.trim();
+        } else {
+          // Pastikan nilai actual dari dropdown
+          keperluanActual.value = keperluanSelect.value;
+        }
+        
+        console.log('Data keperluan yang akan diupdate:', keperluanActual.value);
+      });
+    }
+  });
+
+  // Placeholder behavior
+  document.querySelectorAll("input, textarea").forEach(function(el){
+    el.addEventListener("focus", function(){
+      this.dataset.placeholder = this.placeholder;
+      this.placeholder = "";
+    });
+    el.addEventListener("blur", function(){
+      if(this.value === ""){
+        this.placeholder = this.dataset.placeholder;
+      }
+    });
+  });
+</script>
 
   </main>
   <div class="fixed-plugin">

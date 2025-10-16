@@ -203,6 +203,8 @@
     margin-left: 5px;
     font-size: 0.7rem;
 }
+
+
   </style>
 </head>
 
@@ -472,95 +474,101 @@
     </div>
 
       <!-- Top Cards - MENGGUNAKAN BOOTSTRAP GRID -->
-      <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card custom-card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <p class="text-sm mb-0 text-capitalize font-weight-bold">Nilai IKM</p>
-                  <h4 class="font-weight-bolder mb-0">
-                    <?= number_format($nilai_ikm, 2) ?>
-                    <span class="text-success text-sm"><?= number_format($persentase_ikm, 2) ?>%</span>
-                  </h4>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="fas fa-chart-line text-lg opacity-10"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div class="row mb-4">
+  <!-- Card Nilai IKM -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card custom-card h-100">
+      <div class="card-body p-3">
+        <div class="row align-items-center h-100">
+          <div class="col-8">
+            <p class="text-sm mb-0 text-capitalize font-weight-bold">Nilai IKM</p>
+            <h4 class="font-weight-bolder mb-0">
+              <?= number_format($nilai_ikm, 2) ?>
+              <span class="text-success text-sm"><?= number_format($persentase_ikm, 2) ?>%</span>
+            </h4>
           </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card custom-card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <p class="text-sm mb-0 text-capitalize font-weight-bold">Grade Mutu</p>
-                  <h4 class="font-weight-bolder mb-0">
-                    <?= $grade_pkm ?>
-                    <span class="text-success text-sm">
-                      <?php
-                      if($grade_pkm == 'A') echo 'SANGAT BAIK';
-                      elseif($grade_pkm == 'B') echo 'BAIK';
-                      elseif($grade_pkm == 'C') echo 'CUKUP';
-                      else echo 'KURANG';
-                      ?>
-                    </span>
-                  </h4>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
-  <i class="fas fa-award text-lg text-white"></i>
-</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card custom-card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Responden</p>
-                  <h4 class="font-weight-bolder mb-0"><?= $total_responden ?></h4>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
-  <i class="fas fa-users text-lg text-white"></i>
-</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card custom-card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <p class="text-sm mb-0 text-capitalize font-weight-bold">Jenis Kelamin</p>
-                  <h4 class="font-weight-bolder mb-0">
-                    <span class="text-success text-sm">Laki-Laki : <?= $jenis_kelamin['pria'] ?></span><br>
-                    <span class="text-danger text-sm">Perempuan : <?= $jenis_kelamin['wanita'] ?></span>
-                  </h4>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
-                    <i class="fas fa-venus-mars text-lg opacity-10"></i>
-                  </div>
-                </div>
-              </div>
+          <div class="col-4 text-end">
+            <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+              <i class="fas fa-chart-line text-lg opacity-10"></i>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Card Grade Mutu -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card custom-card h-100">
+      <div class="card-body p-3">
+        <div class="row align-items-center h-100">
+          <div class="col-8">
+            <p class="text-sm mb-0 text-capitalize font-weight-bold">Grade Mutu</p>
+            <h4 class="font-weight-bolder mb-0">
+              <?= $grade_pkm ?>
+              <span class="text-success text-sm">
+                <?php
+                if($grade_pkm == 'A') echo 'SANGAT BAIK';
+                elseif($grade_pkm == 'B') echo 'BAIK';
+                elseif($grade_pkm == 'C') echo 'CUKUP';
+                else echo 'KURANG';
+                ?>
+              </span>
+            </h4>
+          </div>
+          <div class="col-4 text-end">
+            <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+              <i class="fas fa-award text-lg text-white"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Total Responden -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card custom-card h-100">
+      <div class="card-body p-3">
+        <div class="row align-items-center h-100">
+          <div class="col-8">
+            <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Responden</p>
+            <h4 class="font-weight-bolder mb-0"><?= $total_responden ?></h4>
+          </div>
+          <div class="col-4 text-end">
+            <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+              <i class="fas fa-users text-lg text-white"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Jenis Kelamin -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card custom-card h-100">
+      <div class="card-body p-3">
+        <div class="row align-items-center h-100">
+          <div class="col-8">
+            <p class="text-sm mb-0 text-capitalize font-weight-bold">Jenis Kelamin</p>
+            <h4 class="font-weight-bolder mb-0">
+              <div class="d-flex flex-column lh-1">
+                <span class="text-success text-sm mb-1">Laki-laki: <?= $jenis_kelamin['pria'] ?></span>
+                <span class="text-danger text-sm">Perempuan: <?= $jenis_kelamin['wanita'] ?></span>
+              </div>
+            </h4>
+          </div>
+          <div class="col-4 text-end">
+            <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+              <i class="fas fa-venus-mars text-lg text-white"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
       <!-- Main Content -->
       <div class="row mt-4">
@@ -585,31 +593,41 @@
             <?php if(!empty($unsur_skm)): ?>
               <?php foreach ($unsur_skm as $no => $item): ?>
               <tr style="cursor: pointer;" 
-    onclick="showUnsurDetail('<?= $item['nama'] ?>', '<?= $no ?>')"
-    title="Klik untuk lihat detail <?= $item['nama'] ?>">
-    <td class="text-center">
-        <p class="text-xs font-weight-bold mb-0"><?= $no + 1 ?></p>
-    </td>
-    <td class="ps-2">
-        <p class="text-xs font-weight-bold mb-0">
-            <?= $item['nama'] ?>
-            <i class="fas fa-chart-pie ms-1 text-info clickable-icon" 
-               title="Klik untuk grafik detail"></i>
-        </p>
-    </td>
-    <td class="align-middle text-center">
-        <span class="text-secondary text-xs font-weight-bold"><?= number_format($item['nilai'], 2) ?></span>
-    </td>
-    <td class="align-middle text-center">
-        <?php
-        $grade = $item['grade'];
-        $color = $grade == 'A' ? 'bg-gradient-success' : 
-                ($grade == 'B' ? 'bg-gradient-warning' : 
-                ($grade == 'C' ? 'bg-gradient-info' : 'bg-gradient-danger'));
-        ?>
-        <span class="badge badge-sm <?= $color ?>"><?= $grade ?></span>
-    </td>
-</tr>
+                  onclick="showUnsurDetail('<?= $item['nama'] ?>', '<?= $no ?>')"
+                  title="Klik untuk lihat detail <?= $item['nama'] ?>">
+                <td class="text-center">
+                  <p class="text-xs font-weight-bold mb-0"><?= $no + 1 ?></p>
+                </td>
+                <td class="ps-2">
+                  <p class="text-xs font-weight-bold mb-0">
+                    <?= $item['nama'] ?>
+                  </p>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold"><?= number_format($item['nilai'], 2) ?></span>
+                </td>
+                <td class="align-middle text-center">
+    <?php
+    $grade = $item['grade'];
+    $color_style = '';
+    $text_color = 'color: black;'; // default putih
+    
+    if ($grade == 'A') $color_style = 'background-color: #10b981';
+    elseif ($grade == 'B') {
+        $color_style = 'background-color: #fbbf24';
+        $text_color = 'color: black;'; // kuning butuh teks hitam
+    }
+    elseif ($grade == 'C') {
+        $color_style = 'background-color: #f97316';
+        $text_color = 'color: black;'; // orange butuh teks hitam
+    }
+    else $color_style = 'background-color: #ef4444';
+    ?>
+    <span class="badge badge-sm" style="<?= $color_style ?>; <?= $text_color ?>; font-weight: bold;">
+        <?= $grade ?>
+    </span>
+</td>
+              </tr>
               <?php endforeach; ?>
             <?php else: ?>
               <tr><td colspan="4" class="text-center py-4"><p class="text-xs text-secondary mb-0">Belum ada data</p></td></tr>
@@ -620,6 +638,8 @@
     </div>
   </div>
 </div>
+
+<!-- GANTI Modal Detail Unsur SKM di v_monev_kepuasan.php -->
 
 <!-- Modal Detail Unsur SKM -->
 <div class="modal fade" id="detailUnsurModal" tabindex="-1" aria-hidden="true">
@@ -638,81 +658,103 @@
                 <h6 class="mb-0">Distribusi Penilaian</h6>
               </div>
               <div class="card-body">
-                <div class="position-relative" style="height: 250px;">
-                  <canvas id="detailDonutChart"></canvas>
-                  <!-- Center Text -->
-                  <div class="position-absolute top-50 start-50 translate-middle text-center">
-                    <div class="h4 fw-bold text-dark mb-0" id="donutTotal">0</div>
-                    <div class="text-xs text-muted">Total Responden</div>
+                <!-- Diagram Donut -->
+                <div class="text-center">
+                  <div class="position-relative d-inline-block" style="height: 280px; width: 280px;">
+                    <canvas id="detailDonutChart"></canvas>
+                    <!-- Center Text -->
+                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                      <div class="h4 fw-bold text-dark mb-0" id="donutTotal">0</div>
+                      <div class="text-xs text-muted">Total</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           
-          <!-- Statistik & Legend -->
+          <!-- Statistik -->
           <div class="col-md-6">
             <div class="card h-100">
               <div class="card-header">
-                <h6 class="mb-0">Statistik & Keterangan</h6>
+                <h6 class="mb-0">Statistik</h6>
               </div>
               <div class="card-body">
                 <!-- Statistik -->
                 <div id="detailStats" class="mb-3">
-                  <!-- Statistik akan diisi oleh JavaScript -->
-                </div>
-                
-                <hr>
-                
-                <!-- Legend -->
-                <div class="space-y-2">
-                  <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light">
-                    <div class="d-flex align-items-center">
-                      <span class="badge badge-dot bg-success me-2"></span>
-                      <span class="text-sm font-weight-bold">Sangat Puas</span>
-                    </div>
-                    <span class="text-sm font-weight-bold" id="legendSangat">0</span>
-                  </div>
-                  
-                  <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light">
-                    <div class="d-flex align-items-center">
-                      <span class="badge badge-dot bg-warning me-2"></span>
-                      <span class="text-sm font-weight-bold">Puas</span>
-                    </div>
-                    <span class="text-sm font-weight-bold" id="legendPuas">0</span>
-                  </div>
-                  
-                  <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light">
-                    <div class="d-flex align-items-center">
-                      <span class="badge badge-dot bg-orange me-2" style="background-color: #f97316 !important;"></span>
-                      <span class="text-sm font-weight-bold">Cukup</span>
-                    </div>
-                    <span class="text-sm font-weight-bold" id="legendCukup">0</span>
-                  </div>
-                  
-                  <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light">
-                    <div class="d-flex align-items-center">
-                      <span class="badge badge-dot bg-danger me-2"></span>
-                      <span class="text-sm font-weight-bold">Kurang Puas</span>
-                    </div>
-                    <span class="text-sm font-weight-bold" id="legendKurang">0</span>
-                  </div>
+                  <p class="text-sm text-muted">Memuat data...</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Komentar Responden -->
+        <!-- Progress Bars -->
         <div class="row mt-3">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h6 class="mb-0">Komentar Responden</h6>
+              <div class="card-header pb-2">
+                <h6 class="mb-0 text-sm">Visualisasi Persentase</h6>
               </div>
-              <div class="card-body">
-                <div id="detailComments" style="max-height: 200px; overflow-y: auto;">
-                  <!-- Komentar akan diisi oleh JavaScript -->
+              <div class="card-body pt-2 pb-3">
+                <!-- Progress Bar Sangat Puas -->
+                <div class="mb-2">
+                  <div class="d-flex align-items-center mb-1">
+                    <div class="d-flex align-items-center" style="width: 120px;">
+                      <div style="width: 14px; height: 14px; background-color: #10b981; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
+                      <span class="text-xs font-weight-bold text-dark">Sangat Puas</span>
+                    </div>
+                    <div class="progress flex-grow-1 mx-2" style="height: 10px;">
+                      <div class="progress-bar" id="progressSangat" style="width: 0%; background-color: #10b981;"></div>
+                    </div>
+                    <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendSangat">0</span>
+                    <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentSangat">0%</span>
+                  </div>
+                </div>
+                
+                <!-- Progress Bar Puas -->
+                <div class="mb-2">
+                  <div class="d-flex align-items-center mb-1">
+                    <div class="d-flex align-items-center" style="width: 120px;">
+                      <div style="width: 14px; height: 14px; background-color: #fbbf24; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
+                      <span class="text-xs font-weight-bold text-dark">Puas</span>
+                    </div>
+                    <div class="progress flex-grow-1 mx-2" style="height: 10px;">
+                      <div class="progress-bar" id="progressPuas" style="width: 0%; background-color: #fbbf24;"></div>
+                    </div>
+                    <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendPuas">0</span>
+                    <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentPuas">0%</span>
+                  </div>
+                </div>
+                
+                <!-- Progress Bar Cukup -->
+                <div class="mb-2">
+                  <div class="d-flex align-items-center mb-1">
+                    <div class="d-flex align-items-center" style="width: 120px;">
+                      <div style="width: 14px; height: 14px; background-color: #f97316; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
+                      <span class="text-xs font-weight-bold text-dark">Cukup</span>
+                    </div>
+                    <div class="progress flex-grow-1 mx-2" style="height: 10px;">
+                      <div class="progress-bar" id="progressCukup" style="width: 0%; background-color: #f97316;"></div>
+                    </div>
+                    <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendCukup">0</span>
+                    <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentCukup">0%</span>
+                  </div>
+                </div>
+                
+                <!-- Progress Bar Kurang Puas -->
+                <div class="mb-2">
+                  <div class="d-flex align-items-center mb-1">
+                    <div class="d-flex align-items-center" style="width: 120px;">
+                      <div style="width: 14px; height: 14px; background-color: #ef4444; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
+                      <span class="text-xs font-weight-bold text-dark">Kurang Puas</span>
+                    </div>
+                    <div class="progress flex-grow-1 mx-2" style="height: 10px;">
+                      <div class="progress-bar" id="progressKurang" style="width: 0%; background-color: #ef4444;"></div>
+                    </div>
+                    <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendKurang">0</span>
+                    <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentKurang">0%</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -720,7 +762,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+          Tutup
+        </button>
       </div>
     </div>
   </div>
@@ -876,60 +920,95 @@
 </div>
 
       <!-- Jenis Keperluan -->
-      <div class="row mt-4">
-        <div class="col-12">
-          <div class="card mb-4">
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Jenis Keperluan Kunjungan Masyarakat</h6>
+                <h6>Jenis Keperluan Kunjungan Masyarakat</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keperluan</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Persentase</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Jumlah</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php if(!empty($keperluan)): ?>
-                      <?php foreach ($keperluan as $idx => $item): ?>
-                      <tr>
-                        <td><p class="text-xs font-weight-bold mb-0 ps-3"><?= $idx + 1 ?></p></td>
-                        <td><p class="text-xs font-weight-bold mb-0"><?= $item['nama'] ?></p></td>
-                        <td>
-                          <div class="progress-wrapper w-100">
-                            <div class="progress-info">
-                              <div class="progress-percentage">
-                                <span class="text-xs font-weight-bold"><?= $item['persen'] ?>%</span>
-                              </div>
-                            </div>
-                            <div class="progress">
-                              <?php
-                              $bar_color = $item['persen'] >= 80 ? 'bg-gradient-success' : 
-                                          ($item['persen'] >= 60 ? 'bg-gradient-warning' : 'bg-gradient-info');
-                              ?>
-                              <div class="progress-bar <?= $bar_color ?>" style="width: <?= $item['persen'] ?>%"></div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="align-middle text-center">
-                          <span class="text-secondary text-xs font-weight-bold"><?= $item['persen'] ?>%</span>
-                        </td>
-                      </tr>
-                      <?php endforeach; ?>
-                    <?php else: ?>
-                      <tr><td colspan="4" class="text-center py-4"><p class="text-xs text-secondary mb-0">Belum ada data keperluan</p></td></tr>
-                    <?php endif; ?>
-                  </tbody>
-                </table>
-              </div>
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keperluan</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Persentase</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            // Daftar keperluan utama yang akan ditampilkan terpisah
+                            $keperluan_utama = [
+                                'Menemui Pejabat/Staf',
+                                'Rekomendasi Teknis (Rekomtek)', 
+                                'Kirim Surat (Promosi/Aduan/Temuan)',
+                                'Permintaan Data/Informasi'
+                            ];
+                            
+                            // Kelompokkan data
+                            $keperluan_utama_data = [];
+                            $total_persen_lainnya = 0;
+                            
+                            if(!empty($keperluan)):
+                                foreach ($keperluan as $item):
+                                    if (in_array($item['nama'], $keperluan_utama)) {
+                                        $keperluan_utama_data[] = $item;
+                                    } else {
+                                        // Langsung tambahkan ke total lainnya tanpa menyimpan detail
+                                        $persen_value = is_numeric($item['persen']) ? $item['persen'] : floatval(str_replace(['%', ','], '', $item['persen']));
+                                        $total_persen_lainnya += $persen_value;
+                                    }
+                                endforeach;
+                                
+                                // Jika ada keperluan lainnya, buat entri "Lainnya"
+                                if ($total_persen_lainnya > 0) {
+                                    $keperluan_utama_data[] = [
+                                        'nama' => 'Lainnya',
+                                        'persen' => round($total_persen_lainnya, 2),
+                                        'jumlah' => round($total_persen_lainnya, 2)
+                                    ];
+                                }
+                                
+                                // Tampilkan data yang sudah dikelompokkan
+                                foreach ($keperluan_utama_data as $idx => $item):
+                            ?>
+                            <tr>
+                                <td><p class="text-xs font-weight-bold mb-0 ps-3"><?= $idx + 1 ?></p></td>
+                                <td><p class="text-xs font-weight-bold mb-0"><?= $item['nama'] ?></p></td>
+                                <td>
+                                    <div class="progress-wrapper w-100">
+                                        <div class="progress-info">
+                                            <div class="progress-percentage">
+                                                <span class="text-xs font-weight-bold"><?= $item['persen'] ?>%</span>
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <?php
+                                            $bar_color = $item['persen'] >= 80 ? 'bg-gradient-success' : 
+                                                        ($item['persen'] >= 60 ? 'bg-gradient-warning' : 'bg-gradient-info');
+                                            ?>
+                                            <div class="progress-bar <?= $bar_color ?>" style="width: <?= $item['persen'] ?>%"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold"><?= $item['persen'] ?>%</span>
+                                </td>
+                            </tr>
+                            <?php 
+                                endforeach;
+                            else: ?>
+                                <tr><td colspan="4" class="text-center py-4"><p class="text-xs text-secondary mb-0">Belum ada data keperluan</p></td></tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
 
       <footer class="footer pt-3 no-print">
         <div class="container-fluid">
@@ -1079,7 +1158,7 @@ function updateFilterStates() {
         // Set value periode ke 'tahunan' untuk backend
         const opt = document.createElement('option');
         opt.value = 'tahunan';
-        opt.textContent = 'Tahunan';
+        opt.textContent = '-- Pilih Periode --';
         opt.selected = true;
         periodeSelect.appendChild(opt);
     } else {
@@ -1148,49 +1227,45 @@ window.addEventListener('beforeprint', function() {
 let detailDonutChart = null;
 
 function showUnsurDetail(unsurName, index) {
-    console.log('Clicked unsur:', unsurName, 'Index:', index);
+    console.log('🟡 Memuat detail untuk:', unsurName, 'Index:', index);
     
     // Show loading state
-    document.getElementById('detailUnsurTitle').textContent = 'Memuat Detail...';
-    document.getElementById('detailStats').innerHTML = '<p class="text-sm text-muted">Memuat data...</p>';
-    document.getElementById('detailComments').innerHTML = '<p class="text-sm text-muted">Memuat komentar...</p>';
+    document.getElementById('detailUnsurTitle').textContent = 'Memuat Detail ' + unsurName + '...';
+    document.getElementById('detailStats').innerHTML = '<p class="text-sm text-muted">Memuat data statistik...</p>';
     
-    // Reset legend
-    document.getElementById('legendSangat').textContent = '0';
-    document.getElementById('legendPuas').textContent = '0';
-    document.getElementById('legendCukup').textContent = '0';
-    document.getElementById('legendKurang').textContent = '0';
-    document.getElementById('donutTotal').textContent = '0';
+    // Reset values
+    resetModalData();
     
     // Get current filter parameters
     const jenisPeriode = document.getElementById('jenis_periode').value;
     const periode = document.getElementById('periode').value;
     const tahun = document.getElementById('tahun').value;
     
-    console.log('Filter params:', { jenisPeriode, periode, tahun });
-    
-    // AJAX call untuk get data real
+    // AJAX call
     fetch(`<?= base_url('monev_kepuasan/get_detail_unsur') ?>?jenis_periode=${jenisPeriode}&periode=${periode}&tahun=${tahun}&unsur_index=${index}`)
         .then(response => {
-            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.status);
+            }
             return response.json();
         })
         .then(data => {
-            console.log('Data received:', data);
+            console.log('✅ Data diterima:', data);
             
             if (data.error) {
-                console.error('API Error:', data.error);
-                alert('Error: ' + data.error);
-                return;
+                throw new Error(data.error);
             }
             
-            // Update modal dengan data real
-            updateModalWithRealData(data);
+            if (!data.success) {
+                throw new Error('Response tidak sukses');
+            }
+            
+            // Update modal dengan data
+            updateModalWithData(data);
         })
         .catch(error => {
-            console.error('Fetch Error:', error);
-            document.getElementById('detailStats').innerHTML = '<p class="text-sm text-danger">Gagal memuat data</p>';
-            document.getElementById('detailComments').innerHTML = '<p class="text-sm text-danger">Error: ' + error.message + '</p>';
+            console.error('❌ Error:', error);
+            showErrorState(error.message);
         });
     
     // Show modal
@@ -1198,8 +1273,31 @@ function showUnsurDetail(unsurName, index) {
     modal.show();
 }
 
-function updateModalWithRealData(data) {
-    console.log('Updating modal with:', data);
+function resetModalData() {
+    // Reset legend dan total
+    document.getElementById('legendSangat').textContent = '0';
+    document.getElementById('legendPuas').textContent = '0';
+    document.getElementById('legendCukup').textContent = '0';
+    document.getElementById('legendKurang').textContent = '0';
+    document.getElementById('donutTotal').textContent = '0';
+    
+    // Reset chart dengan cara yang safe
+    safeDestroyChart();
+}
+
+function safeDestroyChart() {
+    try {
+        if (detailDonutChart && typeof detailDonutChart.destroy === 'function') {
+            detailDonutChart.destroy();
+        }
+    } catch (e) {
+        console.log('ℹ️ No chart to destroy or destroy failed:', e.message);
+    }
+    detailDonutChart = null;
+}
+
+function updateModalWithData(data) {
+    console.log('🔄 Update modal dengan data:', data);
     
     // Set judul modal
     document.getElementById('detailUnsurTitle').textContent = 'Detail - ' + data.unsur;
@@ -1207,15 +1305,12 @@ function updateModalWithRealData(data) {
     // Update statistik
     updateDetailStats(data.statistik);
     
-    // Update komentar
-    updateDetailComments(data.komentar);
-    
-    // Update grafik donut dan legend
+    // Update grafik donut
     updateDetailDonutChart(data.unsur, data.distribusi);
 }
 
 function updateDetailStats(stats) {
-    console.log('Updating stats:', stats);
+    console.log('📈 Update stats dengan data REAL:', stats);
     
     const statsHtml = `
         <div class="space-y-2">
@@ -1228,6 +1323,14 @@ function updateDetailStats(stats) {
                 <span class="text-sm font-weight-bold">${stats.total_responden}</span>
             </div>
             <div class="d-flex justify-content-between">
+                <span class="text-sm">Nilai Tertinggi:</span>
+                <span class="text-sm font-weight-bold">${stats.max_nilai}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-sm">Nilai Terendah:</span>
+                <span class="text-sm font-weight-bold">${stats.min_nilai}</span>
+            </div>
+            <div class="d-flex justify-content-between">
                 <span class="text-sm">Grade:</span>
                 <span class="text-sm font-weight-bold">${getGradeFromNilai(stats.rata_rata)}</span>
             </div>
@@ -1236,42 +1339,31 @@ function updateDetailStats(stats) {
     document.getElementById('detailStats').innerHTML = statsHtml;
 }
 
-function updateDetailComments(comments) {
-    console.log('Updating comments:', comments);
-    
-    let commentsHtml = '';
-    
-    if (comments && comments.length > 0) {
-        comments.forEach(comment => {
-            if (comment.kritik_saran && comment.kritik_saran.trim() !== '') {
-                const nama = comment.nama || 'Anonim';
-                const tanggal = comment.timestamp ? 
-                    new Date(comment.timestamp).toLocaleDateString('id-ID') : 
-                    'Tanggal tidak tersedia';
-                    
-                commentsHtml += `
-                    <div class="border-bottom pb-2 mb-2">
-                        <p class="text-sm mb-1">"${comment.kritik_saran}"</p>
-                        <small class="text-muted">- ${nama}, ${tanggal}</small>
-                    </div>
-                `;
-            }
-        });
-    }
-    
-    if (!commentsHtml) {
-        commentsHtml = '<p class="text-sm text-muted">Tidak ada komentar untuk periode ini</p>';
-    }
-    
-    document.getElementById('detailComments').innerHTML = commentsHtml;
+function getGradeFromNilai(nilai) {
+    if (nilai >= 3.5324) return 'A (Sangat Baik)';
+    if (nilai >= 3.0644) return 'B (Baik)';
+    if (nilai >= 2.60) return 'C (Cukup)';
+    return 'D (Kurang)';
 }
 
+// GANTI fungsi updateDetailDonutChart di script yang ada
+
 function updateDetailDonutChart(unsurName, distribusi) {
-    console.log('Updating chart with:', distribusi);
+    console.log('📊 Update chart dengan distribusi:', distribusi);
     
-    const ctx = document.getElementById('detailDonutChart').getContext('2d');
+    const ctx = document.getElementById('detailDonutChart');
+    if (!ctx) {
+        console.error('❌ Canvas element tidak ditemukan');
+        return;
+    }
     
-    // Data untuk chart - pastikan formatnya array
+    // Pastikan distribusi ada
+    if (!distribusi) {
+        console.error('❌ Data distribusi tidak ada');
+        return;
+    }
+    
+    // Data untuk chart
     const dataValues = [
         distribusi.sangat_puas || 0,
         distribusi.puas || 0,
@@ -1281,61 +1373,173 @@ function updateDetailDonutChart(unsurName, distribusi) {
     
     const total = dataValues.reduce((a, b) => a + b, 0);
     
-    console.log('Chart data values:', dataValues, 'Total:', total);
+    console.log('🎯 Chart data:', dataValues, 'Total:', total);
     
-    // Update legend values
+    // Update legend (angka)
     document.getElementById('legendSangat').textContent = distribusi.sangat_puas || 0;
     document.getElementById('legendPuas').textContent = distribusi.puas || 0;
     document.getElementById('legendCukup').textContent = distribusi.cukup || 0;
     document.getElementById('legendKurang').textContent = distribusi.kurang_puas || 0;
     document.getElementById('donutTotal').textContent = total;
     
-    // Destroy chart sebelumnya jika ada
-    if (window.detailDonutChart) {
-        window.detailDonutChart.destroy();
+    // Update progress bars dengan persentase
+    if (total > 0) {
+        const percentSangat = Math.round((distribusi.sangat_puas / total) * 100);
+        const percentPuas = Math.round((distribusi.puas / total) * 100);
+        const percentCukup = Math.round((distribusi.cukup / total) * 100);
+        const percentKurang = Math.round((distribusi.kurang_puas / total) * 100);
+        
+        // Update progress bars
+        document.getElementById('progressSangat').style.width = percentSangat + '%';
+        document.getElementById('progressPuas').style.width = percentPuas + '%';
+        document.getElementById('progressCukup').style.width = percentCukup + '%';
+        document.getElementById('progressKurang').style.width = percentKurang + '%';
+        
+        // Update text persentase
+        document.getElementById('percentSangat').textContent = percentSangat + '%';
+        document.getElementById('percentPuas').textContent = percentPuas + '%';
+        document.getElementById('percentCukup').textContent = percentCukup + '%';
+        document.getElementById('percentKurang').textContent = percentKurang + '%';
+    } else {
+        // Reset jika tidak ada data
+        ['Sangat', 'Puas', 'Cukup', 'Kurang'].forEach(type => {
+            document.getElementById('progress' + type).style.width = '0%';
+            document.getElementById('percent' + type).textContent = '0%';
+        });
     }
     
+    // Destroy chart sebelumnya dengan cara safe
+    safeDestroyChart();
+    
     // Buat chart baru
-    window.detailDonutChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Sangat Puas', 'Puas', 'Cukup', 'Kurang Puas'],
-            datasets: [{
-                data: dataValues,
-                backgroundColor: [
-                    '#10b981', // green
-                    '#fbbf24', // yellow
-                    '#f97316', // orange
-                    '#ef4444'  // red
-                ],
-                borderWidth: 3,
-                borderColor: '#ffffff',
-                hoverBorderWidth: 4,
-                hoverOffset: 15
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '70%',
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const label = context.label || '';
-                            const value = context.raw || 0;
-                            const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
-                            return `${label}: ${value} responden (${percentage}%)`;
+    try {
+        const context = ctx.getContext('2d');
+        detailDonutChart = new Chart(context, {
+            type: 'doughnut',
+            data: {
+                labels: ['Sangat Puas', 'Puas', 'Cukup', 'Kurang Puas'],
+                datasets: [{
+                    data: dataValues,
+                    backgroundColor: [
+                        '#10b981', // green
+                        '#fbbf24', // yellow
+                        '#f97316', // orange
+                        '#ef4444'  // red
+                    ],
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                    hoverBorderWidth: 4,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: { 
+                        display: false 
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        padding: 12,
+                        displayColors: true,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                return `${label}: ${value} responden (${percentage}%)`;
+                            }
                         }
                     }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 1500,
+                    easing: 'easeOutQuart'
                 }
             }
+        });
+        
+        console.log('✅ Chart berhasil dibuat');
+    } catch (error) {
+        console.error('❌ Error creating chart:', error);
+    }
+}
+
+function showErrorState(message) {
+    document.getElementById('detailStats').innerHTML = 
+        '<p class="text-sm text-danger">Error: ' + message + '</p>';
+}
+
+// Pastikan chart di-destroy ketika modal ditutup
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('detailUnsurModal');
+    if (modal) {
+        modal.addEventListener('hidden.bs.modal', function() {
+            safeDestroyChart();
+        });
+    }
+});
+
+// Tambahkan ini di bagian script
+let beforePrint = function() {
+    console.log('Functionality to run before printing.');
+};
+
+// Tambahkan script ini di bagian script yang sudah ada
+let afterPrint = function() {
+    console.log('Print dibatalkan - resetting styles');
+    
+    // Method 1: Force re-render yang lebih efektif
+    document.body.style.display = 'none';
+    document.body.offsetHeight; // Trigger reflow
+    document.body.style.display = 'block';
+    
+    // Method 2: Reset specific elements yang mungkin terpengaruh
+    const floatingBtn = document.querySelector('.btn-print-floating');
+    if (floatingBtn) {
+        floatingBtn.style.cssText = '';
+    }
+    
+    const printBtn = document.querySelector('.btn-print-floating .btn');
+    if (printBtn) {
+        printBtn.style.cssText = '';
+    }
+    
+    // Method 3: Temporary manipulation untuk force browser re-render
+    setTimeout(() => {
+        document.documentElement.classList.add('force-render');
+        setTimeout(() => {
+            document.documentElement.classList.remove('force-render');
+        }, 100);
+    }, 50);
+};
+
+// Deteksi print events
+if (window.matchMedia) {
+    const mediaQueryList = window.matchMedia('print');
+    mediaQueryList.addListener(function(mql) {
+        if (!mql.matches) {
+            setTimeout(afterPrint, 100);
         }
     });
 }
+
+window.onafterprint = afterPrint;
+
+// Juga reset ketika kembali ke tab ini
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        setTimeout(afterPrint, 100);
+    }
+});
 
 </script>
 </body>

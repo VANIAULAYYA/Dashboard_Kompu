@@ -337,7 +337,7 @@
             </div>
 
             <div class="mb-3">
-              <label>Asal Instansi?Pribadi</label>
+              <label>Asal Instansi/Pribadi</label>
               <input type="text" name="asal_instansi" class="form-control" placeholder="Masukkan asal instansi/pribadi tamu">
             </div>
 
@@ -348,14 +348,23 @@
 
             <div class="mb-3">
               <label>Keperluan</label>
-              <select name="keperluan" class="form-select" required>
+              <select id="keperluanSelect" class="form-select" required onchange="toggleKeteranganLainnya()">
                 <option value="">-- Pilih Keperluan --</option>
                 <option value="Menemui Pejabat/Staff">Menemui Pejabat/Staff</option>
                 <option value="Rekomendasi Teknis (Rekomtek)">Rekomendasi Teknis (Rekomtek)</option>
                 <option value="Kirim Surat (Promosi/Aduan/Temuan)">Kirim Surat (Promosi/Aduan/Temuan)</option>
                 <option value="Permintaan Data/Informasi">Permintaan Data/Informasi</option>
-                <option value="Lainnya">Lainnya</option>
+                <option value="other">Lainnya</option>
               </select>
+              <!-- Input hidden untuk keperluan yang akan disimpan ke database -->
+              <input type="hidden" name="keperluan" id="keperluanActual">
+            </div>
+
+            <!-- Form Keterangan Lainnya (Awalnya Disembunyikan) -->
+            <div class="mb-3" id="keteranganLainnyaGroup" style="display: none;">
+              <label>Keterangan Keperluan Lainnya</label>
+              <input type="text" id="keteranganLainnya" class="form-control" placeholder="Silakan jelaskan keperluan lainnya...">
+              <small class="text-muted">Mohon diisi untuk keperluan selain yang tersedia di atas</small>
             </div>
 
             <div class="mb-3">
@@ -410,14 +419,23 @@
 
             <div class="mb-3">
               <label>Keperluan</label>
-              <select name="keperluan" id="edit_keperluan" class="form-select" required>
+              <select id="edit_keperluanSelect" class="form-select" required onchange="toggleKeteranganLainnyaEdit()">
                 <option value="">-- Pilih Keperluan --</option>
                 <option value="Menemui Pejabat/Staff">Menemui Pejabat/Staff</option>
                 <option value="Rekomendasi Teknis (Rekomtek)">Rekomendasi Teknis (Rekomtek)</option>
                 <option value="Kirim Surat (Promosi/Aduan/Temuan)">Kirim Surat (Promosi/Aduan/Temuan)</option>
                 <option value="Permintaan Data/Informasi">Permintaan Data/Informasi</option>
-                <option value="Lainnya">Lainnya</option>
+                <option value="other">Lainnya</option>
               </select>
+              <!-- Input hidden untuk keperluan yang akan disimpan ke database -->
+              <input type="hidden" name="keperluan" id="edit_keperluanActual">
+            </div>
+
+            <!-- Form Keterangan Lainnya untuk Edit -->
+            <div class="mb-3" id="edit_keteranganLainnyaGroup" style="display: none;">
+              <label>Keterangan Keperluan Lainnya</label>
+              <input type="text" id="edit_keteranganLainnya" class="form-control" placeholder="Silakan jelaskan keperluan lainnya...">
+              <small class="text-muted">Mohon diisi untuk keperluan selain yang tersedia di atas</small>
             </div>
 
             <div class="mb-3">
@@ -466,22 +484,33 @@
     document.getElementById("divTabel").style.display = "block";
   });
 
-  // Edit
+  // Edit - VERSI DIPERBAIKI
   document.addEventListener("click", function(e){
     const btn = e.target.closest(".btnEdit");
     if (!btn) return;
+    
+    // Sembunyikan semua div, tampilkan form edit
     document.getElementById("divTabel").style.display = "none";
     document.getElementById("divForm").style.display = "none";
     document.getElementById("divFormEdit").style.display = "block";
 
-    document.getElementById("edit_id").value = btn.dataset.id;
-    document.getElementById("edit_nama").value = btn.dataset.nama;
-    document.getElementById("edit_jenis").value = btn.dataset.jenis;
-    document.getElementById("edit_instansi").value = btn.dataset.instansi;
-    document.getElementById("edit_telp").value = btn.dataset.telp;
-    document.getElementById("edit_keperluan").value = btn.dataset.keperluan;
-    document.getElementById("edit_kritik").value = btn.dataset.kritik;
+    // Buat object data dari dataset
+    const data = {
+      id: btn.dataset.id,
+      nama: btn.dataset.nama,
+      jenis_kelamin: btn.dataset.jenis,
+      asal_instansi: btn.dataset.instansi,
+      no_handphone: btn.dataset.telp,
+      keperluan: btn.dataset.keperluan,
+      kritik_saran: btn.dataset.kritik
+    };
+
+    console.log('Data dari button:', data); // Debug
+
+    // Gunakan fungsi fillEditForm yang sudah dibuat
+    fillEditForm(data);
   });
+
   document.getElementById("btnKembaliEdit").addEventListener("click", function(){
     document.getElementById("divFormEdit").style.display = "none";
     document.getElementById("divTabel").style.display = "block";
@@ -495,18 +524,18 @@
     document.getElementById('deleteButton').setAttribute('href', url);
   });
 
+  // Placeholder behavior
   document.querySelectorAll("input, textarea").forEach(function(el){
-  el.addEventListener("focus", function(){
-    this.dataset.placeholder = this.placeholder;
-    this.placeholder = "";
+    el.addEventListener("focus", function(){
+      this.dataset.placeholder = this.placeholder;
+      this.placeholder = "";
+    });
+    el.addEventListener("blur", function(){
+      if(this.value === ""){
+        this.placeholder = this.dataset.placeholder;
+      }
+    });
   });
-  el.addEventListener("blur", function(){
-    if(this.value === ""){
-      this.placeholder = this.dataset.placeholder;
-    }
-  });
-});
-
 </script>
 
   </main>
@@ -609,6 +638,184 @@
       fixedHeight: true
     });
   </script>
+  <script>
+function toggleKeteranganLainnya() {
+  const keperluanSelect = document.getElementById('keperluanSelect');
+  const keteranganGroup = document.getElementById('keteranganLainnyaGroup');
+  const keteranganInput = document.getElementById('keteranganLainnya');
+  const keperluanActual = document.getElementById('keperluanActual');
+  
+  if (keperluanSelect.value === 'other') {
+    // Tampilkan form keterangan
+    keteranganGroup.style.display = 'block';
+    keteranganInput.required = true;
+    // Reset nilai actual
+    keperluanActual.value = '';
+  } else {
+    // Sembunyikan form keterangan
+    keteranganGroup.style.display = 'none';
+    keteranganInput.required = false;
+    keteranganInput.value = ''; // Kosongkan input
+    // Set nilai actual dari dropdown
+    keperluanActual.value = keperluanSelect.value;
+  }
+}
+
+// Update nilai actual ketika user mengetik di keterangan lainnya
+document.getElementById('keteranganLainnya').addEventListener('input', function(e) {
+  const keperluanActual = document.getElementById('keperluanActual');
+  keperluanActual.value = e.target.value.trim();
+});
+
+// Validasi form sebelum submit
+document.querySelector('form').addEventListener('submit', function(e) {
+  const keperluanSelect = document.getElementById('keperluanSelect');
+  const keteranganInput = document.getElementById('keteranganLainnya');
+  const keperluanActual = document.getElementById('keperluanActual');
+  
+  if (keperluanSelect.value === 'other') {
+    if (!keteranganInput.value.trim()) {
+      e.preventDefault();
+      alert('Mohon isi keterangan keperluan lainnya');
+      keteranganInput.focus();
+      return;
+    }
+    // Pastikan nilai actual sudah terisi dengan input user
+    keperluanActual.value = keteranganInput.value.trim();
+  } else {
+    // Pastikan nilai actual dari dropdown
+    keperluanActual.value = keperluanSelect.value;
+  }
+  
+  console.log('Data yang akan dikirim ke database:', keperluanActual.value);
+});
+
+// Inisialisasi saat pertama kali load
+document.addEventListener('DOMContentLoaded', function() {
+  const keperluanSelect = document.getElementById('keperluanSelect');
+  const keperluanActual = document.getElementById('keperluanActual');
+  // Set nilai default
+  if (keperluanSelect.value && keperluanSelect.value !== 'other') {
+    keperluanActual.value = keperluanSelect.value;
+  }
+});
+</script>
+<script>
+// Fungsi untuk form edit
+function toggleKeteranganLainnyaEdit() {
+  const keperluanSelect = document.getElementById('edit_keperluanSelect');
+  const keteranganGroup = document.getElementById('edit_keteranganLainnyaGroup');
+  const keteranganInput = document.getElementById('edit_keteranganLainnya');
+  const keperluanActual = document.getElementById('edit_keperluanActual');
+  
+  if (keperluanSelect.value === 'other') {
+    // Tampilkan form keterangan
+    keteranganGroup.style.display = 'block';
+    keteranganInput.required = true;
+  } else {
+    // Sembunyikan form keterangan
+    keteranganGroup.style.display = 'none';
+    keteranganInput.required = false;
+    keteranganInput.value = ''; // Kosongkan input
+    // Set nilai actual dari dropdown
+    keperluanActual.value = keperluanSelect.value;
+  }
+}
+
+// Update nilai actual ketika user mengetik di keterangan lainnya (edit)
+document.getElementById('edit_keteranganLainnya').addEventListener('input', function(e) {
+  const keperluanActual = document.getElementById('edit_keperluanActual');
+  keperluanActual.value = e.target.value.trim();
+});
+
+// Validasi form edit sebelum submit
+document.querySelector('#divFormEdit form').addEventListener('submit', function(e) {
+  const keperluanSelect = document.getElementById('edit_keperluanSelect');
+  const keteranganInput = document.getElementById('edit_keteranganLainnya');
+  const keperluanActual = document.getElementById('edit_keperluanActual');
+  
+  if (keperluanSelect.value === 'other') {
+    if (!keteranganInput.value.trim()) {
+      e.preventDefault();
+      alert('Mohon isi keterangan keperluan lainnya');
+      keteranganInput.focus();
+      return;
+    }
+    // Pastikan nilai actual sudah terisi dengan input user
+    keperluanActual.value = keteranganInput.value.trim();
+  } else {
+    // Pastikan nilai actual dari dropdown
+    keperluanActual.value = keperluanSelect.value;
+  }
+  
+  console.log('Data keperluan yang akan diupdate:', keperluanActual.value);
+});
+
+// Fungsi untuk mengisi form edit dengan data yang ada - VERSI PERBAIKI
+function fillEditForm(data) {
+  console.log('Mengisi form edit dengan data:', data);
+  
+  document.getElementById('edit_id').value = data.id;
+  document.getElementById('edit_nama').value = data.nama;
+  document.getElementById('edit_jenis').value = data.jenis_kelamin;
+  document.getElementById('edit_instansi').value = data.asal_instansi || '';
+  document.getElementById('edit_telp').value = data.no_handphone || '';
+  document.getElementById('edit_kritik').value = data.kritik_saran || '';
+  
+  const keperluanSelect = document.getElementById('edit_keperluanSelect');
+  const keperluanActual = document.getElementById('edit_keperluanActual');
+  const keteranganGroup = document.getElementById('edit_keteranganLainnyaGroup');
+  const keteranganInput = document.getElementById('edit_keteranganLainnya');
+  
+  // Daftar keperluan utama yang tersedia di dropdown
+  const keperluanUtama = [
+    'Menemui Pejabat/Staff',
+    'Rekomendasi Teknis (Rekomtek)',
+    'Kirim Surat (Promosi/Aduan/Temuan)',
+    'Permintaan Data/Informasi'
+  ];
+  
+  // Reset dulu
+  keperluanSelect.value = '';
+  keteranganGroup.style.display = 'none';
+  keteranganInput.value = '';
+  keteranganInput.required = false;
+  
+  // Cek apakah keperluan ada di daftar utama
+  if (keperluanUtama.includes(data.keperluan)) {
+    // Jika termasuk keperluan utama, pilih dari dropdown
+    keperluanSelect.value = data.keperluan;
+    keperluanActual.value = data.keperluan;
+    console.log('Keperluan utama dipilih:', data.keperluan);
+  } else {
+    // Jika bukan keperluan utama, pilih "Lainnya" dan isi keterangan
+    keperluanSelect.value = 'other';
+    keperluanActual.value = data.keperluan;
+    keteranganGroup.style.display = 'block';
+    keteranganInput.value = data.keperluan;
+    keteranganInput.required = true;
+    console.log('Keperluan custom dipilih:', data.keperluan);
+  }
+}
+
+// Event listener untuk form edit
+document.addEventListener('DOMContentLoaded', function() {
+  // Inisialisasi form edit
+  const editKeperluanSelect = document.getElementById('edit_keperluanSelect');
+  const editKeperluanActual = document.getElementById('edit_keperluanActual');
+  
+  if (editKeperluanSelect.value && editKeperluanSelect.value !== 'other') {
+    editKeperluanActual.value = editKeperluanSelect.value;
+  }
+});
+
+// Fungsi untuk membuka form edit (pastikan ini dipanggil dari tombol edit)
+function openEditForm(data) {
+  fillEditForm(data);
+  document.getElementById('divFormEdit').style.display = 'block';
+  document.getElementById('divTable').style.display = 'none';
+}
+</script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
