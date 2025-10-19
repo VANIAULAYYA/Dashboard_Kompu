@@ -182,30 +182,59 @@
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
-     <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur" data-scroll="true">
-      <div class="container-fluid py-1 px-3">
-        <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none me-2 ">
-          <a href="javascript:;" class="nav-link text-body p-0">
-            <div class="sidenav-toggler-inner">
-              <i class="sidenav-toggler-line"></i>
-              <i class="sidenav-toggler-line"></i>
-              <i class="sidenav-toggler-line"></i>
-            </div>
-          </a>
+<nav class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur" data-scroll="true">
+  <div class="container-fluid py-1 px-3">
+    <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none me-2 ">
+      <a href="javascript:;" class="nav-link text-body p-0">
+        <div class="sidenav-toggler-inner">
+          <i class="sidenav-toggler-line"></i>
+          <i class="sidenav-toggler-line"></i>
+          <i class="sidenav-toggler-line"></i>
         </div>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Default</li>
-          </ol>
-        </nav>
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Type here...">
-            </div>
-          </div>
+      </a>
+    </div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pelayanan</a></li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Layanan Permintaan Data</li>
+      </ol>
+    </nav>
+    <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+      
+      <!-- ✅ FORM FILTER PERIODE - TARUH DI SINI -->
+      <form method="GET" action="<?= site_url('Layanan/filter') ?>" class="d-flex align-items-center gap-3 ms-auto me-3" id="filterForm">
+    <!-- Filter Controls -->
+    <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center">
+            <label class="text-gray-700 font-medium mb-0 me-2">Periode:</label>
+            <select name="jenis_periode" id="jenis_periode" class="form-select form-select-sm" style="width: 130px;">
+                <option value="bulanan" <?= $jenis_periode == 'bulanan' ? 'selected' : '' ?>>Bulanan</option>
+                <option value="triwulan" <?= $jenis_periode == 'triwulan' ? 'selected' : '' ?>>Triwulan</option>
+                <option value="semester" <?= $jenis_periode == 'semester' ? 'selected' : '' ?>>Semester</option>
+                <option value="tahunan" <?= $jenis_periode == 'tahunan' ? 'selected' : '' ?>>Tahunan</option>
+                <option value="semua" <?= $jenis_periode == 'semua' ? 'selected' : '' ?>>Semua Data</option>
+            </select>
+        </div>
+
+        <select name="periode" id="periode" class="form-select form-select-sm" style="width: 180px;">
+            <!-- Options akan diisi oleh JavaScript -->
+        </select>
+
+        <div class="d-flex align-items-center">
+            <label class="text-gray-700 font-medium mb-0 me-2">Tahun:</label>
+            <select name="tahun" id="tahun" class="form-select form-select-sm" style="width: 150px;">
+                <option value="semua" <?= $tahun_selected == 'semua' ? 'selected' : '' ?>>-- Semua Tahun --</option>
+                <?php foreach($tahun_available as $tahun_item): ?>
+                    <option value="<?= $tahun_item ?>" <?= $tahun_item == $tahun_selected ? 'selected' : '' ?>>
+                        <?= $tahun_item ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+
+    <!-- HAPUS BUTTON FILTER DAN VERTICAL SEPARATOR -->
+</form>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="<?= base_url("Auth/logout");?>" class="nav-link text-body font-weight-bold px-0">
@@ -231,6 +260,7 @@
         </div>
       </div>
     </nav>
+
     <!-- End Navbar -->
      <div id="divTabel">
       <div class="container-fluid py-4">
@@ -238,10 +268,19 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
             <h5 class="mb-0">Layanan Permintaan Data</h5>
             <p class="text-sm mb-0">
               Daftar Layanan Permintaan Data di BBWS Brantas
             </p>
+            </div>
+              <!-- ✅ LABEL PERIODE DI SEBELAH KANAN -->
+              <div class="border-start ps-4 ms-4">
+                <div class="text-sm text-muted mb-1">Periode</div>
+                <div class="h5 fw-bold text-dark mb-0"><?= isset($periode_label) ? $periode_label : 'Semua Data' ?></div>
+              </div>
+            </div>
             <button type="button" class="btn btn-primary btn-sm mt-4" id="btnTambah">
               <i class="fa fa-plus"></i> Tambah Permohonan
             </button>
@@ -277,7 +316,7 @@
     </td>
                   <td class="text-sm font-weight-normal"><?= $p->nomor_surat; ?></td>
                   <td class="text-sm font-weight-normal"><?= $p->perihal; ?></td>
-                  <td class="text-sm font-weight-normal"><?= $p->diterima_ppid; ?></td>
+                  <td class="text-sm font-weight-normal"><?= date('d F Y', strtotime($p->diterima_ppid)); ?></td>
                   <td class="text-sm font-weight-normal"><a href="<?= $p->link_bukti_surat ?>" target="_blank">Lihat</a></td>
                   <td class="text-sm font-weight-normal"><?= $p->tindak_lanjut; ?></td>
                   <td class="text-sm font-weight-normal"><?= $p->status; ?></td>
@@ -739,6 +778,107 @@ document.querySelectorAll("input, textarea").forEach(function(el){
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="<?= base_url();?>assets/Template/assets/js/soft-ui-dashboard.min.js?v=1.2.0"></script>
+
+  <script>
+// Periode Options
+const periodeOptions = {
+    bulanan: [
+        { value: 'januari', label: 'Januari' }, { value: 'februari', label: 'Februari' },
+        { value: 'maret', label: 'Maret' }, { value: 'april', label: 'April' },
+        { value: 'mei', label: 'Mei' }, { value: 'juni', label: 'Juni' },
+        { value: 'juli', label: 'Juli' }, { value: 'agustus', label: 'Agustus' },
+        { value: 'september', label: 'September' }, { value: 'oktober', label: 'Oktober' },
+        { value: 'november', label: 'November' }, { value: 'desember', label: 'Desember' }
+    ],
+    triwulan: [
+        { value: 'triwulan1', label: 'Triwulan I (Jan–Mar)' },
+        { value: 'triwulan2', label: 'Triwulan II (Apr–Jun)' },
+        { value: 'triwulan3', label: 'Triwulan III (Jul–Sep)' },
+        { value: 'triwulan4', label: 'Triwulan IV (Okt–Des)' }
+    ],
+    semester: [
+        { value: 'semester1', label: 'Semester I (Jan–Jun)' },
+        { value: 'semester2', label: 'Semester II (Jul–Des)' }
+    ],
+    tahunan: [
+        { value: 'tahunan', label: 'Tahunan (Jan–Des)' }
+    ]
+};
+
+// Inisialisasi filter dengan AUTO SUBMIT
+document.addEventListener('DOMContentLoaded', function() {
+    const tahunSelect = document.getElementById('tahun');
+    const jenisSelect = document.getElementById('jenis_periode');
+    const periodeSelect = document.getElementById('periode');
+    const filterForm = document.getElementById('filterForm');
+
+    function updateFilterStates() {
+        const jenis = jenisSelect.value;
+        const selectedPeriode = '<?= $periode_selected ?>';
+        
+        periodeSelect.innerHTML = '<option value="">-- Pilih Periode --</option>';
+
+        if (jenis === 'semua') {
+            periodeSelect.disabled = true;
+            tahunSelect.disabled = true;
+            tahunSelect.value = 'semua';
+        } else if (jenis === 'tahunan') {
+            periodeSelect.disabled = true;
+            tahunSelect.disabled = false;
+            const opt = document.createElement('option');
+            opt.value = 'tahunan';
+            opt.textContent = '-- Pilih Periode --';
+            opt.selected = true;
+            periodeSelect.appendChild(opt);
+        } else {
+            periodeSelect.disabled = false;
+            tahunSelect.disabled = false;
+            
+            if (periodeOptions[jenis]) {
+                periodeOptions[jenis].forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.label;
+                    if (opt.value === selectedPeriode) {
+                        option.selected = true;
+                    }
+                    periodeSelect.appendChild(option);
+                });
+            }
+        }
+    }
+
+    // AUTO SUBMIT ketika ada perubahan
+    function autoSubmit() {
+        // Submit form setelah perubahan
+        setTimeout(() => {
+            filterForm.submit();
+        }, 100);
+    }
+
+    // Event listener dengan auto-submit
+    jenisSelect.addEventListener('change', function() {
+        updateFilterStates();
+        autoSubmit();
+    });
+
+    periodeSelect.addEventListener('change', function() {
+        if (this.value && !this.disabled) {
+            autoSubmit();
+        }
+    });
+
+    tahunSelect.addEventListener('change', function() {
+        if (!this.disabled) {
+            autoSubmit();
+        }
+    });
+
+    // Inisialisasi pertama kali
+    updateFilterStates();
+});
+</script>
+
 </body>
 
 </html>

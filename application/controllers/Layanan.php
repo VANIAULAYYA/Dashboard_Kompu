@@ -8,19 +8,35 @@ class Layanan extends CI_Controller {
         parent::__construct();
         $this->load->model('M_layanan_permintaan_data');
         $this->load->helper(['form', 'url']);
+        
+        // Tambahkan session check seperti di Admin
+        if(!$this->session->userdata('logged_in')) {
+            redirect('auth');
+        }
     }
 
-    // READ
+    // READ - Index (Dashboard/Default View)
     public function index()
     {
-        $data['Layanan'] = $this->M_layanan_permintaan_data->get_all();
+        $data = [
+            'title' => 'Layanan Permintaan Data',
+            'Layanan' => $this->M_layanan_permintaan_data->get_all(), // GANTI jadi 'Layanan' (huruf besar)
+            'tahun_available' => $this->M_layanan_permintaan_data->get_available_years(),
+            'tahun_selected' => date('Y'),
+            'jenis_periode' => 'semua',
+            'periode_selected' => 'semua',
+            'periode_label' => 'Semua Data'
+        ];
         $this->load->view('admin/v_layanan_permintaan_data', $data);
     }
 
     // CREATE - tampil form tambah
     public function tambah()
     {
-        $this->load->view('admin/v_layanan_form');
+        $data = [
+            'title' => 'Tambah Layanan Permintaan Data'
+        ];
+        $this->load->view('admin/v_layanan_form', $data);
     }
 
     // CREATE - simpan data baru
@@ -46,27 +62,30 @@ class Layanan extends CI_Controller {
 
     // UPDATE - tampil form edit
     public function edit($nomor)
-{
-    $data['Layanan'] = $this->M_layanan_permintaan_data->get_by_id($nomor);
+    {
+        $data = [
+            'title' => 'Edit Layanan Permintaan Data',
+            'Layanan' => $this->M_layanan_permintaan_data->get_by_id($nomor) // GANTI jadi 'Layanan'
+        ];
 
-    // Debug dulu
-    if (!$data['Layanan']) {
-        echo "<h3>Data tidak ditemukan untuk nomor: " . $nomor . "</h3>";
-        echo "<pre>";
-        print_r($this->db->last_query()); // cek query terakhir
-        echo "</pre>";
-        exit;
+        // Debug dulu
+        if (!$data['Layanan']) {
+            echo "<h3>Data tidak ditemukan untuk nomor: " . $nomor . "</h3>";
+            echo "<pre>";
+            print_r($this->db->last_query());
+            echo "</pre>";
+            exit;
+        }
+
+        $this->load->view('admin/v_layanan_edit', $data);
     }
-
-    $this->load->view('admin/v_layanan_edit', $data);
-}
 
     // UPDATE - simpan perubahan
     public function update()
-{
-    $nomor = $this->input->post('nomor'); // ambil dari form
+    {
+        $nomor = $this->input->post('nomor');
 
-    $data = [
+        $data = [
             'via'               => $this->input->post('via'),
             'status_pemohon'    => $this->input->post('status_pemohon'),
             'pengirim'          => $this->input->post('pengirim'),
@@ -89,5 +108,113 @@ class Layanan extends CI_Controller {
     {
         $this->M_layanan_permintaan_data->delete($nomor);
         redirect('Layanan');
+    }
+
+    // ========= HALAMAN LAYANAN DENGAN FILTER =========
+    public function filter()
+    {
+        // Ambil parameter filter
+        $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'triwulan';
+        $periode = $this->input->get('periode') ? $this->input->get('periode') : 'triwulan1';
+        $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : date('Y');
+        
+        // Ambil tahun yang tersedia dari database
+        $tahun_available = $this->M_layanan_permintaan_data->get_available_years();
+        
+        // Handle date range
+        if ($jenis_periode == 'semua') {
+            $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+            $periode = 'semua';
+            $tahun = 'semua';
+        } elseif ($jenis_periode == 'tahunan') {
+            $periode = 'tahunan';
+            $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+            $date_range = $this->get_date_range($periode, $tahun_for_range);
+        } else {
+            $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+            $date_range = $this->get_date_range($periode, $tahun_for_range);
+        }
+        
+        // Get data dengan filter
+        $data = [
+            'title' => 'Layanan Permintaan Data',
+            'Layanan' => $this->M_layanan_permintaan_data->get_with_filter($date_range), // GANTI jadi 'Layanan'
+            'tahun_available' => $tahun_available,
+            'tahun_selected' => $tahun,
+            'jenis_periode' => $jenis_periode,
+            'periode_selected' => $periode,
+            'periode_label' => $date_range['label']
+        ];
+        
+        $this->load->view('admin/v_layanan_permintaan_data', $data);
+    }
+
+    // ========= FUNGSI GET DATE RANGE SEPERTI DI ADMIN =========
+    
+    /**
+     * Fungsi untuk mendapatkan range tanggal berdasarkan periode
+     * SAMA PERSIS DENGAN YANG DI ADMIN CONTROLLER
+     */
+    private function get_date_range($periode, $tahun = null)
+    {
+        if ($tahun === null) {
+            $tahun = date('Y');
+        }
+        
+        $tahun = intval($tahun);
+        
+        switch ($periode) {
+            // Bulanan
+            case 'januari': 
+                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-01-31', 'label' => 'Januari '.$tahun];
+            case 'februari': 
+                $end_day = date('t', strtotime($tahun.'-02-01'));
+                return ['start' => $tahun.'-02-01', 'end' => $tahun.'-02-'.$end_day, 'label' => 'Februari '.$tahun];
+            case 'maret': 
+                return ['start' => $tahun.'-03-01', 'end' => $tahun.'-03-31', 'label' => 'Maret '.$tahun];
+            case 'april': 
+                return ['start' => $tahun.'-04-01', 'end' => $tahun.'-04-30', 'label' => 'April '.$tahun];
+            case 'mei': 
+                return ['start' => $tahun.'-05-01', 'end' => $tahun.'-05-31', 'label' => 'Mei '.$tahun];
+            case 'juni': 
+                return ['start' => $tahun.'-06-01', 'end' => $tahun.'-06-30', 'label' => 'Juni '.$tahun];
+            case 'juli': 
+                return ['start' => $tahun.'-07-01', 'end' => $tahun.'-07-31', 'label' => 'Juli '.$tahun];
+            case 'agustus': 
+                return ['start' => $tahun.'-08-01', 'end' => $tahun.'-08-31', 'label' => 'Agustus '.$tahun];
+            case 'september': 
+                return ['start' => $tahun.'-09-01', 'end' => $tahun.'-09-30', 'label' => 'September '.$tahun];
+            case 'oktober': 
+                return ['start' => $tahun.'-10-01', 'end' => $tahun.'-10-31', 'label' => 'Oktober '.$tahun];
+            case 'november': 
+                return ['start' => $tahun.'-11-01', 'end' => $tahun.'-11-30', 'label' => 'November '.$tahun];
+            case 'desember': 
+                return ['start' => $tahun.'-12-01', 'end' => $tahun.'-12-31', 'label' => 'Desember '.$tahun];
+                
+            // Triwulan
+            case 'triwulan1': 
+                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-03-31', 'label' => 'Triwulan I (Jan-Mar) '.$tahun];
+            case 'triwulan2': 
+                return ['start' => $tahun.'-04-01', 'end' => $tahun.'-06-30', 'label' => 'Triwulan II (Apr-Jun) '.$tahun];
+            case 'triwulan3': 
+                return ['start' => $tahun.'-07-01', 'end' => $tahun.'-09-30', 'label' => 'Triwulan III (Jul-Sep) '.$tahun];
+            case 'triwulan4': 
+                return ['start' => $tahun.'-10-01', 'end' => $tahun.'-12-31', 'label' => 'Triwulan IV (Okt-Des) '.$tahun];
+                
+            // Semester
+            case 'semester1': 
+                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-06-30', 'label' => 'Semester I (Jan-Jun) '.$tahun];
+            case 'semester2': 
+                return ['start' => $tahun.'-07-01', 'end' => $tahun.'-12-31', 'label' => 'Semester II (Jul-Des) '.$tahun];
+                
+            // Tahunan
+            case 'tahunan': 
+                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-12-31', 'label' => 'Tahunan '.$tahun];
+                
+            // Semua Data
+            case 'semua':
+            default:
+                return ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+        }
     }
 }

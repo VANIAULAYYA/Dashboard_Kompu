@@ -286,24 +286,28 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="gradient-bg py-20 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="p-6">
-                    <h3 class="textyou're the is-animated text-4xl md:text-5xl font-bold mb-2">9440</h3>
-                    <p class="text-lg">Kunjungan</p>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-4xl md:text-5xl font-bold mb-2">90%</h3>
-                    <p class="text-lg">Kepuasan Layanan</p>
-                </div>
-                <div class="p-6">
-                    <h5 class="text-4xl md:text-5xl font-bold mb-2">Senin-Jumat <br>07.30-16.00 WIB</h5>
-                    <p class="text-lg">Waktu Layanan</p>
-                </div>
+<section class="gradient-bg py-20 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="p-6">
+                <h3 class="text-youre-the-is-animated text-4xl md:text-5xl font-bold mb-2" id="totalKunjungan">
+                    9440
+                </h3>
+                <p class="text-lg">Kunjungan</p>
+            </div>
+            <div class="p-6">
+                <h3 class="text-4xl md:text-5xl font-bold mb-2" id="kepuasanLayanan">
+                    90%
+                </h3>
+                <p class="text-lg">Kepuasan Layanan</p>
+            </div>
+            <div class="p-6">
+                <h5 class="text-4xl md:text-5xl font-bold mb-2">Senin-Jumat <br>07.30-16.00 WIB</h5>
+                <p class="text-lg">Waktu Layanan</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- CTA Section -->
     <section class="py-20 gradient-bg text-white">
@@ -510,6 +514,44 @@
 
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
+
+        // Function untuk load stats data - TANPA MENGUBAH TAMPILAN
+function loadStatsData() {
+    fetch('<?= base_url('monev_kepuasan/get_stats_all_data') ?>')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('📊 Stats data received:', data);
+            
+            if (data.success) {
+                // Update total kunjungan - HANYA GANTI ANGKA
+                const kunjunganElement = document.getElementById('totalKunjungan');
+                if (kunjunganElement) {
+                    kunjunganElement.textContent = data.total_kunjungan.toLocaleString();
+                }
+                
+                // Update kepuasan layanan - HANYA GANTI ANGKA
+                const kepuasanElement = document.getElementById('kepuasanLayanan');
+                if (kepuasanElement) {
+                    kepuasanElement.textContent = data.kepuasan_layanan + '%';
+                }
+            }
+            // Jika error, biarkan angka default (9440 dan 90%) tetap tampil
+        })
+        .catch(error => {
+            console.error('Error fetching stats:', error);
+            // Biarkan angka default tetap tampil
+        });
+}
+
+// Load stats ketika halaman siap
+document.addEventListener('DOMContentLoaded', function() {
+    loadStatsData();
+});
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
 </body>

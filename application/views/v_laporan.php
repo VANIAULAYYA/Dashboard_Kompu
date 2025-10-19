@@ -406,50 +406,61 @@
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light shadow-sm">
-    <div class="container">
-      <!-- Logo -->
-      <a class="navbar-brand" href="#">
-        <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" style="width: 250px; height: auto;">
-      </a>
+<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light shadow-sm">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand" href="<?php echo base_url(); ?>">
+      <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" style="width: 250px; height: auto;">
+    </a>
 
-      <!-- Toggler button -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <!-- Toggler/collapse button (mobile) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <!-- Navbar links -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Tentang</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Buku Tamu</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Media Sosial</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Layanan</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="#" id="navbarLaporan" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Publikasi <i id="laporan-icon" class="fas fa-chevron-up ms-1"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
-              <li><a class="dropdown-item" href="#">Laporan PPID</a></li>
-              <li><a class="dropdown-item" href="#">Laporan Kompu</a></li>
-              <li><a class="dropdown-item" href="#">Survei Kepuasan Masyarakat</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'home' ? 'active' : ''; ?>" href="<?php echo base_url(); ?>">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/tentang'); ?>">Tentang</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'buku_tamu' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/buku_tamu'); ?>">Buku Tamu</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Media Sosial</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active_menu == 'layanan' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/layanan'); ?>">Layanan</a>
+        </li>
+
+        <!-- Dropdown Laporan -->
+        <li class="nav-item dropdown">
+          <a class="nav-link <?php echo $active_menu == 'laporan' ? 'active' : ''; ?>" 
+             href="#" id="navbarLaporan" role="button" 
+             data-bs-toggle="dropdown" data-bs-display="static" 
+             aria-expanded="false">
+            Publikasi <i id="laporan-icon" class="fas fa-chevron-up ms-1"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
+            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_harian'); ?>">Laporan PPID</a></li>
+            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_bulanan'); ?>">Laporan Kompu</a></li>
+            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_tahunan'); ?>">Survei Kepuasan Masyarakat</a></li>
+          </ul>
+        </li>
+
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- Hero Section -->
 <section class="hero-section">

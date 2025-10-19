@@ -91,4 +91,34 @@ class M_admin extends CI_Model {
     public function get_aduan() {
         return $this->db->get('aduan')->result();
     }
+
+    // Method untuk get data tamu dengan filter
+public function get_tamu_with_filter($date_range) {
+    $this->db->from('buku_tamu'); // Ganti dengan nama tabel Anda
+    
+    if ($date_range['start'] && $date_range['end']) {
+        $this->db->where('timestamp >=', $date_range['start']);
+        $this->db->where('timestamp <=', $date_range['end']);
+    }
+    
+    return $this->db->get()->result();
+}
+
+// Method untuk get available years
+public function get_available_years() {
+    $this->db->select('YEAR(timestamp) as tahun');
+    $this->db->from('buku_tamu');
+    $this->db->group_by('YEAR(timestamp)');
+    $this->db->order_by('tahun', 'DESC');
+    
+    $result = $this->db->get()->result();
+    
+    $years = [];
+    foreach ($result as $row) {
+        $years[] = $row->tahun;
+    }
+    
+    return !empty($years) ? $years : [date('Y')];
+}
+
 }

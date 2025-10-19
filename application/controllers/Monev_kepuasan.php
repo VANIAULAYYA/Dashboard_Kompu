@@ -558,4 +558,42 @@ private function generate_dummy_data($unsur_name, $index) {
     ];
 }
 
+/**
+ * AJAX endpoint untuk mendapatkan statistik semua data
+ */
+public function get_stats_all_data() {
+    header('Content-Type: application/json');
+    
+    try {
+        // Get data untuk SEMUA PERIODE (tanpa filter)
+        $date_range_all = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+        
+        $total_responden = $this->M_monev_kepuasan->get_total_responden($date_range_all);
+        $nilai_ikm = $this->M_monev_kepuasan->get_nilai_ikm($date_range_all);
+        
+        // KONVERSI NILAI IKM KE SKALA 100%
+        $persentase_ikm = ($nilai_ikm / 4) * 100;
+        
+        $data = [
+            'total_kunjungan' => $total_responden,
+            'kepuasan_layanan' => round($persentase_ikm, 2), // Sudah dalam persentase 100%
+            'success' => true
+        ];
+        
+        echo json_encode($data);
+        
+    } catch (Exception $e) {
+        log_message('error', 'Error in get_stats_all_data: ' . $e->getMessage());
+        
+        $error_response = [
+            'success' => false,
+            'error' => $e->getMessage(),
+            'total_kunjungan' => 0,
+            'kepuasan_layanan' => 0
+        ];
+        
+        echo json_encode($error_response);
+    }
+}
+
 }

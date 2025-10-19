@@ -18,6 +18,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url(); ?>assets/Template/assets/img/apple-icon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
   <link rel="icon" type="image/png" href="<?= base_url(); ?>assets/Pictures/Logo_PU_(RGB).jpg">
   <title>
     Dashboard Lampu Petromak
@@ -182,30 +183,59 @@
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
-     <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur" data-scroll="true">
-      <div class="container-fluid py-1 px-3">
-        <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none me-2 ">
-          <a href="javascript:;" class="nav-link text-body p-0">
-            <div class="sidenav-toggler-inner">
-              <i class="sidenav-toggler-line"></i>
-              <i class="sidenav-toggler-line"></i>
-              <i class="sidenav-toggler-line"></i>
-            </div>
-          </a>
+<nav class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur" data-scroll="true">
+  <div class="container-fluid py-1 px-3">
+    <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none me-2 ">
+      <a href="javascript:;" class="nav-link text-body p-0">
+        <div class="sidenav-toggler-inner">
+          <i class="sidenav-toggler-line"></i>
+          <i class="sidenav-toggler-line"></i>
+          <i class="sidenav-toggler-line"></i>
         </div>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Default</li>
-          </ol>
-        </nav>
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Type here...">
-            </div>
-          </div>
+      </a>
+    </div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pelayanan</a></li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Layanan Kepuasan Masyarakat</li>
+      </ol>
+    </nav>
+    <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+      
+      <!-- ✅ FORM FILTER PERIODE - TARUH DI SINI -->
+      <form method="GET" action="<?= site_url('Admin/layanan_kepuasan_filter') ?>" class="d-flex align-items-center gap-3 ms-auto me-3" id="filterForm">
+    <!-- Filter Controls -->
+    <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center">
+            <label class="text-gray-700 font-medium mb-0 me-2">Periode:</label>
+            <select name="jenis_periode" id="jenis_periode" class="form-select form-select-sm" style="width: 130px;">
+                <option value="bulanan" <?= $jenis_periode == 'bulanan' ? 'selected' : '' ?>>Bulanan</option>
+                <option value="triwulan" <?= $jenis_periode == 'triwulan' ? 'selected' : '' ?>>Triwulan</option>
+                <option value="semester" <?= $jenis_periode == 'semester' ? 'selected' : '' ?>>Semester</option>
+                <option value="tahunan" <?= $jenis_periode == 'tahunan' ? 'selected' : '' ?>>Tahunan</option>
+                <option value="semua" <?= $jenis_periode == 'semua' ? 'selected' : '' ?>>Semua Data</option>
+            </select>
+        </div>
+
+        <select name="periode" id="periode" class="form-select form-select-sm" style="width: 180px;">
+            <!-- Options akan diisi oleh JavaScript -->
+        </select>
+
+        <div class="d-flex align-items-center">
+            <label class="text-gray-700 font-medium mb-0 me-2">Tahun:</label>
+            <select name="tahun" id="tahun" class="form-select form-select-sm" style="width: 150px;">
+                <option value="semua" <?= $tahun_selected == 'semua' ? 'selected' : '' ?>>-- Semua Tahun --</option>
+                <?php foreach($tahun_available as $tahun_item): ?>
+                    <option value="<?= $tahun_item ?>" <?= $tahun_item == $tahun_selected ? 'selected' : '' ?>>
+                        <?= $tahun_item ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+
+    <!-- HAPUS BUTTON FILTER DAN VERTICAL SEPARATOR -->
+</form>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="<?= base_url("Auth/logout");?>" class="nav-link text-body font-weight-bold px-0">
@@ -232,14 +262,23 @@
       </div>
     </nav>
     <!-- End Navbar -->
-     <div id="divTabel">
+    <div id="divTabel">
   <div class="container-fluid py-4">
     <div class="row mt-4">
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h5 class="mb-0">Layanan Kepuasan Masyarakat</h5>
-            <p class="text-sm mb-0">Daftar Layanan Kepuasan Masyarakat di BBWS Brantas</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="mb-0">Layanan Kepuasan Masyarakat</h5>
+                <p class="text-sm mb-0">Daftar Layanan Kepuasan Masyarakat di BBWS Brantas</p>
+              </div>
+              <!-- ✅ LABEL PERIODE DI SEBELAH KANAN -->
+              <div class="border-start ps-4 ms-4">
+                <div class="text-sm text-muted mb-1">Periode</div>
+                <div class="h5 fw-bold text-dark mb-0"><?= isset($periode_label) ? $periode_label : 'Semua Data' ?></div>
+              </div>
+            </div>
             <button type="button" class="btn btn-primary btn-sm mt-4" id="btnTambah">
               <i class="fa fa-plus"></i> Tambah Data
             </button>
@@ -309,7 +348,7 @@
                     <button type="button" class="btn btn-danger btn-sm"
                       data-bs-toggle="modal"
                       data-bs-target="#confirmDeleteModal"
-                      data-delete-url="<?= site_url('Admin/delete_tamu/'.$t->id) ?>">
+                      data-delete-url="<?= site_url('Admin/delete_layanan_kepuasan/'.$t->id) ?>">
                       Delete
                     </button>
                   </td>
@@ -347,7 +386,7 @@
       <div class="card">
         <div class="card-header"><h5 class="mb-0">Tambah Tamu</h5></div>
         <div class="card-body p-4">
-          <form action="<?= site_url('Admin/simpan_tamu') ?>" method="post">
+          <form action="<?= site_url('Admin/simpan_layanan_kepuasan') ?>" method="post">
             
             <!-- Data Diri -->
             <div class="row">
@@ -373,29 +412,32 @@
               </div>
 
               <div class="col-md-6 mb-3">
-                <label>No. Handphone</label>
+                <label>No. Handphone yang bisa dihubungi</label>
                 <input type="text" name="no_handphone" class="form-control" placeholder="Masukkan no. handphone tamu">
               </div>
             </div>
 
-            <div class="mb-3">
-              <label>Keperluan</label>
-              <select name="keperluan" class="form-select" required>
-                <option value="">-- Pilih Keperluan --</option>
-                <option value="Menemui Pejabat/Staff">Menemui Pejabat/Staff</option>
-                <option value="Rekomendasi Teknis (Rekomtek)">Rekomendasi Teknis (Rekomtek)</option>
-                <option value="Kirim Surat (Promosi/Aduan/Temuan)">Kirim Surat (Promosi/Aduan/Temuan)</option>
-                <option value="Permintaan Data/Informasi">Permintaan Data/Informasi</option>
-                <option value="Lainnya">Lainnya</option>
-              </select>
-            </div>
+            <!-- FORM TAMBAH - VERSI DIPERBAIKI -->
+<div class="mb-3">
+    <label>Keperluan</label>
+    <select id="keperluanSelect" class="form-select" required onchange="toggleKeteranganLainnya()">
+        <option value="">-- Pilih Keperluan --</option>
+        <option value="Menemui Pejabat/Staff">Menemui Pejabat/Staff</option>
+        <option value="Rekomendasi Teknis (Rekomtek)">Rekomendasi Teknis (Rekomtek)</option>
+        <option value="Kirim Surat (Promosi/Aduan/Temuan)">Kirim Surat (Promosi/Aduan/Temuan)</option>
+        <option value="Permintaan Data/Informasi">Permintaan Data/Informasi</option>
+        <option value="other">Lainnya</option> <!-- GANTI VALUE JADI "other" -->
+    </select>
+    <!-- TAMBAHKAN INPUT HIDDEN -->
+    <input type="hidden" name="keperluan" id="keperluanActual">
+</div>
 
-            <!-- Form Keterangan Lainnya (Awalnya Disembunyikan) -->
-            <div class="mb-3" id="keteranganLainnyaGroup" style="display: none;">
-              <label>Keterangan Keperluan Lainnya</label>
-              <input type="text" id="keteranganLainnya" class="form-control" placeholder="Silakan jelaskan keperluan lainnya...">
-              <small class="text-muted">Mohon diisi untuk keperluan selain yang tersedia di atas</small>
-            </div>
+<!-- Form Keterangan Lainnya -->
+<div class="mb-3" id="keteranganLainnyaGroup" style="display: none;">
+    <label>Keterangan Keperluan Lainnya</label>
+    <input type="text" id="keteranganLainnya" class="form-control" placeholder="Silakan jelaskan keperluan lainnya...">
+    <small class="text-muted">Mohon diisi untuk keperluan selain yang tersedia di atas</small>
+</div>
 
             <div class="row">
               <!-- Kolom 1 -->
@@ -436,17 +478,6 @@
                 <div class="mb-3">
                   <label class="small">Biaya/Tarif</label>
                   <select name="pendapat_biaya" class="form-select form-select-sm" required>
-                    <option value="">-- Pilih Nilai --</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label class="small">Kesesuaian Produk</label>
-                  <select name="pendapat_produk" class="form-select form-select-sm" required>
                     <option value="">-- Pilih Nilai --</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -505,6 +536,17 @@
             </div>
 
             <div class="mb-3">
+                  <label class="small">Kesesuaian Produk Pelayanan</label>
+                  <select name="pendapat_produk" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+
+            <div class="mb-3">
               <label>Kritik dan Saran Perbaikan</label>
               <textarea name="kritik_saran" class="form-control" rows="3" placeholder="Isi kritik atau saran tamu"></textarea>
             </div>
@@ -528,7 +570,7 @@
       <div class="card">
         <div class="card-header"><h5 class="mb-0">Edit Tamu</h5></div>
         <div class="card-body p-4">
-          <form action="<?= site_url('Admin/update_tamu') ?>" method="post">
+          <form action="<?= site_url('Admin/update_layanan_kepuasan') ?>" method="post">
             <input type="hidden" name="id" id="edit_id">
 
             <!-- Data Diri -->
@@ -554,7 +596,7 @@
               </div>
 
               <div class="col-md-6 mb-3">
-                <label>No. Handphone</label>
+                <label>No. Handphone yang bisa diubungi</label>
                 <input type="text" name="no_handphone" id="edit_telp" class="form-control">
               </div>
             </div>
@@ -624,17 +666,6 @@
                     <option value="4">4</option>
                   </select>
                 </div>
-
-                <div class="mb-3">
-                  <label class="small">Kesesuaian Produk</label>
-                  <select name="pendapat_produk" id="edit_pendapat_produk" class="form-select form-select-sm" required>
-                    <option value="">-- Pilih Nilai --</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                  </select>
-                </div>
               </div>
 
               <!-- Kolom 2 -->
@@ -686,6 +717,17 @@
             </div>
 
             <div class="mb-3">
+                  <label class="small">Kesesuaian Produk Pelayanan</label>
+                  <select name="pendapat_produk" id="edit_pendapat_produk" class="form-select form-select-sm" required>
+                    <option value="">-- Pilih Nilai --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+
+            <div class="mb-3">
               <label>Kritik dan Saran Perbaikan</label>
               <textarea name="kritik_saran" id="edit_kritik" class="form-control" rows="3"></textarea>
             </div>
@@ -718,26 +760,139 @@
   </div>
 </div>
 
-<!-- Script -->
 <script>
-  // Tambah
-  document.getElementById("btnTambah").addEventListener("click", function(){
-    document.getElementById("divTabel").style.display = "none";
-    document.getElementById("divForm").style.display = "block";
-    document.getElementById("divFormEdit").style.display = "none";
-  });
-  
-  document.getElementById("btnKembali").addEventListener("click", function () {
-    document.getElementById("divForm").style.display = "none";
-    document.getElementById("divTabel").style.display = "block";
-  });
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Tombol Tambah
+    const btnTambah = document.getElementById("btnTambah");
+    if (btnTambah) {
+        btnTambah.addEventListener("click", function(){
+            console.log('🎯 Tombol Tambah DIKLIK!');
+            document.getElementById("divTabel").style.display = "none";
+            document.getElementById("divForm").style.display = "block";
+            document.getElementById("divFormEdit").style.display = "none";
+            
+            resetFormTambah();
+        });
+    }
+
+    // Tombol Kembali Form Tambah
+    const btnKembali = document.getElementById("btnKembali");
+    if (btnKembali) {
+        btnKembali.addEventListener("click", function () {
+            console.log('Tombol Kembali Tambah diklik');
+            document.getElementById("divForm").style.display = "none";
+            document.getElementById("divTabel").style.display = "block";
+        });
+    }
+
+    // Tombol Kembali Form Edit
+    const btnKembaliEdit = document.getElementById("btnKembaliEdit");
+    if (btnKembaliEdit) {
+        btnKembaliEdit.addEventListener("click", function(){
+            console.log('Tombol Kembali Edit diklik');
+            document.getElementById("divFormEdit").style.display = "none";
+            document.getElementById("divTabel").style.display = "block";
+        });
+    }
+});
+
+  // ========== FUNGSI UNTUK FORM TAMBAH ==========
+  
+ // Fungsi toggle untuk form TAMBAH - SUDAH BENAR
+function toggleKeteranganLainnya() {
+    console.log('toggleKeteranganLainnya dipanggil');
+    
+    const keperluanSelect = document.getElementById('keperluanSelect');
+    const keteranganGroup = document.getElementById('keteranganLainnyaGroup');
+    const keteranganInput = document.getElementById('keteranganLainnya');
+    const keperluanActual = document.getElementById('keperluanActual');
+    
+    console.log('Nilai select:', keperluanSelect.value);
+    
+    if (keperluanSelect.value === 'other') {
+        // Tampilkan form keterangan
+        keteranganGroup.style.display = 'block';
+        keteranganInput.required = true;
+        keperluanActual.value = '';
+        console.log('Menampilkan form keterangan');
+    } else {
+        // Sembunyikan form keterangan
+        keteranganGroup.style.display = 'none';
+        keteranganInput.required = false;
+        keteranganInput.value = '';
+        keperluanActual.value = keperluanSelect.value;
+        console.log('Menyembunyikan form keterangan, nilai:', keperluanActual.value);
+    }
+}
+
+  // Update nilai ketika user mengetik di keterangan (form tambah)
+  document.addEventListener('DOMContentLoaded', function() {
+    const keteranganInput = document.getElementById('keteranganLainnya');
+    if (keteranganInput) {
+        keteranganInput.addEventListener('input', function(e) {
+            const keperluanActual = document.getElementById('keperluanActual');
+            keperluanActual.value = e.target.value.trim();
+            console.log('Keterangan diinput:', keperluanActual.value);
+        });
+    }
+    
+    // TAMBAHKAN: Event listener untuk form submit - SUDAH BENAR
+    const tambahForm = document.querySelector('#divForm form');
+    if (tambahForm) {
+        tambahForm.addEventListener('submit', function(e) {
+            const keperluanSelect = document.getElementById('keperluanSelect');
+            const keteranganInput = document.getElementById('keteranganLainnya');
+            const keperluanActual = document.getElementById('keperluanActual');
+            
+            console.log('Validasi form tambah:', {
+                selectValue: keperluanSelect.value,
+                keteranganValue: keteranganInput.value,
+                actualValue: keperluanActual.value
+            });
+            
+            if (keperluanSelect.value === 'other') {
+                if (!keteranganInput.value.trim()) {
+                    e.preventDefault();
+                    alert('Mohon isi keterangan keperluan lainnya');
+                    keteranganInput.focus();
+                    return;
+                }
+                keperluanActual.value = keteranganInput.value.trim();
+            } else {
+                keperluanActual.value = keperluanSelect.value;
+            }
+            
+            console.log('Data keperluan yang akan disimpan:', keperluanActual.value);
+        });
+    }
+});
+
+  // Reset form tambah ketika dibuka
+  function resetFormTambah() {
+    const keperluanSelect = document.getElementById('keperluanSelect');
+    const keteranganGroup = document.getElementById('keteranganLainnyaGroup');
+    const keteranganInput = document.getElementById('keteranganLainnya');
+    const keperluanActual = document.getElementById('keperluanActual');
+    
+    if (keperluanSelect) keperluanSelect.value = '';
+    if (keteranganGroup) keteranganGroup.style.display = 'none';
+    if (keteranganInput) {
+        keteranganInput.value = '';
+        keteranganInput.required = false;
+    }
+    if (keperluanActual) keperluanActual.value = '';
+    
+    console.log('Form tambah direset');
+}
+
+  // ========== FUNGSI UNTUK FORM EDIT (sudah ada) ==========
+  
   // Edit - VERSI DIPERBAIKI
   document.addEventListener("click", function(e){
     const btn = e.target.closest(".btnEdit");
     if (!btn) return;
     
-    // Sembunyikan semua div, tampilkan form edit
     document.getElementById("divTabel").style.display = "none";
     document.getElementById("divForm").style.display = "none";
     document.getElementById("divFormEdit").style.display = "block";
@@ -762,15 +917,8 @@
       pendapat_pengaduan: btn.dataset.pendapat_pengaduan
     };
 
-    console.log('Data dari button:', data); // Debug
-
-    // Gunakan fungsi fillEditForm yang sudah dibuat
+    console.log('Data dari button:', data);
     fillEditForm(data);
-  });
-
-  document.getElementById("btnKembaliEdit").addEventListener("click", function(){
-    document.getElementById("divFormEdit").style.display = "none";
-    document.getElementById("divTabel").style.display = "block";
   });
 
   // Fungsi untuk mengisi form edit dengan data yang ada
@@ -785,42 +933,43 @@
     document.getElementById('edit_telp').value = data.no_handphone || '';
     document.getElementById('edit_kritik').value = data.kritik_saran || '';
     
-    // Isi field-field pendapat (jika ada di form Anda)
-    if (document.getElementById('edit_pendapat_pelayanan')) {
-      document.getElementById('edit_pendapat_pelayanan').value = data.pendapat_pelayanan || '';
-    }
-    if (document.getElementById('edit_pemahaman_prosedur')) {
-      document.getElementById('edit_pemahaman_prosedur').value = data.pemahaman_prosedur || '';
-    }
-    if (document.getElementById('edit_pendapat_kecepatan')) {
-      document.getElementById('edit_pendapat_kecepatan').value = data.pendapat_kecepatan || '';
-    }
-    if (document.getElementById('edit_pendapat_biaya')) {
-      document.getElementById('edit_pendapat_biaya').value = data.pendapat_biaya || '';
-    }
-    if (document.getElementById('edit_pendapat_produk')) {
-      document.getElementById('edit_pendapat_produk').value = data.pendapat_produk || '';
-    }
-    if (document.getElementById('edit_pendapat_kompetensi')) {
-      document.getElementById('edit_pendapat_kompetensi').value = data.pendapat_kompetensi || '';
-    }
-    if (document.getElementById('edit_pendapat_perilaku')) {
-      document.getElementById('edit_pendapat_perilaku').value = data.pendapat_perilaku || '';
-    }
-    if (document.getElementById('edit_pendapat_kualitas')) {
-      document.getElementById('edit_pendapat_kualitas').value = data.pendapat_kualitas || '';
-    }
-    if (document.getElementById('edit_pendapat_pengaduan')) {
-      document.getElementById('edit_pendapat_pengaduan').value = data.pendapat_pengaduan || '';
+    // Fungsi helper untuk handle nilai 0
+    function getSafeValue(value) {
+        // Jika nilai 0, null, undefined, atau empty, return empty string
+        if (value === 0 || value === '0' || value === null || value === undefined || value === '') {
+            return '';
+        }
+        return String(value);
     }
     
-    // Handle keperluan dengan sistem "Lainnya"
-    const keperluanSelect = document.getElementById('edit_keperluanSelect');
-    const keperluanActual = document.getElementById('edit_keperluanActual');
+    // Isi SEMUA field pendapat dengan penanganan nilai 0
+    const pendapatFields = [
+        { id: 'edit_pendapat_pelayanan', value: data.pendapat_pelayanan },
+        { id: 'edit_pemahaman_prosedur', value: data.pemahaman_prosedur },
+        { id: 'edit_pendapat_kecepatan', value: data.pendapat_kecepatan },
+        { id: 'edit_pendapat_biaya', value: data.pendapat_biaya },
+        { id: 'edit_pendapat_produk', value: data.pendapat_produk },
+        { id: 'edit_pendapat_kompetensi', value: data.pendapat_kompetensi },
+        { id: 'edit_pendapat_perilaku', value: data.pendapat_perilaku },
+        { id: 'edit_pendapat_kualitas', value: data.pendapat_kualitas },
+        { id: 'edit_pendapat_pengaduan', value: data.pendapat_pengaduan }
+    ];
+    
+    pendapatFields.forEach(field => {
+        const element = document.getElementById(field.id);
+        if (element) {
+            const safeValue = getSafeValue(field.value);
+            element.value = safeValue;
+            console.log(`Set ${field.id} ke:`, safeValue, '(dari:', field.value, ')');
+        }
+    });
+    
+    // Handle keperluan - PERBAIKI INI!
+    const keperluanSelect = document.getElementById('edit_keperluan'); // Ganti ke ID yang benar
     const keteranganGroup = document.getElementById('edit_keteranganLainnyaGroup');
     const keteranganInput = document.getElementById('edit_keteranganLainnya');
     
-    // Daftar keperluan utama yang tersedia di dropdown
+    // Daftar keperluan utama
     const keperluanUtama = [
       'Menemui Pejabat/Staff',
       'Rekomendasi Teknis (Rekomtek)',
@@ -829,63 +978,50 @@
     ];
     
     // Reset dulu
-    keperluanSelect.value = '';
-    keteranganGroup.style.display = 'none';
-    keteranganInput.value = '';
-    keteranganInput.required = false;
+    if (keperluanSelect) keperluanSelect.value = '';
+    if (keteranganGroup) keteranganGroup.style.display = 'none';
+    if (keteranganInput) {
+      keteranganInput.value = '';
+      keteranganInput.required = false;
+    }
     
     // Cek apakah keperluan ada di daftar utama
     if (data.keperluan && keperluanUtama.includes(data.keperluan)) {
-      // Jika termasuk keperluan utama, pilih dari dropdown
-      keperluanSelect.value = data.keperluan;
-      keperluanActual.value = data.keperluan;
-      console.log('Keperluan utama dipilih:', data.keperluan);
+      if (keperluanSelect) keperluanSelect.value = data.keperluan;
     } else if (data.keperluan) {
       // Jika bukan keperluan utama, pilih "Lainnya" dan isi keterangan
-      keperluanSelect.value = 'other';
-      keperluanActual.value = data.keperluan;
-      keteranganGroup.style.display = 'block';
-      keteranganInput.value = data.keperluan;
-      keteranganInput.required = true;
-      console.log('Keperluan custom dipilih:', data.keperluan);
-    } else {
-      // Jika tidak ada data keperluan
-      keperluanSelect.value = '';
-      keperluanActual.value = '';
+      if (keperluanSelect) keperluanSelect.value = 'Lainnya';
+      if (keteranganGroup) keteranganGroup.style.display = 'block';
+      if (keteranganInput) {
+        keteranganInput.value = data.keperluan;
+        keteranganInput.required = true;
+      }
     }
   }
 
-  // Fungsi toggle untuk form edit
+  // Fungsi toggle untuk form edit - PERBAIKI INI!
   function toggleKeteranganLainnyaEdit() {
-    const keperluanSelect = document.getElementById('edit_keperluanSelect');
+    const keperluanSelect = document.getElementById('edit_keperluan'); // Ganti ke ID yang benar
     const keteranganGroup = document.getElementById('edit_keteranganLainnyaGroup');
     const keteranganInput = document.getElementById('edit_keteranganLainnya');
-    const keperluanActual = document.getElementById('edit_keperluanActual');
     
-    if (keperluanSelect.value === 'other') {
-      // Tampilkan form keterangan
-      keteranganGroup.style.display = 'block';
-      keteranganInput.required = true;
-      // Kosongkan nilai actual sampai user mengisi
-      keperluanActual.value = '';
+    if (keperluanSelect && keperluanSelect.value === 'Lainnya') {
+      if (keteranganGroup) keteranganGroup.style.display = 'block';
+      if (keteranganInput) keteranganInput.required = true;
     } else {
-      // Sembunyikan form keterangan
-      keteranganGroup.style.display = 'none';
-      keteranganInput.required = false;
-      keteranganInput.value = ''; // Kosongkan input
-      // Set nilai actual dari dropdown
-      keperluanActual.value = keperluanSelect.value;
+      if (keteranganGroup) keteranganGroup.style.display = 'none';
+      if (keteranganInput) {
+        keteranganInput.required = false;
+        keteranganInput.value = '';
+      }
     }
   }
 
-  // Update nilai actual ketika user mengetik di keterangan lainnya (edit)
+  // Tambahkan event listener untuk keperluan dropdown
   document.addEventListener('DOMContentLoaded', function() {
-    const keteranganInput = document.getElementById('edit_keteranganLainnya');
-    if (keteranganInput) {
-      keteranganInput.addEventListener('input', function(e) {
-        const keperluanActual = document.getElementById('edit_keperluanActual');
-        keperluanActual.value = e.target.value.trim();
-      });
+    const keperluanSelect = document.getElementById('edit_keperluan');
+    if (keperluanSelect) {
+      keperluanSelect.addEventListener('change', toggleKeteranganLainnyaEdit);
     }
   });
 
@@ -894,25 +1030,17 @@
     const editForm = document.querySelector('#divFormEdit form');
     if (editForm) {
       editForm.addEventListener('submit', function(e) {
-        const keperluanSelect = document.getElementById('edit_keperluanSelect');
+        const keperluanSelect = document.getElementById('edit_keperluan');
         const keteranganInput = document.getElementById('edit_keteranganLainnya');
-        const keperluanActual = document.getElementById('edit_keperluanActual');
         
-        if (keperluanSelect.value === 'other') {
-          if (!keteranganInput.value.trim()) {
+        if (keperluanSelect && keperluanSelect.value === 'Lainnya') {
+          if (!keteranganInput || !keteranganInput.value.trim()) {
             e.preventDefault();
             alert('Mohon isi keterangan keperluan lainnya');
-            keteranganInput.focus();
+            if (keteranganInput) keteranganInput.focus();
             return;
           }
-          // Pastikan nilai actual sudah terisi dengan input user
-          keperluanActual.value = keteranganInput.value.trim();
-        } else {
-          // Pastikan nilai actual dari dropdown
-          keperluanActual.value = keperluanSelect.value;
         }
-        
-        console.log('Data keperluan yang akan diupdate:', keperluanActual.value);
       });
     }
   });
@@ -932,87 +1060,13 @@
 </script>
 
   </main>
-  <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="fa fa-cog py-2"> </i>
-    </a>
-    <div class="card shadow-lg blur">
-      <div class="card-header pb-0 pt-3  bg-transparent ">
-        <div class="float-start">
-          <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
-          <p>See our dashboard options.</p>
-        </div>
-        <div class="float-end mt-4">
-          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-            <i class="fa fa-close"></i>
-          </button>
-        </div>
-        <!-- End Toggle Button -->
-      </div>
-      <hr class="horizontal dark my-1">
-      <div class="card-body pt-sm-3 pt-0">
-        <!-- Sidebar Backgrounds -->
-        <div>
-          <h6 class="mb-0">Sidebar Colors</h6>
-        </div>
-        <a href="javascript:void(0)" class="switch-trigger background-color">
-          <div class="badge-colors my-2 text-start">
-            <span class="badge filter bg-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
-          </div>
-        </a>
-        <!-- Sidenav Type -->
-        <div class="mt-3">
-          <h6 class="mb-0">Sidenav Type</h6>
-          <p class="text-sm">Choose between 2 different sidenav types.</p>
-        </div>
-        <div class="d-flex">
-          <button class="btn btn-primary w-100 px-3 mb-2 active" data-class="bg-transparent" onclick="sidebarType(this)">Transparent</button>
-          <button class="btn btn-primary w-100 px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
-        </div>
-        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-        <!-- Navbar Fixed -->
-        <div class="mt-3">
-          <h6 class="mb-0">Navbar Fixed</h6>
-        </div>
-        <div class="form-check form-switch ps-0">
-          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
-        </div>
-        <hr class="horizontal dark mb-1 d-xl-block d-none">
-        <div class="mt-2 d-xl-block d-none">
-          <h6 class="mb-0">Sidenav Mini</h6>
-        </div>
-        <div class="form-check form-switch ps-0 d-xl-block d-none">
-          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarMinimize" onclick="navbarMinimize(this)">
-        </div>
-        <hr class="horizontal dark mb-1 d-xl-block d-none">
-        <div class="mt-2 d-xl-block d-none">
-          <h6 class="mb-0">Light/Dark</h6>
-        </div>
-        <div class="form-check form-switch ps-0 d-xl-block d-none">
-          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
-        </div>
-        <hr class="horizontal dark my-sm-4">
-        <a class="btn bg-gradient-info w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro">Buy now</a>
-        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard">Free demo</a>
-        <a class="btn btn-outline-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/overview/soft-ui-dashboard">View documentation</a>
-        <div class="w-100 text-center">
-          <a class="github-button" href="https://github.com/creativetimofficial/ct-soft-ui-dashboard-pro" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub">Star</a>
-          <h6 class="mt-3">Thank you for sharing!</h6>
-          <a href="https://twitter.com/intent/tweet?text=Check%20Soft%20UI%20Dashboard%20PRO%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard-pro" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-          </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/soft-ui-dashboard-pro" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Tombol floating -->
+<div class="position-fixed bottom-0 end-0 m-4 z-3">
+  <button onclick="printLandscape()" class="btn btn-primary btn-lg shadow rounded-pill">
+    <i class="fas fa-print me-2"></i>
+    Cetak
+  </button>
+</div>
   <!--   Core JS Files   -->
   <script src="<?= base_url();?>assets/Template/assets/js/core/popper.min.js"></script>
   <script src="<?= base_url();?>assets/Template/assets/js/core/bootstrap.min.js"></script>
@@ -1044,6 +1098,190 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="<?= base_url();?>assets/Template/assets/js/soft-ui-dashboard.min.js?v=1.2.0"></script>
+
+  <script>
+// Periode Options
+const periodeOptions = {
+    bulanan: [
+        { value: 'januari', label: 'Januari' }, { value: 'februari', label: 'Februari' },
+        { value: 'maret', label: 'Maret' }, { value: 'april', label: 'April' },
+        { value: 'mei', label: 'Mei' }, { value: 'juni', label: 'Juni' },
+        { value: 'juli', label: 'Juli' }, { value: 'agustus', label: 'Agustus' },
+        { value: 'september', label: 'September' }, { value: 'oktober', label: 'Oktober' },
+        { value: 'november', label: 'November' }, { value: 'desember', label: 'Desember' }
+    ],
+    triwulan: [
+        { value: 'triwulan1', label: 'Triwulan I (Jan–Mar)' },
+        { value: 'triwulan2', label: 'Triwulan II (Apr–Jun)' },
+        { value: 'triwulan3', label: 'Triwulan III (Jul–Sep)' },
+        { value: 'triwulan4', label: 'Triwulan IV (Okt–Des)' }
+    ],
+    semester: [
+        { value: 'semester1', label: 'Semester I (Jan–Jun)' },
+        { value: 'semester2', label: 'Semester II (Jul–Des)' }
+    ],
+    tahunan: [
+        { value: 'tahunan', label: 'Tahunan (Jan–Des)' }
+    ]
+};
+
+// Inisialisasi filter dengan AUTO SUBMIT
+document.addEventListener('DOMContentLoaded', function() {
+    const tahunSelect = document.getElementById('tahun');
+    const jenisSelect = document.getElementById('jenis_periode');
+    const periodeSelect = document.getElementById('periode');
+    const filterForm = document.getElementById('filterForm');
+
+    function updateFilterStates() {
+        const jenis = jenisSelect.value;
+        const selectedPeriode = '<?= $periode_selected ?>';
+        
+        periodeSelect.innerHTML = '<option value="">-- Pilih Periode --</option>';
+
+        if (jenis === 'semua') {
+            periodeSelect.disabled = true;
+            tahunSelect.disabled = true;
+            tahunSelect.value = 'semua';
+        } else if (jenis === 'tahunan') {
+            periodeSelect.disabled = true;
+            tahunSelect.disabled = false;
+            const opt = document.createElement('option');
+            opt.value = 'tahunan';
+            opt.textContent = '-- Pilih Periode --';
+            opt.selected = true;
+            periodeSelect.appendChild(opt);
+        } else {
+            periodeSelect.disabled = false;
+            tahunSelect.disabled = false;
+            
+            if (periodeOptions[jenis]) {
+                periodeOptions[jenis].forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.label;
+                    if (opt.value === selectedPeriode) {
+                        option.selected = true;
+                    }
+                    periodeSelect.appendChild(option);
+                });
+            }
+        }
+    }
+
+    // AUTO SUBMIT ketika ada perubahan
+    function autoSubmit() {
+        // Submit form setelah perubahan
+        setTimeout(() => {
+            filterForm.submit();
+        }, 100);
+    }
+
+    // Event listener dengan auto-submit
+    jenisSelect.addEventListener('change', function() {
+        updateFilterStates();
+        autoSubmit();
+    });
+
+    periodeSelect.addEventListener('change', function() {
+        if (this.value && !this.disabled) {
+            autoSubmit();
+        }
+    });
+
+    tahunSelect.addEventListener('change', function() {
+        if (!this.disabled) {
+            autoSubmit();
+        }
+    });
+
+    // Inisialisasi pertama kali
+    updateFilterStates();
+});
+</script>
+
+<script>
+// Function untuk print dengan zoom + landscape
+function printLandscape() {
+  // Simpan state awal body
+  const originalBodyStyle = document.body.style.cssText;
+  
+  // Apply zoom out
+  document.body.style.cssText = `
+    zoom: 0.6 !important;
+    transform: scale(0.6) !important;
+    transform-origin: 0 0 !important;
+    width: 166% !important;
+    height: 166% !important;
+  `;
+
+  // Buat style untuk landscape
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @page {
+      size: landscape;
+      margin: 0.5cm;
+    }
+    body {
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 10px !important;
+    }
+    .table {
+      width: 100% !important;
+      font-size: 7pt !important;
+    }
+    .no-print {
+      display: none !important;
+    }
+  `;
+  style.setAttribute('id', 'print-landscape-style');
+  document.head.appendChild(style);
+
+  // Scroll ke atas
+  window.scrollTo(0, 0);
+
+  // Print
+  window.print();
+
+  // Restore state setelah print
+  setTimeout(() => {
+    document.body.style.cssText = originalBodyStyle;
+    const styleEl = document.getElementById('print-landscape-style');
+    if (styleEl) {
+      document.head.removeChild(styleEl);
+    }
+  }, 1000);
+}
+
+// Ganti semua tombol print
+document.addEventListener('DOMContentLoaded', function() {
+  // Tombol di navbar
+  const navPrintBtn = document.querySelector('a[onclick="window.print()"]');
+  if (navPrintBtn) {
+    navPrintBtn.setAttribute('onclick', 'printLandscape()');
+  }
+  
+  // Tombol floating
+  const floatPrintBtn = document.querySelector('.btn-print-floating button[onclick="window.print()"]');
+  if (floatPrintBtn) {
+    floatPrintBtn.setAttribute('onclick', 'printLandscape()');
+  }
+  
+  // Fixed plugin
+  const fixedPrintBtn = document.querySelector('.fixed-plugin a[onclick="window.print()"]');
+  if (fixedPrintBtn) {
+    fixedPrintBtn.setAttribute('onclick', 'printLandscape()');
+  }
+});
+
+// Shortcut keyboard Ctrl+P
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.key === 'p') {
+    e.preventDefault();
+    printLandscape();
+  }
+});
+</script>
 </body>
 
 </html>
