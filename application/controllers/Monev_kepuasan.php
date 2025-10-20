@@ -19,14 +19,14 @@ class Monev_kepuasan extends CI_Controller {
      */
     public function index() {
         // Ambil parameter dari GET
-        $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'triwulan';
-        $periode = $this->input->get('periode') ? $this->input->get('periode') : 'triwulan1';
-        
-        // Ambil tahun yang tersedia dari database
-        $tahun_available = $this->M_monev_kepuasan->get_available_years();
-        
-        // Set tahun default (gunakan tahun terbaru dari array yang tersedia)
-        $tahun_selected = $this->input->get('tahun') ? $this->input->get('tahun') : $tahun_available[0];
+    $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'semua'; // ⚡ UBAH: 'triwulan' jadi 'semua'
+    $periode = $this->input->get('periode') ? $this->input->get('periode') : 'semua'; // ⚡ UBAH: 'triwulan1' jadi 'semua'
+    
+    // Ambil tahun yang tersedia dari database
+    $tahun_available = $this->M_monev_kepuasan->get_available_years();
+    
+    // ⚡ UBAH: Set tahun default ke 'semua' untuk pertama kali
+    $tahun_selected = $this->input->get('tahun') ? $this->input->get('tahun') : 'semua'; // ⚡ UBAH: $tahun_available[0] jadi 'semua'
         
         // PERBAIKAN: Jika tahun selected tidak ada di list, tambahkan ke array
         if ($tahun_selected != 'semua' && !in_array($tahun_selected, $tahun_available)) {

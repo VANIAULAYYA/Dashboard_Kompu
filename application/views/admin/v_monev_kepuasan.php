@@ -295,7 +295,7 @@
     </a>
 </li>  
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/dashboards/default.html">
+                <a class="nav-link" href="<?php echo base_url('Monev_permintaan'); ?>">
                   <span class="sidenav-mini-icon"> M </span>
                   <span class="sidenav-normal"> Monev Permintaan Data</span>
                 </a>
