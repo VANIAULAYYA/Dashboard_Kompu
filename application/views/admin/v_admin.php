@@ -33,6 +33,50 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="<?= base_url();?>assets/Template/assets/css/soft-ui-dashboard.css?v=1.2.0" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .custom-card {
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+    }
+    .custom-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+    .section-title {
+      position: relative;
+      padding-left: 15px;
+      margin-bottom: 25px;
+    }
+    .section-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 30px;
+      background: linear-gradient(135deg, #1C6C8C 0%, #33AFE0 100%);
+      border-radius: 2px;
+    }
+    .stat-card-link {
+      text-decoration: none;
+      display: block;
+    }
+    .icon-box {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 24px;
+    }
+    @media print {
+      .no-print { display: none !important; }
+    }
+  </style>
+
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -58,32 +102,32 @@
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link active collapsed" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
+          <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link active" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
             <div class="icon icon-sm shadow-sm border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
               <i class="far fa-folder-open" aria-hidden="true"></i>
             </div>
             <span class="nav-link-text ms-1">Pelayanan</span>
           </a>
-          <div class="collapse " id="dashboardsExamples">
+          <div class="collapse show" id="dashboardsExamples">
             <ul class="nav ms-4 ps-3">
-              <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url('Admin/rekap_tamu'); ?>">
+              <li class="nav-item active">
+                <a class="nav-link active" href="<?php echo base_url('Admin/rekap_tamu'); ?>">
                   <span class="sidenav-mini-icon"> R </span>
                   <span class="sidenav-normal"> Rekap Buku Tamu </span>
                 </a>
               </li>
-              <li class="nav-item active">
+              <li class="nav-item ">
                 <a class="nav-link " href="<?php echo base_url('Admin/layanan_kepuasan'); ?>">
                   <span class="sidenav-mini-icon"> L </span>
                   <span class="sidenav-normal"> Layanan Kepuasan Masyarakat </span>
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link " href="<?= base_url('Layanan') ?>">
+  <a class="nav-link " href="<?= base_url('Layanan') ?>">
     <span class="sidenav-mini-icon"> L </span>
     <span class="sidenav-normal"> Layanan Permintaan Data </span>
   </a>
-              </li>
+</li>
               <li class="nav-item ">
                 <a class="nav-link " href="<?= base_url('Pengaduan') ?>">
                   <span class="sidenav-mini-icon"> L </span>
@@ -113,7 +157,7 @@
           </a>
           <div class="collapse" id="dashboardsExamples2">
             <ul class="nav ms-4 ps-3">
-            <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="<?php echo base_url('Monev_kepuasan'); ?>">
         <span class="sidenav-mini-icon"> M </span>
         <span class="sidenav-normal"> Monev Kepuasan Masyarakat</span>
@@ -125,10 +169,10 @@
                   <span class="sidenav-normal"> Monev Permintaan Data</span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../../pages/dashboards/automotive.html">
+             <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('Monev_pengaduan'); ?>">
                   <span class="sidenav-mini-icon"> M </span>
-                  <span class="sidenav-normal"> Monev Pengaduan </span>
+                  <span class="sidenav-normal"> Monev Pengaduan</span>
                 </a>
               </li>
             </ul>
@@ -168,7 +212,7 @@
 
           <!-- Survei Kepuasan Masyarakat -->
           <li class="nav-item">
-            <a class="nav-link <?= ($this->uri->segment(2) == 'skm' ? 'active fw-bold text-dark' : '') ?>" 
+            <a class="nav-link <?= ($this->uri->segment(1) == 'skm' ? 'active fw-bold text-dark' : '') ?>" 
                href="<?= site_url('Laporan/skm') ?>">
               <span class="nav-link-text ms-1">Survei Kepuasan Masyarakat</span>
             </a>
@@ -195,8 +239,7 @@
         </div>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Default</li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Dashboard</a></li>
           </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -231,523 +274,314 @@
         </div>
       </div>
     </nav>
-    <!-- End Navbar -->
+
     <div class="container-fluid py-4">
-      <div class="row">
-        <h2 class="mb-0">Dashboard Laporan Survey Kepuasan Masyarakat</h2>
-        <p class="mb-4 ms-1">Tetap Semangat dan Selalu Semangat Setiap Hari</p>
-        <div>
-          <div class="row">
-            <div class="col-lg-6 col-sm-6">
-              <div class="card  mb-4">
-                <div class="card-body p-3">
-                  <div class="row">
-                    <div class="col-8">
-                      <div class="numbers">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Responden Masyarakat</p>
-                        <h3 class="font-weight-bolder mb-0">
-                          <?= $total_tamu; ?>
-                        </h3>
-                      </div>
-                    </div>
-                    <div class="col-4 text-end">
-                      <div class="icon icon-shape bg-primary shadow text-center border-radius-md">
-                        <i class="fas fa-users text-lg opacity-10" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card ">
-                <div class="card-body p-3">
-                  <div class="row">
-                    <div class="col-8">
-                      <div class="numbers">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Jenis Kelamin Responden Masyarakat</p>
-                        <h3 class="font-weight-bolder mb-0">
-                          Pria <span class="text-success text-md font-weight-bolder"><?= $laki; ?></span> -
-                          Wanita <span class="text-danger text-md font-weight-bolder"><?= $perempuan; ?></span>
-                        </h3>
-                      </div>
-                    </div>
-                    <div class="col-4 text-end">
-                      <div class="icon icon-shape bg-primary shadow text-center border-radius-md">
-                        <i class="fa fa-venus-mars text-lg opacity-10" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-sm-6 mt-sm-0 mt-4">
-              <div class="card  mb-4">
-                <div class="card-body p-3">
-                  <div class="row">
-                    <div class="col-8">
-                      <div class="numbers">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Grade Mutu Pelayanan Kepuasan Masyarakat (PKM)</p>
-                        <h3 class="font-weight-bolder mb-0">
-                          B
-                          <span class="text-success text-sm font-weight-bolder">BAIK</span>
-                        </h3>
-                      </div>
-                    </div>
-                    <div class="col-4 text-end">
-                      <div class="icon icon-shape bg-primary shadow text-center border-radius-md">
-                        <i class="far fa-thumbs-up text-lg opacity-10" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card ">
-                <div class="card-body p-3">
-                  <div class="row">
-                    <div class="col-8">
-                      <div class="numbers">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Nilai Indeks Kepuasan Masyarakat (IKM)</p>
-                        <h3 class="font-weight-bolder mb-0">
-                          3,16
-                          <span class="text-success text-sm font-weight-bolder">78,88%</span>
-                        </h3>
-                      </div>
-                    </div>
-                    <div class="col-4 text-end">
-                      <div class="icon icon-shape bg-primary shadow text-center border-radius-md">
-                        <i class="fa fa-line-chart text-lg opacity-10" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-4">
-         <!--begin::App Content-->
-        <div class="content">
-          <!--begin::Container-->
+      <!-- Header -->
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center">
           <div>
-            <!--begin::Row-->
-            <div class="row">
-              <div class="col-md-6">
-                <div class="card mb-4">
-                  <div class="card-header">
-                    <h4 class="card-title">Unsur Survey Kepuasan Masyarakat (SKM)</h4>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body p-0">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th style="width: 10px">#</th>
-                          <th>Unsur SKM</th>
-                          <th>Nilai</th>
-                          <th style="width: 40px">Mutu Pelayanan</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="align-middle">
-                          <td>1.</td>
-                          <td>Persyaratan</td>
-                          <td>3,14</td>
-                          <td><span class="badge text-bg-warning">B</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>2.</td>
-                          <td>Prosedur</td>
-                          <td>
-                            3,04
-                          </td>
-                          <td><span class="badge text-bg-primary">C</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>3.</td>
-                          <td>Kecepatan Waktu</td>
-                          <td>2,84</td>
-                          <td><span class="badge text-bg-primary">C</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>4.</td>
-                          <td>Biaya/Tarif</td>
-                          <td>3,58</td>
-                          <td><span class="badge text-bg-success">A</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>5.</td>
-                          <td>Kesesuaian Produk Pelayanan</td>
-                          <td>3,10</td>
-                          <td><span class="badge text-bg-warning">B</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>6.</td>
-                          <td>Kompetensi Petugas</td>
-                          <td>3,15</td>
-                          <td><span class="badge text-bg-warning">B</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>7.</td>
-                          <td>Perilaku Petugas</td>
-                          <td>3,18</td>
-                          <td><span class="badge text-bg-warning">B</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>8.</td>
-                          <td>Penanganan Pengaduan</td>
-                          <td>2,88</td>
-                          <td><span class="badge text-bg-primary">C</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>9.</td>
-                          <td>Kualitas Sarana Prasarana</td>
-                          <td>3,48</td>
-                          <td><span class="badge text-bg-warning">B</span></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-              </div>
-              <div class="col-md-6">
-                <!-- Chart Start -->
-                 <div class=" mt-4 mt-lg-0">
-                  <div class="card h-100">
-                      <div class="card-header">
-                    <h4 class="card-title">Grafik Survey Kepuasan Masyarakat (SKM)</h4>
-                  </div>
-                    <div class="card-body p-3">
-                      <div class="row">
-                        <div class="col-lg-5 col-12 text-center">
-                          <div class="chart mt-5">
-                            <canvas id="myDoughnutChart" width="400" height="400"></canvas>
-                          </div>
-                        </div>
-                        <div class="col-lg-7 col-12">
-                          <div class="table-responsive">
-                            <table class="table align-items-center mb-0">
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    <div class="d-flex px-2 py-1">
-                                      <div>
-                                        <span class="badge text-bg-success">A</span>&nbsp;&nbsp;&nbsp;
-                                      </div>
-                                      <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">Sangat Sesuai</h6>
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">4.00 - 3,5324</h6>
-                                      </div>
-                                  </td>
-                                  <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> 11% </span>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="d-flex px-2 py-1">
-                                      <div>
-                                        <span class="badge text-bg-warning">B</span>&nbsp;&nbsp;&nbsp;
-                                      </div>
-                                      <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">Sesuai</h6>
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">3,0644 - 3,532</h6>
-                                      </div>
-                                  </td>
-                                  <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> 56% </span>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="d-flex px-2 py-1">
-                                      <div>
-                                        <span class="badge text-bg-primary">C</span>&nbsp;&nbsp;&nbsp;
-                                      </div>
-                                      <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">Kurang Sesuai</h6>
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">2,60 - 3,064</h6>
-                                      </div>
-                                  </td>
-                                  <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> 33% </span>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="d-flex px-2 py-1">
-                                      <div>
-                                        <span class="badge text-bg-danger">D</span>&nbsp;&nbsp;&nbsp;
-                                      </div>
-                                      <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">Tidak Sesuai</h6>
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">1,00 - 2,5996</h6>
-                                      </div>
-                                  </td>
-                                  <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> 0% </span>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Chart End -->
-              </div>
-              <div class="col-md-6">
-                <!-- /.card -->
-                <div class="card mb-4">
-                  <div class="card-header">
-                    <h4 class="card-title">Jenis Keperluan Kunjungan Masyarakat</h4>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body p-0">
-                    <table class="table table-sm">
-                      <thead>
-                        <tr>
-                          <th style="width: 10px">#</th>
-                          <th>Keperluan</th>
-                          <th>Jumlah</th>
-                          <th style="width: 40px">Jumlah(Angka)</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="align-middle">
-                          <td>1.</td>
-                          <td>Menemui Pejabat/Staf</td>
-                          <td>
-                            <div class="progress progress-xs">
-                              <div class="progress-bar progress-bar-danger" style="width: 55%">
-                              </div>
-                            </div>
-                          </td>
-                          <td style="text-align: center;"><span class="badge text-bg-danger">55%</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>2.</td>
-                          <td>Rekomendasi Teknis (Rekomtek)</td>
-                          <td>
-                            <div class="progress progress-xs">
-                              <div class="progress-bar text-bg-warning" style="width: 70%"></div>
-                            </div>
-                          </td>
-                          <td style="text-align: center;"><span class="badge text-bg-warning">70%</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>3.</td>
-                          <td>Kirim Surat (Promosi/Aduan/Temuan)  </td>
-                          <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar text-bg-primary" style="width: 30%"></div>
-                            </div>
-                          </td>
-                          <td style="text-align: center;"><span class="badge text-bg-primary">30%</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>4.</td>
-                          <td>Permintaan Data/Informasi</td>
-                          <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar text-bg-success" style="width: 90%"></div>
-                            </div>
-                          </td>
-                          <td style="text-align: center;"><span class="badge text-bg-success">90%</span></td>
-                        </tr>
-                        <tr class="align-middle">
-                          <td>5.</td>
-                          <td>Lainnya</td>
-                          <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar text-bg-success" style="width: 90%"></div>
-                            </div>
-                          </td>
-                          <td style="text-align: center;"><span class="badge text-bg-success">90%</span></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-              </div>
-              <!-- /.col -->
-              
-              
-              <!-- /.col -->
-            </div>
-            <!--end::Row-->
+            <h2 class="mb-1 fw-bold">Dashboard Monitoring & Evaluasi</h2>
+            <p class="mb-0 text-sm text-muted">Overview semua layanan monitoring dan evaluasi</p>
           </div>
-          <!--end::Container-->
-        </div>
-        <!--end::App Content-->
-      </div>
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made by KOMPU BBWS BRANTAS
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">IT Tim</a>
-              </div>
-            </div>
+          <div class="text-end">
+            <div class="text-sm text-muted mb-1">Periode</div>
+            <div class="h5 fw-bold text-dark mb-0"><?= date('Y') ?></div> <!-- 🔹 hanya tahun -->
           </div>
-        </div>
-      </footer>
-    </div>
-  </main>
-  <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="fa fa-cog py-2"> </i>
-    </a>
-    <div class="card shadow-lg blur">
-      <div class="card-header pb-0 pt-3  bg-transparent ">
-        <div class="float-start">
-          <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
-          <p>See our dashboard options.</p>
-        </div>
-        <div class="float-end mt-4">
-          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-            <i class="fa fa-close"></i>
-          </button>
-        </div>
-        <!-- End Toggle Button -->
-      </div>
-      <hr class="horizontal dark my-1">
-      <div class="card-body pt-sm-3 pt-0">
-        <!-- Sidebar Backgrounds -->
-        <div>
-          <h6 class="mb-0">Sidebar Colors</h6>
-        </div>
-        <a href="javascript:void(0)" class="switch-trigger background-color">
-          <div class="badge-colors my-2 text-start">
-            <span class="badge filter bg-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
-          </div>
-        </a>
-        <!-- Sidenav Type -->
-        <div class="mt-3">
-          <h6 class="mb-0">Sidenav Type</h6>
-          <p class="text-sm">Choose between 2 different sidenav types.</p>
-        </div>
-        <div class="d-flex">
-          <button class="btn btn-primary w-100 px-3 mb-2 active" data-class="bg-transparent" onclick="sidebarType(this)">Transparent</button>
-          <button class="btn btn-primary w-100 px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
-        </div>
-        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-        <!-- Navbar Fixed -->
-        <div class="mt-3">
-          <h6 class="mb-0">Navbar Fixed</h6>
-        </div>
-        <div class="form-check form-switch ps-0">
-          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
-        </div>
-        <hr class="horizontal dark mb-1 d-xl-block d-none">
-        <div class="mt-2 d-xl-block d-none">
-          <h6 class="mb-0">Sidenav Mini</h6>
-        </div>
-        <div class="form-check form-switch ps-0 d-xl-block d-none">
-          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarMinimize" onclick="navbarMinimize(this)">
-        </div>
-        <hr class="horizontal dark mb-1 d-xl-block d-none">
-        <div class="mt-2 d-xl-block d-none">
-          <h6 class="mb-0">Light/Dark</h6>
-        </div>
-        <div class="form-check form-switch ps-0 d-xl-block d-none">
-          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
-        </div>
-        <hr class="horizontal dark my-sm-4">
-        <a class="btn bg-gradient-info w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro">Buy now</a>
-        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard">Free demo</a>
-        <a class="btn btn-outline-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/overview/soft-ui-dashboard">View documentation</a>
-        <div class="w-100 text-center">
-          <a class="github-button" href="https://github.com/creativetimofficial/ct-soft-ui-dashboard-pro" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub">Star</a>
-          <h6 class="mt-3">Thank you for sharing!</h6>
-          <a href="https://twitter.com/intent/tweet?text=Check%20Soft%20UI%20Dashboard%20PRO%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard-pro" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-          </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/soft-ui-dashboard-pro" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-          </a>
         </div>
       </div>
     </div>
   </div>
-  <!--   Core JS Files   -->
+</div>
+
+      <!-- KEPUASAN MASYARAKAT - TAHUN BERJALAN -->
+<div class="section-title">
+  <h5 class="fw-bold text-dark mb-0">Kepuasan Masyarakat - <?= date('Y') ?></h5>
+</div>
+<div class="row mb-4">
+  <!-- Card Total Responden -->
+  <div class="col-xl-4 col-md-6 mb-4">
+    <a href="<?= base_url('Monev_kepuasan') ?>" class="stat-card-link">
+      <div class="card custom-card h-100">
+        <div class="card-body p-3">
+          <div class="row align-items-center h-100">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Total Responden</p>
+                <h4 class="font-weight-bolder mb-0">
+                  <?= number_format($kepuasan_tahun_ini['total_responden']) ?>
+                </h4>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                <i class="fas fa-users text-white text-lg opacity-10"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Card Nilai IKM -->
+  <div class="col-xl-4 col-md-6 mb-4">
+    <a href="<?= base_url('Monev_kepuasan') ?>" class="stat-card-link">
+      <div class="card custom-card h-100">
+        <div class="card-body p-3">
+          <div class="row align-items-center h-100">
+            <div class="col-8">
+              <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Nilai IKM</p>
+              <h4 class="font-weight-bolder mb-0">
+                <?= number_format($kepuasan_tahun_ini['nilai_ikm'], 2) ?>
+                <span class="text-success text-sm"><?= number_format($kepuasan_tahun_ini['persentase_ikm'] ?? (($kepuasan_tahun_ini['nilai_ikm'] / 4) * 100), 2) ?>%</span>
+              </h4>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                <i class="fas fa-chart-line text-lg opacity-10 text-white"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Card Grade Mutu -->
+  <div class="col-xl-4 col-md-6 mb-4">
+    <a href="<?= base_url('Monev_kepuasan') ?>" class="stat-card-link">
+      <div class="card custom-card h-100">
+        <div class="card-body p-3">
+          <div class="row align-items-center h-100">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Grade Mutu</p>
+                <h4 class="font-weight-bolder mb-0">
+                  <?= substr($kepuasan_tahun_ini['grade_mutu'], 0, 1) ?>
+                  <span class="text-success text-sm">
+                    <?php
+                    $grade = substr($kepuasan_tahun_ini['grade_mutu'], 0, 1);
+                    if($grade == 'A') echo 'SANGAT BAIK';
+                    elseif($grade == 'B') echo 'BAIK';
+                    elseif($grade == 'C') echo 'CUKUP';
+                    else echo 'KURANG';
+                    ?>
+                  </span>
+                </h4>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+                <i class="fas fa-award text-white text-lg"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- MONEV PERMINTAAN DATA -->
+<div class="section-title">
+  <h5 class="fw-bold text-dark mb-0">Permintaan Data Informasi - <?= date('Y') ?></h5>
+</div>
+<div class="row mb-4">
+  <!-- Card Total Permohonan -->
+  <div class="col-xl-4 col-md-6 mb-4">
+    <a href="<?= base_url('Monev_permintaan') ?>" class="stat-card-link">
+      <div class="card custom-card h-100">
+        <div class="card-body p-3">
+          <div class="row align-items-center h-100">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Total Permohonan</p>
+                <h4 class="font-weight-bolder mb-0">
+                  <?= number_format($permintaan['total_permohonan'] ?? 0) ?>
+                </h4>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                <i class="fas fa-file-alt text-white text-lg opacity-10"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Card Dalam Proses -->
+  <div class="col-xl-4 col-md-6 mb-4">
+    <a href="<?= base_url('Monev_permintaan') ?>" class="stat-card-link">
+      <div class="card custom-card h-100">
+        <div class="card-body p-3">
+          <div class="row align-items-center h-100">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Dalam Proses</p>
+                <h4 class="font-weight-bolder mb-0">
+                  <?= number_format($permintaan['dalam_proses'] ?? 0) ?>
+                  <span class="text-success text-sm">
+                    <?= $permintaan['persen_proses'] ?? 0 ?>%
+                  </span>
+                </h4>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+                <i class="fas fa-clock text-white text-lg opacity-10"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Card Dipenuhi -->
+  <div class="col-xl-4 col-md-6 mb-4">
+    <a href="<?= base_url('Monev_permintaan') ?>" class="stat-card-link">
+      <div class="card custom-card h-100">
+        <div class="card-body p-3">
+          <div class="row align-items-center h-100">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Dipenuhi</p>
+                <h4 class="font-weight-bolder mb-0">
+                  <?= number_format($permintaan['dipenuhi'] ?? 0) ?>
+                  <span class="text-success text-sm">
+                    <?= $permintaan['persen_dipenuhi'] ?? 0 ?>%
+                  </span>
+                </h4>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+                <i class="fas fa-check-circle text-white text-lg opacity-10"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- MONEV PENGADUAN -->
+<div class="section-title">
+  <h5 class="fw-bold text-dark mb-0">Pengaduan Masyarakat - <?= date('Y') ?></h5>
+</div>
+<div class="row mb-4">
+  <!-- Card Total Pengaduan -->
+  <div class="col-xl-4 col-md-6 mb-4">
+    <a href="<?= base_url('Monev_pengaduan') ?>" class="stat-card-link">
+      <div class="card custom-card h-100">
+        <div class="card-body p-3">
+          <div class="row align-items-center h-100">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Total Pengaduan</p>
+                <h4 class="font-weight-bolder mb-0">
+                  <?= number_format($pengaduan['total_pengaduan'] ?? 0) ?>
+                </h4>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                <i class="fas fa-exclamation-triangle text-white text-lg opacity-10"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Card Dalam Proses -->
+  <div class="col-xl-4 col-md-6 mb-4">
+    <a href="<?= base_url('Monev_pengaduan') ?>" class="stat-card-link">
+      <div class="card custom-card h-100">
+        <div class="card-body p-3">
+          <div class="row align-items-center h-100">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Dalam Proses</p>
+                <h4 class="font-weight-bolder mb-0">
+                  <?= number_format($pengaduan['dalam_proses'] ?? 0) ?>
+                  <span class="text-success text-sm">
+                    <?= $pengaduan['persen_proses'] ?? 0 ?>%
+                  </span>
+                </h4>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+                <i class="fas fa-spinner text-white text-lg opacity-10"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Card Selesai -->
+  <div class="col-xl-4 col-md-6 mb-4">
+    <a href="<?= base_url('Monev_pengaduan') ?>" class="stat-card-link">
+      <div class="card custom-card h-100">
+        <div class="card-body p-3">
+          <div class="row align-items-center h-100">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Selesai</p>
+                <h4 class="font-weight-bolder mb-0">
+                  <?= number_format($pengaduan['selesai'] ?? 0) ?>
+                  <span class="text-success text-sm">
+                    <?= $pengaduan['persen_selesai'] ?? 0 ?>%
+                  </span>
+                </h4>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+                <i class="fas fa-check-double text-white text-lg opacity-10"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer pt-2 no-print"> <!-- 🔽 dari pt-3 jadi pt-2 -->
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6 mb-lg-0 mb-3">
+        <div class="copyright text-center text-sm text-muted text-lg-start" style="line-height:1.3;"> <!-- 🔽 line spacing dirapatkan -->
+          © <script>document.write(new Date().getFullYear())</script>, made by KOMPU BBWS BRANTAS
+          <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">IT Tim</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <!-- Scripts -->
   <script src="<?= base_url();?>assets/Template/assets/js/core/popper.min.js"></script>
   <script src="<?= base_url();?>assets/Template/assets/js/core/bootstrap.min.js"></script>
   <script src="<?= base_url();?>assets/Template/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="<?= base_url();?>assets/Template/assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <!-- Kanban scripts -->
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/dragula/dragula.min.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/jkanban/jkanban.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/chartjs.min.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/threejs.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/orbit-controls.js"></script>
+  <script src="<?= base_url();?>assets/Template/assets/js/soft-ui-dashboard.min.js?v=1.2.0"></script>
+
   <script>
-        const ctx = document.getElementById('myDoughnutChart').getContext('2d');
-        const myDoughnutChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: [
-                    'Sangat Sesuai',
-                    'Sesuai',
-                    'Kurang Sesuai',
-                    'Tidak Sesuai',
-                ],
-                datasets: [{
-                    data: [11, 56, 33, 0 ],
-                    backgroundColor: [
-                        '#15ca00',
-                        '#EAB308',
-                        '#F97316',
-                        '#EF4444'
-                    ],
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                }
-            },
-        });
-    </script>
-  <script>
+    // Smooth scroll behavior
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -755,11 +589,23 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="<?= base_url();?>assets/Template/assets/js/soft-ui-dashboard.min.js?v=1.2.0"></script>
-</body>
 
+    // Card animation on load
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.custom-card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          card.style.transition = 'all 0.5s ease';
+          
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 50);
+        }, index * 50);
+      });
+    });
+  </script>
+</body>
 </html>

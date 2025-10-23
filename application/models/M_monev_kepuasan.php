@@ -531,4 +531,47 @@ public function get_distribusi_unsur($date_range, $kolom) {
     return $result;
 }
 
+ public function get_kepuasan_tahun_ini($tahun) {
+        // Query untuk total responden tahun berjalan
+        $this->db->where('YEAR(timestamp)', $tahun);
+        $total_responden = $this->db->count_all_results('buku_tamu_backup');
+        
+        // Query untuk menghitung nilai IKM (rata-rata semua aspek penilaian)
+        $this->db->select('
+            AVG(pendapat_pelayanan) as pelayanan,
+            AVG(pemahaman_prosedur) as prosedur,
+            AVG(pendapat_kecepatan) as kecepatan,
+            AVG(pendapat_biaya) as biaya,
+            AVG(pendapat_produk) as produk,
+            AVG(pendapat_kompetensi) as kompetensi,
+            AVG(pendapat_perilaku) as perilaku,
+            AVG(pendapat_pengaduan) as pengaduan,
+            AVG(pendapat_kualitas) as kualitas
+        ');
+        $this->db->where('YEAR(timestamp)', $tahun);
+        $rata_rata = $this->db->get('buku_tamu_backup')->row_array();
+        
+        // Hitung nilai IKM total (rata-rata dari semua aspek)
+        $total_nilai = 0;
+        $jumlah_aspek = 0;
+        
+        foreach ($rata_rata as $nilai) {
+            if ($nilai !== null) {
+                $total_nilai += $nilai;
+                $jumlah_aspek++;
+            }
+        }
+        
+        $nilai_ikm = $jumlah_aspek > 0 ? $total_nilai / $jumlah_aspek : 0;
+        
+        // Hitung grade mutu berdasarkan nilai IKM
+        $grade_mutu = $this->hitung_grade_mutu($nilai_ikm);
+        
+        return [
+            'total_responden' => $total_responden,
+            'nilai_ikm' => $nilai_ikm,
+            'grade_mutu' => $grade_mutu
+        ];
+    }
+
 }

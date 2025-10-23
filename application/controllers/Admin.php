@@ -10,22 +10,315 @@ class Admin extends CI_Controller {
         }
     }
 
-    // Dashboard
-    public function index() {
-        $data = [
-            'title' => 'Dashboard Admin',
-            'total_tamu' => $this->M_admin->count_tamu(),
-            'laki' => $this->M_admin->count_laki(),
-            'perempuan' => $this->M_admin->count_perempuan(),
-            'total_aduan' => $this->M_admin->count_aduan(),
-            'aduan_proses' => $this->M_admin->count_aduan_proses(),
-            'keperluan1' => $this->M_admin->count_keperluan1(),
-            'keperluan2' => $this->M_admin->count_keperluan2(),
-            'keperluan3' => $this->M_admin->count_keperluan3(),
-            'keperluan4' => $this->M_admin->count_keperluan4(),
-            'content' => 'admin/dashboard'
+    // Di Controller Admin
+ public function index() {
+    $tahun_ini = date('Y');
+    
+    // Data Kepuasan Masyarakat Tahun Berjalan
+    $data['kepuasan_tahun_ini'] = $this->M_admin->get_data_kepuasan_tahun($tahun_ini);
+    
+    // Data Permintaan untuk dashboard
+    $data['permintaan'] = $this->hitung_statistik_permintaan_data();
+    
+    // Data Pengaduan untuk dashboard
+    $data['pengaduan'] = $this->M_admin->get_statistik_pengaduan();
+    
+    // Load view
+    $this->load->view('admin/v_admin', $data);
+}
+
+    /**
+     * Method untuk testing koneksi database
+     */
+    public function test_db() {
+        $test_result = $this->M_admin->test_koneksi();
+        
+        echo "<pre>";
+        echo "=== TEST KONEKSI DATABASE ===\n\n";
+        
+        echo "Total Records: " . $test_result['total_records'] . "\n\n";
+        
+        echo "Data per Tahun:\n";
+        foreach ($test_result['data_per_tahun'] as $tahun) {
+            echo "- Tahun " . $tahun['tahun'] . ": " . $tahun['total'] . " records\n";
+        }
+        
+        echo "\n5 Data Terbaru:\n";
+        foreach ($test_result['data_terbaru'] as $data) {
+            echo "- ID: " . $data['id'] . ", Nama: " . $data['nama'] . ", Tanggal: " . $data['timestamp'] . "\n";
+        }
+        
+        echo "\n=== TEST DATA KEPUASAN TAHUN INI ===\n";
+        $tahun_ini = date('Y');
+        $kepuasan = $this->M_admin->get_kepuasan_tahun_ini($tahun_ini);
+        print_r($kepuasan);
+        
+        echo "</pre>";
+    }
+
+    /**
+     * Method untuk debugging data kepuasan
+     */
+    public function debug_kepuasan() {
+        $tahun_ini = date('Y');
+        $data = $this->M_admin->get_kepuasan_tahun_ini($tahun_ini);
+        
+        echo "<pre>";
+        echo "=== DEBUG DATA KEPUASAN TAHUN " . $tahun_ini . " ===\n\n";
+        echo "Total Responden: " . $data['total_responden'] . "\n";
+        echo "Nilai IKM: " . number_format($data['nilai_ikm'], 4) . "\n";
+        echo "Grade Mutu: " . $data['grade_mutu'] . "\n";
+        echo "</pre>";
+    }
+
+private function get_kepuasan_tahun_ini($tahun)
+{
+    // Query untuk total responden tahun berjalan
+    $this->db->where('YEAR(timestamp)', $tahun);
+    $total_responden = $this->db->count_all_results('buku_tamu_backup');
+    
+    // Query untuk menghitung nilai IKM (rata-rata semua aspek penilaian)
+    $this->db->select('
+        AVG(pendapat_pelayanan) as pelayanan,
+        AVG(pemahaman_prosedur) as prosedur,
+        AVG(pendapat_kecepatan) as kecepatan,
+        AVG(pendapat_biaya) as biaya,
+        AVG(pendapat_produk) as produk,
+        AVG(pendapat_kompetensi) as kompetensi,
+        AVG(pendapat_perilaku) as perilaku,
+        AVG(pendapat_pengaduan) as pengaduan,
+        AVG(pendapat_kualitas) as kualitas
+    ');
+    $this->db->where('YEAR(timestamp)', $tahun);
+    $rata_rata = $this->db->get('buku_tamu_backup')->row_array();
+    
+    // Hitung nilai IKM total (rata-rata dari semua aspek)
+    $total_nilai = 0;
+    $jumlah_aspek = 0;
+    
+    foreach ($rata_rata as $nilai) {
+        if ($nilai !== null) {
+            $total_nilai += $nilai;
+            $jumlah_aspek++;
+        }
+    }
+    
+    $nilai_ikm = $jumlah_aspek > 0 ? $total_nilai / $jumlah_aspek : 0;
+    
+    // Hitung grade mutu berdasarkan nilai IKM
+    $grade_mutu = $this->hitung_grade_mutu($nilai_ikm);
+    
+    return [
+        'total_responden' => $total_responden,
+        'nilai_ikm' => $nilai_ikm,
+        'grade_mutu' => $grade_mutu
+    ];
+}
+
+private function hitung_grade_mutu($nilai_ikm)
+{
+    if ($nilai_ikm >= 3.5324) {
+        return 'A (Sangat Baik)';
+    } elseif ($nilai_ikm >= 3.0644) {
+        return 'B (Baik)';
+    } elseif ($nilai_ikm >= 2.60) {
+        return 'C (Cukup)';
+    } else {
+        return 'D (Kurang)';
+    }
+}
+
+    /**
+ * Method untuk mendapatkan statistik permintaan data (untuk dashboard utama) - BERDASARKAN TAHUN BERJALAN
+ */
+private function hitung_statistik_permintaan_data() {
+    $tahun_ini = date('Y');
+    
+    // Total permohonan TAHUN INI
+    $this->db->where('YEAR(diterima_ppid)', $tahun_ini);
+    $total_permohonan = $this->db->count_all_results('layanan_permintaan_data');
+    
+    // Dalam proses (status: 'Dalam Proses', 'proses') TAHUN INI
+    $this->db->where('YEAR(diterima_ppid)', $tahun_ini);
+    $this->db->where_in('status', ['Dalam Proses', 'proses']);
+    $dalam_proses = $this->db->count_all_results('layanan_permintaan_data');
+    
+    // Dipenuhi (status: 'selesai') TAHUN INI
+    $this->db->where('YEAR(diterima_ppid)', $tahun_ini);
+    $this->db->where('status', 'selesai');
+    $dipenuhi = $this->db->count_all_results('layanan_permintaan_data');
+    
+    // Hitung persentase
+    $persen_proses = $total_permohonan > 0 ? round(($dalam_proses / $total_permohonan) * 100, 1) : 0;
+    $persen_dipenuhi = $total_permohonan > 0 ? round(($dipenuhi / $total_permohonan) * 100, 1) : 0;
+    
+    // Trend - bandingkan dengan tahun lalu
+    $trend = $this->hitung_trend_permintaan_tahunan();
+    
+    return [
+        'total_permohonan' => $total_permohonan,
+        'dalam_proses' => $dalam_proses,
+        'dipenuhi' => $dipenuhi,
+        'persen_proses' => $persen_proses,
+        'persen_dipenuhi' => $persen_dipenuhi,
+        'trend' => $trend
+    ];
+}
+
+/**
+ * Method untuk menghitung trend permintaan (tahun ini vs tahun lalu)
+ */
+private function hitung_trend_permintaan_tahunan() {
+    $tahun_ini = date('Y');
+    $tahun_lalu = $tahun_ini - 1;
+    
+    // Hitung permintaan tahun ini
+    $this->db->where('YEAR(diterima_ppid)', $tahun_ini);
+    $tahun_ini_count = $this->db->count_all_results('layanan_permintaan_data');
+    
+    // Hitung permintaan tahun lalu
+    $this->db->where('YEAR(diterima_ppid)', $tahun_lalu);
+    $tahun_lalu_count = $this->db->count_all_results('layanan_permintaan_data');
+    
+    if ($tahun_lalu_count == 0) {
+        return $tahun_ini_count > 0 ? "+100%" : "+0%";
+    }
+    
+    $persentase = (($tahun_ini_count - $tahun_lalu_count) / $tahun_lalu_count) * 100;
+    $trend = $persentase >= 0 ? "+" . round($persentase, 1) . "%" : round($persentase, 1) . "%";
+    
+    return $trend;
+}
+
+    /**
+     * Method untuk dashboard pengaduan masyarakat
+     */
+    public function pengaduan_masyarakat() {
+        $tahun_ini = date('Y');
+        
+        // Data statistik pengaduan TAHUN INI
+        $data['pengaduan'] = $this->hitung_statistik_pengaduan_lengkap($tahun_ini);
+        
+        // Data untuk chart TAHUN INI
+        $data['chart_bulanan'] = $this->M_admin->get_pengaduan_per_bulan($tahun_ini);
+        $data['chart_jenis'] = $this->M_admin->get_pengaduan_by_jenis($tahun_ini);
+        $data['chart_via'] = $this->M_admin->get_pengaduan_by_channel($tahun_ini);
+        
+        // Data daftar pengaduan TAHUN INI
+        $data['daftar_pengaduan'] = $this->get_daftar_pengaduan_tahun($tahun_ini);
+        
+        // Load view
+        $this->load->view('admin/v_pengaduan_masyarakat', $data);
+    }
+
+    /**
+     * Method untuk statistik pengaduan lengkap
+     */
+    private function hitung_statistik_pengaduan_lengkap($tahun) {
+        // Total pengaduan TAHUN TERPILIH
+        $this->db->where('YEAR(diterima_ppid)', $tahun);
+        $total_pengaduan = $this->db->count_all_results('layanan_pengaduan');
+        
+        // Dalam proses TAHUN TERPILIH
+        $this->db->where('YEAR(diterima_ppid)', $tahun);
+        $this->db->where('status', 'proses');
+        $dalam_proses = $this->db->count_all_results('layanan_pengaduan');
+        
+        // Selesai TAHUN TERPILIH
+        $this->db->where('YEAR(diterima_ppid)', $tahun);
+        $this->db->where('status', 'selesai');
+        $selesai = $this->db->count_all_results('layanan_pengaduan');
+        
+        // Ditolak TAHUN TERPILIH
+        $this->db->where('YEAR(diterima_ppid)', $tahun);
+        $this->db->where('status', 'Ditolak');
+        $ditolak = $this->db->count_all_results('layanan_pengaduan');
+        
+        // Hitung persentase
+        $persen_proses = $total_pengaduan > 0 ? round(($dalam_proses / $total_pengaduan) * 100, 1) : 0;
+        $persen_selesai = $total_pengaduan > 0 ? round(($selesai / $total_pengaduan) * 100, 1) : 0;
+        $persen_ditolak = $total_pengaduan > 0 ? round(($ditolak / $total_pengaduan) * 100, 1) : 0;
+        
+        // Trend
+        $trend = $this->hitung_trend_pengaduan_tahunan($tahun);
+        
+        return [
+            'total_pengaduan' => $total_pengaduan,
+            'dalam_proses' => $dalam_proses,
+            'selesai' => $selesai,
+            'ditolak' => $ditolak,
+            'persen_proses' => $persen_proses,
+            'persen_selesai' => $persen_selesai,
+            'persen_ditolak' => $persen_ditolak,
+            'trend' => $trend,
+            'tahun' => $tahun
         ];
-        $this->load->view('admin/v_admin', $data);
+    }
+
+    /**
+     * Method untuk mendapatkan daftar pengaduan berdasarkan tahun
+     */
+    private function get_daftar_pengaduan_tahun($tahun) {
+        $this->db->where('YEAR(diterima_ppid)', $tahun);
+        $this->db->order_by('diterima_ppid', 'DESC');
+        $this->db->order_by('no', 'DESC');
+        return $this->db->get('layanan_pengaduan')->result_array();
+    }
+
+    /**
+     * Method untuk trend pengaduan tahunan
+     */
+    private function hitung_trend_pengaduan_tahunan($tahun) {
+        $tahun_lalu = $tahun - 1;
+        
+        // Hitung pengaduan tahun ini
+        $this->db->where('YEAR(diterima_ppid)', $tahun);
+        $tahun_ini_count = $this->db->count_all_results('layanan_pengaduan');
+        
+        // Hitung pengaduan tahun lalu
+        $this->db->where('YEAR(diterima_ppid)', $tahun_lalu);
+        $tahun_lalu_count = $this->db->count_all_results('layanan_pengaduan');
+        
+        if ($tahun_lalu_count == 0) {
+            return $tahun_ini_count > 0 ? "+100%" : "+0%";
+        }
+        
+        $persentase = (($tahun_ini_count - $tahun_lalu_count) / $tahun_lalu_count) * 100;
+        $trend = $persentase >= 0 ? "+" . round($persentase, 1) . "%" : round($persentase, 1) . "%";
+        
+        return $trend;
+    }
+
+    /**
+     * Method untuk debugging data pengaduan
+     */
+    public function debug_pengaduan() {
+        $data = $this->M_admin->get_statistik_pengaduan();
+        
+        echo "<pre>";
+        echo "=== DEBUG DATA PENGADUAN ===\n\n";
+        print_r($data);
+        
+        echo "\n=== DETAIL STATUS ===\n";
+        $this->db->select('status, COUNT(*) as total');
+        $this->db->group_by('status');
+        $status_detail = $this->db->get('layanan_pengaduan')->result_array();
+        
+        foreach ($status_detail as $status) {
+            echo "- Status '" . $status['status'] . "': " . $status['total'] . " records\n";
+        }
+        
+        echo "\n=== 10 DATA TERBARU ===\n";
+        $this->db->order_by('no', 'DESC');
+        $this->db->limit(10);
+        $data_terbaru = $this->db->get('layanan_pengaduan')->result_array();
+        
+        foreach ($data_terbaru as $data) {
+            echo "- No: " . $data['no'] . ", Pengirim: " . $data['pengirim'] . 
+                 ", Jenis: " . $data['jenis'] . ", Status: " . $data['status'] . 
+                 ", Tanggal: " . $data['diterima_ppid'] . "\n";
+        }
+        echo "</pre>";
     }
 
     // ========= REKAP BUKU TAMU =========

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url(); ?>assets/Template/assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="<?= base_url(); ?>assets/Pictures/Logo_PU_(RGB).jpg">
-  <title>Dashboard Monev Permintaan Data</title>
+  <title>Dashboard Monev Pengaduan</title>
   
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -230,13 +230,13 @@
                   <span class="sidenav-normal"> Monev Kepuasan Masyarakat</span>
                 </a>
               </li>  
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('Monev_permintaan'); ?>">
                   <span class="sidenav-mini-icon"> M </span>
                   <span class="sidenav-normal"> Monev Permintaan Data</span>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="<?php echo base_url('Monev_pengaduan'); ?>">
                   <span class="sidenav-mini-icon"> M </span>
                   <span class="sidenav-normal"> Monev Pengaduan</span>
@@ -298,14 +298,14 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                     <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Monev</a></li>
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Permintaan Data</li>
+                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Pengaduan</li>
                 </ol>
             </nav>
 
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 
                 <!-- Form Filter Periode -->
-                <form method="GET" action="<?= site_url('Monev_permintaan') ?>" class="d-flex align-items-center gap-3 ms-auto me-3">
+                <form method="GET" action="<?= site_url('Monev_pengaduan') ?>" class="d-flex align-items-center gap-3 ms-auto me-3">
                     <div class="d-flex align-items-center gap-2">
                         <div class="d-flex align-items-center">
                             <label class="text-gray-700 font-medium mb-0 me-2">Periode:</label>
@@ -371,8 +371,8 @@
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h2 class="mb-1">Monev Permintaan Data</h2>
-                                <p class="mb-0 text-sm">Monitoring dan Evaluasi Permintaan Data Informasi</p>
+                                <h2 class="mb-1">Monev Pengaduan</h2>
+                                <p class="mb-0 text-sm">Monitoring dan Evaluasi Pengaduan Informasi</p>
                             </div>
                             <div class="border-start ps-4 ms-4">
                                 <div class="text-sm text-muted mb-1">Periode</div>
@@ -392,7 +392,7 @@
                     <div class="card-body p-3">
                         <div class="row align-items-center h-100">
                             <div class="col-8">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Permohonan Informasi</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Pengaduan</p>
                                 <h4 class="font-weight-bolder mb-0">
                                     <?= $total_permohonan ?>
                                 </h4>
@@ -437,7 +437,7 @@
                     <div class="card-body p-3">
                         <div class="row align-items-center h-100">
                             <div class="col-8">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Dipenuhi</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Selesai</p>
                                 <h4 class="font-weight-bolder mb-0">
                                     <?= $dipenuhi ?>
                                     <?php if($total_permohonan > 0): ?>
@@ -457,115 +457,124 @@
         </div>
 
         <!-- Main Content -->
-        <div class="row mt-4">
-            <!-- Status Permohonan Chart - KIRI -->
-            <div class="col-lg-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-header pb-0">
-                        <h6>Status Permohonan Informasi</h6>
+<div class="row mt-4">
+    <!-- Status Permohonan Chart - KIRI -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header pb-0">
+                <h6>Status Permohonan Informasi</h6>
+            </div>
+            <div class="card-body p-3 d-flex flex-column justify-content-center">
+                <?php 
+                $total_status = $status_permohonan['terpenuhi'] + $status_permohonan['dalam_proses'] + $status_permohonan['telah_disampaikan'];
+                ?>
+
+                <?php if($total_status > 0): ?>
+                <?php
+                    $persen_terpenuhi = ($status_permohonan['terpenuhi'] / $total_status) * 100;
+                    $persen_proses = ($status_permohonan['dalam_proses'] / $total_status) * 100;
+                    $persen_telah_disampaikan = ($status_permohonan['telah_disampaikan'] / $total_status) * 100;
+                ?>
+                
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center pe-4">
+                        <div class="position-relative" style="height: 250px;">
+                            <canvas id="statusChart"></canvas>
+                            <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                <div class="h4 fw-bold text-dark mb-0"><?= $total_status ?></div>
+                                <div class="text-xs text-muted">Total</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body p-3 d-flex flex-column justify-content-center">
-                        <?php 
-                        $total_status = $status_permohonan['terpenuhi'] + $status_permohonan['dalam_proses'] + $status_permohonan['ditolak'];
-                        ?>
-
-                        <?php if($total_status > 0): ?>
-                        <?php
-                            $persen_terpenuhi = ($status_permohonan['terpenuhi'] / $total_status) * 100;
-                            $persen_proses = ($status_permohonan['dalam_proses'] / $total_status) * 100;
-                            $persen_ditolak = ($status_permohonan['ditolak'] / $total_status) * 100;
-                        ?>
-                        
-                        <div class="row align-items-center">
-                            <div class="col-md-6 text-center pe-4">
-                                <div class="position-relative" style="height: 250px;">
-                                    <canvas id="statusChart"></canvas>
-                                    <div class="position-absolute top-50 start-50 translate-middle text-center">
-                                        <div class="h4 fw-bold text-dark mb-0"><?= $total_status ?></div>
-                                        <div class="text-xs text-muted">Total</div>
-                                    </div>
+                    <div class="col-md-6 ps-4">
+                        <div class="space-y-3">
+                            <!-- Selesai -->
+                            <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light" 
+                                 style="cursor: pointer;" 
+                                 onclick="showStatusPermohonanDetail('terpenuhi')"
+                                 title="Klik untuk lihat detail Selesai">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge badge-dot me-2" style="background-color: #1C6C8C;"></span>
+                                    <span class="text-sm font-weight-bold">Selesai</span>
+                                </div>
+                                <div class="text-end">
+                                    <span class="text-sm font-weight-bold d-block"><?= $status_permohonan['terpenuhi'] ?></span>
+                                    <span class="text-xs text-muted"><?= round($persen_terpenuhi, 1) ?>%</span>
                                 </div>
                             </div>
-                            <div class="col-md-6 ps-4">
-                                <div class="space-y-3">
-                                    <!-- Terpenuhi -->
-                                    <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light">
-                                        <div class="d-flex align-items-center">
-                                            <span class="badge badge-dot me-2" style="background-color: #1C6C8C;"></span>
-                                            <span class="text-sm font-weight-bold">Terpenuhi</span>
-                                        </div>
-                                        <div class="text-end">
-                                            <span class="text-sm font-weight-bold d-block"><?= $status_permohonan['terpenuhi'] ?></span>
-                                            <span class="text-xs text-muted"><?= round($persen_terpenuhi, 1) ?>%</span>
-                                        </div>
-                                    </div>
 
-                                    <!-- Dalam Proses -->
-                                    <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light">
-                                        <div class="d-flex align-items-center">
-                                            <span class="badge badge-dot me-2" style="background-color: #E1712C;"></span>
-                                            <span class="text-sm font-weight-bold">Dalam Proses</span>
-                                        </div>
-                                        <div class="text-end">
-                                            <span class="text-sm font-weight-bold d-block"><?= $status_permohonan['dalam_proses'] ?></span>
-                                            <span class="text-xs text-muted"><?= round($persen_proses, 1) ?>%</span>
-                                        </div>
-                                    </div>
+                            <!-- Dalam Proses -->
+                            <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light"
+                                 style="cursor: pointer;" 
+                                 onclick="showStatusPermohonanDetail('dalam_proses')"
+                                 title="Klik untuk lihat detail Dalam Proses">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge badge-dot me-2" style="background-color: #E1712C;"></span>
+                                    <span class="text-sm font-weight-bold">Dalam Proses</span>
+                                </div>
+                                <div class="text-end">
+                                    <span class="text-sm font-weight-bold d-block"><?= $status_permohonan['dalam_proses'] ?></span>
+                                    <span class="text-xs text-muted"><?= round($persen_proses, 1) ?>%</span>
+                                </div>
+                            </div>
 
-                                    <!-- Ditolak -->
-                                    <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light">
-                                        <div class="d-flex align-items-center">
-                                            <span class="badge badge-dot me-2" style="background-color: #3D8B37;"></span>
-                                            <span class="text-sm font-weight-bold">Ditolak</span>
-                                        </div>
-                                        <div class="text-end">
-                                            <span class="text-sm font-weight-bold d-block"><?= $status_permohonan['ditolak'] ?></span>
-                                            <span class="text-xs text-muted"><?= round($persen_ditolak, 1) ?>%</span>
-                                        </div>
-                                    </div>
+                            <!-- Telah Disampaikan -->
+                            <div class="d-flex justify-content-between align-items-center p-2 rounded hover-bg-light"
+                                 style="cursor: pointer;" 
+                                 onclick="showStatusPermohonanDetail('telah_disampaikan')"
+                                 title="Klik untuk lihat detail Telah Disampaikan">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge badge-dot me-2" style="background-color: #3D8B37;"></span>
+                                    <span class="text-sm font-weight-bold">Telah Disampaikan</span>
+                                </div>
+                                <div class="text-end">
+                                    <span class="text-sm font-weight-bold d-block"><?= $status_permohonan['telah_disampaikan'] ?></span>
+                                    <span class="text-xs text-muted"><?= round($persen_telah_disampaikan, 1) ?>%</span>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Progress Bars -->
-                        <div class="row mt-5">
-                            <div class="col-12">
-                                <div class="d-flex align-items-center mb-2">
-                                    <span class="text-xs font-weight-bold me-2" style="width: 120px;">Terpenuhi</span>
-                                    <div class="progress flex-grow-1" style="height: 8px;">
-                                        <div class="progress-bar" role="progressbar" 
-                                             style="width: <?= $persen_terpenuhi ?>%; background-color: #1C6C8C;"></div>
-                                    </div>
-                                    <span class="text-xs font-weight-bold ms-2" style="width: 60px;"><?= round($persen_terpenuhi, 1) ?>%</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <span class="text-xs font-weight-bold me-2" style="width: 120px;">Dalam Proses</span>
-                                    <div class="progress flex-grow-1" style="height: 8px;">
-                                        <div class="progress-bar" role="progressbar" 
-                                             style="width: <?= $persen_proses ?>%; background-color: #E1712C;"></div>
-                                    </div>
-                                    <span class="text-xs font-weight-bold ms-2" style="width: 60px;"><?= round($persen_proses, 1) ?>%</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-0">
-                                    <span class="text-xs font-weight-bold me-2" style="width: 120px;">Ditolak</span>
-                                    <div class="progress flex-grow-1" style="height: 8px;">
-                                        <div class="progress-bar" role="progressbar" 
-                                             style="width: <?= $persen_ditolak ?>%; background-color: #3D8B37;"></div>
-                                    </div>
-                                    <span class="text-xs font-weight-bold ms-2" style="width: 60px;"><?= round($persen_ditolak, 1) ?>%</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <?php else: ?>
-                            <div class="text-center py-4">
-                                <i class="fas fa-chart-pie text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-sm text-gray-500">Tidak ada data untuk periode <?= $periode_label ?> ini</p>
-                            </div>
-                        <?php endif; ?>
                     </div>
                 </div>
+
+                <!-- Progress Bars -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="text-xs font-weight-bold me-2" style="width: 120px;">Selesai</span>
+                            <div class="progress flex-grow-1" style="height: 8px;">
+                                <div class="progress-bar" role="progressbar" 
+                                     style="width: <?= $persen_terpenuhi ?>%; background-color: #1C6C8C;"></div>
+                            </div>
+                            <span class="text-xs font-weight-bold ms-2" style="width: 60px;"><?= round($persen_terpenuhi, 1) ?>%</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="text-xs font-weight-bold me-2" style="width: 120px;">Dalam Proses</span>
+                            <div class="progress flex-grow-1" style="height: 8px;">
+                                <div class="progress-bar" role="progressbar" 
+                                     style="width: <?= $persen_proses ?>%; background-color: #E1712C;"></div>
+                            </div>
+                            <span class="text-xs font-weight-bold ms-2" style="width: 60px;"><?= round($persen_proses, 1) ?>%</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-0">
+                            <span class="text-xs font-weight-bold me-2" style="width: 120px;">Telah Disampaikan</span>
+                            <div class="progress flex-grow-1" style="height: 8px;">
+                                <div class="progress-bar" role="progressbar" 
+                                     style="width: <?= $persen_telah_disampaikan ?>%; background-color: #3D8B37;"></div>
+                            </div>
+                            <span class="text-xs font-weight-bold ms-2" style="width: 60px;"><?= round($persen_telah_disampaikan, 1) ?>%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <?php else: ?>
+                    <div class="text-center py-4">
+                        <i class="fas fa-chart-pie text-4xl text-gray-300 mb-3"></i>
+                        <p class="text-sm text-gray-500">Tidak ada data untuk periode <?= $periode_label ?> ini</p>
+                    </div>
+                <?php endif; ?>
             </div>
+        </div>
+    </div>
 
             <!-- Status Pemohon Chart - KANAN -->
             <div class="col-lg-6 mb-4">
@@ -575,18 +584,18 @@
                     </div>
                     <div class="card-body p-3">
                         <?php 
-                        $total_pemohon = $status_pemohon['mahasiswa'] + $status_pemohon['media'] + 
-                                        $status_pemohon['instansi'] + $status_pemohon['lsm'] + 
-                                        $status_pemohon['perseorangan'];
+                        $total_pemohon = $status_pengirim['mahasiswa'] + $status_pengirim['media'] + 
+                                        $status_pengirim['instansi'] + $status_pengirim['lsm'] + 
+                                        $status_pengirim['perseorangan'];
                         ?>
 
                         <?php if($total_pemohon > 0): ?>
                         <?php
-                            $persen_mahasiswa = ($status_pemohon['mahasiswa'] / $total_pemohon) * 100;
-                            $persen_media = ($status_pemohon['media'] / $total_pemohon) * 100;
-                            $persen_instansi = ($status_pemohon['instansi'] / $total_pemohon) * 100;
-                            $persen_lsm = ($status_pemohon['lsm'] / $total_pemohon) * 100;
-                            $persen_perseorangan = ($status_pemohon['perseorangan'] / $total_pemohon) * 100;
+                            $persen_mahasiswa = ($status_pengirim['mahasiswa'] / $total_pemohon) * 100;
+                            $persen_media = ($status_pengirim['media'] / $total_pemohon) * 100;
+                            $persen_instansi = ($status_pengirim['instansi'] / $total_pemohon) * 100;
+                            $persen_lsm = ($status_pengirim['lsm'] / $total_pemohon) * 100;
+                            $persen_perseorangan = ($status_pengirim['perseorangan'] / $total_pemohon) * 100;
                         ?>
                         
                         <div class="row align-items-center">
@@ -608,7 +617,7 @@
                                             <span class="text-sm font-weight-bold">Mahasiswa (Instansi)</span>
                                         </div>
                                         <div class="text-end">
-                                            <span class="text-sm font-weight-bold d-block"><?= $status_pemohon['mahasiswa'] ?></span>
+                                            <span class="text-sm font-weight-bold d-block"><?= $status_pengirim['mahasiswa'] ?></span>
                                             <span class="text-xs text-muted"><?= round($persen_mahasiswa, 1) ?>%</span>
                                         </div>
                                     </div>
@@ -620,7 +629,7 @@
                                             <span class="text-sm font-weight-bold">Media</span>
                                         </div>
                                         <div class="text-end">
-                                            <span class="text-sm font-weight-bold d-block"><?= $status_pemohon['media'] ?></span>
+                                            <span class="text-sm font-weight-bold d-block"><?= $status_pengirim['media'] ?></span>
                                             <span class="text-xs text-muted"><?= round($persen_media, 1) ?>%</span>
                                         </div>
                                     </div>
@@ -632,7 +641,7 @@
                                             <span class="text-sm font-weight-bold">Instansi</span>
                                         </div>
                                         <div class="text-end">
-                                            <span class="text-sm font-weight-bold d-block"><?= $status_pemohon['instansi'] ?></span>
+                                            <span class="text-sm font-weight-bold d-block"><?= $status_pengirim['instansi'] ?></span>
                                             <span class="text-xs text-muted"><?= round($persen_instansi, 1) ?>%</span>
                                         </div>
                                     </div>
@@ -644,7 +653,7 @@
                                             <span class="text-sm font-weight-bold">LSM</span>
                                         </div>
                                         <div class="text-end">
-                                            <span class="text-sm font-weight-bold d-block"><?= $status_pemohon['lsm'] ?></span>
+                                            <span class="text-sm font-weight-bold d-block"><?= $status_pengirim['lsm'] ?></span>
                                             <span class="text-xs text-muted"><?= round($persen_lsm, 1) ?>%</span>
                                         </div>
                                     </div>
@@ -656,7 +665,7 @@
                                             <span class="text-sm font-weight-bold">Perseorangan</span>
                                         </div>
                                         <div class="text-end">
-                                            <span class="text-sm font-weight-bold d-block"><?= $status_pemohon['perseorangan'] ?></span>
+                                            <span class="text-sm font-weight-bold d-block"><?= $status_pengirim['perseorangan'] ?></span>
                                             <span class="text-xs text-muted"><?= round($persen_perseorangan, 1) ?>%</span>
                                         </div>
                                     </div>
@@ -826,18 +835,18 @@
                                         <h6 class="mb-0 text-sm">Visualisasi Persentase</h6>
                                     </div>
                                     <div class="card-body pt-2 pb-3">
-                                        <!-- Terpenuhi -->
+                                        <!-- Selesai -->
                                         <div class="mb-2">
                                             <div class="d-flex align-items-center mb-1">
                                                 <div class="d-flex align-items-center" style="width: 120px;">
                                                     <div style="width: 14px; height: 14px; background-color: #1C6C8C; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
-                                                    <span class="text-xs font-weight-bold text-dark">Terpenuhi</span>
+                                                    <span class="text-xs font-weight-bold text-dark">Selesai</span>
                                                 </div>
                                                 <div class="progress flex-grow-1 mx-2" style="height: 10px;">
-                                                    <div class="progress-bar" id="progressTerpenuhi" style="width: 0%; background-color: #1C6C8C;"></div>
+                                                    <div class="progress-bar" id="progressSelesai" style="width: 0%; background-color: #1C6C8C;"></div>
                                                 </div>
-                                                <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendTerpenuhi">0</span>
-                                                <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentTerpenuhi">0%</span>
+                                                <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendSelesai">0</span>
+                                                <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentSelesai">0%</span>
                                             </div>
                                         </div>
                                         
@@ -856,18 +865,18 @@
                                             </div>
                                         </div>
 
-                                        <!-- Ditolak -->
+                                        <!-- Telah Disampaikan -->
                                         <div class="mb-2">
                                             <div class="d-flex align-items-center mb-1">
                                                 <div class="d-flex align-items-center" style="width: 120px;">
                                                     <div style="width: 14px; height: 14px; background-color: #3D8B37; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
-                                                    <span class="text-xs font-weight-bold text-dark">Ditolak</span>
+                                                    <span class="text-xs font-weight-bold text-dark">Telah Disampaikan</span>
                                                 </div>
                                                 <div class="progress flex-grow-1 mx-2" style="height: 10px;">
-                                                    <div class="progress-bar" id="progressDitolak" style="width: 0%; background-color: #3D8B37;"></div>
+                                                    <div class="progress-bar" id="progressTelahDisampaikan" style="width: 0%; background-color: #3D8B37;"></div>
                                                 </div>
-                                                <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendDitolak">0</span>
-                                                <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentDitolak">0%</span>
+                                                <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendTelahDisampaikan">0</span>
+                                                <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentTelahDisampaikan">0%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -881,6 +890,190 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Detail Status Pemohon -->
+<div class="modal fade" id="detailStatusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailStatusTitle">Detail Status Pemohon</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Distribusi Jenis Pengaduan</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <div class="position-relative d-inline-block" style="height: 280px; width: 280px;">
+                                        <canvas id="detailStatusChart"></canvas>
+                                        <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                            <div class="h4 fw-bold text-dark mb-0" id="statusTotal">0</div>
+                                            <div class="text-xs text-muted">Total</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="mb-0">Statistik</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="detailStatusStats" class="mb-3">
+                                    <p class="text-sm text-muted">Memuat data...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualisasi Persentase -->
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header pb-2">
+                                <h6 class="mb-0 text-sm">Visualisasi Persentase</h6>
+                            </div>
+                            <div class="card-body pt-2 pb-3">
+                                <!-- Pelanggaran SDA -->
+                                <div class="mb-2">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div class="d-flex align-items-center" style="width: 120px;">
+                                            <div style="width: 14px; height: 14px; background-color: #1C6C8C; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
+                                            <span class="text-xs font-weight-bold text-dark">Pelanggaran SDA</span>
+                                        </div>
+                                        <div class="progress flex-grow-1 mx-2" style="height: 10px;">
+                                            <div class="progress-bar" id="progressPelanggaran" style="width: 0%; background-color: #1C6C8C;"></div>
+                                        </div>
+                                        <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendPelanggaran">0</span>
+                                        <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentPelanggaran">0%</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Pembangunan SDA -->
+                                <div class="mb-2">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div class="d-flex align-items-center" style="width: 120px;">
+                                            <div style="width: 14px; height: 14px; background-color: #E1712C; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
+                                            <span class="text-xs font-weight-bold text-dark">Pembangunan SDA</span>
+                                        </div>
+                                        <div class="progress flex-grow-1 mx-2" style="height: 10px;">
+                                            <div class="progress-bar" id="progressPembangunan" style="width: 0%; background-color: #E1712C;"></div>
+                                        </div>
+                                        <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendPembangunan">0</span>
+                                        <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentPembangunan">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detail Status Permohonan -->
+<div class="modal fade" id="detailStatusPermohonanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailStatusPermohonanTitle">Detail Status Permohonan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Distribusi Jenis Pengaduan</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <div class="position-relative d-inline-block" style="height: 280px; width: 280px;">
+                                        <canvas id="detailStatusPermohonanChart"></canvas>
+                                        <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                            <div class="h4 fw-bold text-dark mb-0" id="statusPermohonanTotal">0</div>
+                                            <div class="text-xs text-muted">Total</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="mb-0">Statistik</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="detailStatusPermohonanStats" class="mb-3">
+                                    <p class="text-sm text-muted">Memuat data...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualisasi Persentase -->
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header pb-2">
+                                <h6 class="mb-0 text-sm">Visualisasi Persentase</h6>
+                            </div>
+                            <div class="card-body pt-2 pb-3">
+                                <!-- Pelanggaran SDA -->
+                                <div class="mb-2">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div class="d-flex align-items-center" style="width: 120px;">
+                                            <div style="width: 14px; height: 14px; background-color: #1C6C8C; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
+                                            <span class="text-xs font-weight-bold text-dark">Pelanggaran SDA</span>
+                                        </div>
+                                        <div class="progress flex-grow-1 mx-2" style="height: 10px;">
+                                            <div class="progress-bar" id="progressStatusPelanggaran" style="width: 0%; background-color: #1C6C8C;"></div>
+                                        </div>
+                                        <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendStatusPelanggaran">0</span>
+                                        <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentStatusPelanggaran">0%</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Pembangunan SDA -->
+                                <div class="mb-2">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div class="d-flex align-items-center" style="width: 120px;">
+                                            <div style="width: 14px; height: 14px; background-color: #E1712C; border-radius: 2px; flex-shrink: 0;" class="me-2"></div>
+                                            <span class="text-xs font-weight-bold text-dark">Pembangunan SDA</span>
+                                        </div>
+                                        <div class="progress flex-grow-1 mx-2" style="height: 10px;">
+                                            <div class="progress-bar" id="progressStatusPembangunan" style="width: 0%; background-color: #E1712C;"></div>
+                                        </div>
+                                        <span class="text-xs font-weight-bold text-dark me-2" style="width: 40px; text-align: right;" id="legendStatusPembangunan">0</span>
+                                        <span class="text-xs text-muted" style="width: 50px; text-align: right;" id="percentStatusPembangunan">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Tombol Cetak Floating -->
         <div class="position-fixed bottom-0 end-0 m-4 z-3 no-print">
@@ -932,12 +1125,12 @@ if (statusCtx) {
     new Chart(statusCtx, {
         type: 'doughnut',
         data: {
-            labels: ['Terpenuhi', 'Dalam Proses', 'Ditolak'],
+            labels: ['Selesai', 'Dalam Proses', 'Telah Disampaikan'],
             datasets: [{
                 data: [
                     <?= $status_permohonan['terpenuhi'] ?>,
                     <?= $status_permohonan['dalam_proses'] ?>,
-                    <?= $status_permohonan['ditolak'] ?>
+                    <?= $status_permohonan['telah_disampaikan'] ?>
                 ],
                 backgroundColor: ['#1C6C8C', '#E1712C', '#3D8B37'], // Update dengan 3 warna
                 borderWidth: 3,
@@ -984,11 +1177,11 @@ if (statusCtx) {
                 labels: ['Mahasiswa (Instansi)', 'Media', 'Instansi', 'LSM', 'Perseorangan'],
                 datasets: [{
                     data: [
-                        <?= $status_pemohon['mahasiswa'] ?>,
-                        <?= $status_pemohon['media'] ?>,
-                        <?= $status_pemohon['instansi'] ?>,
-                        <?= $status_pemohon['lsm'] ?>,
-                        <?= $status_pemohon['perseorangan'] ?>
+                        <?= $status_pengirim['mahasiswa'] ?>,
+                        <?= $status_pengirim['media'] ?>,
+                        <?= $status_pengirim['instansi'] ?>,
+                        <?= $status_pengirim['lsm'] ?>,
+                        <?= $status_pengirim['perseorangan'] ?>
                     ],
                     backgroundColor: ['#1C6C8C', '#E1712C', '#3D8B37', '#33AFE0', '#A23A8E'],
                     borderWidth: 3,
@@ -1177,7 +1370,7 @@ function showViaDetail(viaName, index) {
     const periode = document.getElementById('periode').value;
     const tahun = document.getElementById('tahun').value;
     
-    fetch(`<?= base_url('Monev_permintaan/get_detail_via') ?>?jenis_periode=${jenisPeriode}&periode=${periode}&tahun=${tahun}&via_index=${index}`)
+    fetch(`<?= base_url('Monev_pengaduan/get_detail_via') ?>?jenis_periode=${jenisPeriode}&periode=${periode}&tahun=${tahun}&via_index=${index}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok: ' + response.status);
@@ -1207,7 +1400,7 @@ function showViaDetail(viaName, index) {
 }
 
 function resetModalData() {
-    document.getElementById('legendTerpenuhi').textContent = '0';
+    document.getElementById('legendSelesai').textContent = '0';
     document.getElementById('legendProses').textContent = '0';
     document.getElementById('viaTotal').textContent = '0';
     
@@ -1225,7 +1418,7 @@ function safeDestroyChart() {
     detailViaChart = null;
 }
 
-// Di fungsi updateModalWithData - tambahkan update untuk Ditolak
+// Di fungsi updateModalWithData - tambahkan update untuk Telah Disampaikan
 function updateModalWithData(data) {
     console.log('Update modal dengan data:', data);
     
@@ -1243,7 +1436,7 @@ function updateDetailStats(stats) {
                 <span class="text-sm font-weight-bold">${stats.total_permohonan}</span>
             </div>
             <div class="d-flex justify-content-between">
-                <span class="text-sm">Terpenuhi:</span>
+                <span class="text-sm">Selesai:</span>
                 <span class="text-sm font-weight-bold">${stats.terpenuhi}</span>
             </div>
             <div class="d-flex justify-content-between">
@@ -1251,11 +1444,11 @@ function updateDetailStats(stats) {
                 <span class="text-sm font-weight-bold">${stats.dalam_proses}</span>
             </div>
             <div class="d-flex justify-content-between">
-                <span class="text-sm">Ditolak:</span>
-                <span class="text-sm font-weight-bold">${stats.ditolak}</span>
+                <span class="text-sm">Telah Disampaikan:</span>
+                <span class="text-sm font-weight-bold">${stats.telah_disampaikan}</span>
             </div>
             <div class="d-flex justify-content-between">
-                <span class="text-sm">Persentase Terpenuhi:</span>
+                <span class="text-sm">Persentase Selesai:</span>
                 <span class="text-sm font-weight-bold">${stats.persentase_terpenuhi}%</span>
             </div>
         </div>
@@ -1280,7 +1473,7 @@ function updateDetailViaChart(viaName, distribusi) {
     const dataValues = [
         distribusi.terpenuhi || 0,
         distribusi.dalam_proses || 0,
-        distribusi.ditolak || 0  // TAMBAH INI
+        distribusi.telah_diterima || 0  // TAMBAH INI
     ];
     
     const total = dataValues.reduce((a, b) => a + b, 0);
@@ -1288,25 +1481,25 @@ function updateDetailViaChart(viaName, distribusi) {
     console.log('Chart data:', dataValues, 'Total:', total);
     
     // Update legends untuk semua status
-    document.getElementById('legendTerpenuhi').textContent = distribusi.terpenuhi || 0;
+    document.getElementById('legendSelesai').textContent = distribusi.terpenuhi || 0;
     document.getElementById('legendProses').textContent = distribusi.dalam_proses || 0;
-    document.getElementById('legendDitolak').textContent = distribusi.ditolak || 0; // TAMBAH INI
+    document.getElementById('legendTelahDisampaikan').textContent = distribusi.telah_disampaikan || 0; // TAMBAH INI
     document.getElementById('viaTotal').textContent = total;
     
     if (total > 0) {
-        const percentTerpenuhi = Math.round((distribusi.terpenuhi / total) * 100);
+        const percentSelesai = Math.round((distribusi.terpenuhi / total) * 100);
         const percentProses = Math.round((distribusi.dalam_proses / total) * 100);
-        const percentDitolak = Math.round((distribusi.ditolak / total) * 100); // TAMBAH INI
+        const percentTelahDisampaikan = Math.round((distribusi.telah_disampaikan / total) * 100); // TAMBAH INI
         
-        document.getElementById('progressTerpenuhi').style.width = percentTerpenuhi + '%';
+        document.getElementById('progressSelesai').style.width = percentSelesai + '%';
         document.getElementById('progressProses').style.width = percentProses + '%';
-        document.getElementById('progressDitolak').style.width = percentDitolak + '%'; // TAMBAH INI
+        document.getElementById('progressTelahDisampaikan').style.width = percentTelahDisampaikan + '%'; // TAMBAH INI
         
-        document.getElementById('percentTerpenuhi').textContent = percentTerpenuhi + '%';
+        document.getElementById('percentSelesai').textContent = percentSelesai + '%';
         document.getElementById('percentProses').textContent = percentProses + '%';
-        document.getElementById('percentDitolak').textContent = percentDitolak + '%'; // TAMBAH INI
+        document.getElementById('percentTelahDisampaikan').textContent = percentTelahDisampaikan + '%'; // TAMBAH INI
     } else {
-        ['Terpenuhi', 'Proses', 'Ditolak'].forEach(type => { // UBAH INI
+        ['Selesai', 'Proses', 'Telah Disampaikan'].forEach(type => { // UBAH INI
             document.getElementById('progress' + type).style.width = '0%';
             document.getElementById('percent' + type).textContent = '0%';
         });
@@ -1319,7 +1512,7 @@ function updateDetailViaChart(viaName, distribusi) {
         detailViaChart = new Chart(context, {
             type: 'doughnut',
             data: {
-                labels: ['Terpenuhi', 'Dalam Proses', 'Ditolak'], // UBAH INI
+                labels: ['Selesai', 'Dalam Proses', 'Telah Disampaikan'], // UBAH INI
                 datasets: [{
                     data: dataValues,
                     backgroundColor: ['#1C6C8C', '#E1712C', '#3D8B37'], // UBAH INI
@@ -1381,6 +1574,413 @@ document.addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key === 'p') {
         e.preventDefault();
         window.print();
+    }
+});
+
+// Modal Detail Status Pemohon
+let detailStatusChart = null;
+
+function showStatusDetail(statusName, index) {
+    console.log('Loading detail status untuk:', statusName, 'Index:', index);
+    
+    document.getElementById('detailStatusTitle').textContent = 'Memuat Detail ' + statusName + '...';
+    document.getElementById('detailStatusStats').innerHTML = '<p class="text-sm text-muted">Memuat data statistik...</p>';
+    
+    resetStatusModalData();
+    
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    fetch(`<?= base_url('Monev_pengaduan/get_detail_status_pengirim') ?>?jenis_periode=${jenisPeriode}&periode=${periode}&tahun=${tahun}&status_index=${index}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data status diterima:', data);
+            
+            if (data.error) {
+                throw new Error(data.error);
+            }
+            
+            if (!data.success) {
+                throw new Error('Response tidak sukses');
+            }
+            
+            updateStatusModalWithData(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showStatusErrorState(error.message);
+        });
+    
+    const modal = new bootstrap.Modal(document.getElementById('detailStatusModal'));
+    modal.show();
+}
+
+function resetStatusModalData() {
+    document.getElementById('legendPelanggaran').textContent = '0';
+    document.getElementById('legendPembangunan').textContent = '0';
+    document.getElementById('statusTotal').textContent = '0';
+    
+    safeDestroyStatusChart();
+}
+
+function safeDestroyStatusChart() {
+    try {
+        if (detailStatusChart && typeof detailStatusChart.destroy === 'function') {
+            detailStatusChart.destroy();
+        }
+    } catch (e) {
+        console.log('No status chart to destroy:', e.message);
+    }
+    detailStatusChart = null;
+}
+
+function updateStatusModalWithData(data) {
+    console.log('Update status modal dengan data:', data);
+    
+    document.getElementById('detailStatusTitle').textContent = 'Detail - ' + data.status_pengirim;
+    
+    updateStatusStats(data.statistik);
+    updateStatusChart(data.status_pengirim, data.distribusi);
+}
+
+function updateStatusStats(stats) {
+    const statsHtml = `
+        <div class="space-y-2">
+            <div class="d-flex justify-content-between">
+                <span class="text-sm">Total Pengaduan:</span>
+                <span class="text-sm font-weight-bold">${stats.total_permohonan}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-sm">Pelanggaran SDA:</span>
+                <span class="text-sm font-weight-bold">${stats.pelanggaran_sda}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-sm">Pembangunan SDA:</span>
+                <span class="text-sm font-weight-bold">${stats.pembangunan_sda}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-sm">Persentase Pelanggaran:</span>
+                <span class="text-sm font-weight-bold">${stats.persentase_pelanggaran}%</span>
+            </div>
+        </div>
+    `;
+    document.getElementById('detailStatusStats').innerHTML = statsHtml;
+}
+
+function updateStatusChart(statusName, distribusi) {
+    console.log('Update status chart dengan distribusi:', distribusi);
+    
+    const ctx = document.getElementById('detailStatusChart');
+    if (!ctx) {
+        console.error('Canvas element status tidak ditemukan');
+        return;
+    }
+    
+    if (!distribusi) {
+        console.error('Data distribusi status tidak ada');
+        return;
+    }
+    
+    const dataValues = [
+        distribusi.pelanggaran_sda || 0,
+        distribusi.pembangunan_sda || 0
+    ];
+    
+    const total = dataValues.reduce((a, b) => a + b, 0);
+    
+    console.log('Status chart data:', dataValues, 'Total:', total);
+    
+    // Update legends
+    document.getElementById('legendPelanggaran').textContent = distribusi.pelanggaran_sda || 0;
+    document.getElementById('legendPembangunan').textContent = distribusi.pembangunan_sda || 0;
+    document.getElementById('statusTotal').textContent = total;
+    
+    if (total > 0) {
+        const percentPelanggaran = Math.round((distribusi.pelanggaran_sda / total) * 100);
+        const percentPembangunan = Math.round((distribusi.pembangunan_sda / total) * 100);
+        
+        document.getElementById('progressPelanggaran').style.width = percentPelanggaran + '%';
+        document.getElementById('progressPembangunan').style.width = percentPembangunan + '%';
+        
+        document.getElementById('percentPelanggaran').textContent = percentPelanggaran + '%';
+        document.getElementById('percentPembangunan').textContent = percentPembangunan + '%';
+    } else {
+        ['Pelanggaran', 'Pembangunan'].forEach(type => {
+            document.getElementById('progress' + type).style.width = '0%';
+            document.getElementById('percent' + type).textContent = '0%';
+        });
+    }
+    
+    safeDestroyStatusChart();
+    
+    try {
+        const context = ctx.getContext('2d');
+        detailStatusChart = new Chart(context, {
+            type: 'doughnut',
+            data: {
+                labels: ['Pelanggaran SDA', 'Pembangunan SDA'],
+                datasets: [{
+                    data: dataValues,
+                    backgroundColor: ['#1C6C8C', '#E1712C'],
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                    hoverBorderWidth: 4,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                return `${label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+        
+        console.log('Status chart berhasil dibuat');
+    } catch (error) {
+        console.error('Error creating status chart:', error);
+    }
+}
+
+function showStatusErrorState(message) {
+    document.getElementById('detailStatusStats').innerHTML = 
+        '<p class="text-sm text-danger">Error: ' + message + '</p>';
+}
+
+// Modal Detail Status Permohonan
+let detailStatusPermohonanChart = null;
+
+function showStatusPermohonanDetail(statusKey) {
+    console.log('Loading detail status permohonan untuk:', statusKey);
+    
+    document.getElementById('detailStatusPermohonanTitle').textContent = 'Memuat Detail Status...';
+    document.getElementById('detailStatusPermohonanStats').innerHTML = '<p class="text-sm text-muted">Memuat data statistik...</p>';
+    
+    resetStatusPermohonanModalData();
+    
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    fetch(`<?= base_url('Monev_pengaduan/get_detail_status_permohonan') ?>?jenis_periode=${jenisPeriode}&periode=${periode}&tahun=${tahun}&status_key=${statusKey}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data status permohonan diterima:', data);
+            
+            if (data.error) {
+                throw new Error(data.error);
+            }
+            
+            if (!data.success) {
+                throw new Error('Response tidak sukses');
+            }
+            
+            updateStatusPermohonanModalWithData(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showStatusPermohonanErrorState(error.message);
+        });
+    
+    const modal = new bootstrap.Modal(document.getElementById('detailStatusPermohonanModal'));
+    modal.show();
+}
+
+function resetStatusPermohonanModalData() {
+    document.getElementById('legendStatusPelanggaran').textContent = '0';
+    document.getElementById('legendStatusPembangunan').textContent = '0';
+    document.getElementById('statusPermohonanTotal').textContent = '0';
+    
+    safeDestroyStatusPermohonanChart();
+}
+
+function safeDestroyStatusPermohonanChart() {
+    try {
+        if (detailStatusPermohonanChart && typeof detailStatusPermohonanChart.destroy === 'function') {
+            detailStatusPermohonanChart.destroy();
+        }
+    } catch (e) {
+        console.log('No status permohonan chart to destroy:', e.message);
+    }
+    detailStatusPermohonanChart = null;
+}
+
+function updateStatusPermohonanModalWithData(data) {
+    console.log('Update status permohonan modal dengan data:', data);
+    
+    document.getElementById('detailStatusPermohonanTitle').textContent = 'Detail - ' + data.status_permohonan;
+    
+    updateStatusPermohonanStats(data.statistik);
+    updateStatusPermohonanChart(data.status_permohonan, data.distribusi);
+}
+
+function updateStatusPermohonanStats(stats) {
+    const statsHtml = `
+        <div class="space-y-2">
+            <div class="d-flex justify-content-between">
+                <span class="text-sm">Total Pengaduan:</span>
+                <span class="text-sm font-weight-bold">${stats.total_permohonan}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-sm">Pelanggaran SDA:</span>
+                <span class="text-sm font-weight-bold">${stats.pelanggaran_sda}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-sm">Pembangunan SDA:</span>
+                <span class="text-sm font-weight-bold">${stats.pembangunan_sda}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-sm">Persentase Pelanggaran:</span>
+                <span class="text-sm font-weight-bold">${stats.persentase_pelanggaran}%</span>
+            </div>
+        </div>
+    `;
+    document.getElementById('detailStatusPermohonanStats').innerHTML = statsHtml;
+}
+
+function updateStatusPermohonanChart(statusName, distribusi) {
+    console.log('Update status permohonan chart dengan distribusi:', distribusi);
+    
+    const ctx = document.getElementById('detailStatusPermohonanChart');
+    if (!ctx) {
+        console.error('Canvas element status permohonan tidak ditemukan');
+        return;
+    }
+    
+    if (!distribusi) {
+        console.error('Data distribusi status permohonan tidak ada');
+        return;
+    }
+    
+    const dataValues = [
+        distribusi.pelanggaran_sda || 0,
+        distribusi.pembangunan_sda || 0
+    ];
+    
+    const total = dataValues.reduce((a, b) => a + b, 0);
+    
+    console.log('Status permohonan chart data:', dataValues, 'Total:', total);
+    
+    // Update legends
+    document.getElementById('legendStatusPelanggaran').textContent = distribusi.pelanggaran_sda || 0;
+    document.getElementById('legendStatusPembangunan').textContent = distribusi.pembangunan_sda || 0;
+    document.getElementById('statusPermohonanTotal').textContent = total;
+    
+    if (total > 0) {
+        const percentPelanggaran = Math.round((distribusi.pelanggaran_sda / total) * 100);
+        const percentPembangunan = Math.round((distribusi.pembangunan_sda / total) * 100);
+        
+        document.getElementById('progressStatusPelanggaran').style.width = percentPelanggaran + '%';
+        document.getElementById('progressStatusPembangunan').style.width = percentPembangunan + '%';
+        
+        document.getElementById('percentStatusPelanggaran').textContent = percentPelanggaran + '%';
+        document.getElementById('percentStatusPembangunan').textContent = percentPembangunan + '%';
+    } else {
+        ['StatusPelanggaran', 'StatusPembangunan'].forEach(type => {
+            document.getElementById('progress' + type).style.width = '0%';
+            document.getElementById('percent' + type).textContent = '0%';
+        });
+    }
+    
+    safeDestroyStatusPermohonanChart();
+    
+    try {
+        const context = ctx.getContext('2d');
+        detailStatusPermohonanChart = new Chart(context, {
+            type: 'doughnut',
+            data: {
+                labels: ['Pelanggaran SDA', 'Pembangunan SDA'],
+                datasets: [{
+                    data: dataValues,
+                    backgroundColor: ['#1C6C8C', '#E1712C'],
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                    hoverBorderWidth: 4,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                return `${label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+        
+        console.log('Status permohonan chart berhasil dibuat');
+    } catch (error) {
+        console.error('Error creating status permohonan chart:', error);
+    }
+}
+
+function showStatusPermohonanErrorState(message) {
+    document.getElementById('detailStatusPermohonanStats').innerHTML = 
+        '<p class="text-sm text-danger">Error: ' + message + '</p>';
+}
+
+// Event listener untuk modal status
+document.addEventListener('DOMContentLoaded', function() {
+    const statusModal = document.getElementById('detailStatusModal');
+    if (statusModal) {
+        statusModal.addEventListener('hidden.bs.modal', function() {
+            safeDestroyStatusChart();
+        });
+    }
+    
+    const statusPermohonanModal = document.getElementById('detailStatusPermohonanModal');
+    if (statusPermohonanModal) {
+        statusPermohonanModal.addEventListener('hidden.bs.modal', function() {
+            safeDestroyStatusPermohonanChart();
+        });
     }
 });
 

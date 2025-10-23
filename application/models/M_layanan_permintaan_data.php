@@ -44,12 +44,12 @@ class M_layanan_permintaan_data extends CI_Model {
         // Jika ada filter tanggal
         if ($date_range['start'] !== null && $date_range['end'] !== null) {
             // Sesuaikan dengan nama kolom tanggal di tabel layanan_permintaan_data
-            // Asumsi kolomnya adalah 'tanggal_surat' atau 'diterima_ppid'
-            $this->db->where('tanggal_surat >=', $date_range['start']);
-            $this->db->where('tanggal_surat <=', $date_range['end']);
+            // Asumsi kolomnya adalah 'diterima_ppid' atau 'diterima_ppid'
+            $this->db->where('diterima_ppid >=', $date_range['start']);
+            $this->db->where('diterima_ppid <=', $date_range['end']);
         }
         
-        $this->db->order_by('tanggal_surat', 'DESC');
+        $this->db->order_by('diterima_ppid', 'DESC');
         return $this->db->get()->result();
     }
 
@@ -59,9 +59,9 @@ class M_layanan_permintaan_data extends CI_Model {
      */
     public function get_available_years()
     {
-        $this->db->select('YEAR(tanggal_surat) as tahun');
+        $this->db->select('YEAR(diterima_ppid) as tahun');
         $this->db->from($this->table);
-        $this->db->group_by('YEAR(tanggal_surat)');
+        $this->db->group_by('YEAR(diterima_ppid)');
         $this->db->order_by('tahun', 'DESC');
         
         $result = $this->db->get()->result();
@@ -105,10 +105,10 @@ class M_layanan_permintaan_data extends CI_Model {
             $tahun = date('Y');
         }
         
-        $this->db->select('MONTH(tanggal_surat) as bulan, COUNT(*) as total');
+        $this->db->select('MONTH(diterima_ppid) as bulan, COUNT(*) as total');
         $this->db->from($this->table);
-        $this->db->where('YEAR(tanggal_surat)', $tahun);
-        $this->db->group_by('MONTH(tanggal_surat)');
+        $this->db->where('YEAR(diterima_ppid)', $tahun);
+        $this->db->group_by('MONTH(diterima_ppid)');
         $this->db->order_by('bulan', 'ASC');
         
         return $this->db->get()->result();
@@ -119,7 +119,7 @@ class M_layanan_permintaan_data extends CI_Model {
      */
     public function get_recent($limit = 5)
     {
-        $this->db->order_by('tanggal_surat', 'DESC');
+        $this->db->order_by('diterima_ppid', 'DESC');
         $this->db->limit($limit);
         return $this->db->get($this->table)->result();
     }

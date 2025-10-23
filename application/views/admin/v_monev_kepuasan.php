@@ -300,10 +300,10 @@
                   <span class="sidenav-normal"> Monev Permintaan Data</span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="../../pages/dashboards/automotive.html">
+             <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('Monev_pengaduan'); ?>">
                   <span class="sidenav-mini-icon"> M </span>
-                  <span class="sidenav-normal"> Monev Pengaduan </span>
+                  <span class="sidenav-normal"> Monev Pengaduan</span>
                 </a>
               </li>
             </ul>
