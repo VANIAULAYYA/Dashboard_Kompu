@@ -101,10 +101,45 @@
     background-color: #ffedd5;
     color: #f97316;
 }
+
+/* DROPDOWN STYLING UNTUK KEDUA DROPDOWN */
+#desktop-buku-tamu-dropdown,
+#desktop-laporan-dropdown {
+    min-width: 16rem !important;
+    padding: 0.5rem 0 !important;
+    border-radius: 0.25rem !important;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+    background-color: #ffffff !important;
+    line-height: 1.5 !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+#desktop-buku-tamu-dropdown a,
+#desktop-laporan-dropdown a {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: #374151;
+    font-weight: 500;
+    text-decoration: none;
+    line-height: 1.7;
+}
+
+#desktop-buku-tamu-dropdown a:hover,
+#desktop-laporan-dropdown a:hover {
+    background-color: #ffedd5;
+    color: #f97316;
+}
+
+/* Pastikan parent container tidak memotong dropdown */
+nav .max-w-7xl,
+nav .relative {
+    overflow: visible !important;
+}
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigation - SAMA PERSIS DENGAN KODE PERTAMA -->
 <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
@@ -119,25 +154,34 @@
       <div class="hidden md:flex items-center space-x-8 relative">
         <a href="<?php echo base_url('Landing'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
         <a href="<?php echo base_url('Landing/tentang'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
-        <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+
+      <!-- Dropdown Buku Tamu (Desktop) -->
+<div class="relative" id="desktop-buku-tamu">
+    <button id="desktop-buku-tamu-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
+        Buku Tamu
+        <i id="desktop-buku-tamu-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
+    </button>
+    <div id="desktop-buku-tamu-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48 z-50">
+        <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Buku Tamu</a>
+        <a href="<?php echo base_url('Landing/survei'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Survei</a>
+    </div>
+</div>
+
         <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
         <a href="<?php echo base_url('Landing/layanan'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Layanan</a>
 
-
         <!-- Dropdown (Desktop) -->
-        <!-- Dropdown (Desktop) -->
-<div class="relative" id="desktop-laporan">
-  <button id="desktop-laporan-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
-    Publikasi
-    <i id="desktop-laporan-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
-  </button>
-  <div id="desktop-laporan-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48">
-    <a href="<?php echo base_url('Landing/laporan_PPID'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan PPID</a>
-    <a href="<?php echo base_url('Landing/laporan_Kompu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan Kompu</a>
-    <a href="<?php echo base_url('Landing/Survei_Kepuasan_Masyarakat'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Survei Kepuasan Masyarakat</a>
-  </div>
-</div>
-
+        <div class="relative" id="desktop-laporan">
+          <button id="desktop-laporan-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
+            Publikasi
+            <i id="desktop-laporan-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
+          </button>
+          <div id="desktop-laporan-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48">
+            <a href="<?php echo base_url('Landing/laporan_PPID'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan PPID</a>
+            <a href="<?php echo base_url('Landing/laporan_Kompu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Laporan Kompu</a>
+            <a href="<?php echo base_url('Landing/Survei_Kepuasan_Masyarakat'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Survei Kepuasan Masyarakat</a>
+          </div>
+        </div>
         <!-- End Dropdown -->
       </div>
 
@@ -156,11 +200,23 @@
   <div class="flex flex-col space-y-4">
     <a href="<?php echo base_url('Landing'); ?>" class="text-gray-700 hover:text-orange-600 transition">Home</a>
     <a href="<?php echo base_url('Landing/tentang'); ?>" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
-    <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
-    <a href="<?php echo base_url('Landing/medsos'); ?>" class="text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
-    <a href="<?php echo base_url('Landing/layanan'); ?>" class="text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
 
-    <!-- Dropdown Mobile -->
+    <!-- Dropdown Buku Tamu Mobile -->
+<div>
+    <button id="buku-tamu-dropdown-btn" class="w-full flex justify-between items-center text-gray-700 hover:text-orange-600 transition">
+        Buku Tamu
+        <i id="buku-tamu-icon" class="fas fa-chevron-down ml-2"></i>
+    </button>
+    <div id="buku-tamu-dropdown" class="hidden flex flex-col pl-4 mt-2 space-y-2">
+        <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Formulir Buku Tamu</a>
+        <a href="<?php echo base_url('Landing/survei'); ?>" class="text-gray-700 hover:text-orange-600 transition">Formulir Survei</a>
+    </div>
+</div>
+    
+    <a href="<?php echo base_url('Landing/medsos'); ?>" class="text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
+    <a href="<?php echo base_url('Landing/layanan'); ?>" class="text-gray-700 hover:text-orange-600 transition">Layanan</a>
+
+    <!-- Dropdown Publikasi Mobile -->
     <div>
       <button id="laporan-dropdown-btn" class="w-full flex justify-between items-center text-gray-700 hover:text-orange-600 transition">
         Publikasi
@@ -173,7 +229,6 @@
       </div>
     </div>
     <!-- End Dropdown Mobile -->
-
   </div>
 </div>
 
@@ -183,19 +238,29 @@
     document.getElementById("mobile-menu").classList.toggle("hidden");
   });
 
-  // Toggle dropdown laporan di mobile
-  document.getElementById("laporan-dropdown-btn").addEventListener("click", function() {
-    const dropdown = document.getElementById("laporan-dropdown");
-    const icon = document.getElementById("laporan-icon");
+  // ========== DROPDOWN BUKU TAMU ==========
+  
+  // Toggle dropdown buku tamu di mobile
+  document.getElementById("buku-tamu-dropdown-btn").addEventListener("click", function() {
+    const dropdown = document.getElementById("buku-tamu-dropdown");
+    const icon = document.getElementById("buku-tamu-icon");
     dropdown.classList.toggle("hidden");
     icon.classList.toggle("fa-chevron-down");
     icon.classList.toggle("fa-chevron-up");
   });
-  // Toggle mobile menu (hamburger)
-  document.getElementById("mobile-menu-button").addEventListener("click", function() {
-    document.getElementById("mobile-menu").classList.toggle("hidden");
+
+  // Toggle dropdown buku tamu di desktop (klik)
+  document.getElementById("desktop-buku-tamu-btn").addEventListener("click", function(e) {
+    e.preventDefault();
+    const dropdown = document.getElementById("desktop-buku-tamu-dropdown");
+    const icon = document.getElementById("desktop-buku-tamu-icon");
+    dropdown.classList.toggle("hidden");
+    icon.classList.toggle("fa-chevron-down");
+    icon.classList.toggle("fa-chevron-up");
   });
 
+  // ========== DROPDOWN LAPORAN/PUBLIKASI ==========
+  
   // Toggle dropdown laporan di mobile
   document.getElementById("laporan-dropdown-btn").addEventListener("click", function() {
     const dropdown = document.getElementById("laporan-dropdown");
@@ -207,7 +272,7 @@
 
   // Toggle dropdown laporan di desktop (klik)
   document.getElementById("desktop-laporan-btn").addEventListener("click", function(e) {
-    e.preventDefault(); // mencegah scroll ke atas jika button
+    e.preventDefault();
     const dropdown = document.getElementById("desktop-laporan-dropdown");
     const icon = document.getElementById("desktop-laporan-icon");
     dropdown.classList.toggle("hidden");
@@ -215,18 +280,45 @@
     icon.classList.toggle("fa-chevron-up");
   });
 
-  // Optional: klik di luar dropdown untuk menutup
+  // ========== CLOSE DROPDOWN WHEN CLICK OUTSIDE ==========
+  
+  // Close semua dropdown ketika klik di luar
   document.addEventListener("click", function(e) {
-    const dropdown = document.getElementById("desktop-laporan-dropdown");
-    const btn = document.getElementById("desktop-laporan-btn");
-    const icon = document.getElementById("desktop-laporan-icon");
+    // Dropdown Buku Tamu
+    const bukuTamuDropdown = document.getElementById("desktop-buku-tamu-dropdown");
+    const bukuTamuBtn = document.getElementById("desktop-buku-tamu-btn");
+    const bukuTamuIcon = document.getElementById("desktop-buku-tamu-icon");
 
-    if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
-      if (!dropdown.classList.contains("hidden")) {
-        dropdown.classList.add("hidden");
-        icon.classList.remove("fa-chevron-up");
-        icon.classList.add("fa-chevron-down");
+    if (bukuTamuBtn && !bukuTamuBtn.contains(e.target) && bukuTamuDropdown && !bukuTamuDropdown.contains(e.target)) {
+      if (!bukuTamuDropdown.classList.contains("hidden")) {
+        bukuTamuDropdown.classList.add("hidden");
+        bukuTamuIcon.classList.remove("fa-chevron-up");
+        bukuTamuIcon.classList.add("fa-chevron-down");
       }
+    }
+
+    // Dropdown Laporan
+    const laporanDropdown = document.getElementById("desktop-laporan-dropdown");
+    const laporanBtn = document.getElementById("desktop-laporan-btn");
+    const laporanIcon = document.getElementById("desktop-laporan-icon");
+
+    if (laporanBtn && !laporanBtn.contains(e.target) && laporanDropdown && !laporanDropdown.contains(e.target)) {
+      if (!laporanDropdown.classList.contains("hidden")) {
+        laporanDropdown.classList.add("hidden");
+        laporanIcon.classList.remove("fa-chevron-up");
+        laporanIcon.classList.add("fa-chevron-down");
+      }
+    }
+  });
+
+  // Prevent dropdown dari closing ketika klik inside
+  const desktopDropdowns = ["desktop-buku-tamu-dropdown", "desktop-laporan-dropdown"];
+  desktopDropdowns.forEach(id => {
+    const dropdown = document.getElementById(id);
+    if (dropdown) {
+      dropdown.addEventListener("click", function(e) {
+        e.stopPropagation();
+      });
     }
   });
 </script>
@@ -460,99 +552,7 @@
     <button id="back-to-top" class="hidden fixed bottom-8 right-8 w-12 h-12 bg-orange-600 text-white rounded-full shadow-lg hover:bg-orange-700 transition">
         <i class="fas fa-arrow-up"></i>
     </button>
-
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
-
-        // Back to top button
-        const backToTopButton = document.getElementById('back-to-top');
-        
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.remove('hidden');
-            } else {
-                backToTopButton.classList.add('hidden');
-            }
-        });
-
-        backToTopButton.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Animate elements when they come into view
-        const animateOnScroll = function() {
-            const elements = document.querySelectorAll('.fade-in');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.2;
-                
-                if (elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        };
-
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-
-        // Function untuk load stats data - TANPA MENGUBAH TAMPILAN
-function loadStatsData() {
-    fetch('<?= base_url('monev_kepuasan/get_stats_all_data') ?>')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('📊 Stats data received:', data);
-            
-            if (data.success) {
-                // Update total kunjungan - HANYA GANTI ANGKA
-                const kunjunganElement = document.getElementById('totalKunjungan');
-                if (kunjunganElement) {
-                    kunjunganElement.textContent = data.total_kunjungan.toLocaleString();
-                }
-                
-                // Update kepuasan layanan - HANYA GANTI ANGKA
-                const kepuasanElement = document.getElementById('kepuasanLayanan');
-                if (kepuasanElement) {
-                    kepuasanElement.textContent = data.kepuasan_layanan + '%';
-                }
-            }
-            // Jika error, biarkan angka default (9440 dan 90%) tetap tampil
-        })
-        .catch(error => {
-            console.error('Error fetching stats:', error);
-            // Biarkan angka default tetap tampil
-        });
-}
-
-// Load stats ketika halaman siap
-document.addEventListener('DOMContentLoaded', function() {
-    loadStatsData();
-});
-    </script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>

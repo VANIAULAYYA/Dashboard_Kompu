@@ -1205,6 +1205,7 @@ filterPeriode.addEventListener('change', applyFilters);
 filterStatus.addEventListener('change', applyFilters);
 
 applyFilters();
+    });
 
     // Dropdown toggle script
     const laporanToggle = document.getElementById('navbarLaporan');
@@ -1231,36 +1232,7 @@ applyFilters();
         }
       }
     });
-
-    function applyFilters() {
-  const selectedPeriod = filterPeriode.value;
-  const selectedStatus = filterStatus.value;
-
-  document.querySelectorAll('.period-card').forEach(card => {
-    const period = card.getAttribute('data-period');
-    const statusBadge = card.querySelector('.period-badge');
-    const status = statusBadge ? statusBadge.classList[1] : '';
-    let showCard = true;
-
-    if (selectedPeriod && period !== selectedPeriod) {
-      showCard = false;
-    }
-
-    if (selectedStatus && status !== selectedStatus) {
-      showCard = false;
-    }
-
-    card.style.display = showCard ? 'block' : 'none';
-  });
-
-  // Sembunyikan section yang tidak memiliki card visible
-  document.querySelectorAll('.period-section').forEach(section => {
-    const hasVisibleCards = Array.from(section.querySelectorAll('.period-card'))
-      .some(card => card.style.display !== 'none');
     
-    section.style.display = hasVisibleCards ? 'block' : 'none';
-  });
-}
   </script>
 </body>
 </html>

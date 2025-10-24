@@ -184,7 +184,19 @@ nav .relative {
       <div class="hidden md:flex items-center space-x-8 relative">
         <a href="<?php echo base_url('Landing'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Home</a>
         <a href="<?php echo base_url('Landing/tentang'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
-        <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+
+      <!-- Dropdown Buku Tamu (Desktop) -->
+    <div class="relative" id="desktop-buku-tamu">
+        <button id="desktop-buku-tamu-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
+            Buku Tamu
+            <i id="desktop-buku-tamu-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
+        </button>
+        <div id="desktop-buku-tamu-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48 z-50">
+            <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Buku Tamu</a>
+            <a href="<?php echo base_url('Landing/survei'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Survei</a>
+        </div>
+    </div>
+
         <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
         <a href="<?php echo base_url('Landing/layanan'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Layanan</a>
 
@@ -218,7 +230,19 @@ nav .relative {
   <div class="flex flex-col space-y-4">
     <a href="<?php echo base_url('Landing'); ?>" class="text-gray-700 hover:text-orange-600 transition">Home</a>
     <a href="<?php echo base_url('Landing/tentang'); ?>" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
-    <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Buku Tamu</a>
+
+    <!-- Dropdown Buku Tamu (Desktop) -->
+    <div class="relative" id="desktop-buku-tamu">
+        <button id="desktop-buku-tamu-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
+            Buku Tamu
+            <i id="desktop-buku-tamu-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
+        </button>
+        <div id="desktop-buku-tamu-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48 z-50">
+            <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Buku Tamu</a>
+            <a href="<?php echo base_url('Landing/survei'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Survei</a>
+        </div>
+    </div>
+    
     <a href="<?php echo base_url('Landing/medsos'); ?>" class="text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
     <a href="<?php echo base_url('Landing/layanan'); ?>" class="text-gray-700 hover:text-orange-600 transition">Layanan</a>
 
@@ -282,34 +306,51 @@ nav .relative {
   <!-- Hero Section -->
 <section class="hero-section">
   <div class="container text-center">
-    <h1 class="display-4 fw-bold mb-3">BUKU TAMU</h1>
+    <h1 class="display-4 fw-bold mb-3">FORMULIR BUKU TAMU</h1>
     <p class="lead mb-0">LAMPU PETROMAK BBWS BRANTAS</p>
   </div>
 </section>
 
     <div class="container mx-auto mt-20">
-        <div class="form-container">
-            <form action="<?php echo site_url('Landing/submit'); ?>" method="post">
-                <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" class="form-control" name="nama" placeholder="Masukkan nama Anda">
-                </div>
-                <div class="form-group">
-                    <label for="jenis_kelamin">Jenis Kelamin</label>
-                    <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
-                        <option value="L">Laki-laki</option>
-                        <option value="P">Perempuan</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="asal_instansi">Asal Instansi/Pribadi</label>
-                    <input type="text" class="form-control" name="asal_instansi" placeholder="Masukkan asal instansi/pribadi Anda">
-                </div>
-                <div class="form-group">
-                    <label for="no_handphone">No. Handphone yang bisa dihubungi</label>
-                    <input type="text" class="form-control" name="no_handphone" placeholder="Masukkan no. handphone Anda">
-                </div>
-                <div class="form-group">
+    <div class="form-container">
+        <form action="<?php echo site_url('Landing/submit'); ?>" method="post">
+            <!-- KOLOM BARU: NIK -->
+            <div class="form-group">
+                <label for="nik">NIK (Nomor Induk Kependudukan)</label>
+                <input type="text" class="form-control" name="nik" placeholder="Masukkan NIK 16 digit" maxlength="16" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nama">Nama</label>
+                <input type="text" class="form-control" name="nama" placeholder="Masukkan nama Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="jenis_kelamin">Jenis Kelamin</label>
+                <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
+                    <option value="">-- Pilih Jenis Kelamin --</option>
+                    <option value="L">Laki-laki</option>
+                    <option value="P">Perempuan</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="asal_instansi">Asal Instansi/Pribadi</label>
+                <input type="text" class="form-control" name="asal_instansi" placeholder="Masukkan asal instansi/pribadi Anda">
+            </div>
+            
+            <div class="form-group">
+                <label for="no_handphone">No. Handphone yang bisa dihubungi</label>
+                <input type="text" class="form-control" name="no_handphone" placeholder="Masukkan no. handphone Anda">
+            </div>
+
+            <!-- KOLOM BARU: EMAIL -->
+            <div class="form-group">
+                <label for="email">Alamat Email</label>
+                <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email Anda">
+            </div>
+            
+            <div class="form-group">
                 <label for="keperluan" class="block font-semibold mb-2">Keperluan</label>
                 <select id="keperluan" name="keperluan" required class="form-control" onchange="toggleOtherInput()">
                     <option value="">-- Pilih Keperluan --</option>
@@ -319,121 +360,17 @@ nav .relative {
                     <option value="Permintaan Data/Informasi">Permintaan Data/Informasi</option>
                     <option value="lainnya">Lainnya</option>
                 </select>
-                </div>
-                <div class="form-group" id="otherInput">
-                    <label for="otherText" class="block font-semibold mb-2">Tuliskan lebih lanjut:</label>
-                    <input type="text" class="form-control" id="otherText" name="kategori_lainnya" placeholder="Berikan detail Keperluan">
-                </div>
+            </div>
+            
+            <div class="form-group" id="otherInput" style="display: none;">
+                <label for="otherText" class="block font-semibold mb-2">Tuliskan lebih lanjut:</label>
+                <input type="text" class="form-control" id="otherText" name="kategori_lainnya" placeholder="Berikan detail Keperluan">
+            </div>
 
-                <!-- Pertanyaan 1 -->
-<div class="form-group">
-  <label>1. Bagaimana pendapat Saudara tentang kesesuaian persyaratan pelayanan dengan jenis pelayanannya?</label>
-  <div class="radio-group">
-    <label style="grid-column: 1; grid-row: 1;"><input type="radio" name="pendapat_pelayanan" value="4" required> Sangat Sesuai</label>
-    <label style="grid-column: 1; grid-row: 2;"><input type="radio" name="pendapat_pelayanan" value="3"> Sesuai</label>
-    <label style="grid-column: 2; grid-row: 1;"><input type="radio" name="pendapat_pelayanan" value="2"> Kurang Sesuai</label>
-    <label style="grid-column: 2; grid-row: 2;"><input type="radio" name="pendapat_pelayanan" value="1"> Tidak Sesuai</label>
-  </div>
-</div>
-
-<!-- Pertanyaan 2 -->
-<div class="form-group">
-  <label>2. Bagaimana pemahaman Saudara tentang kemudahan prosedur pelayanan di unit ini?</label>
-  <div class="radio-group">
-    <label style="grid-column: 1; grid-row: 1;"><input type="radio" name="pemahaman_prosedur" value="4" required> Sangat Mudah</label>
-    <label style="grid-column: 1; grid-row: 2;"><input type="radio" name="pemahaman_prosedur" value="3"> Mudah</label>
-    <label style="grid-column: 2; grid-row: 1;"><input type="radio" name="pemahaman_prosedur" value="2"> Kurang Mudah</label>
-    <label style="grid-column: 2; grid-row: 2;"><input type="radio" name="pemahaman_prosedur" value="1"> Tidak Mudah</label>
-  </div>
-</div>
-
-<!-- Pertanyaan 3 -->
-<div class="form-group">
-  <label>3. Bagaimana pendapat Saudara tentang kecepatan waktu dalam memberikan pelayanan?</label>
-  <div class="radio-group">
-    <label style="grid-column: 1; grid-row: 1;"><input type="radio" name="pendapat_kecepatan" value="4" required> Sangat Cepat</label>
-    <label style="grid-column: 1; grid-row: 2;"><input type="radio" name="pendapat_kecepatan" value="3"> Cepat</label>
-    <label style="grid-column: 2; grid-row: 1;"><input type="radio" name="pendapat_kecepatan" value="2"> Kurang Cepat</label>
-    <label style="grid-column: 2; grid-row: 2;"><input type="radio" name="pendapat_kecepatan" value="1"> Tidak Cepat</label>
-  </div>
-</div>
-
-<!-- Pertanyaan 4 -->
-<div class="form-group">
-  <label>4. Bagaimana pendapat Saudara tentang kewajaran biaya/tarif dalam pelayanan?</label>
-  <div class="radio-group">
-    <label style="grid-column: 1; grid-row: 1;"><input type="radio" name="pendapat_biaya" value="4" required> Sangat Wajar</label>
-    <label style="grid-column: 1; grid-row: 2;"><input type="radio" name="pendapat_biaya" value="3"> Wajar</label>
-    <label style="grid-column: 2; grid-row: 1;"><input type="radio" name="pendapat_biaya" value="2"> Kurang Wajar</label>
-    <label style="grid-column: 2; grid-row: 2;"><input type="radio" name="pendapat_biaya" value="1"> Tidak Wajar</label>
-  </div>
-</div>
-
-<!-- Pertanyaan 5 -->
-<div class="form-group">
-  <label>5. Bagaimana pendapat Saudara tentang kesesuaian produk pelayanan antara yang tercantum dengan hasil yang diberikan?</label>
-  <div class="radio-group">
-    <label style="grid-column: 1; grid-row: 1;"><input type="radio" name="pendapat_produk" value="4" required> Sangat Sesuai</label>
-    <label style="grid-column: 1; grid-row: 2;"><input type="radio" name="pendapat_produk" value="3"> Sesuai</label>
-    <label style="grid-column: 2; grid-row: 1;"><input type="radio" name="pendapat_produk" value="2"> Kurang Sesuai</label>
-    <label style="grid-column: 2; grid-row: 2;"><input type="radio" name="pendapat_produk" value="1"> Tidak Sesuai</label>
-  </div>
-</div>
-
-<!-- Pertanyaan 6 -->
-<div class="form-group">
-  <label>6. Bagaimana pendapat Saudara tentang kompetensi/kemampuan petugas dalam pelayanan?</label>
-  <div class="radio-group">
-    <label style="grid-column: 1; grid-row: 1;"><input type="radio" name="pendapat_kompetensi" value="4" required> Sangat Kompeten</label>
-    <label style="grid-column: 1; grid-row: 2;"><input type="radio" name="pendapat_kompetensi" value="3"> Kompeten</label>
-    <label style="grid-column: 2; grid-row: 1;"><input type="radio" name="pendapat_kompetensi" value="2"> Kurang Kompeten</label>
-    <label style="grid-column: 2; grid-row: 2;"><input type="radio" name="pendapat_kompetensi" value="1"> Tidak Kompeten</label>
-  </div>
-</div>
-
-<!-- Pertanyaan 7 -->
-<div class="form-group">
-  <label>7. Bagaimana pendapat Saudara tentang perilaku petugas dalam pelayanan terkait kesopanan dan keramahan?</label>
-  <div class="radio-group">
-    <label style="grid-column: 1; grid-row: 1;"><input type="radio" name="pendapat_perilaku" value="4" required> Sangat Baik</label>
-    <label style="grid-column: 1; grid-row: 2;"><input type="radio" name="pendapat_perilaku" value="3"> Baik</label>
-    <label style="grid-column: 2; grid-row: 1;"><input type="radio" name="pendapat_perilaku" value="2"> Kurang Baik</label>
-    <label style="grid-column: 2; grid-row: 2;"><input type="radio" name="pendapat_perilaku" value="1"> Tidak Baik</label>
-  </div>
-</div>
-
-<!-- Pertanyaan 8 -->
-<div class="form-group">
-  <label>8. Bagaimana pendapat Saudara tentang kualitas sarana dan prasarana?</label>
-  <div class="radio-group">
-    <label style="grid-column: 1; grid-row: 1;"><input type="radio" name="pendapat_kualitas" value="4" required> Sangat Baik</label>
-    <label style="grid-column: 1; grid-row: 2;"><input type="radio" name="pendapat_kualitas" value="3"> Baik</label>
-    <label style="grid-column: 2; grid-row: 1;"><input type="radio" name="pendapat_kualitas" value="2"> Kurang Baik</label>
-    <label style="grid-column: 2; grid-row: 2;"><input type="radio" name="pendapat_kualitas" value="1"> Tidak Baik</label>
-  </div>
-</div>
-
-<!-- Pertanyaan 9 -->
-<div class="form-group">
-  <label>9. Bagaimana pendapat Saudara tentang penanganan pengaduan pengguna layanan?</label>
-  <div class="radio-group">
-    <label style="grid-column: 1; grid-row: 1;"><input type="radio" name="pendapat_pengaduan" value="4" required> Sangat Baik</label>
-    <label style="grid-column: 1; grid-row: 2;"><input type="radio" name="pendapat_pengaduan" value="3"> Baik</label>
-    <label style="grid-column: 2; grid-row: 1;"><input type="radio" name="pendapat_pengaduan" value="2"> Kurang Baik</label>
-    <label style="grid-column: 2; grid-row: 2;"><input type="radio" name="pendapat_pengaduan" value="1"> Tidak Baik</label>
-  </div>
-</div>
-
-                <div class="form-group">
-                    <label for="kritik_saran">10. Kritik dan Saran Perbaikan</label>
-                    <textarea class="form-control" name="kritik_saran" placeholder="Masukkan kritik dan saran Anda"></textarea>
-                </div>
-                <div class="form-group text-right">
-    <button type="submit" class="btn btn-primary">Kirim</button>
-</div>
-            </form>
-        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
+</div>
 
     <!-- Back to Top button -->
     <button id="back-to-top" class="hidden fixed bottom-8 right-8 w-12 h-12 bg-orange-600 text-white rounded-full shadow-lg hover:bg-orange-700 transition">
@@ -497,14 +434,24 @@ nav .relative {
 </script>
 <script>
         function toggleOtherInput() {
-            const select = document.getElementById("keperluan");
-            const otherInput = document.getElementById("otherInput");
-            if (select.value === "lainnya") {
-                otherInput.style.display = "block"; // Tampilkan input lainnya
-            } else {
-                otherInput.style.display = "none"; // Sembunyikan input lainnya
-            }
-        }
+    const keperluanSelect = document.getElementById('keperluan');
+    const otherInput = document.getElementById('otherInput');
+    const otherText = document.getElementById('otherText');
+    
+    if (keperluanSelect.value === 'lainnya') {
+        otherInput.style.display = 'block';
+        otherText.required = true;
+    } else {
+        otherInput.style.display = 'none';
+        otherText.required = false;
+        otherText.value = '';
+    }
+}
+
+// Jalankan sekali saat halaman load
+document.addEventListener('DOMContentLoaded', function() {
+    toggleOtherInput();
+});
     </script>
 <script src="<?php echo base_url('assets/AdminLTE/dist/js/adminlte.min.js'); ?>"></script>
 </body>

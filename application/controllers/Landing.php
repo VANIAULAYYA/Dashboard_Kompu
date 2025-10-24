@@ -72,28 +72,129 @@ class Landing extends CI_Controller {
         if ($kategori === 'lainnya' && !empty($kategori_lainnya)) {
             $kategori = $kategori_lainnya;
         }
-
         $data = array(
+            'nik' => $this->input->post('nik'),
             'nama'                => $this->input->post('nama'),
             'jenis_kelamin'       => $this->input->post('jenis_kelamin'),
             'asal_instansi'       => $this->input->post('asal_instansi'),
             'no_handphone'        => $this->input->post('no_handphone'),
+            'email'               => $this->input->post('email'),
             'keperluan'           => $kategori,
-            'pendapat_pelayanan'  => $this->input->post('pendapat_pelayanan'),
-            'pemahaman_prosedur'  => $this->input->post('pemahaman_prosedur'),
-            'pendapat_kecepatan'  => $this->input->post('pendapat_kecepatan'),
-            'pendapat_biaya'      => $this->input->post('pendapat_biaya'),
-            'pendapat_produk'     => $this->input->post('pendapat_produk'),
-            'pendapat_kompetensi' => $this->input->post('pendapat_kompetensi'),
-            'pendapat_perilaku'   => $this->input->post('pendapat_perilaku'),
-            'pendapat_kualitas'   => $this->input->post('pendapat_kualitas'),
-            'pendapat_pengaduan'  => $this->input->post('pendapat_pengaduan'),
+            'status_survei'       => 'belum',
             'kritik_saran'        => $this->input->post('kritik_saran')
         );
 
-        $this->M_landing->insert_feedback($data);
-        redirect('Landing');
+        $this->db->insert('buku_tamu', $data);
+    
+    // Redirect atau tampilkan pesan sukses
+    redirect('Landing');
+}
+
+public function validate_nik()
+{
+    $nik = $this->input->post('nik');
+    
+    // Cek di database
+    $user_data = $this->db->get_where('buku_tamu', [
+        'nik' => $nik,
+        'status_survei' => 'belum'
+    ])->row();
+    
+    if ($user_data) {
+        echo json_encode([
+            'success' => true,
+            'user_data' => [
+                'nama' => $user_data->nama,
+                'asal_instansi' => $user_data->asal_instansi,
+                'keperluan' => $user_data->keperluan
+            ]
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'NIK tidak ditemukan atau sudah mengisi survei'
+        ]);
     }
+}
+
+public function submit_survei()
+{
+    $nik = $this->input->post('nik');
+    
+    // Update data survei
+    $data_update = [
+        'pendapat_pelayanan' => $this->input->post('pendapat_pelayanan'),
+        'pemahaman_prosedur' => $this->input->post('pemahaman_prosedur'),
+        'pendapat_kecepatan' => $this->input->post('pendapat_kecepatan'),
+        'pendapat_biaya' => $this->input->post('pendapat_biaya'),
+        'pendapat_produk' => $this->input->post('pendapat_produk'),
+        'pendapat_kompetensi' => $this->input->post('pendapat_kompetensi'),
+        'pendapat_perilaku' => $this->input->post('pendapat_perilaku'),
+        'pendapat_kualitas' => $this->input->post('pendapat_kualitas'),
+        'pendapat_pengaduan' => $this->input->post('pendapat_pengaduan'),
+        'kritik_saran' => $this->input->post('kritik_saran'),
+        'status_survei' => 'sudah'
+    ];
+    
+    $this->db->where('nik', $nik);
+    $this->db->update('buku_tamu', $data_update);
+    
+    // Tampilkan success message
+    $data = array(
+        'page_title' => 'Survei Berhasil - BBWS Brantas',
+        'show_success' => true
+    );
+    $this->load->view('v_survei', $data);
+
+}
+
+public function success_survei()
+{
+    $data = array(
+        'page_title' => 'Survei Berhasil - BBWS Brantas',
+        'active_menu' => 'survei'
+    );
+    $this->load->view('v_success_survei', $data);
+}
+
+public function Survei()
+{
+    // Jika ada POST NIK, berarti validasi
+    if ($this->input->post('nik')) {
+        $nik = $this->input->post('nik');
+        
+        // Cek di database
+        $user_data = $this->db->get_where('buku_tamu', [
+            'nik' => $nik,
+            'status_survei' => 'belum'
+        ])->row();
+        
+        if ($user_data) {
+            // Tampilkan form survei
+            $data = array(
+                'page_title' => 'Survei - BBWS Brantas',
+                'show_survei' => true,
+                'user_data' => $user_data,
+                'nik' => $nik
+            );
+        } else {
+            // Tampilkan error
+            $data = array(
+                'page_title' => 'Survei - BBWS Brantas',
+                'error' => 'NIK tidak ditemukan atau sudah mengisi survei',
+                'nik' => $nik
+            );
+        }
+    } else {
+        // Tampilkan form validasi NIK
+        $data = array(
+            'page_title' => 'Survei - BBWS Brantas'
+        );
+    }
+    
+    $this->load->view('v_survei', $data);
+}
+
 // ===============================
     // LAPORAN
     // ===============================
