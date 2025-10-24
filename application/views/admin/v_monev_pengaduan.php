@@ -24,124 +24,198 @@
     .custom-card:hover {
       transform: translateY(-2px);
     }
-    .table tbody tr[onclick] {
-      cursor: pointer;
-      transition: background-color 0.2s ease;
+    /* Style untuk diagram donut */
+    .donut-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
     }
-    .table tbody tr[onclick]:hover {
-      background-color: rgba(0, 0, 0, 0.02);
+    .donut-segment {
+      transition: all 0.3s ease;
     }
-    .table tbody tr[onclick]:active {
-      background-color: rgba(0, 0, 0, 0.05);
+    .donut-segment:hover {
+      stroke-width: 45;
     }
+    
+    /* STYLE PRINT YANG SAMA PERSIS DENGAN v_monev_kepuasan */
     @media print {
-        .no-print, .navbar-main, .sidenav, .footer, .btn-print-floating, .vr {
+        /* Sembunyikan element yang tidak perlu di print */
+        .no-print, 
+        .navbar-main,
+        .sidenav,
+        .footer,
+        .btn-print-floating,
+        .vr {
             display: none !important;
         }
+        
+    /* Sembunyikan kolom Progress */
+    #via-permohonan-table .col-progress {
+        display: none !important;
+    }
+    
+    /* Atau gunakan nth-child jika class tidak work */
+    #via-permohonan-table thead tr th:nth-child(3),
+    #via-permohonan-table tbody tr td:nth-child(3) {
+        display: none !important;
+    }
+    
+        /* Reset layout untuk print */
         body {
             background: white !important;
             font-size: 12pt;
             margin: 0 !important;
             padding: 20px !important;
         }
+        
         .main-content {
             margin: 0 !important;
             padding: 0 !important;
             max-height: none !important;
         }
+        
         .container-fluid {
             padding: 0 !important;
             margin: 0 !important;
             width: 100% !important;
         }
+        
         .card {
             border: 1px solid #000 !important;
             box-shadow: none !important;
             margin-bottom: 15px !important;
             page-break-inside: avoid;
         }
+        
         .card-header {
             background: #f8f9fa !important;
             border-bottom: 1px solid #000 !important;
             padding: 10px 15px !important;
         }
+        
         .card-body {
             padding: 15px !important;
         }
+        
+        /* Header laporan */
         .print-header {
             text-align: center;
             margin-bottom: 20px;
             border-bottom: 2px solid #000;
             padding-bottom: 10px;
         }
+        
         .print-title {
             font-size: 16pt;
             font-weight: bold;
             margin-bottom: 5px;
         }
+        
         .print-subtitle {
             font-size: 12pt;
             margin-bottom: 5px;
         }
+        
         .print-period {
             font-size: 11pt;
             font-weight: bold;
         }
+        
+        /* Optimalkan tabel untuk print */
         .table {
             font-size: 10pt;
             width: 100% !important;
         }
+        
         .table th {
             background: #f8f9fa !important;
             border: 1px solid #000 !important;
             padding: 8px !important;
         }
+        
         .table td {
             border: 1px solid #000 !important;
             padding: 8px !important;
         }
+        
+        /* Pastikan grafik terlihat */
         canvas {
             max-width: 100% !important;
             height: auto !important;
         }
+        
+        /* Atur ulang grid layout */
         .row {
             display: block !important;
         }
+        
         .col-lg-6, .col-md-6, .col-xl-3, .col-12 {
             width: 100% !important;
             max-width: 100% !important;
             flex: none !important;
             margin-bottom: 15px !important;
         }
+        
+        /* Optimalkan spacing */
         .py-4 {
             padding-top: 0 !important;
             padding-bottom: 0 !important;
         }
+        
         .mb-4 {
             margin-bottom: 15px !important;
         }
+        
         .mt-4 {
             margin-top: 15px !important;
         }
+        
+        /* Progress bars */
         .progress {
             height: 15px !important;
         }
+        
+        /* Badge untuk print */
         .badge {
             border: 1px solid #000 !important;
             padding: 5px 10px !important;
         }
     }
+    
+    /* Informasi print-only */
     .print-only {
         display: none;
     }
+    
     @media print {
         .print-only {
             display: block !important;
         }
     }
 
-    
-  </style>
+    /* Highlight baris tabel yang bisa diklik */
+    .table tbody tr[onclick] {
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .table tbody tr[onclick]:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    /* Efek ketika diklik */
+    .table tbody tr[onclick]:active {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Style untuk icon clickable */
+    .clickable-icon {
+        color: #17a2b8;
+        margin-left: 5px;
+        font-size: 0.7rem;
+    }
+</style>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -728,61 +802,61 @@
         </div>
 
         <!-- Via Permohonan Table -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-header pb-0">
-                        <h6>Via Permohonan</h6>
-                    </div>
-                    <div class="card-body p-3">
-                        <div class="table-responsive">
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 50px;">#</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3" style="width: 150px;">Via</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-4" style="width: 400px;">Progress</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-3" style="width: 80px;">Jumlah</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-3" style="width: 80px;">Persen</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php if(!empty($via_permohonan)): ?>
-                                        <?php foreach ($via_permohonan as $no => $item): ?>
-                                        <tr style="cursor: pointer;" 
-                                            onclick="showViaDetail('<?= $item['nama'] ?>', '<?= $no ?>')"
-                                            title="Klik untuk lihat detail <?= $item['nama'] ?>">
-                                            <td class="text-center">
-                                                <p class="text-xs font-weight-bold mb-0"><?= $no + 1 ?></p>
-                                            </td>
-                                            <td class="ps-3">
-                                                <p class="text-xs font-weight-bold mb-0"><?= $item['nama'] ?></p>
-                                            </td>
-                                            <td class="align-middle ps-4 pe-4">
-                                                <div class="progress" style="height: 8px; width: 700px;">
-                                                    <div class="progress-bar bg-gradient-info" role="progressbar" 
-                                                         style="width: <?= $item['persen'] ?>%;">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center ps-3">
-                                                <span class="text-secondary text-xs font-weight-bold"><?= $item['jumlah'] ?></span>
-                                            </td>
-                                            <td class="align-middle text-center ps-3">
-                                                <span class="badge badge-sm bg-gradient-info"><?= number_format($item['persen'], 1) ?>%</span>
-                                            </td>
-                                        </tr>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <tr><td colspan="5" class="text-center py-4"><p class="text-xs text-secondary mb-0">Belum ada data</p></td></tr>
-                                    <?php endif; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header pb-0">
+                <h6>Via Permohonan</h6>
+            </div>
+            <div class="card-body p-3">
+                <div class="table-responsive">
+                    <table id="via-permohonan-table" class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 50px;">#</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3" style="width: 150px;">Via</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-4 col-progress" style="width: 400px;">Progress</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-3" style="width: 80px;">Jumlah</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-3" style="width: 80px;">Persen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if(!empty($via_permohonan)): ?>
+                                <?php foreach ($via_permohonan as $no => $item): ?>
+                                <tr style="cursor: pointer;" 
+                                    onclick="showViaDetail('<?= $item['nama'] ?>', '<?= $no ?>')"
+                                    title="Klik untuk lihat detail <?= $item['nama'] ?>">
+                                    <td class="text-center">
+                                        <p class="text-xs font-weight-bold mb-0"><?= $no + 1 ?></p>
+                                    </td>
+                                    <td class="ps-3">
+                                        <p class="text-xs font-weight-bold mb-0"><?= $item['nama'] ?></p>
+                                    </td>
+                                    <td class="align-middle ps-4 pe-4 col-progress">
+                                        <div class="progress" style="height: 8px; width: 700px;">
+                                            <div class="progress-bar bg-gradient-info" role="progressbar" 
+                                                 style="width: <?= $item['persen'] ?>%;">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center ps-3">
+                                        <span class="text-secondary text-xs font-weight-bold"><?= $item['jumlah'] ?></span>
+                                    </td>
+                                    <td class="align-middle text-center ps-3">
+                                        <span class="badge badge-sm bg-gradient-info"><?= number_format($item['persen'], 1) ?>%</span>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr><td colspan="5" class="text-center py-4"><p class="text-xs text-secondary mb-0">Belum ada data</p></td></tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
         <!-- Modal Detail Via -->
         <div class="modal fade" id="detailViaModal" tabindex="-1" aria-hidden="true">
@@ -1075,14 +1149,6 @@
     </div>
 </div>
 
-        <!-- Tombol Cetak Floating -->
-        <div class="position-fixed bottom-0 end-0 m-4 z-3 no-print">
-            <button onclick="window.print()" class="btn btn-primary btn-lg shadow rounded-pill d-flex align-items-center">
-                <i class="fas fa-print me-2"></i>
-                <span class="d-none d-md-inline">Cetak Laporan</span>
-            </button>
-        </div>
-    </div>
 <!-- FOOTER DIPINDAH KE DALAM -->
     <footer class="footer pt-0 mb-2 no-print">
         <div class="container-fluid">
@@ -1569,13 +1635,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// SHORTCUT CTRL+P BOLEH TETAP
+// Shortcut Ctrl+P untuk print langsung
 document.addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key === 'p') {
         e.preventDefault();
         window.print();
     }
 });
+
+// Handle page numbers untuk print
+window.addEventListener('beforeprint', function() {
+    document.querySelector('.page-number').textContent = '1';
+});
+
+// Tambahkan script ini di bagian script yang sudah ada
+let afterPrint = function() {
+    console.log('Print dibatalkan - resetting styles');
+    
+    // Method 1: Force re-render yang lebih efektif
+    document.body.style.display = 'none';
+    document.body.offsetHeight; // Trigger reflow
+    document.body.style.display = 'block';
+    
+    // Method 2: Reset specific elements yang mungkin terpengaruh
+    const floatingBtn = document.querySelector('.btn-print-floating');
+    if (floatingBtn) {
+        floatingBtn.style.cssText = '';
+    }
+    
+    const printBtn = document.querySelector('.btn-print-floating .btn');
+    if (printBtn) {
+        printBtn.style.cssText = '';
+    }
+};
+
+// Deteksi print events
+if (window.matchMedia) {
+    const mediaQueryList = window.matchMedia('print');
+    mediaQueryList.addListener(function(mql) {
+        if (!mql.matches) {
+            setTimeout(afterPrint, 100);
+        }
+    });
+}
+
+window.onafterprint = afterPrint;
 
 // Modal Detail Status Pemohon
 let detailStatusChart = null;

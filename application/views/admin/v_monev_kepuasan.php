@@ -50,6 +50,36 @@
             display: none !important;
         }
         
+        /* Sembunyikan kolom Progress saat print untuk KEDUA tabel */
+#jenis-keperluan-table .col-progress,
+#via-permohonan-table .col-progress {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Gunakan nth-child dengan prioritas tinggi */
+#jenis-keperluan-table thead tr th:nth-child(3),
+#jenis-keperluan-table tbody tr td:nth-child(3),
+#via-permohonan-table thead tr th:nth-child(3),
+#via-permohonan-table tbody tr td:nth-child(3) {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+/* Hide semua progress bar */
+.progress {
+    display: none !important;
+}
+
         /* Reset layout untuk print */
         body {
             background: white !important;
@@ -926,15 +956,16 @@
             <div class="card-header pb-0">
                 <h6>Jenis Keperluan Kunjungan Masyarakat</h6>
             </div>
-            <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0">
+            <div class="card-body p-3">
+                <div class="table-responsive">
+                    <table id="jenis-keperluan-table" class="table align-items-center mb-0">
                         <thead>
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keperluan</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Persentase</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Jumlah</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 50px;">#</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3" style="width: 150px;">Keperluan</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-4 col-progress" style="width: 400px;">Progress</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-3" style="width: 80px;">Jumlah</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center ps-3" style="width: 80px;">Persen</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -975,32 +1006,34 @@
                                 foreach ($keperluan_utama_data as $idx => $item):
                             ?>
                             <tr>
-                                <td><p class="text-xs font-weight-bold mb-0 ps-3"><?= $idx + 1 ?></p></td>
-                                <td><p class="text-xs font-weight-bold mb-0"><?= $item['nama'] ?></p></td>
-                                <td>
-                                    <div class="progress-wrapper w-100">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold"><?= $item['persen'] ?>%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <?php
-                                            $bar_color = $item['persen'] >= 80 ? 'bg-gradient-success' : 
-                                                        ($item['persen'] >= 60 ? 'bg-gradient-warning' : 'bg-gradient-info');
-                                            ?>
-                                            <div class="progress-bar <?= $bar_color ?>" style="width: <?= $item['persen'] ?>%"></div>
+                                <td class="text-center">
+                                    <p class="text-xs font-weight-bold mb-0"><?= $idx + 1 ?></p>
+                                </td>
+                                <td class="ps-3">
+                                    <p class="text-xs font-weight-bold mb-0"><?= $item['nama'] ?></p>
+                                </td>
+                                <td class="align-middle ps-4 pe-4 col-progress">
+                                    <div class="progress" style="height: 8px; width: 100%;">
+                                        <?php
+                                        $bar_color = $item['persen'] >= 80 ? 'bg-gradient-success' : 
+                                                    ($item['persen'] >= 60 ? 'bg-gradient-warning' : 'bg-gradient-info');
+                                        ?>
+                                        <div class="progress-bar <?= $bar_color ?>" role="progressbar" 
+                                             style="width: <?= $item['persen'] ?>%;">
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle text-center">
-                                    <span class="text-secondary text-xs font-weight-bold"><?= $item['persen'] ?>%</span>
+                                <td class="align-middle text-center ps-3">
+                                    <span class="text-secondary text-xs font-weight-bold"><?= round($item['persen']) ?></span>
+                                </td>
+                                <td class="align-middle text-center ps-3">
+                                    <span class="badge badge-sm <?= $bar_color ?>"><?= number_format($item['persen'], 1) ?>%</span>
                                 </td>
                             </tr>
                             <?php 
                                 endforeach;
                             else: ?>
-                                <tr><td colspan="4" class="text-center py-4"><p class="text-xs text-secondary mb-0">Belum ada data keperluan</p></td></tr>
+                                <tr><td colspan="5" class="text-center py-4"><p class="text-xs text-secondary mb-0">Belum ada data keperluan</p></td></tr>
                             <?php endif; ?>
                         </tbody>
                     </table>

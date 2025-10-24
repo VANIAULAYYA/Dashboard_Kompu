@@ -94,36 +94,255 @@ class Landing extends CI_Controller {
         $this->M_landing->insert_feedback($data);
         redirect('Landing');
     }
-
-    // ===============================
+// ===============================
     // LAPORAN
     // ===============================
 
-    public function laporan_PPID() {
-        $data['laporan'] = $this->M_landing->get_laporan_by_jenis('PPID');
-        $data['page_title'] = "Laporan PPID";
-        $data['active_menu'] = 'laporan';
-        $this->load->view('v_laporan', $data);
-    }
-
-    public function laporan_Kompu() {
-        $data['laporan'] = $this->M_landing->get_laporan_by_jenis('KOMPU');
-        $data['page_title'] = "Laporan Kompu";
-        $data['active_menu'] = 'laporan';
-        $this->load->view('v_laporan', $data);
-    }
-
-    public function Survei_Kepuasan_Masyarakat() {
-        $data['laporan'] = $this->M_landing->get_laporan_by_jenis('SKM');
+     public function Survei_Kepuasan_Masyarakat($tahun = null) {
+        if ($tahun === null) {
+            $tahun = date('Y');
+        }
+        
+        // Ambil data
+        $this->db->select('YEAR(tanggal) as tahun');
+        $this->db->from('laporan');
+        $this->db->where('jenis_laporan', 'SKM');
+        $this->db->group_by('YEAR(tanggal)');
+        $this->db->order_by('tahun', 'DESC');
+        $data['tahun_list'] = $this->db->get()->result_array();
+        
+        $this->db->select('*');
+        $this->db->from('laporan');
+        $this->db->where('jenis_laporan', 'SKM');
+        $this->db->where('YEAR(tanggal)', $tahun);
+        $this->db->order_by('tanggal', 'ASC');
+        $dokumen_tahun = $this->db->get()->result_array();
+        
+        // FIX PATH: Gunakan uploads/bukti/
+        foreach ($dokumen_tahun as &$doc) {
+            if (!empty($doc['bukti_file'])) {
+                // Path yang benar: uploads/bukti/namafile
+                $doc['bukti_file'] = 'uploads/bukti/' . $doc['bukti_file'];
+                
+                // Cek jika file exists
+                $file_path = FCPATH . $doc['bukti_file'];
+                $doc['file_exists'] = file_exists($file_path);
+            } else {
+                $doc['file_exists'] = false;
+            }
+        }
+        
+        // Group data dengan AUTO DETECT TRIWULAN
+        $data['triwulan'] = [];
+        $data['semester'] = [];
+        $data['tahunan'] = [];
+        
+        foreach ($dokumen_tahun as $doc) {
+            // AUTO DETECT TRIWULAN dari nama file
+            if ($doc['periode'] == 'Triwulan') {
+                $doc['triwulan_number'] = $this->detect_triwulan($doc['nama_file']);
+                
+                if ($doc['triwulan_number']) {
+                    $data['triwulan'][] = $doc;
+                } else {
+                    // Jika tidak terdetect, masukkan ke triwulan I sebagai default
+                    $doc['triwulan_number'] = 'I';
+                    $data['triwulan'][] = $doc;
+                }
+            }
+            // AUTO DETECT SEMESTER
+            elseif ($doc['periode'] == 'Semester') {
+                $doc['semester_number'] = $this->detect_semester($doc['nama_file']);
+                $data['semester'][] = $doc;
+            }
+            // TAHUNAN
+            elseif ($doc['periode'] == 'Tahunan') {
+                $data['tahunan'][] = $doc;
+            }
+            // Jika periode kosong, coba deteksi dari nama file
+            else {
+                if (preg_match('/(triwulan|tw|q)\s*(i{1,3}|iv|1|2|3|4)/i', $doc['nama_file'])) {
+                    $doc['triwulan_number'] = $this->detect_triwulan($doc['nama_file']);
+                    $data['triwulan'][] = $doc;
+                } 
+                elseif (preg_match('/(semester|sem)\s*(i{1,2}|1|2)/i', $doc['nama_file'])) {
+                    $doc['semester_number'] = $this->detect_semester($doc['nama_file']);
+                    $data['semester'][] = $doc;
+                }
+                elseif (preg_match('/(tahunan|tahun|annual)/i', $doc['nama_file'])) {
+                    $data['tahunan'][] = $doc;
+                }
+            }
+        }
+        
+        $data['current_year'] = $tahun;
         $data['page_title'] = "Survei Kepuasan Masyarakat";
         $data['active_menu'] = 'laporan';
+        $data['jenis_laporan'] = 'SKM';
         $this->load->view('v_laporan', $data);
     }
 
-    // AJAX untuk ambil laporan berdasarkan periode
-    public function get_laporan_periode() {
-        $periode = $this->input->post('periode'); 
-        $laporan = $this->M_landing->get_ppid_periode($periode);
-        echo json_encode($laporan);
+    /**
+     * Fungsi untuk mendeteksi nomor triwulan dari nama file
+     * Support format: Triwulan I, Triwulan II, TW 2, Q3, dll
+     */
+    private function detect_triwulan($nama_file) {
+        // Pattern untuk mendeteksi triwulan
+        // Bisa detect: Triwulan I, Triwulan II, TW 2, Q3, dll
+        if (preg_match('/(triwulan|tw|quarter|q)[\s_-]*(i{1,3}|iv|1|2|3|4)/i', $nama_file, $matches)) {
+            $number = strtoupper(trim($matches[2]));
+            
+            // Convert angka ke romawi
+            $roman_map = [
+                '1' => 'I',
+                '2' => 'II', 
+                '3' => 'III',
+                '4' => 'IV'
+            ];
+            
+            // Jika sudah romawi, return as is
+            if (in_array($number, ['I', 'II', 'III', 'IV'])) {
+                return $number;
+            }
+            
+            // Jika angka, convert ke romawi
+            if (isset($roman_map[$number])) {
+                return $roman_map[$number];
+            }
+        }
+        
+        return null; // Tidak terdetect
+    }
+
+    /**
+     * Fungsi untuk mendeteksi nomor semester dari nama file
+     * Support format: Semester I, Semester 1, Sem 2, dll
+     */
+    private function detect_semester($nama_file) {
+        if (preg_match('/(semester|sem)[\s_-]*(i{1,2}|1|2)/i', $nama_file, $matches)) {
+            $number = strtoupper(trim($matches[2]));
+            
+            // Convert angka ke romawi
+            $roman_map = [
+                '1' => 'I',
+                '2' => 'II'
+            ];
+            
+            // Jika sudah romawi, return as is
+            if (in_array($number, ['I', 'II'])) {
+                return $number;
+            }
+            
+            // Jika angka, convert ke romawi
+            if (isset($roman_map[$number])) {
+                return $roman_map[$number];
+            }
+        }
+        
+        return null;
+    }
+
+    // Fungsi lain tetap sama seperti sebelumnya
+    public function laporan_PPID($tahun = null) {
+        if ($tahun === null) {
+            $tahun = date('Y');
+        }
+        
+        $this->db->select('YEAR(tanggal) as tahun');
+        $this->db->from('laporan');
+        $this->db->where('jenis_laporan', 'PPID');
+        $this->db->group_by('YEAR(tanggal)');
+        $this->db->order_by('tahun', 'DESC');
+        $data['tahun_list'] = $this->db->get()->result_array();
+        
+        $this->db->select('*');
+        $this->db->from('laporan');
+        $this->db->where('jenis_laporan', 'PPID');
+        $this->db->where('YEAR(tanggal)', $tahun);
+        $this->db->order_by('tanggal', 'ASC');
+        $dokumen_tahun = $this->db->get()->result_array();
+        
+        $data['triwulan'] = [];
+        $data['semester'] = [];
+        $data['tahunan'] = [];
+        
+        foreach ($dokumen_tahun as &$doc) {
+            if (!empty($doc['bukti_file'])) {
+                $doc['bukti_file'] = 'uploads/bukti/' . $doc['bukti_file'];
+                $file_path = FCPATH . $doc['bukti_file'];
+                $doc['file_exists'] = file_exists($file_path);
+            } else {
+                $doc['file_exists'] = false;
+            }
+            
+            // Auto detect periode
+            if ($doc['periode'] == 'Triwulan') {
+                $doc['triwulan_number'] = $this->detect_triwulan($doc['nama_file']);
+                $data['triwulan'][] = $doc;
+            } elseif ($doc['periode'] == 'Semester') {
+                $doc['semester_number'] = $this->detect_semester($doc['nama_file']);
+                $data['semester'][] = $doc;
+            } elseif ($doc['periode'] == 'Tahunan') {
+                $data['tahunan'][] = $doc;
+            }
+        }
+        
+        $data['current_year'] = $tahun;
+        $data['page_title'] = "Laporan PPID";
+        $data['active_menu'] = 'laporan';
+        $data['jenis_laporan'] = 'PPID';
+        $this->load->view('v_laporan', $data);
+    }
+
+    public function laporan_Kompu($tahun = null) {
+        if ($tahun === null) {
+            $tahun = date('Y');
+        }
+        
+        $this->db->select('YEAR(tanggal) as tahun');
+        $this->db->from('laporan');
+        $this->db->where('jenis_laporan', 'Kompu');
+        $this->db->group_by('YEAR(tanggal)');
+        $this->db->order_by('tahun', 'DESC');
+        $data['tahun_list'] = $this->db->get()->result_array();
+        
+        $this->db->select('*');
+        $this->db->from('laporan');
+        $this->db->where('jenis_laporan', 'Kompu');
+        $this->db->where('YEAR(tanggal)', $tahun);
+        $this->db->order_by('tanggal', 'ASC');
+        $dokumen_tahun = $this->db->get()->result_array();
+        
+        $data['triwulan'] = [];
+        $data['semester'] = [];
+        $data['tahunan'] = [];
+        
+        foreach ($dokumen_tahun as &$doc) {
+            if (!empty($doc['bukti_file'])) {
+                $doc['bukti_file'] = 'uploads/bukti/' . $doc['bukti_file'];
+                $file_path = FCPATH . $doc['bukti_file'];
+                $doc['file_exists'] = file_exists($file_path);
+            } else {
+                $doc['file_exists'] = false;
+            }
+            
+            // Auto detect periode
+            if ($doc['periode'] == 'Triwulan') {
+                $doc['triwulan_number'] = $this->detect_triwulan($doc['nama_file']);
+                $data['triwulan'][] = $doc;
+            } elseif ($doc['periode'] == 'Semester') {
+                $doc['semester_number'] = $this->detect_semester($doc['nama_file']);
+                $data['semester'][] = $doc;
+            } elseif ($doc['periode'] == 'Tahunan') {
+                $data['tahunan'][] = $doc;
+            }
+        }
+        
+        $data['current_year'] = $tahun;
+        $data['page_title'] = "Laporan Kompu";
+        $data['active_menu'] = 'laporan';
+        $data['jenis_laporan'] = 'Kompu';
+        $this->load->view('v_laporan', $data);
     }
 }
+?>

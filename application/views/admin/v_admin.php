@@ -56,7 +56,7 @@
       transform: translateY(-50%);
       width: 4px;
       height: 30px;
-      background: linear-gradient(135deg, #1C6C8C 0%, #33AFE0 100%);
+      background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
       border-radius: 2px;
     }
     .stat-card-link {
@@ -91,7 +91,7 @@
     <hr class="horizontal dark mt-0">
         <div class="collapse navbar-collapse  w-auto h-auto">
       <ul class="navbar-nav">
-        <li class="nav-item">
+        <li class="nav-item active">
           <a href="<?php echo base_url('Admin'); ?>" class="btn btn-primary btn-lg">
               <i class="fas fa-house-user" aria-hidden="true"></i>
             <span class="nav-link-text ms-1">Dashboard</span>
@@ -108,9 +108,9 @@
             </div>
             <span class="nav-link-text ms-1">Pelayanan</span>
           </a>
-          <div class="collapse show" id="dashboardsExamples">
+          <div class="collapse" id="dashboardsExamples">
             <ul class="nav ms-4 ps-3">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link active" href="<?php echo base_url('Admin/rekap_tamu'); ?>">
                   <span class="sidenav-mini-icon"> R </span>
                   <span class="sidenav-normal"> Rekap Buku Tamu </span>
@@ -297,8 +297,9 @@
 </div>
 
       <!-- KEPUASAN MASYARAKAT - TAHUN BERJALAN -->
-<div class="section-title">
-  <h5 class="fw-bold text-dark mb-0">Kepuasan Masyarakat - <?= date('Y') ?></h5>
+<br>
+      <div class="section-title">
+  <h5 class="fw-bold text-dark mb-3">Kepuasan Masyarakat - <?= date('Y') ?></h5>
 </div>
 <div class="row mb-4">
   <!-- Card Total Responden -->
@@ -383,11 +384,18 @@
       </div>
     </a>
   </div>
+
+  <!-- Tombol Lihat Detail -->
+  <div class="col-12 mt-2 text-end">
+    <a href="<?= base_url('Monev_kepuasan') ?>" class="btn btn-warning w-15 text-white fw-bold">
+      <i class="fas fa-eye me-2"></i> LIHAT DETAIL
+    </a>
+  </div>
 </div>
 
 <!-- MONEV PERMINTAAN DATA -->
 <div class="section-title">
-  <h5 class="fw-bold text-dark mb-0">Permintaan Data Informasi - <?= date('Y') ?></h5>
+  <h5 class="fw-bold text-dark mb-3">Permintaan Data - <?= date('Y') ?></h5>
 </div>
 <div class="row mb-4">
   <!-- Card Total Permohonan -->
@@ -470,11 +478,18 @@
       </div>
     </a>
   </div>
+
+  <!-- Tombol Lihat Detail -->
+  <div class="col-12 mt-2 text-end">
+    <a href="<?= base_url('Monev_permintaan') ?>" class="btn btn-warning w-15 text-white fw-bold">
+      <i class="fas fa-eye me-2"></i> LIHAT DETAIL
+    </a>
+  </div>
 </div>
 
 <!-- MONEV PENGADUAN -->
 <div class="section-title">
-  <h5 class="fw-bold text-dark mb-0">Pengaduan Masyarakat - <?= date('Y') ?></h5>
+  <h5 class="fw-bold text-dark mb-3">Pengaduan - <?= date('Y') ?></h5>
 </div>
 <div class="row mb-4">
   <!-- Card Total Pengaduan -->
@@ -493,7 +508,7 @@
             </div>
             <div class="col-4 text-end">
               <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                <i class="fas fa-exclamation-triangle text-white text-lg opacity-10"></i>
+                <i class="fas fa-file-alt text-white text-lg opacity-10"></i>
               </div>
             </div>
           </div>
@@ -521,7 +536,7 @@
             </div>
             <div class="col-4 text-end">
               <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
-                <i class="fas fa-spinner text-white text-lg opacity-10"></i>
+                <i class="fas fa-clock text-white text-lg opacity-10"></i>
               </div>
             </div>
           </div>
@@ -549,12 +564,19 @@
             </div>
             <div class="col-4 text-end">
               <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
-                <i class="fas fa-check-double text-white text-lg opacity-10"></i>
+                <i class="fas fa-check-circle text-white text-lg opacity-10"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </a>
+  </div>
+
+  <!-- Tombol Lihat Detail -->
+  <div class="col-12 mt-2 text-end">
+    <a href="<?= base_url('Monev_pengaduan') ?>" class="btn btn-warning w-15 text-white fw-bold">
+      <i class="fas fa-eye me-2"></i> LIHAT DETAIL
     </a>
   </div>
 </div>

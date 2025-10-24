@@ -247,9 +247,9 @@
             Publikasi <i id="laporan-icon" class="fas fa-chevron-up ms-1"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
-            <li><a class="dropdown-item" href="<?php echo base_url('laporan_view'); ?>">Laporan PPID</a></li>
-            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_bulanan'); ?>">Laporan Kompu</a></li>
-            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_tahunan'); ?>">Survei Kepuasan Masyarakat</a></li>
+            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_PPID'); ?>">Laporan PPID</a></li>
+            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_Kompu'); ?>">Laporan Kompu</a></li>
+            <li><a class="dropdown-item" href="<?php echo base_url('Landing/Suvei_Kepuasan_Masyarakat'); ?>">Survei Kepuasan Masyarakat</a></li>
           </ul>
         </li>
 
