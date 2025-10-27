@@ -199,195 +199,77 @@
     color: var(--orange);
   }
 
-  /* DROPDOWN STYLING UNTUK KEDUA DROPDOWN */
-#desktop-buku-tamu-dropdown,
-#desktop-laporan-dropdown {
-    min-width: 16rem !important;
-    padding: 0.5rem 0 !important;
-    border-radius: 0.25rem !important;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
-    background-color: #ffffff !important;
-    line-height: 1.5 !important;
-    font-family: 'Poppins', sans-serif !important;
+.navbar .dropdown-toggle::after {
+  display: none !important;
 }
-
-#desktop-buku-tamu-dropdown a,
-#desktop-laporan-dropdown a {
-    display: block;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    color: #374151;
-    font-weight: 500;
-    text-decoration: none;
-    line-height: 1.7;
-}
-
-#desktop-buku-tamu-dropdown a:hover,
-#desktop-laporan-dropdown a:hover {
-    background-color: #ffedd5;
-    color: #f97316;
-}
-
-/* Pastikan parent container tidak memotong dropdown */
-nav .max-w-7xl,
-nav .relative {
-    overflow: visible !important;
-}
+  
 </style>
 
 
    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light shadow-sm">
-        <div class="container">
-            <!-- Logo -->
-            <a class="navbar-brand" href="<?php echo base_url(); ?>">
-                <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" style="width: 250px; height: auto;">
-            </a>
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand" href="<?php echo base_url(); ?>">
+            <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" style="width: 250px; height: auto;">
+        </a>
 
             <!-- Toggler/collapse button (mobile) -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <!-- Navbar links -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
 
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'home' ? 'active' : ''; ?>" href="<?php echo base_url(); ?>">Home</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'home' ? 'active' : ''; ?>" href="<?php echo base_url(); ?>">Home</a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/tentang'); ?>">Tentang</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/tentang'); ?>">Tentang</a>
+                </li>
 
-                    <!-- Dropdown Buku Tamu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'buku_tamu' ? 'active' : ''; ?>" 
-                           href="#" id="navbarBukuTamu" role="button" 
-                           data-bs-toggle="dropdown" data-bs-display="static" 
-                           aria-expanded="false">
-                            Buku Tamu <i id="buku-tamu-icon" class="fas fa-chevron-up ms-1"></i>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarBukuTamu">
-                            <li><a class="dropdown-item" href="<?php echo base_url('Landing/buku_tamu'); ?>">Formulir Buku Tamu</a></li>
-                            <li><a class="dropdown-item" href="<?php echo base_url('Landing/survei'); ?>">Formulir Survei</a></li>
-                        </ul>
-                    </li>
+                <!-- Dropdown Buku Tamu - FIXED -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?php echo isset($active_menu) && $active_menu == 'buku_tamu' ? 'active' : ''; ?>" 
+                       href="#" id="navbarBukuTamu" role="button" 
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Buku Tamu <i id="buku-tamu-icon" class="fas fa-chevron-down ms-1"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarBukuTamu">
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/buku_tamu'); ?>">Formulir Buku Tamu</a></li>
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/survei'); ?>">Formulir Survei</a></li>
+                    </ul>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Media Sosial</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Media Sosial</a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'layanan' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/layanan'); ?>">Layanan</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'layanan' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/layanan'); ?>">Layanan</a>
+                </li>
 
-                    <!-- Dropdown Laporan -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'laporan' ? 'active' : ''; ?>" 
-                           href="#" id="navbarLaporan" role="button" 
-                           data-bs-toggle="dropdown" data-bs-display="static" 
-                           aria-expanded="false">
-                            Publikasi <i id="laporan-icon" class="fas fa-chevron-up ms-1"></i>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
-                            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_PPID'); ?>">Laporan PPID</a></li>
-                            <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_Kompu'); ?>">Laporan Kompu</a></li>
-                            <li><a class="dropdown-item" href="<?php echo base_url('Landing/Survei_Kepuasan_Masyarakat'); ?>">Survei Kepuasan Masyarakat</a></li>
-                        </ul>
-                    </li>
+                <!-- Dropdown Laporan - FIXED -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?php echo isset($active_menu) && $active_menu == 'laporan' ? 'active' : ''; ?>" 
+                       href="#" id="navbarLaporan" role="button" 
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Publikasi <i id="laporan-icon" class="fas fa-chevron-down ms-1"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_PPID'); ?>">Laporan PPID</a></li>
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_Kompu'); ?>">Laporan Kompu</a></li>
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/Survei_Kepuasan_Masyarakat'); ?>">Survei Kepuasan Masyarakat</a></li>
+                    </ul>
+                </li>
 
-                </ul>
-            </div>
+            </ul>
         </div>
-    </nav>
-
-<!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // JS untuk toggle ikon dropdown
-        const bukuTamuToggle = document.getElementById('navbarBukuTamu');
-        const bukuTamuIcon = document.getElementById('buku-tamu-icon');
-        const laporanToggle = document.getElementById('navbarLaporan');
-        const laporanIcon = document.getElementById('laporan-icon');
-
-        if (bukuTamuToggle) {
-            bukuTamuToggle.addEventListener('show.bs.dropdown', () => {
-                bukuTamuIcon.classList.remove('fa-chevron-up');
-                bukuTamuIcon.classList.add('fa-chevron-down');
-            });
-
-            bukuTamuToggle.addEventListener('hide.bs.dropdown', () => {
-                bukuTamuIcon.classList.remove('fa-chevron-down');
-                bukuTamuIcon.classList.add('fa-chevron-up');
-            });
-        }
-
-        if (laporanToggle) {
-            laporanToggle.addEventListener('show.bs.dropdown', () => {
-                laporanIcon.classList.remove('fa-chevron-up');
-                laporanIcon.classList.add('fa-chevron-down');
-            });
-
-            laporanToggle.addEventListener('hide.bs.dropdown', () => {
-                laporanIcon.classList.remove('fa-chevron-down');
-                laporanIcon.classList.add('fa-chevron-up');
-            });
-        }
-
-        // Back to top button
-        const backToTopButton = document.getElementById('back-to-top');
-        
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.remove('hidden');
-            } else {
-                backToTopButton.classList.add('hidden');
-            }
-        });
-
-        backToTopButton.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Validasi Form Survei
-        const formSurvei = document.getElementById('form-survei');
-        if (formSurvei) {
-            formSurvei.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Reset semua error
-                const errorMessages = document.querySelectorAll('.error-message');
-                errorMessages.forEach(error => {
-                    error.style.display = 'none';
-                });
-                
-                const radioGroups = document.querySelectorAll('.radio-group');
-                let isValid = true;
-                
-                // Validasi setiap pertanyaan
-                radioGroups.forEach(group => {
-                    const questionName = group.querySelector('input[type="radio"]').name;
-                    const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-                    
-                    if (!selectedOption) {
-                        isValid = false;
-                        document.getElementById(`error-${questionName}`).style.display = 'block';
-                    }
-                });
-                
-                if (isValid) {
-                    // Jika semua valid, submit form
-                    this.submit();
-                } else {
-                    // Tampilkan modal error
-                    document.getElementById('error-modal').style.display = 'flex';
-                }
-            });
-        }
-</script>
+    </div>
+</nav>
 
   <!-- Hero Section -->
   <section class="hero-section">
@@ -435,8 +317,44 @@ nav .relative {
     <p class="mb-0">&copy; <?php echo date('Y'); ?> BBWS Brantas. All rights reserved.</p>
   </footer>
 
-  <!-- JS -->
+  <!-- HANYA SATU Bootstrap JS di akhir -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script untuk dropdown -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bukuTamuToggle = document.getElementById('navbarBukuTamu');
+        const bukuTamuIcon = document.getElementById('buku-tamu-icon');
+        const laporanToggle = document.getElementById('navbarLaporan');
+        const laporanIcon = document.getElementById('laporan-icon');
+
+        if (bukuTamuToggle && bukuTamuIcon) {
+            bukuTamuToggle.addEventListener('show.bs.dropdown', () => {
+                bukuTamuIcon.classList.remove('fa-chevron-down');
+                bukuTamuIcon.classList.add('fa-chevron-up');
+            });
+
+            bukuTamuToggle.addEventListener('hide.bs.dropdown', () => {
+                bukuTamuIcon.classList.remove('fa-chevron-up');
+                bukuTamuIcon.classList.add('fa-chevron-down');
+            });
+        }
+
+        if (laporanToggle && laporanIcon) {
+            laporanToggle.addEventListener('show.bs.dropdown', () => {
+                laporanIcon.classList.remove('fa-chevron-down');
+                laporanIcon.classList.add('fa-chevron-up');
+            });
+
+            laporanToggle.addEventListener('hide.bs.dropdown', () => {
+                laporanIcon.classList.remove('fa-chevron-up');
+                laporanIcon.classList.add('fa-chevron-down');
+            });
+        }
+    });
+  </script>
+
+  <!-- Script untuk slideshow - JANGAN DIHAPUS -->
   <script>
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
@@ -488,12 +406,12 @@ nav .relative {
     }
 
     // Auto slide tiap 5 detik
-    // let autoSlide = setInterval(nextSlide, 5000);
+    let autoSlide = setInterval(nextSlide, 5000);
 
-    // function resetAutoSlide() {
-    //   clearInterval(autoSlide);
-    //   autoSlide = setInterval(nextSlide, 5000);
-    // }
+    function resetAutoSlide() {
+      clearInterval(autoSlide);
+      autoSlide = setInterval(nextSlide, 5000);
+    }
 
     // Navigasi manual
     arrowLeft.addEventListener('click', () => {
@@ -505,7 +423,7 @@ nav .relative {
       resetAutoSlide();
     });
 
-    // ✅ PAUSE saat hover mouse di slideshow
+    // PAUSE saat hover mouse di slideshow
     wrapper.addEventListener("mouseenter", () => {
       clearInterval(autoSlide);
     });

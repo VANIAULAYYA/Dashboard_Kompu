@@ -62,43 +62,82 @@ class Landing extends CI_Controller {
     }
 
     // ===============================
-    // FEEDBACK
-    // ===============================
+// SURVEI
+// ===============================
 
-    public function submit() {
-        $kategori_lainnya = $this->input->post('kategori_lainnya');
-        $kategori = $this->input->post('keperluan'); 
-
-        if ($kategori === 'lainnya' && !empty($kategori_lainnya)) {
-            $kategori = $kategori_lainnya;
-        }
-        $data = array(
-            'nik' => $this->input->post('nik'),
-            'nama'                => $this->input->post('nama'),
-            'jenis_kelamin'       => $this->input->post('jenis_kelamin'),
-            'asal_instansi'       => $this->input->post('asal_instansi'),
-            'no_handphone'        => $this->input->post('no_handphone'),
-            'email'               => $this->input->post('email'),
-            'keperluan'           => $kategori,
-            'status_survei'       => 'belum',
-            'kritik_saran'        => $this->input->post('kritik_saran')
-        );
-
-        $this->db->insert('buku_tamu', $data);
+public function submit_survei() {
+    // Bersihkan output buffer
+    if (ob_get_length()) ob_clean();
+    header('Content-Type: application/json');
     
-    // Redirect atau tampilkan pesan sukses
-    redirect('Landing');
+    try {
+        $nik = $this->input->post('nik');
+        
+        // Validasi NIK tidak kosong
+        if (empty($nik)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'NIK tidak boleh kosong'
+            ]);
+            exit;
+        }
+        
+        // Cek apakah user ada dan belum isi survei
+        $user_data = $this->M_landing->validate_nik_survei($nik);
+        
+        if (!$user_data) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'NIK tidak ditemukan atau sudah mengisi survei'
+            ]);
+            exit;
+        }
+        
+        // Update data survei
+        $data_survei = [
+            'status_survei' => 'sudah',
+            'tanggal_survei' => date('Y-m-d H:i:s'),
+            'pendapat_pelayanan' => $this->input->post('pendapat_pelayanan'),
+            'pemahaman_prosedur' => $this->input->post('pemahaman_prosedur'),
+            'pendapat_kecepatan' => $this->input->post('pendapat_kecepatan'),
+            'pendapat_biaya' => $this->input->post('pendapat_biaya'),
+            'pendapat_produk' => $this->input->post('pendapat_produk'),
+            'pendapat_kompetensi' => $this->input->post('pendapat_kompetensi'),
+            'pendapat_perilaku' => $this->input->post('pendapat_perilaku'),
+            'pendapat_kualitas' => $this->input->post('pendapat_kualitas'),
+            'pendapat_pengaduan' => $this->input->post('pendapat_pengaduan'),
+            'kritik_saran' => $this->input->post('kritik_saran')
+        ];
+        
+        $update_result = $this->M_landing->update_survei($nik, $data_survei);
+        
+        if ($update_result) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Survei berhasil dikirim! Terima kasih atas partisipasi Anda.'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Gagal mengupdate data survei'
+            ]);
+        }
+        
+    } catch (Exception $e) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Terjadi kesalahan sistem: ' . $e->getMessage()
+        ]);
+    }
+    
+    exit;
 }
 
-public function validate_nik()
-{
+public function validate_nik() {
     $nik = $this->input->post('nik');
     
-    // Cek di database
-    $user_data = $this->db->get_where('buku_tamu', [
-        'nik' => $nik,
-        'status_survei' => 'belum'
-    ])->row();
+    // Cek di database menggunakan model
+    $user_data = $this->M_landing->validate_nik_survei($nik);
     
     if ($user_data) {
         echo json_encode([
@@ -110,64 +149,32 @@ public function validate_nik()
             ]
         ]);
     } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'NIK tidak ditemukan atau sudah mengisi survei'
-        ]);
+        // Cek apakah NIK ada tapi sudah survei
+        $user_exists = $this->M_landing->get_user_by_nik($nik);
+        
+        if ($user_exists) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Anda sudah mengisi survei untuk kunjungan ini',
+                'error_type' => 'already_filled'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'NIK tidak ditemukan. Silakan isi buku tamu terlebih dahulu',
+                'error_type' => 'not_found'
+            ]);
+        }
     }
 }
 
-public function submit_survei()
-{
-    $nik = $this->input->post('nik');
-    
-    // Update data survei
-    $data_update = [
-        'pendapat_pelayanan' => $this->input->post('pendapat_pelayanan'),
-        'pemahaman_prosedur' => $this->input->post('pemahaman_prosedur'),
-        'pendapat_kecepatan' => $this->input->post('pendapat_kecepatan'),
-        'pendapat_biaya' => $this->input->post('pendapat_biaya'),
-        'pendapat_produk' => $this->input->post('pendapat_produk'),
-        'pendapat_kompetensi' => $this->input->post('pendapat_kompetensi'),
-        'pendapat_perilaku' => $this->input->post('pendapat_perilaku'),
-        'pendapat_kualitas' => $this->input->post('pendapat_kualitas'),
-        'pendapat_pengaduan' => $this->input->post('pendapat_pengaduan'),
-        'kritik_saran' => $this->input->post('kritik_saran'),
-        'status_survei' => 'sudah'
-    ];
-    
-    $this->db->where('nik', $nik);
-    $this->db->update('buku_tamu', $data_update);
-    
-    // Tampilkan success message
-    $data = array(
-        'page_title' => 'Survei Berhasil - BBWS Brantas',
-        'show_success' => true
-    );
-    $this->load->view('v_survei', $data);
-
-}
-
-public function success_survei()
-{
-    $data = array(
-        'page_title' => 'Survei Berhasil - BBWS Brantas',
-        'active_menu' => 'survei'
-    );
-    $this->load->view('v_success_survei', $data);
-}
-
-public function Survei()
-{
+public function Survei() {
     // Jika ada POST NIK, berarti validasi
     if ($this->input->post('nik')) {
         $nik = $this->input->post('nik');
         
-        // Cek di database
-        $user_data = $this->db->get_where('buku_tamu', [
-            'nik' => $nik,
-            'status_survei' => 'belum'
-        ])->row();
+        // Cek di database menggunakan model
+        $user_data = $this->M_landing->validate_nik_survei($nik);
         
         if ($user_data) {
             // Tampilkan form survei
@@ -193,6 +200,41 @@ public function Survei()
     }
     
     $this->load->view('v_survei', $data);
+}
+
+// Method submit buku tamu (tetap sama)
+public function submit() {
+    $kategori_lainnya = $this->input->post('kategori_lainnya');
+    $kategori = $this->input->post('keperluan'); 
+
+    if ($kategori === 'lainnya' && !empty($kategori_lainnya)) {
+        $kategori = $kategori_lainnya;
+    }
+    
+    $data = array(
+        'nik' => $this->input->post('nik'),
+        'nama'                => $this->input->post('nama'),
+        'jenis_kelamin'       => $this->input->post('jenis_kelamin'),
+        'asal_instansi'       => $this->input->post('asal_instansi'),
+        'no_handphone'        => $this->input->post('no_handphone'),
+        'email'               => $this->input->post('email'),
+        'keperluan'           => $kategori,
+        'status_survei'       => 'belum',
+        'kritik_saran'        => $this->input->post('kritik_saran')
+    );
+
+    $this->M_landing->insert_feedback($data);
+    
+    // Redirect atau tampilkan pesan sukses
+    redirect('Landing');
+}
+
+public function success_survei() {
+    $data = array(
+        'page_title' => 'Survei Berhasil - BBWS Brantas',
+        'active_menu' => 'survei'
+    );
+    $this->load->view('v_success_survei', $data);
 }
 
 // ===============================

@@ -949,8 +949,7 @@
   </div>
 </div>
 
-      <!-- Jenis Keperluan -->
-<div class="row mt-4">
+      <div class="row mt-4">
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0">
@@ -978,8 +977,9 @@
                                 'Permintaan Data/Informasi'
                             ];
                             
-                            // Kelompokkan data
+                            // Kelompokkan data dengan BENAR
                             $keperluan_utama_data = [];
+                            $total_jumlah_lainnya = 0;
                             $total_persen_lainnya = 0;
                             
                             if(!empty($keperluan)):
@@ -987,18 +987,20 @@
                                     if (in_array($item['nama'], $keperluan_utama)) {
                                         $keperluan_utama_data[] = $item;
                                     } else {
-                                        // Langsung tambahkan ke total lainnya tanpa menyimpan detail
+                                        // Jumlahkan jumlah dan persen untuk "Lainnya"
+                                        $jumlah_value = is_numeric($item['jumlah']) ? $item['jumlah'] : 0;
                                         $persen_value = is_numeric($item['persen']) ? $item['persen'] : floatval(str_replace(['%', ','], '', $item['persen']));
+                                        $total_jumlah_lainnya += $jumlah_value;
                                         $total_persen_lainnya += $persen_value;
                                     }
                                 endforeach;
                                 
                                 // Jika ada keperluan lainnya, buat entri "Lainnya"
-                                if ($total_persen_lainnya > 0) {
+                                if ($total_jumlah_lainnya > 0) {
                                     $keperluan_utama_data[] = [
                                         'nama' => 'Lainnya',
-                                        'persen' => round($total_persen_lainnya, 2),
-                                        'jumlah' => round($total_persen_lainnya, 2)
+                                        'jumlah' => $total_jumlah_lainnya, // ✅ Jumlah data
+                                        'persen' => round($total_persen_lainnya, 2) // ✅ Persentase
                                     ];
                                 }
                                 
@@ -1024,7 +1026,7 @@
                                     </div>
                                 </td>
                                 <td class="align-middle text-center ps-3">
-                                    <span class="text-secondary text-xs font-weight-bold"><?= round($item['persen']) ?></span>
+                                    <span class="text-secondary text-xs font-weight-bold"><?= $item['jumlah'] ?></span>
                                 </td>
                                 <td class="align-middle text-center ps-3">
                                     <span class="badge badge-sm <?= $bar_color ?>"><?= number_format($item['persen'], 1) ?>%</span>

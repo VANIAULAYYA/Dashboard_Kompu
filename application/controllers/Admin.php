@@ -75,7 +75,7 @@ private function get_kepuasan_tahun_ini($tahun)
 {
     // Query untuk total responden tahun berjalan
     $this->db->where('YEAR(timestamp)', $tahun);
-    $total_responden = $this->db->count_all_results('buku_tamu_backup');
+    $total_responden = $this->db->count_all_results('buku_tamu');
     
     // Query untuk menghitung nilai IKM (rata-rata semua aspek penilaian)
     $this->db->select('
@@ -90,7 +90,7 @@ private function get_kepuasan_tahun_ini($tahun)
         AVG(pendapat_kualitas) as kualitas
     ');
     $this->db->where('YEAR(timestamp)', $tahun);
-    $rata_rata = $this->db->get('buku_tamu_backup')->row_array();
+    $rata_rata = $this->db->get('buku_tamu')->row_array();
     
     // Hitung nilai IKM total (rata-rata dari semua aspek)
     $total_nilai = 0;

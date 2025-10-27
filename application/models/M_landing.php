@@ -11,10 +11,24 @@ class M_landing extends CI_Model {
     // BAGIAN FEEDBACK
     // ===============================
 
-    // Insert feedback ke tabel buku_tamu
-    public function insert_feedback($data) {
-        $this->db->insert('buku_tamu', $data);
-    }
+    // Update status survei dan tanggal_survei
+public function update_survei($nik, $data_survei) {
+    $this->db->where('nik', $nik);
+    return $this->db->update('buku_tamu', $data_survei);
+}
+
+// Cek NIK untuk validasi survei
+public function validate_nik_survei($nik) {
+    return $this->db->get_where('buku_tamu', [
+        'nik' => $nik,
+        'status_survei' => 'belum'
+    ])->row();
+}
+
+// Get data user by NIK
+public function get_user_by_nik($nik) {
+    return $this->db->get_where('buku_tamu', ['nik' => $nik])->row();
+}
 
     // ===============================
     // BAGIAN LAPORAN

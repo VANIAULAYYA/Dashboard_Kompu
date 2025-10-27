@@ -127,7 +127,7 @@ class M_admin extends CI_Model {
 public function get_kepuasan_tahun_ini($tahun) {
     // Query untuk total responden tahun berjalan
     $this->db->where('YEAR(timestamp)', $tahun);
-    $total_responden = $this->db->count_all_results('buku_tamu_backup');
+    $total_responden = $this->db->count_all_results('buku_tamu');
     
     // Jika tidak ada data, return 0
     if ($total_responden == 0) {
@@ -151,7 +151,7 @@ public function get_kepuasan_tahun_ini($tahun) {
         AVG(pendapat_kualitas) as kualitas
     ');
     $this->db->where('YEAR(timestamp)', $tahun);
-    $query = $this->db->get('buku_tamu_backup');
+    $query = $this->db->get('buku_tamu');
     $rata_rata = $query->row_array();
     
     // Hitung nilai IKM total
@@ -197,19 +197,19 @@ public function get_kepuasan_tahun_ini($tahun) {
      */
     public function debug_database() {
         // Total semua data
-        $total_all = $this->db->count_all('buku_tamu_backup');
+        $total_all = $this->db->count_all('buku_tamu');
         
         // Data per tahun
         $this->db->select('YEAR(timestamp) as tahun, COUNT(*) as total');
         $this->db->group_by('YEAR(timestamp)');
         $this->db->order_by('tahun', 'DESC');
-        $tahun_data = $this->db->get('buku_tamu_backup')->result_array();
+        $tahun_data = $this->db->get('buku_tamu')->result_array();
         
         // Sample data
         $this->db->select('id, timestamp, nama, pendapat_pelayanan');
         $this->db->limit(5);
         $this->db->order_by('timestamp', 'DESC');
-        $sample = $this->db->get('buku_tamu_backup')->result_array();
+        $sample = $this->db->get('buku_tamu')->result_array();
         
         return [
             'total_all' => $total_all,
@@ -246,7 +246,7 @@ public function get_kepuasan_tahun_ini($tahun) {
     public function get_data_kepuasan_tahun($tahun) {
         // Query untuk total responden tahun berjalan
         $this->db->where('YEAR(timestamp)', $tahun);
-        $total_responden = $this->db->count_all_results('buku_tamu_backup');
+        $total_responden = $this->db->count_all_results('buku_tamu');
         
         // Jika tidak ada data, return 0
         if ($total_responden == 0) {
@@ -270,7 +270,7 @@ public function get_kepuasan_tahun_ini($tahun) {
             AVG(pendapat_kualitas) as kualitas
         ');
         $this->db->where('YEAR(timestamp)', $tahun);
-        $query = $this->db->get('buku_tamu_backup');
+        $query = $this->db->get('buku_tamu');
         $rata_rata = $query->row_array();
         
         // Hitung nilai IKM total
