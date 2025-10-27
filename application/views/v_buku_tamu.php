@@ -166,6 +166,41 @@ nav .max-w-7xl,
 nav .relative {
     overflow: visible !important;
 }
+
+/* DROPDOWN STYLING UNTUK KEDUA DROPDOWN */
+#desktop-buku-tamu-dropdown,
+#desktop-laporan-dropdown {
+    min-width: 16rem !important;
+    padding: 0.5rem 0 !important;
+    border-radius: 0.25rem !important;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+    background-color: #ffffff !important;
+    line-height: 1.5 !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+#desktop-buku-tamu-dropdown a,
+#desktop-laporan-dropdown a {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: #374151;
+    font-weight: 500;
+    text-decoration: none;
+    line-height: 1.7;
+}
+
+#desktop-buku-tamu-dropdown a:hover,
+#desktop-laporan-dropdown a:hover {
+    background-color: #ffedd5;
+    color: #f97316;
+}
+
+/* Pastikan parent container tidak memotong dropdown */
+nav .max-w-7xl,
+nav .relative {
+    overflow: visible !important;
+}
 </style>
 
 <body>
@@ -186,16 +221,16 @@ nav .relative {
         <a href="<?php echo base_url('Landing/tentang'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Tentang</a>
 
       <!-- Dropdown Buku Tamu (Desktop) -->
-    <div class="relative" id="desktop-buku-tamu">
-        <button id="desktop-buku-tamu-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
-            Buku Tamu
-            <i id="desktop-buku-tamu-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
-        </button>
-        <div id="desktop-buku-tamu-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48 z-50">
-            <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Buku Tamu</a>
-            <a href="<?php echo base_url('Landing/survei'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Survei</a>
-        </div>
+<div class="relative" id="desktop-buku-tamu">
+    <button id="desktop-buku-tamu-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
+        Buku Tamu
+        <i id="desktop-buku-tamu-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
+    </button>
+    <div id="desktop-buku-tamu-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48 z-50">
+        <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Buku Tamu</a>
+        <a href="<?php echo base_url('Landing/survei'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Survei</a>
     </div>
+</div>
 
         <a href="<?php echo base_url('Landing/medsos'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
         <a href="<?php echo base_url('Landing/layanan'); ?>" class="nav-link text-gray-700 hover:text-orange-600 transition">Layanan</a>
@@ -231,22 +266,22 @@ nav .relative {
     <a href="<?php echo base_url('Landing'); ?>" class="text-gray-700 hover:text-orange-600 transition">Home</a>
     <a href="<?php echo base_url('Landing/tentang'); ?>" class="text-gray-700 hover:text-orange-600 transition">Tentang</a>
 
-    <!-- Dropdown Buku Tamu (Desktop) -->
-    <div class="relative" id="desktop-buku-tamu">
-        <button id="desktop-buku-tamu-btn" class="nav-link text-gray-700 hover:text-orange-600 transition">
-            Buku Tamu
-            <i id="desktop-buku-tamu-icon" class="fas fa-chevron-down ml-1 text-sm"></i>
-        </button>
-        <div id="desktop-buku-tamu-dropdown" class="absolute hidden bg-white shadow-lg rounded-md mt-2 w-48 z-50">
-            <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Buku Tamu</a>
-            <a href="<?php echo base_url('Landing/survei'); ?>" class="block px-4 py-2 text-gray-700 hover:bg-orange-100">Formulir Survei</a>
-        </div>
+    <!-- Dropdown Buku Tamu Mobile -->
+<div>
+    <button id="buku-tamu-dropdown-btn" class="w-full flex justify-between items-center text-gray-700 hover:text-orange-600 transition">
+        Buku Tamu
+        <i id="buku-tamu-icon" class="fas fa-chevron-down ml-2"></i>
+    </button>
+    <div id="buku-tamu-dropdown" class="hidden flex flex-col pl-4 mt-2 space-y-2">
+        <a href="<?php echo base_url('Landing/buku_tamu'); ?>" class="text-gray-700 hover:text-orange-600 transition">Formulir Buku Tamu</a>
+        <a href="<?php echo base_url('Landing/survei'); ?>" class="text-gray-700 hover:text-orange-600 transition">Formulir Survei</a>
     </div>
+</div>
     
     <a href="<?php echo base_url('Landing/medsos'); ?>" class="text-gray-700 hover:text-orange-600 transition">Media Sosial</a>
     <a href="<?php echo base_url('Landing/layanan'); ?>" class="text-gray-700 hover:text-orange-600 transition">Layanan</a>
 
-    <!-- Dropdown Mobile -->
+    <!-- Dropdown Publikasi Mobile -->
     <div>
       <button id="laporan-dropdown-btn" class="w-full flex justify-between items-center text-gray-700 hover:text-orange-600 transition">
         Publikasi
@@ -268,6 +303,29 @@ nav .relative {
     document.getElementById("mobile-menu").classList.toggle("hidden");
   });
 
+  // ========== DROPDOWN BUKU TAMU ==========
+  
+  // Toggle dropdown buku tamu di mobile
+  document.getElementById("buku-tamu-dropdown-btn").addEventListener("click", function() {
+    const dropdown = document.getElementById("buku-tamu-dropdown");
+    const icon = document.getElementById("buku-tamu-icon");
+    dropdown.classList.toggle("hidden");
+    icon.classList.toggle("fa-chevron-down");
+    icon.classList.toggle("fa-chevron-up");
+  });
+
+  // Toggle dropdown buku tamu di desktop (klik)
+  document.getElementById("desktop-buku-tamu-btn").addEventListener("click", function(e) {
+    e.preventDefault();
+    const dropdown = document.getElementById("desktop-buku-tamu-dropdown");
+    const icon = document.getElementById("desktop-buku-tamu-icon");
+    dropdown.classList.toggle("hidden");
+    icon.classList.toggle("fa-chevron-down");
+    icon.classList.toggle("fa-chevron-up");
+  });
+
+  // ========== DROPDOWN LAPORAN/PUBLIKASI ==========
+  
   // Toggle dropdown laporan di mobile
   document.getElementById("laporan-dropdown-btn").addEventListener("click", function() {
     const dropdown = document.getElementById("laporan-dropdown");
@@ -287,18 +345,45 @@ nav .relative {
     icon.classList.toggle("fa-chevron-up");
   });
 
-  // Klik di luar dropdown untuk menutup
+  // ========== CLOSE DROPDOWN WHEN CLICK OUTSIDE ==========
+  
+  // Close semua dropdown ketika klik di luar
   document.addEventListener("click", function(e) {
-    const dropdown = document.getElementById("desktop-laporan-dropdown");
-    const btn = document.getElementById("desktop-laporan-btn");
-    const icon = document.getElementById("desktop-laporan-icon");
+    // Dropdown Buku Tamu
+    const bukuTamuDropdown = document.getElementById("desktop-buku-tamu-dropdown");
+    const bukuTamuBtn = document.getElementById("desktop-buku-tamu-btn");
+    const bukuTamuIcon = document.getElementById("desktop-buku-tamu-icon");
 
-    if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
-      if (!dropdown.classList.contains("hidden")) {
-        dropdown.classList.add("hidden");
-        icon.classList.remove("fa-chevron-up");
-        icon.classList.add("fa-chevron-down");
+    if (bukuTamuBtn && !bukuTamuBtn.contains(e.target) && bukuTamuDropdown && !bukuTamuDropdown.contains(e.target)) {
+      if (!bukuTamuDropdown.classList.contains("hidden")) {
+        bukuTamuDropdown.classList.add("hidden");
+        bukuTamuIcon.classList.remove("fa-chevron-up");
+        bukuTamuIcon.classList.add("fa-chevron-down");
       }
+    }
+
+    // Dropdown Laporan
+    const laporanDropdown = document.getElementById("desktop-laporan-dropdown");
+    const laporanBtn = document.getElementById("desktop-laporan-btn");
+    const laporanIcon = document.getElementById("desktop-laporan-icon");
+
+    if (laporanBtn && !laporanBtn.contains(e.target) && laporanDropdown && !laporanDropdown.contains(e.target)) {
+      if (!laporanDropdown.classList.contains("hidden")) {
+        laporanDropdown.classList.add("hidden");
+        laporanIcon.classList.remove("fa-chevron-up");
+        laporanIcon.classList.add("fa-chevron-down");
+      }
+    }
+  });
+
+  // Prevent dropdown dari closing ketika klik inside
+  const desktopDropdowns = ["desktop-buku-tamu-dropdown", "desktop-laporan-dropdown"];
+  desktopDropdowns.forEach(id => {
+    const dropdown = document.getElementById(id);
+    if (dropdown) {
+      dropdown.addEventListener("click", function(e) {
+        e.stopPropagation();
+      });
     }
   });
 </script>
