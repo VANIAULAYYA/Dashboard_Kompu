@@ -279,9 +279,23 @@
                 <div class="h5 fw-bold text-dark mb-0"><?= isset($periode_label) ? $periode_label : 'Semua Data' ?></div>
               </div>
             </div>
-            <button type="button" class="btn btn-primary btn-sm mt-4" id="btnTambah">
-              <i class="fa fa-plus"></i> Tambah Tamu
-            </button>
+            
+            <!-- TOMBOL TAMBAH DAN CETAK -->
+<div class="d-flex gap-2 mt-3">
+  <button type="button" class="btn btn-primary btn-sm" id="btnTambah">
+    <i class="fa fa-plus"></i> Tambah Data
+  </button>
+  <button type="button" class="btn btn-info btn-sm" onclick="exportExcelRekapTamu()">
+    <i class="fas fa-file-excel"></i> Export Excel
+  </button>
+</div>
+           <!-- Tombol Floating untuk Rekap Tamu -->
+<div class="position-fixed bottom-0 end-0 m-4 z-3">
+  <button type="button" class="btn btn-primary btn-lg shadow rounded-pill" onclick="cetakSemuaDataRekapTamu()">
+    <i class="fas fa-print me-2"></i>
+    Cetak Semua Data
+  </button>
+</div>
           </div>
           <div class="table-responsive">
             <table class="table table-flush" id="datatable-search">
@@ -512,6 +526,99 @@
 
 <!-- Script -->
 <script>
+
+  // Function untuk cetak semua data REKAP TAMU
+function cetakSemuaDataRekapTamu() {
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    let url = '<?= site_url("Admin/export_rekap_tamu") ?>'; // GANTI CONTROLLER
+    url += `?jenis_periode=${jenisPeriode}&tahun=${tahun}`;
+    
+    if (periode && jenisPeriode !== 'semua' && jenisPeriode !== 'tahunan') {
+        url += `&periode=${periode}`;
+    }
+    
+    window.open(url, '_blank');
+}
+
+// Function untuk export Excel REKAP TAMU
+function exportExcelRekapTamu() {
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    let url = '<?= site_url("Admin/export_excel_rekap_tamu") ?>'; // GANTI CONTROLLER
+    url += `?jenis_periode=${jenisPeriode}&tahun=${tahun}`;
+    
+    if (periode && jenisPeriode !== 'semua' && jenisPeriode !== 'tahunan') {
+        url += `&periode=${periode}`;
+    }
+    
+    window.location.href = url;
+}
+
+// ========== EVENT LISTENERS ==========
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Tombol Cetak Semua Data
+    const btnCetakSemua = document.getElementById('btnCetakSemua');
+    if (btnCetakSemua) {
+        btnCetakSemua.addEventListener('click', cetakSemuaData);
+    }
+
+    // Tombol Export Excel
+    const btnExportExcel = document.getElementById('btnExportExcel');
+    if (btnExportExcel) {
+        btnExportExcel.addEventListener('click', exportExcel);
+    }
+
+    // Tombol Tambah
+    const btnTambah = document.getElementById("btnTambah");
+    if (btnTambah) {
+        btnTambah.addEventListener("click", function(){
+            console.log('🎯 Tombol Tambah DIKLIK!');
+            document.getElementById("divTabel").style.display = "none";
+            document.getElementById("divForm").style.display = "block";
+            document.getElementById("divFormEdit").style.display = "none";
+            
+            resetFormTambah();
+        });
+    }
+
+    // Tombol Kembali Form Tambah
+    const btnKembali = document.getElementById("btnKembali");
+    if (btnKembali) {
+        btnKembali.addEventListener("click", function () {
+            console.log('Tombol Kembali Tambah diklik');
+            document.getElementById("divForm").style.display = "none";
+            document.getElementById("divTabel").style.display = "block";
+        });
+    }
+
+    // Tombol Kembali Form Edit
+    const btnKembaliEdit = document.getElementById("btnKembaliEdit");
+    if (btnKembaliEdit) {
+        btnKembaliEdit.addEventListener("click", function(){
+            console.log('Tombol Kembali Edit diklik');
+            document.getElementById("divFormEdit").style.display = "none";
+            document.getElementById("divTabel").style.display = "block";
+        });
+    }
+
+    // Modal delete
+    const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+    if (confirmDeleteModal) {
+        confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const deleteUrl = button.getAttribute('data-delete-url');
+            document.getElementById('deleteButton').href = deleteUrl;
+        });
+    }
+});
+
+
   // Tambah
   document.getElementById("btnTambah").addEventListener("click", function(){
     document.getElementById("divTabel").style.display = "none";
@@ -579,9 +686,6 @@
 
   </main>
   <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="fa fa-cog py-2"> </i>
-    </a>
     <div class="card shadow-lg blur">
       <div class="card-header pb-0 pt-3  bg-transparent ">
         <div class="float-start">
@@ -677,6 +781,31 @@
       fixedHeight: true
     });
   </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+
+    // Event listener hanya untuk tombol floating
+document.addEventListener('DOMContentLoaded', function() {
+    // Tombol Cetak Semua Data (floating)
+    const btnCetakSemuaFloating = document.getElementById('btnCetakSemuaFloating');
+    if (btnCetakSemuaFloating) {
+        btnCetakSemuaFloating.addEventListener('click', cetakSemuaData);
+    }
+
+    // Tombol Export Excel
+    const btnExportExcel = document.getElementById('btnExportExcel');
+    if (btnExportExcel) {
+        btnExportExcel.addEventListener('click', exportExcel);
+    }
+});
+  </script>
+
   <script>
 function toggleKeteranganLainnya() {
   const keperluanSelect = document.getElementById('keperluanSelect');

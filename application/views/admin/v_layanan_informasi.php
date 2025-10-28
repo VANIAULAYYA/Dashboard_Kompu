@@ -316,10 +316,25 @@
                 <div class="h5 fw-bold text-dark mb-0"><?= isset($periode_label) ? $periode_label : 'Semua Data' ?></div>
               </div>
             </div>
-          <button type="button" class="btn btn-primary btn-sm mt-4" id="btnTambah">
-            <i class="fa fa-plus"></i> Tambah Data
-          </button>
-        </div>
+            
+            <!-- TOMBOL TAMBAH DAN CETAK -->
+<div class="d-flex gap-2 mt-3">
+  <button type="button" class="btn btn-primary btn-sm" id="btnTambah">
+    <i class="fa fa-plus"></i> Tambah Data
+  </button>
+  <button type="button" class="btn btn-info btn-sm" onclick="exportExcelInformasi()">
+    <i class="fas fa-file-excel"></i> Export Excel
+  </button>
+</div>
+
+<!-- Tombol Floating untuk Informasi -->
+<div class="position-fixed bottom-0 end-0 m-4 z-3">
+  <button type="button" class="btn btn-primary btn-lg shadow rounded-pill" onclick="cetakSemuaDataInformasi()">
+    <i class="fas fa-print me-2"></i>
+    Cetak Semua Data
+  </button>
+</div>
+          </div>
         <div class="table-responsive">
           <table class="table table-flush" id="datatable-search">
             <thead class="thead-light">
@@ -617,9 +632,6 @@ document.querySelectorAll("input, textarea").forEach(function(el){
 
   </main>
   <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="fa fa-cog py-2"> </i>
-    </a>
     <div class="card shadow-lg blur">
       <div class="card-header pb-0 pt-3  bg-transparent ">
         <div class="float-start">
@@ -714,6 +726,48 @@ document.querySelectorAll("input, textarea").forEach(function(el){
       searchable: true,
       fixedHeight: true
     });
+
+    // Function untuk cetak semua data INFORMASI
+function cetakSemuaDataInformasi() {
+    console.log('Tombol Cetak diklik'); // Debug
+    
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    let url = '<?= site_url("Admin/export_informasi") ?>';
+    url += `?jenis_periode=${jenisPeriode}&tahun=${tahun}`;
+    
+    if (periode && jenisPeriode !== 'semua' && jenisPeriode !== 'tahunan') {
+        url += `&periode=${periode}`;
+    }
+    
+    console.log('URL Cetak Informasi:', url);
+    window.open(url, '_blank');
+}
+
+// Function untuk export Excel INFORMASI
+function exportExcelInformasi() {
+    console.log('Tombol Export Excel diklik'); // Debug
+    
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    let url = '<?= site_url("Admin/export_excel_informasi") ?>';
+    url += `?jenis_periode=${jenisPeriode}&tahun=${tahun}`;
+    
+    if (periode && jenisPeriode !== 'semua' && jenisPeriode !== 'tahunan') {
+        url += `&periode=${periode}`;
+    }
+    
+    console.log('URL Excel Informasi:', url);
+    window.location.href = url;
+}
+
+// Pastikan function tersedia secara global
+window.cetakSemuaDataInformasi = cetakSemuaDataInformasi;
+window.exportExcelInformasi = exportExcelInformasi;
   </script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
@@ -771,15 +825,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (jenis === 'semua') {
             periodeSelect.disabled = true;
             tahunSelect.disabled = true;
-            tahunSelect.value = 'semua';
+            // tahunSelect.value = 'semua'; // HAPUS INI, biar value tetap
         } else if (jenis === 'tahunan') {
             periodeSelect.disabled = true;
             tahunSelect.disabled = false;
-            const opt = document.createElement('option');
-            opt.value = 'tahunan';
-            opt.textContent = '-- Pilih Periode --';
-            opt.selected = true;
-            periodeSelect.appendChild(opt);
+            // JANGAN reset value tahun
         } else {
             periodeSelect.disabled = false;
             tahunSelect.disabled = false;
@@ -800,29 +850,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // AUTO SUBMIT ketika ada perubahan
     function autoSubmit() {
-        // Submit form setelah perubahan
-        setTimeout(() => {
-            filterForm.submit();
-        }, 100);
+        console.log('Auto submit triggered'); // Debug
+        filterForm.submit();
     }
 
     // Event listener dengan auto-submit
-    jenisSelect.addEventListener('change', function() {
-        updateFilterStates();
-        autoSubmit();
-    });
-
-    periodeSelect.addEventListener('change', function() {
-        if (this.value && !this.disabled) {
+    if (jenisSelect) {
+        jenisSelect.addEventListener('change', function() {
+            console.log('Jenis periode changed:', this.value); // Debug
+            updateFilterStates();
             autoSubmit();
-        }
-    });
+        });
+    }
 
-    tahunSelect.addEventListener('change', function() {
-        if (!this.disabled) {
-            autoSubmit();
-        }
-    });
+    if (periodeSelect) {
+        periodeSelect.addEventListener('change', function() {
+            console.log('Periode changed:', this.value); // Debug
+            if (this.value && !this.disabled) {
+                autoSubmit();
+            }
+        });
+    }
+
+    if (tahunSelect) {
+        tahunSelect.addEventListener('change', function() {
+            console.log('Tahun changed:', this.value); // Debug
+            if (!this.disabled) {
+                autoSubmit();
+            }
+        });
+    }
 
     // Inisialisasi pertama kali
     updateFilterStates();

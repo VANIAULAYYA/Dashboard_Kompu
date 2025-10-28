@@ -687,4 +687,17 @@ private function get_data_permintaan_by_channel($tahun = null) {
         $this->db->where('no', $id);
         return $this->db->delete('layanan_pengaduan');
     }
+
+    // Get data permintaan data dengan filter
+public function get_permintaan_data_with_filter($date_range = null) {
+    $this->db->from('layanan_permintaan_data');
+    
+    if ($date_range && $date_range['start'] && $date_range['end']) {
+        $this->db->where('tanggal_surat >=', $date_range['start']);
+        $this->db->where('tanggal_surat <=', $date_range['end']);
+    }
+    
+    $this->db->order_by('tanggal_surat', 'DESC');
+    return $this->db->get()->result();
+}
 }

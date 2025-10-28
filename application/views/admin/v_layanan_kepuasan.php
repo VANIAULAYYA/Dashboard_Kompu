@@ -279,9 +279,23 @@
                 <div class="h5 fw-bold text-dark mb-0"><?= isset($periode_label) ? $periode_label : 'Semua Data' ?></div>
               </div>
             </div>
-            <button type="button" class="btn btn-primary btn-sm mt-4" id="btnTambah">
-              <i class="fa fa-plus"></i> Tambah Data
-            </button>
+            
+            <!-- TOMBOL TAMBAH DAN CETAK -->
+            <div class="d-flex gap-2 mt-3">
+              <button type="button" class="btn btn-primary btn-sm" id="btnTambah">
+                <i class="fa fa-plus"></i> Tambah Data
+              </button>
+              <button type="button" class="btn btn-info btn-sm" id="btnExportExcel">
+                <i class="fas fa-file-excel"></i> Export Excel
+              </button>
+            </div>
+           <!-- Tombol Floating Cetak Semua Data -->
+<div class="position-fixed bottom-0 end-0 m-4 z-3">
+  <button type="button" class="btn btn-primary btn-lg shadow rounded-pill" id="btnCetakSemuaFloating">
+    <i class="fas fa-print me-2"></i>
+    Cetak Semua Data
+  </button>
+</div>
           </div>
           <div class="table-responsive">
             <table class="table table-flush" id="datatable-search">
@@ -761,8 +775,55 @@
 </div>
 
 <script>
+// ========== FUNGSI CETAK SEMUA DATA ==========
+
+// Function untuk cetak semua data
+function cetakSemuaData() {
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    let url = '<?= site_url("Admin/export_layanan_kepuasan") ?>';
+    url += `?jenis_periode=${jenisPeriode}&tahun=${tahun}`;
+    
+    if (periode && jenisPeriode !== 'semua' && jenisPeriode !== 'tahunan') {
+        url += `&periode=${periode}`;
+    }
+    
+    window.open(url, '_blank');
+}
+
+// Function untuk export Excel
+function exportExcel() {
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    let url = '<?= site_url("Admin/export_excel_layanan_kepuasan") ?>';
+    url += `?jenis_periode=${jenisPeriode}&tahun=${tahun}`;
+    
+    if (periode && jenisPeriode !== 'semua' && jenisPeriode !== 'tahunan') {
+        url += `&periode=${periode}`;
+    }
+    
+    window.location.href = url;
+}
+
+// ========== EVENT LISTENERS ==========
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Tombol Cetak Semua Data
+    const btnCetakSemua = document.getElementById('btnCetakSemua');
+    if (btnCetakSemua) {
+        btnCetakSemua.addEventListener('click', cetakSemuaData);
+    }
+
+    // Tombol Export Excel
+    const btnExportExcel = document.getElementById('btnExportExcel');
+    if (btnExportExcel) {
+        btnExportExcel.addEventListener('click', exportExcel);
+    }
+
     // Tombol Tambah
     const btnTambah = document.getElementById("btnTambah");
     if (btnTambah) {
@@ -795,11 +856,21 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById("divTabel").style.display = "block";
         });
     }
+
+    // Modal delete
+    const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+    if (confirmDeleteModal) {
+        confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const deleteUrl = button.getAttribute('data-delete-url');
+            document.getElementById('deleteButton').href = deleteUrl;
+        });
+    }
 });
 
-  // ========== FUNGSI UNTUK FORM TAMBAH ==========
-  
- // Fungsi toggle untuk form TAMBAH - SUDAH BENAR
+// ========== FUNGSI UNTUK FORM TAMBAH ==========
+
+// Fungsi toggle untuk form TAMBAH - SUDAH BENAR
 function toggleKeteranganLainnya() {
     console.log('toggleKeteranganLainnya dipanggil');
     
@@ -826,8 +897,8 @@ function toggleKeteranganLainnya() {
     }
 }
 
-  // Update nilai ketika user mengetik di keterangan (form tambah)
-  document.addEventListener('DOMContentLoaded', function() {
+// Update nilai ketika user mengetik di keterangan (form tambah)
+document.addEventListener('DOMContentLoaded', function() {
     const keteranganInput = document.getElementById('keteranganLainnya');
     if (keteranganInput) {
         keteranganInput.addEventListener('input', function(e) {
@@ -837,7 +908,7 @@ function toggleKeteranganLainnya() {
         });
     }
     
-    // TAMBAHKAN: Event listener untuk form submit - SUDAH BENAR
+    // Event listener untuk form submit - SUDAH BENAR
     const tambahForm = document.querySelector('#divForm form');
     if (tambahForm) {
         tambahForm.addEventListener('submit', function(e) {
@@ -868,8 +939,8 @@ function toggleKeteranganLainnya() {
     }
 });
 
-  // Reset form tambah ketika dibuka
-  function resetFormTambah() {
+// Reset form tambah ketika dibuka
+function resetFormTambah() {
     const keperluanSelect = document.getElementById('keperluanSelect');
     const keteranganGroup = document.getElementById('keteranganLainnyaGroup');
     const keteranganInput = document.getElementById('keteranganLainnya');
@@ -886,10 +957,10 @@ function toggleKeteranganLainnya() {
     console.log('Form tambah direset');
 }
 
-  // ========== FUNGSI UNTUK FORM EDIT (sudah ada) ==========
-  
-  // Edit - VERSI DIPERBAIKI
-  document.addEventListener("click", function(e){
+// ========== FUNGSI UNTUK FORM EDIT ==========
+
+// Edit - VERSI DIPERBAIKI
+document.addEventListener("click", function(e){
     const btn = e.target.closest(".btnEdit");
     if (!btn) return;
     
@@ -919,10 +990,10 @@ function toggleKeteranganLainnya() {
 
     console.log('Data dari button:', data);
     fillEditForm(data);
-  });
+});
 
-  // Fungsi untuk mengisi form edit dengan data yang ada
-  function fillEditForm(data) {
+// Fungsi untuk mengisi form edit dengan data yang ada
+function fillEditForm(data) {
     console.log('Mengisi form edit dengan data:', data);
     
     // Isi field dasar
@@ -964,8 +1035,8 @@ function toggleKeteranganLainnya() {
         }
     });
     
-    // Handle keperluan - PERBAIKI INI!
-    const keperluanSelect = document.getElementById('edit_keperluan'); // Ganti ke ID yang benar
+    // Handle keperluan
+    const keperluanSelect = document.getElementById('edit_keperluan');
     const keteranganGroup = document.getElementById('edit_keteranganLainnyaGroup');
     const keteranganInput = document.getElementById('edit_keteranganLainnya');
     
@@ -997,109 +1068,10 @@ function toggleKeteranganLainnya() {
         keteranganInput.required = true;
       }
     }
-  }
+}
 
-  // Fungsi toggle untuk form edit - PERBAIKI INI!
-  function toggleKeteranganLainnyaEdit() {
-    const keperluanSelect = document.getElementById('edit_keperluan'); // Ganti ke ID yang benar
-    const keteranganGroup = document.getElementById('edit_keteranganLainnyaGroup');
-    const keteranganInput = document.getElementById('edit_keteranganLainnya');
-    
-    if (keperluanSelect && keperluanSelect.value === 'Lainnya') {
-      if (keteranganGroup) keteranganGroup.style.display = 'block';
-      if (keteranganInput) keteranganInput.required = true;
-    } else {
-      if (keteranganGroup) keteranganGroup.style.display = 'none';
-      if (keteranganInput) {
-        keteranganInput.required = false;
-        keteranganInput.value = '';
-      }
-    }
-  }
+// ========== FILTER PERIODE ==========
 
-  // Tambahkan event listener untuk keperluan dropdown
-  document.addEventListener('DOMContentLoaded', function() {
-    const keperluanSelect = document.getElementById('edit_keperluan');
-    if (keperluanSelect) {
-      keperluanSelect.addEventListener('change', toggleKeteranganLainnyaEdit);
-    }
-  });
-
-  // Validasi form edit sebelum submit
-  document.addEventListener('DOMContentLoaded', function() {
-    const editForm = document.querySelector('#divFormEdit form');
-    if (editForm) {
-      editForm.addEventListener('submit', function(e) {
-        const keperluanSelect = document.getElementById('edit_keperluan');
-        const keteranganInput = document.getElementById('edit_keteranganLainnya');
-        
-        if (keperluanSelect && keperluanSelect.value === 'Lainnya') {
-          if (!keteranganInput || !keteranganInput.value.trim()) {
-            e.preventDefault();
-            alert('Mohon isi keterangan keperluan lainnya');
-            if (keteranganInput) keteranganInput.focus();
-            return;
-          }
-        }
-      });
-    }
-  });
-
-  // Placeholder behavior
-  document.querySelectorAll("input, textarea").forEach(function(el){
-    el.addEventListener("focus", function(){
-      this.dataset.placeholder = this.placeholder;
-      this.placeholder = "";
-    });
-    el.addEventListener("blur", function(){
-      if(this.value === ""){
-        this.placeholder = this.dataset.placeholder;
-      }
-    });
-  });
-</script>
-
-  </main>
-  <!-- Tombol floating -->
-<div class="position-fixed bottom-0 end-0 m-4 z-3">
-  <button onclick="printLandscape()" class="btn btn-primary btn-lg shadow rounded-pill">
-    <i class="fas fa-print me-2"></i>
-    Cetak
-  </button>
-</div>
-  <!--   Core JS Files   -->
-  <script src="<?= base_url();?>assets/Template/assets/js/core/popper.min.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/core/bootstrap.min.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/datatables.js"></script>
-  <!-- Kanban scripts -->
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/dragula/dragula.min.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/jkanban/jkanban.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/chartjs.min.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/threejs.js"></script>
-  <script src="<?= base_url();?>assets/Template/assets/js/plugins/orbit-controls.js"></script>
-  <script>
-    const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
-      searchable: true,
-      fixedHeight: true
-    });
-  </script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="<?= base_url();?>assets/Template/assets/js/soft-ui-dashboard.min.js?v=1.2.0"></script>
-
-  <script>
 // Periode Options
 const periodeOptions = {
     bulanan: [
@@ -1199,89 +1171,51 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<script>
-// Function untuk print dengan zoom + landscape
-function printLandscape() {
-  // Simpan state awal body
-  const originalBodyStyle = document.body.style.cssText;
-  
-  // Apply zoom out
-  document.body.style.cssText = `
-    zoom: 0.6 !important;
-    transform: scale(0.6) !important;
-    transform-origin: 0 0 !important;
-    width: 166% !important;
-    height: 166% !important;
-  `;
-
-  // Buat style untuk landscape
-  const style = document.createElement('style');
-  style.innerHTML = `
-    @page {
-      size: landscape;
-      margin: 0.5cm;
+  <!--   Core JS Files   -->
+  <script src="<?= base_url();?>assets/Template/assets/js/core/popper.min.js"></script>
+  <script src="<?= base_url();?>assets/Template/assets/js/core/bootstrap.min.js"></script>
+  <script src="<?= base_url();?>assets/Template/assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="<?= base_url();?>assets/Template/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="<?= base_url();?>assets/Template/assets/js/plugins/datatables.js"></script>
+  <!-- Kanban scripts -->
+  <script src="<?= base_url();?>assets/Template/assets/js/plugins/dragula/dragula.min.js"></script>
+  <script src="<?= base_url();?>assets/Template/assets/js/plugins/jkanban/jkanban.js"></script>
+  <script src="<?= base_url();?>assets/Template/assets/js/plugins/chartjs.min.js"></script>
+  <script src="<?= base_url();?>assets/Template/assets/js/plugins/threejs.js"></script>
+  <script src="<?= base_url();?>assets/Template/assets/js/plugins/orbit-controls.js"></script>
+  <script>
+    const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
+      searchable: true,
+      fixedHeight: true
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-    body {
-      width: 100% !important;
-      margin: 0 !important;
-      padding: 10px !important;
-    }
-    .table {
-      width: 100% !important;
-      font-size: 7pt !important;
-    }
-    .no-print {
-      display: none !important;
-    }
-  `;
-  style.setAttribute('id', 'print-landscape-style');
-  document.head.appendChild(style);
 
-  // Scroll ke atas
-  window.scrollTo(0, 0);
-
-  // Print
-  window.print();
-
-  // Restore state setelah print
-  setTimeout(() => {
-    document.body.style.cssText = originalBodyStyle;
-    const styleEl = document.getElementById('print-landscape-style');
-    if (styleEl) {
-      document.head.removeChild(styleEl);
-    }
-  }, 1000);
-}
-
-// Ganti semua tombol print
+    // Event listener hanya untuk tombol floating
 document.addEventListener('DOMContentLoaded', function() {
-  // Tombol di navbar
-  const navPrintBtn = document.querySelector('a[onclick="window.print()"]');
-  if (navPrintBtn) {
-    navPrintBtn.setAttribute('onclick', 'printLandscape()');
-  }
-  
-  // Tombol floating
-  const floatPrintBtn = document.querySelector('.btn-print-floating button[onclick="window.print()"]');
-  if (floatPrintBtn) {
-    floatPrintBtn.setAttribute('onclick', 'printLandscape()');
-  }
-  
-  // Fixed plugin
-  const fixedPrintBtn = document.querySelector('.fixed-plugin a[onclick="window.print()"]');
-  if (fixedPrintBtn) {
-    fixedPrintBtn.setAttribute('onclick', 'printLandscape()');
-  }
-});
+    // Tombol Cetak Semua Data (floating)
+    const btnCetakSemuaFloating = document.getElementById('btnCetakSemuaFloating');
+    if (btnCetakSemuaFloating) {
+        btnCetakSemuaFloating.addEventListener('click', cetakSemuaData);
+    }
 
-// Shortcut keyboard Ctrl+P
-document.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && e.key === 'p') {
-    e.preventDefault();
-    printLandscape();
-  }
+    // Tombol Export Excel
+    const btnExportExcel = document.getElementById('btnExportExcel');
+    if (btnExportExcel) {
+        btnExportExcel.addEventListener('click', exportExcel);
+    }
 });
-</script>
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="<?= base_url();?>assets/Template/assets/js/soft-ui-dashboard.min.js?v=1.2.0"></script>
 </body>
-
 </html>

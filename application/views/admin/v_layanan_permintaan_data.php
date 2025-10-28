@@ -281,9 +281,23 @@
                 <div class="h5 fw-bold text-dark mb-0"><?= isset($periode_label) ? $periode_label : 'Semua Data' ?></div>
               </div>
             </div>
-            <button type="button" class="btn btn-primary btn-sm mt-4" id="btnTambah">
-              <i class="fa fa-plus"></i> Tambah Permohonan
-            </button>
+            
+           <!-- TOMBOL TAMBAH DAN CETAK -->
+<div class="d-flex gap-2 mt-3">
+  <button type="button" class="btn btn-primary btn-sm" id="btnTambah">
+    <i class="fa fa-plus"></i> Tambah Data
+  </button>
+  <button type="button" class="btn btn-info btn-sm" onclick="exportExcelPermintaan()">
+    <i class="fas fa-file-excel"></i> Export Excel
+  </button>
+</div>
+           <!-- Tombol Floating untuk Permintaan Data -->
+<div class="position-fixed bottom-0 end-0 m-4 z-3">
+  <button type="button" class="btn btn-primary btn-lg shadow rounded-pill" onclick="cetakSemuaDataPermintaan()">
+    <i class="fas fa-print me-2"></i>
+    Cetak Semua Data
+  </button>
+</div>
           </div>
           <div class="table-responsive">
             <table class="table table-flush" id="datatable-search">
@@ -667,9 +681,6 @@ document.querySelectorAll("input, textarea").forEach(function(el){
 
   </main>
   <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="fa fa-cog py-2"> </i>
-    </a>
     <div class="card shadow-lg blur">
       <div class="card-header pb-0 pt-3  bg-transparent ">
         <div class="float-start">
@@ -764,6 +775,40 @@ document.querySelectorAll("input, textarea").forEach(function(el){
       searchable: true,
       fixedHeight: true
     });
+
+    // Function untuk cetak semua data PERMINTAAN DATA
+function cetakSemuaDataPermintaan() {
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    let url = '<?= site_url("Admin/export_permintaan_data") ?>';
+    url += `?jenis_periode=${jenisPeriode}&tahun=${tahun}`;
+    
+    if (periode && jenisPeriode !== 'semua' && jenisPeriode !== 'tahunan') {
+        url += `&periode=${periode}`;
+    }
+    
+    console.log('URL Cetak Permintaan Data:', url);
+    window.open(url, '_blank');
+}
+
+// Function untuk export Excel PERMINTAAN DATA
+function exportExcelPermintaan() {
+    const jenisPeriode = document.getElementById('jenis_periode').value;
+    const periode = document.getElementById('periode').value;
+    const tahun = document.getElementById('tahun').value;
+    
+    let url = '<?= site_url("Admin/export_excel_permintaan_data") ?>';
+    url += `?jenis_periode=${jenisPeriode}&tahun=${tahun}`;
+    
+    if (periode && jenisPeriode !== 'semua' && jenisPeriode !== 'tahunan') {
+        url += `&periode=${periode}`;
+    }
+    
+    console.log('URL Excel Permintaan Data:', url);
+    window.location.href = url;
+}
   </script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
