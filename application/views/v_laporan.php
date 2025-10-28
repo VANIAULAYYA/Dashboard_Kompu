@@ -600,51 +600,79 @@
         justify-content: center;
       }
     }
+
+     .navbar .dropdown-toggle::after {
+  display: none !important;
+}
+
   </style>
-</head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light shadow-sm">
+ 
+
+   <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light shadow-sm">
     <div class="container">
-      <a class="navbar-brand" href="<?php echo base_url(); ?>">
-        <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" style="width: 250px; height: auto;">
-      </a>
+        <!-- Logo -->
+        <a class="navbar-brand" href="<?php echo base_url(); ?>">
+            <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" style="width: 250px; height: auto;">
+        </a>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link <?= $active_menu == 'home' ? 'active' : '' ?>" href="<?= base_url() ?>">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link <?= $active_menu == 'tentang' ? 'active' : '' ?>" href="<?= base_url('Landing/tentang') ?>">Tentang</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link <?= $active_menu == 'buku_tamu' ? 'active' : '' ?>" href="<?= base_url('Landing/buku_tamu') ?>">Buku Tamu</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link <?= $active_menu == 'medsos' ? 'active' : '' ?>" href="<?= base_url('Landing/medsos') ?>">Media Sosial</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link <?= $active_menu == 'layanan' ? 'active' : '' ?>" href="<?= base_url('Landing/layanan') ?>">Layanan</a>
-          </li>
+            <!-- Toggler/collapse button (mobile) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link <?= $active_menu == 'laporan' ? 'active' : '' ?>" 
-               href="#" id="navbarLaporan" role="button" 
-               data-bs-toggle="dropdown" data-bs-display="static" 
-               aria-expanded="false">
-              Publikasi <i id="laporan-icon" class="fas fa-chevron-up ms-1"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
-              <li><a class="dropdown-item" href="<?= base_url('Landing/laporan_PPID') ?>">Laporan PPID</a></li>
-              <li><a class="dropdown-item" href="<?= base_url('Landing/laporan_Kompu') ?>">Laporan Kompu</a></li>
-              <li><a class="dropdown-item" href="<?= base_url('Landing/Survei_Kepuasan_Masyarakat') ?>">Survei Kepuasan Masyarakat</a></li>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'home' ? 'active' : ''; ?>" href="<?php echo base_url(); ?>">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/tentang'); ?>">Tentang</a>
+                </li>
+
+                <!-- Dropdown Buku Tamu - FIXED -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?php echo isset($active_menu) && $active_menu == 'buku_tamu' ? 'active' : ''; ?>" 
+                       href="#" id="navbarBukuTamu" role="button" 
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Buku Tamu <i id="buku-tamu-icon" class="fas fa-chevron-down ms-1"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarBukuTamu">
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/buku_tamu'); ?>">Formulir Buku Tamu</a></li>
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/survei'); ?>">Formulir Survei</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'medsos' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/medsos'); ?>">Media Sosial</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'layanan' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/layanan'); ?>">Layanan</a>
+                </li>
+
+                <!-- Dropdown Laporan - FIXED -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?php echo isset($active_menu) && $active_menu == 'laporan' ? 'active' : ''; ?>" 
+                       href="#" id="navbarLaporan" role="button" 
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Publikasi <i id="laporan-icon" class="fas fa-chevron-down ms-1"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarLaporan">
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_PPID'); ?>">Laporan PPID</a></li>
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/laporan_Kompu'); ?>">Laporan Kompu</a></li>
+                        <li><a class="dropdown-item" href="<?php echo base_url('Landing/Survei_Kepuasan_Masyarakat'); ?>">Survei Kepuasan Masyarakat</a></li>
+                    </ul>
+                </li>
+
             </ul>
-          </li>
-        </ul>
-      </div>
+        </div>
     </div>
-  </nav>
+</nav>
+
 
   <!-- Hero Section -->
   <section class="hero-section">
@@ -1074,8 +1102,42 @@
 
   </div>
 
+   <!-- HANYA SATU Bootstrap JS di akhir -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script untuk dropdown -->
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bukuTamuToggle = document.getElementById('navbarBukuTamu');
+        const bukuTamuIcon = document.getElementById('buku-tamu-icon');
+        const laporanToggle = document.getElementById('navbarLaporan');
+        const laporanIcon = document.getElementById('laporan-icon');
+
+        if (bukuTamuToggle && bukuTamuIcon) {
+            bukuTamuToggle.addEventListener('show.bs.dropdown', () => {
+                bukuTamuIcon.classList.remove('fa-chevron-down');
+                bukuTamuIcon.classList.add('fa-chevron-up');
+            });
+
+            bukuTamuToggle.addEventListener('hide.bs.dropdown', () => {
+                bukuTamuIcon.classList.remove('fa-chevron-up');
+                bukuTamuIcon.classList.add('fa-chevron-down');
+            });
+        }
+
+        if (laporanToggle && laporanIcon) {
+            laporanToggle.addEventListener('show.bs.dropdown', () => {
+                laporanIcon.classList.remove('fa-chevron-down');
+                laporanIcon.classList.add('fa-chevron-up');
+            });
+
+            laporanToggle.addEventListener('hide.bs.dropdown', () => {
+                laporanIcon.classList.remove('fa-chevron-up');
+                laporanIcon.classList.add('fa-chevron-down');
+            });
+        }
+    });
+  </script>
     // Enhanced PDF Viewer Functions
     function showPDF(title, pdfUrl, subtitle) {
       console.log('📄 Loading PDF:', pdfUrl);
