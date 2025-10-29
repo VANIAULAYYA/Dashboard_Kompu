@@ -202,9 +202,27 @@
 .navbar .dropdown-toggle::after {
   display: none !important;
 }
+
+/* Audio Control Styles */
+#audio-toggle {
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+#audio-toggle.muted {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+}
+
+#audio-toggle.muted #audio-icon {
+    transform: scale(0.9);
+}
   
 </style>
-
 
    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light shadow-sm">
@@ -307,8 +325,6 @@
   <!-- Dot Indicators -->
   <div class="dots"></div>
 
-  
-
   <!-- Footer -->
   <footer>
     <h3 class="h5">Alamat</h3>
@@ -316,6 +332,17 @@
     <hr class="my-4">
     <p class="mb-0">&copy; <?php echo date('Y'); ?> BBWS Brantas. All rights reserved.</p>
   </footer>
+
+      <!-- Audio Element -->
+    <audio id="background-audio" loop>
+        <source src="<?php echo base_url('assets/audio2.mp3'); ?>" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- Audio Control Button -->
+    <button id="audio-toggle" class="fixed bottom-20 right-8 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition z-50">
+        <i class="fas fa-volume-up" id="audio-icon"></i>
+    </button>
 
   <!-- HANYA SATU Bootstrap JS di akhir -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -433,6 +460,74 @@
 
     window.addEventListener("load", adjustWrapperHeight);
     window.addEventListener("resize", adjustWrapperHeight);
+  
+ // Audio Control Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const audio = document.getElementById('background-audio');
+    const audioToggle = document.getElementById('audio-toggle');
+    const audioIcon = document.getElementById('audio-icon');
+    
+    // Cek preferensi user sebelumnya
+    const audioPreference = localStorage.getItem('audioEnabled');
+    
+    // Fungsi untuk memutar audio (TANPA NOTIFIKASI)
+    function playAudio() {
+        audio.volume = 0.3; // Volume 30%
+        audio.play().then(() => {
+            audioToggle.classList.remove('muted');
+            audioIcon.className = 'fas fa-volume-up';
+            localStorage.setItem('audioEnabled', 'true');
+        }).catch(error => {
+            console.log('Autoplay prevented:', error);
+            // Jika autoplay diblokir, ubah icon ke mute
+            audioToggle.classList.add('muted');
+            audioIcon.className = 'fas fa-volume-mute';
+        });
+    }
+    
+    // Fungsi untuk menghentikan audio (TANPA NOTIFIKASI)
+    function pauseAudio() {
+        audio.pause();
+        audioToggle.classList.add('muted');
+        audioIcon.className = 'fas fa-volume-mute';
+        localStorage.setItem('audioEnabled', 'false');
+    }
+    
+    // Event listener untuk toggle button
+    audioToggle.addEventListener('click', function() {
+        if (audio.paused) {
+            playAudio();
+        } else {
+            pauseAudio();
+        }
+    });
+    
+    // Auto play dengan delay 1 detik setelah halaman load
+    setTimeout(() => {
+        if (audioPreference !== 'false') {
+            playAudio();
+        } else {
+            // Jika user sebelumnya mematikan audio, set icon ke mute
+            audioToggle.classList.add('muted');
+            audioIcon.className = 'fas fa-volume-mute';
+        }
+    }, 1000);
+    
+    // Handle ketika audio berakhir (untuk loop)
+    audio.addEventListener('ended', function() {
+        audio.currentTime = 0;
+        audio.play();
+    });
+    
+    // Handle visibility change - pause audio ketika tab tidak aktif
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            audio.pause();
+        } else if (localStorage.getItem('audioEnabled') === 'true') {
+            audio.play();
+        }
+    });
+});
   </script>
 </body>
 </html>

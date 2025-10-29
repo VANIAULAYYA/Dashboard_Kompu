@@ -15,6 +15,12 @@ body {
     background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
 }
 
+:root {
+    --primary: #3498db;
+    --secondary: #2c3e50; /* INI YANG DITAMBAHKIN */
+    --accent: #e74c3c;
+}
+
 .hero-section {
   background: linear-gradient(rgba(78, 115, 223, 0.8), rgba(26, 26, 46, 0.8));
   color: white;
@@ -29,7 +35,7 @@ body {
     padding: 40px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    max-width: 800px;
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -111,7 +117,7 @@ body {
 }
 
 .user-data-card {
-    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    background: linear-gradient(rgba(78, 115, 223, 0.8), rgba(26, 26, 46, 0.8));
     color: white;
     padding: 25px;
     border-radius: 12px;
@@ -161,8 +167,8 @@ body {
 
 .radio-group {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 kolom sama rata */
+  gap: 8px;
   margin-top: 15px;
 }
 
@@ -176,31 +182,26 @@ body {
   margin: 0;
   padding: 12px 8px;
   background: white;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 2px solid #e3e6f0;
   transition: all 0.3s ease;
   font-weight: 400 !important;
   color: #5a5c69;
-  min-height: 70px;
+  min-height: 60px;
   text-align: center;
   word-wrap: break-word;
   box-sizing: border-box;
   line-height: 1.3;
+  flex-direction: row; /* Horizontal - simbol sejajar dengan teks */
 }
 
-/* Force text alignment dan wrapping */
-.radio-group label {
-  text-align: center !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* Pastikan text di dalam label juga center */
+/* Pastikan semua teks konsisten */
 .radio-group label span {
   text-align: center;
   display: block;
   width: 100%;
+  font-weight: 400 !important; /* Pastikan semua sama */
+  font-family: inherit !important; /* Pastikan font family sama */
 }
 
 .radio-group label:hover {
@@ -215,25 +216,40 @@ body {
   accent-color: #4e73df;
   flex-shrink: 0;
   margin: 0;
+  /* Hapus order: -1 agar radio tetap di kiri */
 }
 
 .radio-group label:has(input:checked) {
   background: #4e73df;
   color: white;
   border-color: #4e73df;
-  box-shadow: 0 4px 12px rgba(78, 115, 223, 0.3);
+  box-shadow: 0 2px 8px rgba(78, 115, 223, 0.3);
   font-weight: 400 !important;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .radio-group {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr; /* 2 kolom di mobile */
+    gap: 6px;
   }
   
   .radio-group label {
-    min-height: 60px;
-    padding: 12px 10px;
+    min-height: 55px;
+    padding: 10px 6px;
+    font-size: 13px;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .radio-group {
+    grid-template-columns: 1fr 1fr; /* Tetap 2 kolom di layar sangat kecil */
+  }
+  
+  .radio-group label {
+    font-size: 12px;
+    padding: 8px 4px;
   }
 }
 
@@ -630,6 +646,15 @@ nav .relative {
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
     color: #1a1a2e;
 }
+
+footer {
+    background-color: #2c3e50; /* Ganti dengan warna langsung sebagai backup */
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 50px; /* Tambahkan margin atas */
+}
+
 </style>
 </head>
 
@@ -802,7 +827,9 @@ nav .relative {
     <h3>Formulir Survei Kepuasan Masyarakat</h3>
     
     <div class="user-data-card">
-        <h5><i class="fas fa-user-circle mr-2"></i> Data Anda</h5>
+        <h5 class="flex justify-center items-center text-white-700 text-lg font-semibold">
+  <i class="fas fa-user-circle mr-2"></i> Data Anda
+</h5>
         <p><strong>Nama:</strong> <span id="display-nama">-</span></p>
         <p><strong>Asal Instansi:</strong> <span id="display-instansi">-</span></p>
         <p><strong>Keperluan:</strong> <span id="display-keperluan">-</span></p>
@@ -962,6 +989,14 @@ nav .relative {
     <button id="back-to-top" class="hidden fixed bottom-8 right-8 w-12 h-12 bg-orange-600 text-white rounded-full shadow-lg hover:bg-orange-700 transition">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Footer -->
+  <footer>
+    <h3 class="h5">Alamat</h3>
+    <p>Jl. Raya Menganti No. 312<br>Surabaya, Jawa Timur</p>
+    <hr class="my-4">
+    <p class="mb-0">&copy; <?php echo date('Y'); ?> BBWS Brantas. All rights reserved.</p>
+  </footer>
 
     <script>
   // Toggle mobile menu (hamburger)

@@ -30,6 +30,11 @@ public function get_user_by_nik($nik) {
     return $this->db->get_where('buku_tamu', ['nik' => $nik])->row();
 }
 
+// Atau jika ingin menggunakan nama insert_feedback
+public function insert_feedback($data) {
+    return $this->db->insert('buku_tamu', $data);
+}
+
     // ===============================
     // BAGIAN LAPORAN
     // ===============================
@@ -166,4 +171,5 @@ public function Survei_Kepuasan_Masyarakat($tahun = null)
         $this->db->order_by('tanggal', 'ASC');
         return $this->db->get()->result_array();
     }
+
 }

@@ -13,18 +13,27 @@ class M_monev_kepuasan extends CI_Model {
      * Get total responden berdasarkan periode
      */
    public function get_total_responden($date_range) {
-    $this->db->from('buku_tamu');
+    // Reset query builder untuk memastikan tidak ada query sebelumnya
+    $this->db->reset_query();
     
-    // Filter berdasarkan tanggal range
-    if ($date_range['start'] && $date_range['end']) {
-        $this->db->where('timestamp >=', $date_range['start']);
-        $this->db->where('timestamp <=', $date_range['end']);
+    $this->db->from($this->table);
+    
+    // DEBUG: Log date range
+    log_message('debug', 'Date Range: ' . json_encode($date_range));
+    
+    // Filter hanya jika date_range tidak null
+    if ($date_range['start'] !== null && $date_range['end'] !== null) {
+        $this->db->where('timestamp >=', $date_range['start'] . ' 00:00:00');
+        $this->db->where('timestamp <=', $date_range['end'] . ' 23:59:59');
     }
     
-    // JANGAN tambahkan filter tahun lagi jika sudah pakai date_range
-    // Karena date_range['start'] dan date_range['end'] sudah include tahun
+    $count = $this->db->count_all_results();
     
-    return $this->db->count_all_results();
+    // DEBUG: Log query dan hasil
+    log_message('debug', 'Total Responden Query: ' . $this->db->last_query());
+    log_message('debug', 'Total Responden Result: ' . $count);
+    
+    return $count;
 }
 
     /**
@@ -530,48 +539,5 @@ public function get_distribusi_unsur($date_range, $kolom) {
     
     return $result;
 }
-
- public function get_kepuasan_tahun_ini($tahun) {
-        // Query untuk total responden tahun berjalan
-        $this->db->where('YEAR(timestamp)', $tahun);
-        $total_responden = $this->db->count_all_results('buku_tamu_backup');
-        
-        // Query untuk menghitung nilai IKM (rata-rata semua aspek penilaian)
-        $this->db->select('
-            AVG(pendapat_pelayanan) as pelayanan,
-            AVG(pemahaman_prosedur) as prosedur,
-            AVG(pendapat_kecepatan) as kecepatan,
-            AVG(pendapat_biaya) as biaya,
-            AVG(pendapat_produk) as produk,
-            AVG(pendapat_kompetensi) as kompetensi,
-            AVG(pendapat_perilaku) as perilaku,
-            AVG(pendapat_pengaduan) as pengaduan,
-            AVG(pendapat_kualitas) as kualitas
-        ');
-        $this->db->where('YEAR(timestamp)', $tahun);
-        $rata_rata = $this->db->get('buku_tamu_backup')->row_array();
-        
-        // Hitung nilai IKM total (rata-rata dari semua aspek)
-        $total_nilai = 0;
-        $jumlah_aspek = 0;
-        
-        foreach ($rata_rata as $nilai) {
-            if ($nilai !== null) {
-                $total_nilai += $nilai;
-                $jumlah_aspek++;
-            }
-        }
-        
-        $nilai_ikm = $jumlah_aspek > 0 ? $total_nilai / $jumlah_aspek : 0;
-        
-        // Hitung grade mutu berdasarkan nilai IKM
-        $grade_mutu = $this->hitung_grade_mutu($nilai_ikm);
-        
-        return [
-            'total_responden' => $total_responden,
-            'nilai_ikm' => $nilai_ikm,
-            'grade_mutu' => $grade_mutu
-        ];
-    }
 
 }

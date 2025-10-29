@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LAMPU BRANTAS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     
     <style>
@@ -377,21 +377,22 @@ nav .relative {
         </div>
     </section>
 
-    <!-- Stats Section -->
+   <!-- Stats Section -->
 <section class="gradient-bg py-20 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div class="p-6">
-                <h3 class="text-youre-the-is-animated text-4xl md:text-5xl font-bold mb-2" id="totalKunjungan">
-                    9440
+                <h3 class="text-youre-the-is-animated text-4xl md:text-5xl font-bold mb-2">
+                    <span id="simpleResponden">0</span>
                 </h3>
                 <p class="text-lg">Kunjungan</p>
             </div>
             <div class="p-6">
-                <h3 class="text-4xl md:text-5xl font-bold mb-2" id="kepuasanLayanan">
-                    90%
+                <h3 class="text-4xl md:text-5xl font-bold mb-2">
+                    <span id="simplePersentase">0.0</span>%
+                    <span class="text-lg block mt-1"></span>
                 </h3>
-                <p class="text-lg">Kepuasan Layanan</p>
+                <p class="text-lg">Kepuasan Masyarakat</p>
             </div>
             <div class="p-6">
                 <h5 class="text-4xl md:text-5xl font-bold mb-2">Senin-Jumat <br>07.30-16.00 WIB</h5>
@@ -412,141 +413,228 @@ nav .relative {
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Kontak Kompu dan PPID</h2>
-                    <p class="text-gray-600 mb-8">Kontak KOMPU BBWS Brantas dapat dihubungi di:</p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <div class="gradient-bg text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <p class="text-gray-700">Jl. Raya Menganti No.312<br>Wiyung, Surabaya</p>
-                        </div>
-                        
-                        <div class="flex items-center">
-                            <div class="gradient-bg text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <p class="text-gray-700">082338417445 (Hanya Chat Whatsapp)</p>
-                        </div>
-                        
-                        <div class="flex items-center">
-                            <div class="gradient-bg text-white w-10 h-10 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <p class="text-gray-700">bbwsbrantas@pu.go.id</p>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-8 flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.instagram.com/pu_sda_brantas" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:text-white hover:bg-orange-600 transition" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- <div>
-                    <form class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                                <input type="text" id="first-name" name="first-name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="John">
-                            </div>
-                            <div>
-                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                                <input type="text" id="last-name" name="last-name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="Doe">
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="your@email.com">
-                        </div>
-                        
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="+1 (___) ___-____">
-                        </div>
-                        
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent" placeholder="Your message..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="gradient-bg text-white px-8 py-3 rounded-lg text-lg font-medium hover:shadow-lg transition w-full">Send Message</button>
-                    </form>
-                </div> -->
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <span class="text-xl font-bold">KEMENPU BBWS BRANTAS</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">Jl. Raya Menganti No.312 Wiyung Surabaya</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-orange-400 transition"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-                
-                <!-- <div>
-                    <h3 class="text-lg font-semibold mb-4">Company</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">Careers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">Press</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">Documentation</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">API Reference</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">Help Center</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">Community</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Legal</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">Terms of Service</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">Cookie Policy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-orange-400 transition">GDPR</a></li>
-                    </ul>
-                </div> -->
-            </div>
+    <!-- Horizontal Polaroid Slider -->
+<section id="activities" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Galeri Kegiatan</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Dokumentasi berbagai aktivitas dan pelayanan KOMPU BBWS Brantas</p>
+        </div>
+
+        <!-- Slider Container -->
+        <div class="relative">
+            <!-- Navigation Buttons -->
+            <button class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full w-10 h-10 shadow-lg flex items-center justify-center hover:bg-gray-100 transition duration-300" onclick="scrollSlider(-1)">
+                <i class="fas fa-chevron-left text-gray-700"></i>
+            </button>
             
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 KOMPU BBWS BRANTAS. All rights reserved.</p>
+            <button class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full w-10 h-10 shadow-lg flex items-center justify-center hover:bg-gray-100 transition duration-300" onclick="scrollSlider(1)">
+                <i class="fas fa-chevron-right text-gray-700"></i>
+            </button>
+
+            <!-- Slider Track -->
+            <div class="overflow-hidden">
+                <div id="sliderTrack" class="flex space-x-8 pb-8 transition-transform duration-500 ease-in-out">
+                    <!-- Polaroid 1 -->
+                    <div class="polaroid-item flex-shrink-0 w-80 transform rotate-2 hover:rotate-0 transition-all duration-500">
+                        <div class="bg-white p-4 shadow-2xl rounded-sm">
+                            <div class="polaroid-image mb-4">
+                                <img src="<?= base_url('assets/Soetami.jpg') ?>" 
+                     alt="Pelayanan Publik" 
+                     class="w-full h-64 object-cover rounded-sm"
+                     onerror="this.src='<?= base_url('assets/img/default.jpg') ?>'">
+            </div>
+                            <div class="polaroid-caption text-center">
+                                <p class="text-gray-800 font-medium">Soetami ( Karang Kates )</p>
+                                <p class="text-gray-500 text-sm mt-1">Bendungan Karang Kates dibangun pada era Orde Baru, tepatnya mulai dibangun pada tahun 1963 dan diresmikan pada tahun 1972.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Polaroid 2 -->
+                    <div class="polaroid-item flex-shrink-0 w-80 transform -rotate-1 hover:rotate-0 transition-all duration-500">
+                        <div class="bg-white p-4 shadow-2xl rounded-sm">
+                            <div class="polaroid-image mb-4">
+                                <img src="<?= base_url('assets/Tugu.jpg') ?>" 
+                     alt="Pelayanan Publik" 
+                     class="w-full h-64 object-cover rounded-sm"
+                     onerror="this.src='<?= base_url('assets/img/default.jpg') ?>'">
+            </div>
+                            <div class="polaroid-caption text-center">
+                                <p class="text-gray-800 font-medium">Tugu</p>
+                                <p class="text-gray-500 text-sm mt-1">Bendungan Tugu diresmikan pada tahun 2022 oleh Presiden Republik Indonesia yang terletak di Desa Nglebo, Kecamatan Tugu, Kabupaten Trenggalek.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Polaroid 3 -->
+                    <div class="polaroid-item flex-shrink-0 w-80 transform rotate-3 hover:rotate-0 transition-all duration-500">
+                        <div class="bg-white p-4 shadow-2xl rounded-sm">
+                            <div class="polaroid-image mb-4">
+                                <img src="<?= base_url('assets/Bajulmati.jpg') ?>" 
+                     alt="Pelayanan Publik" 
+                     class="w-full h-64 object-cover rounded-sm"
+                     onerror="this.src='<?= base_url('assets/img/default.jpg') ?>'">
+            </div>
+                            <div class="polaroid-caption text-center">
+                                <p class="text-gray-800 font-medium">Bajulmati</p>
+                                <p class="text-gray-500 text-sm mt-1">Bendungan Bajulmati berada di Kecamatan Banyuputih, Kabupaten Situbondo mulai dibangun pada tahun 2006 dan resmi dioperasikan pada tahun 2015.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Polaroid 4 -->
+                    <div class="polaroid-item flex-shrink-0 w-80 transform -rotate-2 hover:rotate-0 transition-all duration-500">
+                        <div class="bg-white p-4 shadow-2xl rounded-sm">
+                            <div class="polaroid-image mb-4">
+                                <img src="<?= base_url('assets/Soetami2.jpg') ?>" 
+                     alt="Pelayanan Publik" 
+                     class="w-full h-64 object-cover rounded-sm"
+                     onerror="this.src='<?= base_url('assets/img/default.jpg') ?>'">
+            </div>
+                            <div class="polaroid-caption text-center">
+                                <p class="text-gray-800 font-medium">Soetami ( Karang Kates )</p>
+                                <p class="text-gray-500 text-sm mt-1">Terletak di Kecamatan Sumberpucung, Kabupaten Malang, bendungan ini bukan hanya berfungsi sebagai pengendali air, tetapi juga menjadi simbol keseimbangan antara manusia dan alam.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Polaroid 5 -->
+                    <div class="polaroid-item flex-shrink-0 w-80 transform rotate-1 hover:rotate-0 transition-all duration-500">
+                        <div class="bg-white p-4 shadow-2xl rounded-sm">
+                            <div class="polaroid-image mb-4">
+                                <img src="<?= base_url('assets/Tugu2.jpg') ?>" 
+                     alt="Pelayanan Publik" 
+                     class="w-full h-64 object-cover rounded-sm"
+                     onerror="this.src='<?= base_url('assets/img/default.jpg') ?>'">
+            </div>
+                            <div class="polaroid-caption text-center">
+                                <p class="text-gray-800 font-medium">Tugu</p>
+                                <p class="text-gray-500 text-sm mt-1">Bendungan ini bukan sekadar proyek fisik, melainkan simbol dari komitmen pemerintah untuk memperkuat ketahanan pangan, air, dan energi di wilayah selatan Jawa yang selama ini kurang terjamah oleh pembangunan besar.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Polaroid 6 -->
+                    <div class="polaroid-item flex-shrink-0 w-80 transform -rotate-3 hover:rotate-0 transition-all duration-500">
+                        <div class="bg-white p-4 shadow-2xl rounded-sm">
+                            <div class="polaroid-image mb-4">
+                                <img src="<?= base_url('assets/Bajulmati2.jpg') ?>" 
+                     alt="Pelayanan Publik" 
+                     class="w-full h-64 object-cover rounded-sm"
+                     onerror="this.src='<?= base_url('assets/img/default.jpg') ?>'">
+            </div>
+                            <div class="polaroid-caption text-center">
+                                <p class="text-gray-800 font-medium">Bajulmati</p>
+                                <p class="text-gray-500 text-sm mt-1">Lokasinya yang berada di antara dua kabupaten membuat bendungan ini memiliki peran strategis, baik dari segi sumber daya air maupun pengembangan wilayah.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </footer>
+
+        <!-- Dots Indicator -->
+        <div class="flex justify-center space-x-2 mt-8">
+            <div class="w-3 h-3 bg-orange-400 rounded-full dot-indicator active"></div>
+            <div class="w-3 h-3 bg-gray-300 rounded-full dot-indicator"></div>
+            <div class="w-3 h-3 bg-gray-300 rounded-full dot-indicator"></div>
+        </div>
+        
+    </div>
+</section>
+
+   <!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-52 sm:px-56 lg:px-60">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+            <!-- Kolom 1: Info Perusahaan & Kontak -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">HUBUNGI KAMI</h3>
+                </div>
+                
+                <!-- Informasi Kontak -->
+<div class="space-y-4">
+  <!-- Alamat -->
+  <a href="https://maps.google.com/?q=Jl.+Raya+Menganti+No.312,+Wiyung,+Surabaya" 
+     target="_blank" 
+     class="flex items-start group cursor-pointer">
+    <i class="fas fa-map-marker-alt text-gray-400 group-hover:text-orange-400 transition mt-1 mr-3 w-5 text-center flex-shrink-0"></i>
+    <span class="text-gray-400 text-sm">
+      Jl. Raya Menganti No.312, Wiyung
+    </span>
+  </a>
+
+  <!-- WhatsApp -->
+  <a href="https://wa.me/6282338417445" 
+     target="_blank" 
+     class="flex items-start group cursor-pointer">
+    <i class="fab fa-whatsapp text-gray-400 group-hover:text-orange-400 transition mt-1 mr-3 w-5 text-center flex-shrink-0"></i>
+    <div>
+      <span class="text-gray-400 text-sm block">
+        082338417445
+      </span>
+      <span class="text-gray-400 text-xs">(Hanya Chat WhatsApp)</span>
+    </div>
+  </a>
+
+  <!-- Email -->
+  <a href="mailto:kompu.sda.brantas@pu.go.id?subject=Permintaan%20Informasi&body=Halo%20tim%20BBWS%20Brantas,%0D%0A%0D%0ASaya%20ingin%20menanyakan%20tentang..."
+     class="flex items-start group cursor-pointer">
+    <i class="fas fa-envelope text-gray-400 group-hover:text-orange-400 transition mt-1 mr-3 w-5 text-center flex-shrink-0"></i>
+    <span class="text-gray-400 text-sm">
+      kompu.sda.brantas@pu.go.id
+    </span>
+  </a>
+</div>
+            </div>
+
+            <!-- Kolom 2: Media Sosial -->
+            <div class="space-y-4 md:col-span-2">
+                <h3 class="text-xl font-bold text-white text-left mb-6 pl-56">MEDIA SOSIAL</h3>
+                <div class="grid grid-cols-2 gap-x-16 gap-y-4 max-w-xl ml-32">
+                    <a href="https://www.facebook.com/profile.php?id=100081895749516&_rdc=2&_rdr#" class="flex items-center text-gray-400 transition group">
+                        <i class="fab fa-facebook-f text-base w-5 text-center mr-3 group-hover:text-orange-400 transition flex-shrink-0"></i>
+                        <span class="text-sm">Facebook</span>
+                    </a>
+                    
+                    <a href="https://www.instagram.com/pu_sda_brantas" class="flex items-center text-gray-400 transition group" target="_blank">
+                        <i class="fab fa-instagram text-base w-5 text-center mr-3 group-hover:text-orange-400 transition flex-shrink-0"></i>
+                        <span class="text-sm">Instagram</span>
+                    </a>
+                    
+                    <a href="https://x.com/pu_sda_brantas" class="flex items-center text-gray-400 transition group">
+                        <i class="fab fa-twitter text-base w-5 text-center mr-3 group-hover:text-orange-400 transition flex-shrink-0"></i>
+                        <span class="text-sm">Twitter</span>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/@sisdabrantas" class="flex items-center text-gray-400 transition group">
+                        <i class="fab fa-youtube text-base w-5 text-center mr-3 group-hover:text-orange-400 transition flex-shrink-0"></i>
+                        <span class="text-sm">YouTube</span>
+                    </a>
+                    
+                    <a href="https://www.threads.com/@pu_sda_brantas" class="flex items-center text-gray-400 transition group">
+                        <i class="fab fa-threads text-base w-5 text-center mr-3 group-hover:text-orange-400 transition flex-shrink-0"></i>
+                        <span class="text-sm">Threads</span>
+                    </a>
+                    
+                    <a href="https://www.tiktok.com/@pu_sda_brantas" class="flex items-center text-gray-400 transition group">
+                        <i class="fab fa-tiktok text-base w-5 text-center mr-3 group-hover:text-orange-400 transition flex-shrink-0"></i>
+                        <span class="text-sm">TikTok</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p class="text-sm">&copy; 2025 KOMPU BBWS BRANTAS. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 
     <!-- Back to Top button -->
     <button id="back-to-top" class="hidden fixed bottom-8 right-8 w-12 h-12 bg-orange-600 text-white rounded-full shadow-lg hover:bg-orange-700 transition">
@@ -554,5 +642,150 @@ nav .relative {
     </button>
     
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+// Data dari PHP
+const targetData = {
+    responden: <?= isset($total_responden) ? $total_responden : 0 ?>,
+    persentase: <?= isset($persentase_ikm) ? $persentase_ikm : 0 ?>,
+    nilai: <?= isset($nilai_ikm) ? $nilai_ikm : 0 ?>
+};
+
+// Simple counting animation
+function simpleCountUp(elementId, target, isDecimal = false) {
+    const element = document.getElementById(elementId);
+    let current = 0;
+    const increment = target / 100; // 100 frame animation
+    const duration = 2000; // 2 seconds
+    const intervalTime = duration / 100;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        
+        if (isDecimal) {
+            element.textContent = current.toFixed(1);
+        } else {
+            element.textContent = Math.floor(current).toLocaleString();
+        }
+    }, intervalTime);
+}
+
+// Start all animations
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        simpleCountUp('simpleResponden', targetData.responden, false);
+        simpleCountUp('simplePersentase', targetData.persentase, true);
+        simpleCountUp('simpleNilai', targetData.nilai, true);
+    }, 800);
+});
+</script>
+
+<script>
+let currentPosition = 0;
+const sliderTrack = document.getElementById('sliderTrack');
+const slideWidth = 328; // width + gap (w-80 = 320px + gap-8 = 32px)
+let isScrolling = true;
+
+// Clone slides untuk infinite loop yang smooth
+function setupInfiniteScroll() {
+    const slides = Array.from(sliderTrack.children);
+    
+    // Clone semua slide dan append ke belakang
+    slides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        sliderTrack.appendChild(clone);
+    });
+    
+    // Clone lagi untuk buffer
+    slides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        sliderTrack.appendChild(clone);
+    });
+}
+
+// Smooth auto scroll
+function autoScroll() {
+    if (!isScrolling) {
+        requestAnimationFrame(autoScroll);
+        return;
+    }
+    
+    currentPosition += 1.2; // Kecepatan scroll
+    
+    // Reset position saat sampai di clone pertama
+    const totalSlides = 7; // Jumlah slide asli
+    const maxPosition = totalSlides * slideWidth;
+    
+    if (currentPosition >= maxPosition) {
+        currentPosition = 0;
+        sliderTrack.style.transition = 'none';
+        sliderTrack.style.transform = `translateX(-${currentPosition}px)`;
+        
+        // Re-enable transition setelah reset
+        setTimeout(() => {
+            sliderTrack.style.transition = 'transform 0.3s linear';
+        }, 50);
+    } else {
+        sliderTrack.style.transform = `translateX(-${currentPosition}px)`;
+    }
+    
+    requestAnimationFrame(autoScroll);
+}
+
+// Manual scroll with buttons
+function scrollSlider(direction) {
+    currentPosition += direction * slideWidth;
+    
+    const totalSlides = 7;
+    const maxPosition = totalSlides * slideWidth;
+    
+    if (currentPosition < 0) {
+        currentPosition = maxPosition - slideWidth;
+    } else if (currentPosition >= maxPosition) {
+        currentPosition = 0;
+    }
+    
+    sliderTrack.style.transition = 'transform 0.5s ease-in-out';
+    sliderTrack.style.transform = `translateX(-${currentPosition}px)`;
+}
+
+// Pause on hover - Apply ke seluruh section
+const sliderSection = document.querySelector('#activities .relative');
+
+if (sliderSection) {
+    sliderSection.addEventListener('mouseenter', () => {
+        isScrolling = false;
+        console.log('Scroll PAUSED');
+    });
+
+    sliderSection.addEventListener('mouseleave', () => {
+        isScrolling = true;
+        console.log('Scroll RESUMED');
+        sliderTrack.style.transition = 'transform 0.3s linear';
+    });
+}
+
+// Juga apply ke slider track
+sliderTrack.addEventListener('mouseenter', () => {
+    isScrolling = false;
+});
+
+sliderTrack.addEventListener('mouseleave', () => {
+    isScrolling = true;
+    sliderTrack.style.transition = 'transform 0.3s linear';
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    setupInfiniteScroll();
+    sliderTrack.style.transition = 'transform 0.3s linear';
+    autoScroll();
+});
+</script>
+
 </body>
 </html>

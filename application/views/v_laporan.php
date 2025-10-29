@@ -605,6 +605,13 @@
   display: none !important;
 }
 
+/* Footer */
+  footer {
+    background-color: var(--secondary);
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+  }
   </style>
  
 
@@ -1101,6 +1108,14 @@
 </div>
 
   </div>
+  
+ <!-- Footer -->
+  <footer>
+    <h3 class="h5">Alamat</h3>
+    <p>Jl. Raya Menganti No. 312<br>Surabaya, Jawa Timur</p>
+    <hr class="my-4">
+    <p class="mb-0">&copy; <?php echo date('Y'); ?> BBWS Brantas. All rights reserved.</p>
+  </footer>
 
    <!-- HANYA SATU Bootstrap JS di akhir -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1137,7 +1152,9 @@
             });
         }
     });
-  </script>
+  </script> 
+
+  <script>
     // Enhanced PDF Viewer Functions
     function showPDF(title, pdfUrl, subtitle) {
       console.log('📄 Loading PDF:', pdfUrl);

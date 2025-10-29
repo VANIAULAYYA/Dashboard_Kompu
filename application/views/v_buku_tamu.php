@@ -14,6 +14,12 @@ body {
     scroll-behavior: smooth;
 }
 
+:root {
+    --primary: #3498db;
+    --secondary: #2c3e50; /* INI YANG DITAMBAHKIN */
+    --accent: #e74c3c;
+}
+
 .hero-section {
   background: linear-gradient(rgba(78, 115, 223, 0.8), rgba(26, 26, 46, 0.8));
   color: white;
@@ -200,6 +206,14 @@ nav .relative {
 nav .max-w-7xl,
 nav .relative {
     overflow: visible !important;
+}
+
+footer {
+    background-color: #2c3e50; /* Ganti dengan warna langsung sebagai backup */
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 50px; /* Tambahkan margin atas */
 }
 </style>
 
@@ -461,6 +475,14 @@ nav .relative {
     <button id="back-to-top" class="hidden fixed bottom-8 right-8 w-12 h-12 bg-orange-600 text-white rounded-full shadow-lg hover:bg-orange-700 transition">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Footer -->
+  <footer>
+    <h3 class="h5">Alamat</h3>
+    <p>Jl. Raya Menganti No. 312<br>Surabaya, Jawa Timur</p>
+    <hr class="my-4">
+    <p class="mb-0">&copy; <?php echo date('Y'); ?> BBWS Brantas. All rights reserved.</p>
+  </footer>
 
     <script>
         // Mobile menu toggle

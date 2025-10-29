@@ -16,9 +16,31 @@ class Landing extends CI_Controller {
     // ===============================
 
     public function index()
-    {
-        $this->load->view('v_landing');
-    }
+{
+    // Load model
+    $this->load->model('M_monev_kepuasan');
+    
+    // Date range untuk semua data
+    $date_range_all = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+    
+    // Ambil data REAL dari database
+    $total_responden = $this->M_monev_kepuasan->get_total_responden($date_range_all);
+    $nilai_ikm = $this->M_monev_kepuasan->get_nilai_ikm($date_range_all);
+    $persentase_ikm = ($nilai_ikm / 4) * 100;
+    
+    // DEBUG: Tampilkan nilai di console/log
+    log_message('debug', 'Total Responden: ' . $total_responden);
+    log_message('debug', 'Nilai IKM: ' . $nilai_ikm);
+    
+    $data = array(
+        'total_responden' => $total_responden, // <- PASTIKAN NAMA INI SAMA DENGAN DI VIEW
+        'nilai_ikm' => $nilai_ikm,
+        'persentase_ikm' => $persentase_ikm
+    );
+    
+    // Load view dengan data
+    $this->load->view('v_landing', $data);
+}
 
     public function buku_tamu()
     {
@@ -487,5 +509,8 @@ public function success_survei() {
         $data['jenis_laporan'] = 'Kompu';
         $this->load->view('v_laporan', $data);
     }
+
+
+
 }
 ?>

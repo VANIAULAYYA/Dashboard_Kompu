@@ -304,7 +304,7 @@
                   </a>
                 </td>
                 <td>
-                  <a href="http://wa.me/+6282338417445" class="social-button mx-3" target="_blank">
+                  <a href="https://www.facebook.com/profile.php?id=100081895749516&_rdc=2&_rdr#" class="social-button mx-3" target="_blank">
                     <i class="fab fa-facebook fa-3x"></i>
                   </a>
                 </td>
