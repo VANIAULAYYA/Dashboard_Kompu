@@ -977,30 +977,45 @@
                                 'Permintaan Data/Informasi'
                             ];
                             
+                            // Hitung TOTAL SEMUA data dulu
+                            $total_semua = 0;
+                            if(!empty($keperluan)) {
+                                foreach ($keperluan as $item) {
+                                    $jumlah_value = is_numeric($item['jumlah']) ? $item['jumlah'] : 0;
+                                    $total_semua += $jumlah_value;
+                                }
+                            }
+                            
                             // Kelompokkan data dengan BENAR
                             $keperluan_utama_data = [];
                             $total_jumlah_lainnya = 0;
-                            $total_persen_lainnya = 0;
                             
                             if(!empty($keperluan)):
                                 foreach ($keperluan as $item):
                                     if (in_array($item['nama'], $keperluan_utama)) {
-                                        $keperluan_utama_data[] = $item;
+                                        $jumlah = is_numeric($item['jumlah']) ? $item['jumlah'] : 0;
+                                        $persen = $total_semua > 0 ? ($jumlah / $total_semua) * 100 : 0;
+                                        
+                                        $keperluan_utama_data[] = [
+                                            'nama' => $item['nama'],
+                                            'jumlah' => $jumlah,
+                                            'persen' => $persen
+                                        ];
                                     } else {
-                                        // Jumlahkan jumlah dan persen untuk "Lainnya"
+                                        // Jumlahkan untuk "Lainnya"
                                         $jumlah_value = is_numeric($item['jumlah']) ? $item['jumlah'] : 0;
-                                        $persen_value = is_numeric($item['persen']) ? $item['persen'] : floatval(str_replace(['%', ','], '', $item['persen']));
                                         $total_jumlah_lainnya += $jumlah_value;
-                                        $total_persen_lainnya += $persen_value;
                                     }
                                 endforeach;
                                 
-                                // Jika ada keperluan lainnya, buat entri "Lainnya"
+                                // Jika ada keperluan lainnya, buat entri "Lainnya" dengan persen yang benar
                                 if ($total_jumlah_lainnya > 0) {
+                                    $persen_lainnya = $total_semua > 0 ? ($total_jumlah_lainnya / $total_semua) * 100 : 0;
+                                    
                                     $keperluan_utama_data[] = [
                                         'nama' => 'Lainnya',
-                                        'jumlah' => $total_jumlah_lainnya, // ✅ Jumlah data
-                                        'persen' => round($total_persen_lainnya, 2) // ✅ Persentase
+                                        'jumlah' => $total_jumlah_lainnya,
+                                        'persen' => $persen_lainnya
                                     ];
                                 }
                                 
