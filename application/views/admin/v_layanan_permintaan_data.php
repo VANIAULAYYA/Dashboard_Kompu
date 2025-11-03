@@ -93,7 +93,7 @@
               <li class="nav-item ">
                 <a class="nav-link " href="<?= base_url('Informasi') ?>">
                   <span class="sidenav-mini-icon"> L </span>
-                  <span class="sidenav-normal"> Layanan Informasi </span>
+                  <span class="sidenav-normal"> Rekap Media Sosial </span>
                 </a>
               </li>
             </ul>
@@ -331,10 +331,14 @@
                   <td class="text-sm font-weight-normal"><?= $p->nomor_surat; ?></td>
                   <td class="text-sm font-weight-normal"><?= $p->perihal; ?></td>
                   <td class="text-sm font-weight-normal"><?= date('d F Y', strtotime($p->diterima_ppid)); ?></td>
-                  <td class="text-sm font-weight-normal"><a href="<?= $p->link_bukti_surat ?>" target="_blank">Lihat</a></td>
+                  <td class="text-sm font-weight-normal">
+  <a href="<?= $p->link_bukti_surat ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
+</td>
                   <td class="text-sm font-weight-normal"><?= $p->tindak_lanjut; ?></td>
                   <td class="text-sm font-weight-normal"><?= $p->status; ?></td>
-                  <td class="text-sm font-weight-normal"><a href="<?= $p->link_bukti_surat_penyelesaian ?>" target="_blank">Lihat</a></td>
+                  <td class="text-sm font-weight-normal">
+  <a href="<?= $p->link_bukti_surat_penyelesaian ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
+</td>
                   <td>
   <button type="button" class="btn btn-warning btn-sm btnEdit"
   data-id="<?= htmlspecialchars($p->nomor, ENT_QUOTES) ?>"

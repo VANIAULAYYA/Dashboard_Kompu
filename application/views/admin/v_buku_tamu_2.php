@@ -93,7 +93,7 @@
               <li class="nav-item ">
                 <a class="nav-link " href="<?= base_url('Informasi') ?>">
                   <span class="sidenav-mini-icon"> L </span>
-                  <span class="sidenav-normal"> Layanan Informasi </span>
+                  <span class="sidenav-normal"> Rekap Media Sosial </span>
                 </a>
               </li>
             </ul>

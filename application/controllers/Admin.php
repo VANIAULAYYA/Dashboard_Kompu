@@ -260,8 +260,8 @@ private function hitung_trend_permintaan_tahunan() {
      */
     private function get_daftar_pengaduan_tahun($tahun) {
         $this->db->where('YEAR(diterima_ppid)', $tahun);
-        $this->db->order_by('diterima_ppid', 'DESC');
-        $this->db->order_by('no', 'DESC');
+        $this->db->order_by('diterima_ppid', 'ASC');
+        $this->db->order_by('no', 'ASC');
         return $this->db->get('layanan_pengaduan')->result_array();
     }
 
@@ -309,7 +309,7 @@ private function hitung_trend_permintaan_tahunan() {
         }
         
         echo "\n=== 10 DATA TERBARU ===\n";
-        $this->db->order_by('no', 'DESC');
+        $this->db->order_by('no', 'ASC');
         $this->db->limit(10);
         $data_terbaru = $this->db->get('layanan_pengaduan')->result_array();
         
@@ -961,7 +961,7 @@ public function export_pengaduan() {
         $this->db->where('tanggal <=', $date_range['end']);
     }
     
-    $this->db->order_by('tanggal', 'DESC');
+    $this->db->order_by('tanggal', 'ASC');
     $pengaduan_data = $this->db->get()->result();
     
     $data = [
@@ -998,7 +998,7 @@ public function export_excel_pengaduan() {
         $this->db->where('tanggal <=', $date_range['end']);
     }
     
-    $this->db->order_by('tanggal', 'DESC');
+    $this->db->order_by('tanggal', 'ASC');
     $all_data = $this->db->get()->result();
     
     // Export ke Excel
@@ -1080,7 +1080,7 @@ public function export_informasi() {
         $this->db->where('tanggal <=', $date_range['end']);
     }
     
-    $this->db->order_by('tanggal', 'DESC');
+    $this->db->order_by('tanggal', 'ASC');
     $informasi_data = $this->db->get()->result();
     
     $data = [
@@ -1117,7 +1117,7 @@ public function export_excel_informasi() {
         $this->db->where('tanggal <=', $date_range['end']);
     }
     
-    $this->db->order_by('tanggal', 'DESC');
+    $this->db->order_by('tanggal', 'ASC');
     $all_data = $this->db->get()->result();
     
     // Export ke Excel

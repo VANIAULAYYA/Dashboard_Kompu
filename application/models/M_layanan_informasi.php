@@ -56,7 +56,7 @@ class M_layanan_informasi extends CI_Model {
             $this->db->where('tanggal <=', $date_range['end']);
         }
         
-        $this->db->order_by('tanggal', 'DESC');
+        $this->db->order_by('tanggal', 'ASC');
         return $this->db->get()->result();
     }
 
@@ -69,7 +69,7 @@ class M_layanan_informasi extends CI_Model {
         $this->db->select('YEAR(tanggal) as tahun');
         $this->db->from($this->table);
         $this->db->group_by('YEAR(tanggal)');
-        $this->db->order_by('tahun', 'DESC');
+        $this->db->order_by('tahun', 'ASC');
         
         $result = $this->db->get()->result();
         
@@ -126,7 +126,7 @@ class M_layanan_informasi extends CI_Model {
      */
     public function get_recent($limit = 5)
     {
-        $this->db->order_by('tanggal', 'DESC');
+        $this->db->order_by('tanggal', 'ASC');
         $this->db->limit($limit);
         return $this->db->get($this->table)->result();
     }
@@ -136,8 +136,8 @@ class M_layanan_informasi extends CI_Model {
      */
     public function get_popular($limit = 5)
     {
-        $this->db->order_by('jumlah_like', 'DESC');
-        $this->db->order_by('jumlah_komentar', 'DESC');
+        $this->db->order_by('jumlah_like', 'ASC');
+        $this->db->order_by('jumlah_komentar', 'ASC');
         $this->db->limit($limit);
         return $this->db->get($this->table)->result();
     }

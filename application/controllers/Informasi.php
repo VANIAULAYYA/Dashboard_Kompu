@@ -205,4 +205,111 @@ class Informasi extends CI_Controller {
                 return ['start' => null, 'end' => null, 'label' => 'Semua Data'];
         }
     }
+
+    public function export_informasi() {
+    // Ambil parameter filter
+    $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'semua';
+    $periode = $this->input->get('periode') ? $this->input->get('periode') : 'semua';
+    $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : 'semua';
+    
+    // Handle date range
+    if ($jenis_periode == 'semua') {
+        $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+    } elseif ($jenis_periode == 'tahunan') {
+        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+        $date_range = $this->get_date_range('tahunan', $tahun_for_range);
+    } else {
+        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+        $date_range = $this->get_date_range($periode, $tahun_for_range);
+    }
+    
+    // Query langsung di controller
+    $this->db->from('layanan_informasi');
+    
+    if ($date_range['start'] && $date_range['end']) {
+        $this->db->where('tanggal >=', $date_range['start']);
+        $this->db->where('tanggal <=', $date_range['end']);
+    }
+    
+    $this->db->order_by('tanggal', 'ASC');
+    $informasi_data = $this->db->get()->result();
+    
+    $data = [
+        'informasi_data' => $informasi_data,
+        'periode_label' => $date_range['label']
+    ];
+    
+    $this->load->view('admin/export_informasi', $data);
+}
+
+// 📊 EXPORT EXCEL INFORMASI
+public function export_excel_informasi() {
+    // Ambil parameter filter
+    $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'semua';
+    $periode = $this->input->get('periode') ? $this->input->get('periode') : 'semua';
+    $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : 'semua';
+    
+    // Handle date range
+    if ($jenis_periode == 'semua') {
+        $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+    } elseif ($jenis_periode == 'tahunan') {
+        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+        $date_range = $this->get_date_range('tahunan', $tahun_for_range);
+    } else {
+        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+        $date_range = $this->get_date_range($periode, $tahun_for_range);
+    }
+    
+    // Query langsung di controller
+    $this->db->from('layanan_informasi');
+    
+    if ($date_range['start'] && $date_range['end']) {
+        $this->db->where('tanggal >=', $date_range['start']);
+        $this->db->where('tanggal <=', $date_range['end']);
+    }
+    
+    $this->db->order_by('tanggal', 'ASC');
+    $all_data = $this->db->get()->result();
+    
+    // Export ke Excel
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=\"informasi_" . date('Y-m-d') . ".xls\"");
+    header("Cache-Control: max-age=0");
+    
+    echo "<html><head><meta charset=\"UTF-8\"><style>table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #000; padding: 8px; } th { background-color: #f2f2f2; }</style></head><body>";
+    
+    echo "<h2>LAPORAN LAYANAN INFORMASI</h2>";
+    echo "<h3>BBWS BRANTAS</h3>";
+    echo "<p><strong>Periode:</strong> " . $date_range['label'] . "</p>";
+    echo "<p><strong>Tanggal Export:</strong> " . date('d/m/Y H:i:s') . "</p>";
+    
+    echo "<table border='1'>";
+    echo "<tr>
+        <th>No</th>
+        <th>Kegiatan</th>
+        <th>Lokasi</th>
+        <th>Uraian</th>
+        <th>Tanggal</th>
+        <th>Jumlah Like</th>
+        <th>Jumlah Komentar</th>
+        <th>Keterangan</th>
+    </tr>";
+    
+    $no = 1;
+    foreach($all_data as $i) {
+        echo "<tr>
+            <td>{$no}</td>
+            <td>{$i->kegiatan}</td>
+            <td>{$i->lokasi}</td>
+            <td>{$i->uraian}</td>
+            <td>{$i->tanggal}</td>
+            <td>{$i->jumlah_like}</td>
+            <td>{$i->jumlah_komentar}</td>
+            <td>{$i->keterangan}</td>
+        </tr>";
+        $no++;
+    }
+    echo "</table></body></html>";
+    exit;
+}
 }

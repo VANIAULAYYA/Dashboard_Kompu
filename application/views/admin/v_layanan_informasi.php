@@ -128,7 +128,7 @@
               <li class="nav-item active">
     <a class="nav-link" href="<?= base_url('Informasi') ?>">
         <span class="sidenav-mini-icon"> L </span>
-        <span class="sidenav-normal"> Layanan Informasi </span>
+        <span class="sidenav-normal"> Rekap Media Sosial </span>
     </a>
 </li>
             </ul>
@@ -231,7 +231,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pelayanan</a></li>
-        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Layanan Informasi</li>
+        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Rekap Media Sosial</li>
       </ol>
     </nav>
     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -305,9 +305,9 @@
         <div class="card-header">
           <div class="d-flex justify-content-between align-items-center">
               <div>
-          <h5 class="mb-0">Layanan Informasi</h5>
+          <h5 class="mb-0">Rekap Media Sosial</h5>
           <p class="text-sm mb-0">
-            Daftar Layanan Informasi di BBWS Brantas
+            Daftar Rekap Media Sosial di BBWS Brantas
           </p>
           </div>
               <!-- ✅ LABEL PERIODE DI SEBELAH KANAN -->
@@ -418,7 +418,7 @@
   <div class="row mt-4">
     <div class="col-12">
       <div class="card">
-        <div class="card-header"><h5 class="mb-0">Tambah Layanan Informasi</h5></div>
+        <div class="card-header"><h5 class="mb-0">Tambah Rekap Media Sosial</h5></div>
         <div class="card-body p-4">
           <form id="formTambah" action="<?= site_url('Informasi/simpan') ?>" method="post">
 
@@ -488,7 +488,7 @@
   <div class="row mt-4">
     <div class="col-12">
       <div class="card">
-        <div class="card-header"><h5 class="mb-0">Edit Layanan Informasi</h5></div>
+        <div class="card-header"><h5 class="mb-0">Edit Rekap Media Sosial</h5></div>
         <div class="card-body p-4">
           <form action="<?= site_url('Informasi/update') ?>" method="post">
             <input type="hidden" name="no" id="edit_no">
@@ -825,11 +825,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (jenis === 'semua') {
             periodeSelect.disabled = true;
             tahunSelect.disabled = true;
-            // tahunSelect.value = 'semua'; // HAPUS INI, biar value tetap
+            tahunSelect.value = 'semua';
         } else if (jenis === 'tahunan') {
             periodeSelect.disabled = true;
             tahunSelect.disabled = false;
-            // JANGAN reset value tahun
+            const opt = document.createElement('option');
+            opt.value = 'tahunan';
+            opt.textContent = '-- Pilih Periode --';
+            opt.selected = true;
+            periodeSelect.appendChild(opt);
         } else {
             periodeSelect.disabled = false;
             tahunSelect.disabled = false;
@@ -850,36 +854,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // AUTO SUBMIT ketika ada perubahan
     function autoSubmit() {
-        console.log('Auto submit triggered'); // Debug
-        filterForm.submit();
+        // Submit form setelah perubahan
+        setTimeout(() => {
+            filterForm.submit();
+        }, 100);
     }
 
     // Event listener dengan auto-submit
-    if (jenisSelect) {
-        jenisSelect.addEventListener('change', function() {
-            console.log('Jenis periode changed:', this.value); // Debug
-            updateFilterStates();
+    jenisSelect.addEventListener('change', function() {
+        updateFilterStates();
+        autoSubmit();
+    });
+
+    periodeSelect.addEventListener('change', function() {
+        if (this.value && !this.disabled) {
             autoSubmit();
-        });
-    }
+        }
+    });
 
-    if (periodeSelect) {
-        periodeSelect.addEventListener('change', function() {
-            console.log('Periode changed:', this.value); // Debug
-            if (this.value && !this.disabled) {
-                autoSubmit();
-            }
-        });
-    }
-
-    if (tahunSelect) {
-        tahunSelect.addEventListener('change', function() {
-            console.log('Tahun changed:', this.value); // Debug
-            if (!this.disabled) {
-                autoSubmit();
-            }
-        });
-    }
+    tahunSelect.addEventListener('change', function() {
+        if (!this.disabled) {
+            autoSubmit();
+        }
+    });
 
     // Inisialisasi pertama kali
     updateFilterStates();

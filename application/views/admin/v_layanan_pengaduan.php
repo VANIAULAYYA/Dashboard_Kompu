@@ -19,19 +19,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url(); ?>assets/Template/assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="<?= base_url(); ?>assets/Pictures/Logo_PU_(RGB).jpg">
-  <title>
-    Dashboard Lampu Petromak
-  </title>
-  <!--     Fonts and icons     -->
+  <title>Dashboard Lampu Petromak</title>
+  
+  <!-- Preconnect untuk performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Nucleo Icons -->
+  
+  <!-- CSS Files -->
   <link href="<?= base_url();?>assets/Template/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="<?= base_url();?>assets/Template/assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <!-- CSS Files -->
   <link id="pagestyle" href="<?= base_url();?>assets/Template/assets/css/soft-ui-dashboard.css?v=1.2.0" rel="stylesheet" />
+  
+  <!-- Font Awesome (pilih salah satu) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  
+  <!-- JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -93,7 +98,7 @@
               <li class="nav-item ">
                 <a class="nav-link " href="<?= base_url('Informasi') ?>">
                   <span class="sidenav-mini-icon"> L </span>
-                  <span class="sidenav-normal"> Layanan Informasi </span>
+                  <span class="sidenav-normal"> Rekap Media Sosial </span>
                 </a>
               </li>
             </ul>
@@ -308,7 +313,7 @@
                 <th>No</th>
                 <th>Via</th>
                 <th>Status Pengirim</th>
-                <th>Jenis Pelanggaran</th>
+                <th>Jenis Pengaduan</th>
                 <th>Pengirim</th>
                 <th>Tanggal</th>
                 <th>Nomor Surat</th>
@@ -333,10 +338,26 @@
       <?= date('d F Y', strtotime($p->tanggal)); ?>
     </td>
                 <td class="text-sm font-weight-normal"><?= $p->nomor_surat; ?></td>
-                <td class="text-sm font-weight-normal"><?= $p->perihal; ?></td>
+                <td class="text-sm font-weight-normal">
+      <div><?= $p->perihal; ?></div>
+      <?php if(!empty($p->bukti_perihal)): ?>
+        <a href="<?= $p->bukti_perihal ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
+      <?php endif; ?>
+    </td>
                 <td class="text-sm font-weight-normal"><?= date('d F Y', strtotime($p->diterima_ppid)); ?></td>
-                <td class="text-sm font-weight-normal"><?= $p->tindaklanjut; ?></td>
-                <td class="text-sm font-weight-normal"><?= $p->keterangan; ?></td>
+                <td class="text-sm font-weight-normal">
+      <div><?= $p->tindaklanjut; ?></div>
+      <?php if(!empty($p->bukti_tindak_lanjut)): ?>
+        <a href="<?= $p->bukti_tindak_lanjut ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
+      <?php endif; ?>
+    </td>
+                <!-- KOLOM KETERANGAN + BUKTI KETERANGAN -->
+    <td class="text-sm font-weight-normal">
+      <div><?= $p->keterangan; ?></div>
+      <?php if(!empty($p->bukti_keterangan)): ?>
+        <a href="<?= $p->bukti_keterangan ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
+      <?php endif; ?>
+    </td>
                 <td class="text-sm font-weight-normal"><?= $p->sumber; ?></td>
                 <td class="text-sm font-weight-normal"><?= $p->status; ?></td>
                 <td>
@@ -349,9 +370,12 @@
     data-tanggal="<?= htmlspecialchars($p->tanggal, ENT_QUOTES) ?>"
     data-nomor_surat="<?= htmlspecialchars($p->nomor_surat, ENT_QUOTES) ?>"
     data-perihal="<?= htmlspecialchars($p->perihal, ENT_QUOTES) ?>"
-    data-diterima="<?= htmlspecialchars($p->diterima_ppid, ENT_QUOTES) ?>"
-    data-tindak="<?= htmlspecialchars($p->tindaklanjut, ENT_QUOTES) ?>"
+    data-bukti_perihal="<?= htmlspecialchars($p->bukti_perihal, ENT_QUOTES) ?>"
+    data-diterima_ppid="<?= htmlspecialchars($p->diterima_ppid, ENT_QUOTES) ?>"
+    data-tindaklanjut="<?= htmlspecialchars($p->tindaklanjut, ENT_QUOTES) ?>"
+    data-bukti_tindak_lanjut="<?= htmlspecialchars($p->bukti_tindak_lanjut, ENT_QUOTES) ?>"
     data-keterangan="<?= htmlspecialchars($p->keterangan, ENT_QUOTES) ?>"
+    data-bukti_keterangan="<?= htmlspecialchars($p->bukti_keterangan, ENT_QUOTES) ?>"
     data-sumber="<?= htmlspecialchars($p->sumber, ENT_QUOTES) ?>"
     data-status="<?= htmlspecialchars($p->status, ENT_QUOTES) ?>">
     Edit
@@ -404,7 +428,7 @@
             
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Via</label>
+                <label>Via <span class="text-danger">*</span></label>
                 <select name="via" class="form-select" required>
                   <option value="">-- Pilih Via --</option>
                   <option value="TNDE">TNDE</option>
@@ -417,7 +441,7 @@
                 </select>
               </div>
               <div class="col-md-6 mb-3">
-                <label>Jenis Pelanggaran</label>
+                <label>Jenis Pengaduan <span class="text-danger">*</span></label>
                 <select name="jenis" class="form-select" required>
                   <option value="">-- Pilih Jenis --</option>
                   <option value="Pelanggaran SDA">Pelanggaran SDA</option>
@@ -428,69 +452,88 @@
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Nama Pengirim</label>
+                <label>Nama Pengirim <span class="text-danger">*</span></label>
                 <input type="text" name="pengirim" class="form-control" placeholder="Nama instansi atau perorangan" required>
               </div>
               <div class="col-md-6 mb-3">
-                <label>Tanggal</label>
+                <label>Tanggal <span class="text-danger">*</span></label>
                 <input type="date" name="tanggal" class="form-control" required>
               </div>
             </div>
 
-            <div class="mb-3">
-                <label>Status Pengirim</label>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>Status Pengirim <span class="text-danger">*</span></label>
                 <select name="status_pengirim" class="form-select" required>
-                <option value="">-- Pilih Status Pengirim --</option>
-                <option value="Mahasiswa (Instansi)">Mahasiswa (Instansi)</option>
-                <option value="Media">Media</option>
-                <option value="Instansi">Instansi</option>
-                <option value="LSM">LSM</option>
-                <option value="Perseorangan">Perseorangan</option>
+                  <option value="">-- Pilih Status Pengirim --</option>
+                  <option value="Mahasiswa (Instansi)">Mahasiswa (Instansi)</option>
+                  <option value="Media">Media</option>
+                  <option value="Instansi">Instansi</option>
+                  <option value="LSM">LSM</option>
+                  <option value="Perseorangan">Perseorangan</option>
                 </select>
               </div>
-
-            <div class="mb-3">
-              <label>Nomor Surat</label>
-              <input type="text" name="nomor_surat" class="form-control" placeholder="Masukkan nomor surat">
+              <div class="col-md-6 mb-3">
+                <label>Nomor Surat <span class="text-danger">*</span></label>
+                <input type="text" name="nomor_surat" class="form-control" placeholder="Masukkan nomor surat" required>
+              </div>
             </div>
 
             <div class="mb-3">
-              <label>Perihal</label>
-              <input type="text" name="perihal" class="form-control" placeholder="Tuliskan perihal surat">
+              <label>Perihal <span class="text-danger">*</span></label>
+              <input type="text" name="perihal" class="form-control" placeholder="Tuliskan perihal surat" required>
+              <div class="mt-2">
+                <label class="form-label">Bukti Dokumen Perihal <span class="text-danger">*</span></label>
+                <input type="url" name="bukti_perihal" class="form-control" placeholder="https://drive.google.com/..." required>
+                <small class="text-muted">Tautan berkas surat</small>
+              </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Diterima PPID</label>
-                <input type="date" name="diterima_ppid" class="form-control">
+                <label>Diterima PPID <span class="text-danger">*</span></label>
+                <input type="date" name="diterima_ppid" class="form-control" required>
               </div>
               <div class="col-md-6 mb-3">
-                <label>Tindak Lanjut</label>
-                <textarea name="tindaklanjut" class="form-control" placeholder="Tuliskan tindak lanjut"></textarea>
+                <label>Tindak Lanjut <span class="text-danger">*</span></label>
+                <textarea name="tindaklanjut" class="form-control" placeholder="Tuliskan tindak lanjut" rows="3" required></textarea>
               </div>
+            </div>
+
+            <div class="mb-3">
+              <label>Bukti Dokumen Tindak Lanjut <span class="text-danger">*</span></label>
+              <input type="url" name="bukti_tindak_lanjut" class="form-control" placeholder="https://drive.google.com/..." required>
+              <small class="text-muted">Tautan surat tindak lanjut</small>
             </div>
 
             <div class="mb-3">
               <label>Keterangan</label>
-              <textarea name="keterangan" class="form-control" placeholder="Tambahkan keterangan jika ada"></textarea>
+              <textarea name="keterangan" class="form-control" placeholder="Tambahkan keterangan jika ada" rows="2"></textarea>
             </div>
 
             <div class="mb-3">
-              <label>Sumber</label>
-              <input type="text" name="sumber" class="form-control" placeholder="Tuliskan sumber data">
+              <label>Bukti Dokumen Keterangan</label>
+              <input type="url" name="bukti_keterangan" class="form-control" placeholder="https://drive.google.com/...">
+              <small class="text-muted">Tautan bukti keterangan</small>
             </div>
 
-            <div class="mb-3">
-              <label>Status</label>
-              <select name="status" class="form-select" required>
-                <option value="">-- Pilih Status --</option>
-                <option value="Telah Disampaikan">Telah Disampaikan</option>
-                <option value="Dalam Proses">Dalam Proses</option>
-                <option value="Selesai">Selesai</option>
-              </select>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>Sumber</label>
+                <input type="text" name="sumber" class="form-control" placeholder="Tuliskan sumber data">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label>Status <span class="text-danger">*</span></label>
+                <select name="status" class="form-select" required>
+                  <option value="">-- Pilih Status --</option>
+                  <option value="Telah Disampaikan">Telah Disampaikan</option>
+                  <option value="Dalam Proses">Dalam Proses</option>
+                  <option value="Selesai">Selesai</option>
+                </select>
+              </div>
             </div>
 
-            <div class="text-end">
+            <div class="text-end mt-4">
               <button type="button" class="btn btn-secondary" id="btnKembali">Kembali</button>
               <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
@@ -515,9 +558,9 @@
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Via</label>
+                <label>Via <span class="text-danger">*</span></label>
                 <select name="via" id="edit_via" class="form-select" required>
-                  <option value="" disabled selected hidden>-- Pilih Via --</option>
+                  <option value="">-- Pilih Via --</option>
                   <option value="TNDE">TNDE</option>
                   <option value="Surat">Surat</option>
                   <option value="Email">Email</option>
@@ -528,9 +571,9 @@
                 </select>
               </div>
               <div class="col-md-6 mb-3">
-                <label>Jenis Pelanggaran</label>
+                <label>Jenis Pengaduan <span class="text-danger">*</span></label>
                 <select name="jenis" id="edit_jenis" class="form-select" required>
-                  <option value="" disabled selected hidden>-- Pilih Jenis --</option>
+                  <option value="">-- Pilih Jenis --</option>
                   <option value="Pelanggaran SDA">Pelanggaran SDA</option>
                   <option value="Pembangunan SDA">Pembangunan SDA</option>
                 </select>
@@ -539,72 +582,94 @@
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Nama Pengirim</label>
+                <label>Nama Pengirim <span class="text-danger">*</span></label>
                 <input type="text" name="pengirim" id="edit_pengirim" class="form-control" 
                        placeholder="Masukkan nama pengirim" required>
               </div>
               <div class="col-md-6 mb-3">
-                <label>Tanggal</label>
+                <label>Tanggal <span class="text-danger">*</span></label>
                 <input type="date" name="tanggal" id="edit_tanggal" class="form-control" required>
               </div>
             </div>
 
-            <div class="mb-3">
-              <label>Status Pengirim</label>
-              <select name="status_pengirin" id="edit_status_pengirim" class="form-select" required>
-                <option value="">-- Pilih Status Pengirim --</option>
-                <option value="Mahasiswa (Instansi)">Mahasiswa (Instansi)</option>
-                <option value="Media">Media</option>
-                <option value="Instansi">Instansi</option>
-                <option value="LSM">LSM</option>
-                <option value="Perseorangan">Perseorangan</option>
-              </select>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>Status Pengirim <span class="text-danger">*</span></label>
+                <select name="status_pengirim" id="edit_status_pengirim" class="form-select" required>
+                  <option value="">-- Pilih Status Pengirim --</option>
+                  <option value="Mahasiswa (Instansi)">Mahasiswa (Instansi)</option>
+                  <option value="Media">Media</option>
+                  <option value="Instansi">Instansi</option>
+                  <option value="LSM">LSM</option>
+                  <option value="Perseorangan">Perseorangan</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label>Nomor Surat <span class="text-danger">*</span></label>
+                <input type="text" name="nomor_surat" id="edit_nomor_surat" class="form-control" 
+                       placeholder="Masukkan nomor surat" required>
+              </div>
             </div>
 
             <div class="mb-3">
-              <label>Nomor Surat</label>
-              <input type="text" name="nomor_surat" id="edit_nomor_surat" class="form-control" 
-                     placeholder="Masukkan nomor surat">
-            </div>
-
-            <div class="mb-3">
-              <label>Perihal</label>
+              <label>Perihal <span class="text-danger">*</span></label>
               <input type="text" name="perihal" id="edit_perihal" class="form-control" 
-                     placeholder="Tuliskan perihal">
+                     placeholder="Tuliskan perihal" required>
+              <div class="mt-2">
+                <label class="form-label">Bukti Dokumen Perihal <span class="text-danger">*</span></label>
+                <input type="url" name="bukti_perihal" id="edit_bukti_perihal" class="form-control" 
+                       placeholder="https://drive.google.com/..." required>
+                <small class="text-muted">Tautan berkas surat</small>
+              </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label>Diterima PPID</label>
-                <input type="date" name="diterima_ppid" id="edit_diterima" class="form-control">
+                <label>Diterima PPID <span class="text-danger">*</span></label>
+                <input type="date" name="diterima_ppid" id="edit_diterima_ppid" class="form-control" required>
               </div>
               <div class="col-md-6 mb-3">
-                <label>Tindak Lanjut</label>
-                <textarea name="tindaklanjut" id="edit_tindak" class="form-control" 
-                          placeholder="Tuliskan tindak lanjut"></textarea>
+                <label>Tindak Lanjut <span class="text-danger">*</span></label>
+                <textarea name="tindaklanjut" id="edit_tindaklanjut" class="form-control" 
+                          placeholder="Tuliskan tindak lanjut" rows="3" required></textarea>
               </div>
+            </div>
+
+            <div class="mb-3">
+              <label>Bukti Dokumen Tindak Lanjut <span class="text-danger">*</span></label>
+              <input type="url" name="bukti_tindak_lanjut" id="edit_bukti_tindak_lanjut" class="form-control" 
+                     placeholder="https://drive.google.com/..." required>
+              <small class="text-muted">Tautan surat tindak lanjut</small>
             </div>
 
             <div class="mb-3">
               <label>Keterangan</label>
               <textarea name="keterangan" id="edit_keterangan" class="form-control" 
-                        placeholder="Tambahkan keterangan"></textarea>
+                        placeholder="Tambahkan keterangan" rows="2"></textarea>
             </div>
 
             <div class="mb-3">
-              <label>Sumber</label>
-              <input type="text" name="sumber" id="edit_sumber" class="form-control" 
-                     placeholder="Masukkan sumber informasi">
+              <label>Bukti Dokumen Keterangan</label>
+              <input type="url" name="bukti_keterangan" id="edit_bukti_keterangan" class="form-control" 
+                     placeholder="https://drive.google.com/...">
+              <small class="text-muted">Tautan bukti keterangan</small>
             </div>
 
-            <div class="mb-3">
-              <label>Status</label>
-              <select name="status" id="edit_status" class="form-select" required>
-                <option value="" disabled selected hidden>-- Pilih Status --</option>
-                <option value="Telah Disampaikan">Telah Disampaikan</option>
-                <option value="Dalam Proses">Dalam Proses</option>
-                <option value="Selesai">Selesai</option>
-              </select>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>Sumber</label>
+                <input type="text" name="sumber" id="edit_sumber" class="form-control" 
+                       placeholder="Masukkan sumber informasi">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label>Status <span class="text-danger">*</span></label>
+                <select name="status" id="edit_status" class="form-select" required>
+                  <option value="">-- Pilih Status --</option>
+                  <option value="Telah Disampaikan">Telah Disampaikan</option>
+                  <option value="Dalam Proses">Dalam Proses</option>
+                  <option value="Selesai">Selesai</option>
+                </select>
+              </div>
             </div>
 
             <div class="text-end">
@@ -618,61 +683,86 @@
   </div>
 </div>
 
-
 <!-- Script -->
 <script>
-document.getElementById("btnTambah").addEventListener("click", function(){
-  document.getElementById("divTabel").style.display = "none";
-  document.getElementById("divForm").style.display = "block";
-  document.getElementById("divFormEdit").style.display = "none";
-});
-document.getElementById("btnKembali").addEventListener("click", function(){
-  document.getElementById("divForm").style.display = "none";
-  document.getElementById("divTabel").style.display = "block";
-});
-document.addEventListener("click", function(e) {
-  const btn = e.target.closest(".btnEdit");
-  if (!btn) return; // kalau bukan klik tombol edit, keluar
+// ========= SIMPLE & RELIABLE VERSION =========
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOM Ready - Initializing Pengaduan...');
+    
+    // 1. TOGGLE FORM TAMBAH
+    document.getElementById("btnTambah").addEventListener("click", function(){
+        document.getElementById("divTabel").style.display = "none";
+        document.getElementById("divForm").style.display = "block";
+        document.getElementById("divFormEdit").style.display = "none";
+    });
+    
+    // 2. TOGGLE FORM EDIT - SIMPLE VERSION
+    document.addEventListener("click", function(e) {
+        const btn = e.target.closest(".btnEdit");
+        if (!btn) return;
 
-  // tampilkan form edit
-  document.getElementById("divTabel").style.display = "none";
-  document.getElementById("divForm").style.display = "none";
-  document.getElementById("divFormEdit").style.display = "block";
+        // tampilkan form edit
+        document.getElementById("divTabel").style.display = "none";
+        document.getElementById("divForm").style.display = "none";
+        document.getElementById("divFormEdit").style.display = "block";
 
-  // isi field edit
-  document.getElementById("edit_no").value          = btn.dataset.id || '';
-  document.getElementById("edit_via").value         = btn.dataset.via || '';
-  document.getElementById("edit_jenis").value       = btn.dataset.jenis || '';
-  document.getElementById("edit_pengirim").value    = btn.dataset.pengirim || '';
-  document.getElementById("edit_tanggal").value     = btn.dataset.tanggal || '';
-  document.getElementById("edit_status_pengirim").value = btn.dataset.status_pengirim || '';
-  document.getElementById("edit_nomor_surat").value = btn.dataset.nomor_surat || '';
-  document.getElementById("edit_perihal").value     = btn.dataset.perihal || '';
-  document.getElementById("edit_diterima").value    = btn.dataset.diterima || '';
-  document.getElementById("edit_tindak").value      = btn.dataset.tindak || '';
-  document.getElementById("edit_keterangan").value  = btn.dataset.keterangan || '';
-  document.getElementById("edit_sumber").value      = btn.dataset.sumber || '';
-  document.getElementById("edit_status").value      = btn.dataset.status || '';
+        // isi field edit
+        document.getElementById("edit_no").value = btn.dataset.id || '';
+        document.getElementById("edit_via").value = btn.dataset.via || '';
+        document.getElementById("edit_jenis").value = btn.dataset.jenis || '';
+        document.getElementById("edit_pengirim").value = btn.dataset.pengirim || '';
+        document.getElementById("edit_tanggal").value = btn.dataset.tanggal || '';
+        document.getElementById("edit_status_pengirim").value = btn.dataset.status_pengirim || '';
+        document.getElementById("edit_nomor_surat").value = btn.dataset.nomor_surat || '';
+        document.getElementById("edit_perihal").value = btn.dataset.perihal || '';
+        document.getElementById("edit_bukti_perihal").value = btn.dataset.bukti_perihal || '';
+        document.getElementById("edit_diterima_ppid").value = btn.dataset.diterima_ppid || '';
+        document.getElementById("edit_tindaklanjut").value = btn.dataset.tindaklanjut || '';
+        document.getElementById("edit_bukti_tindak_lanjut").value = btn.dataset.bukti_tindak_lanjut || '';
+        document.getElementById("edit_keterangan").value = btn.dataset.keterangan || '';
+        document.getElementById("edit_bukti_keterangan").value = btn.dataset.bukti_keterangan || '';
+        document.getElementById("edit_sumber").value = btn.dataset.sumber || '';
+        document.getElementById("edit_status").value = btn.dataset.status || '';
+    });
+    
+    // 3. BACK BUTTONS
+    document.getElementById("btnKembali").addEventListener("click", function(){
+        document.getElementById("divForm").style.display = "none";
+        document.getElementById("divTabel").style.display = "block";
+    });
+    
+    document.getElementById("btnKembaliEdit").addEventListener("click", function(){
+        document.getElementById("divFormEdit").style.display = "none";
+        document.getElementById("divTabel").style.display = "block";
+    });
+    
+    console.log('✅ Pengaduan scripts initialized successfully');
 });
 
-// tombol kembali edit
-document.getElementById("btnKembaliEdit").addEventListener("click", function(){
-  document.getElementById("divFormEdit").style.display = "none";
-  document.getElementById("divTabel").style.display = "block";
-});
-
-document.querySelectorAll("input, textarea").forEach(function(el){
-  el.addEventListener("focus", function(){
-    this.dataset.placeholder = this.placeholder;
-    this.placeholder = "";
-  });
-  el.addEventListener("blur", function(){
-    if(this.value === ""){
-      this.placeholder = this.dataset.placeholder;
-    }
-  });
-});
-
+// Emergency fallback function
+function openEditForm(button) {
+    document.getElementById("divTabel").style.display = "none";
+    document.getElementById("divForm").style.display = "none";
+    document.getElementById("divFormEdit").style.display = "block";
+    
+    // Fill form data
+    document.getElementById("edit_no").value = button.getAttribute('data-id') || '';
+    document.getElementById("edit_via").value = button.getAttribute('data-via') || '';
+    document.getElementById("edit_jenis").value = button.getAttribute('data-jenis') || '';
+    document.getElementById("edit_pengirim").value = button.getAttribute('data-pengirim') || '';
+    document.getElementById("edit_tanggal").value = button.getAttribute('data-tanggal') || '';
+    document.getElementById("edit_status_pengirim").value = button.getAttribute('data-status_pengirim') || '';
+    document.getElementById("edit_nomor_surat").value = button.getAttribute('data-nomor_surat') || '';
+    document.getElementById("edit_perihal").value = button.getAttribute('data-perihal') || '';
+    document.getElementById("edit_bukti_perihal").value = button.getAttribute('data-bukti_perihal') || '';
+    document.getElementById("edit_diterima_ppid").value = button.getAttribute('data-diterima_ppid') || '';
+    document.getElementById("edit_tindaklanjut").value = button.getAttribute('data-tindaklanjut') || '';
+    document.getElementById("edit_bukti_tindak_lanjut").value = button.getAttribute('data-bukti_tindak_lanjut') || '';
+    document.getElementById("edit_keterangan").value = button.getAttribute('data-keterangan') || '';
+    document.getElementById("edit_bukti_keterangan").value = button.getAttribute('data-bukti_keterangan') || '';
+    document.getElementById("edit_sumber").value = button.getAttribute('data-sumber') || '';
+    document.getElementById("edit_status").value = button.getAttribute('data-status') || '';
+}
 </script>
 
 <!-- Modal konfirmasi delete -->

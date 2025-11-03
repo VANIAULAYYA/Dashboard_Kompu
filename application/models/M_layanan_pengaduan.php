@@ -64,7 +64,7 @@ class M_layanan_pengaduan extends CI_Model {
             $this->db->where('tanggal <=', $date_range['end']);
         }
         
-        $this->db->order_by('tanggal', 'DESC');
+        $this->db->order_by('tanggal', 'ASC');
         return $this->db->get()->result();
     }
 
@@ -77,7 +77,7 @@ class M_layanan_pengaduan extends CI_Model {
         $this->db->select('YEAR(tanggal) as tahun');
         $this->db->from($this->table);
         $this->db->group_by('YEAR(tanggal)');
-        $this->db->order_by('tahun', 'DESC');
+        $this->db->order_by('tahun', 'ASC');
         
         $result = $this->db->get()->result();
         
@@ -135,7 +135,7 @@ class M_layanan_pengaduan extends CI_Model {
      */
     public function get_recent($limit = 5)
     {
-        $this->db->order_by('tanggal', 'DESC');
+        $this->db->order_by('tanggal', 'ASC');
         $this->db->limit($limit);
         return $this->db->get($this->table)->result();
     }

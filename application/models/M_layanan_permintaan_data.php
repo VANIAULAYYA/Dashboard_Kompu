@@ -49,7 +49,7 @@ class M_layanan_permintaan_data extends CI_Model {
             $this->db->where('diterima_ppid <=', $date_range['end']);
         }
         
-        $this->db->order_by('diterima_ppid', 'DESC');
+        $this->db->order_by('diterima_ppid', 'ASC');
         return $this->db->get()->result();
     }
 
@@ -62,7 +62,7 @@ class M_layanan_permintaan_data extends CI_Model {
         $this->db->select('YEAR(diterima_ppid) as tahun');
         $this->db->from($this->table);
         $this->db->group_by('YEAR(diterima_ppid)');
-        $this->db->order_by('tahun', 'DESC');
+        $this->db->order_by('tahun', 'ASC');
         
         $result = $this->db->get()->result();
         
@@ -119,7 +119,7 @@ class M_layanan_permintaan_data extends CI_Model {
      */
     public function get_recent($limit = 5)
     {
-        $this->db->order_by('diterima_ppid', 'DESC');
+        $this->db->order_by('diterima_ppid', 'ASC');
         $this->db->limit($limit);
         return $this->db->get($this->table)->result();
     }

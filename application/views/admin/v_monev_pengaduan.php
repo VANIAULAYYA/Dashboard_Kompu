@@ -278,7 +278,7 @@
               <li class="nav-item ">
                 <a class="nav-link " href="<?= base_url('Informasi') ?>">
                   <span class="sidenav-mini-icon"> L </span>
-                  <span class="sidenav-normal"> Layanan Informasi </span>
+                  <span class="sidenav-normal"> Rekap Media Sosial </span>
                 </a>
               </li>
             </ul>
@@ -536,7 +536,7 @@
     <div class="col-lg-6 mb-4">
         <div class="card h-100">
             <div class="card-header pb-0">
-                <h6>Status Permohonan Informasi</h6>
+                <h6>Status Penanganan Pengaduan</h6>
             </div>
             <div class="card-body p-3 d-flex flex-column justify-content-center">
                 <?php 
@@ -806,7 +806,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0">
-                <h6>Via Permohonan</h6>
+                <h6>Via Pengaduan</h6>
             </div>
             <div class="card-body p-3">
                 <div class="table-responsive">

@@ -217,4 +217,97 @@ class Layanan extends CI_Controller {
                 return ['start' => null, 'end' => null, 'label' => 'Semua Data'];
         }
     }
+
+    public function export_permintaan_data() {
+    // Ambil parameter filter
+    $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'semua';
+    $periode = $this->input->get('periode') ? $this->input->get('periode') : 'semua';
+    $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : 'semua';
+    
+    // Handle date range
+    if ($jenis_periode == 'semua') {
+        $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+    } elseif ($jenis_periode == 'tahunan') {
+        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+        $date_range = $this->get_date_range('tahunan', $tahun_for_range);
+    } else {
+        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+        $date_range = $this->get_date_range($periode, $tahun_for_range);
+    }
+    
+    // Get data dengan filter - GUNAKAN MODEL PERMINTAAN DATA
+    $data = [
+        'permintaan_data' => $this->M_admin->get_permintaan_data_with_filter($date_range),
+        'periode_label' => $date_range['label']
+    ];
+    
+    $this->load->view('admin/export_permintaan_data', $data);
+}
+
+// 📊 EXPORT EXCEL PERMINTAAN DATA
+public function export_excel_permintaan_data() {
+    // Ambil parameter filter
+    $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'semua';
+    $periode = $this->input->get('periode') ? $this->input->get('periode') : 'semua';
+    $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : 'semua';
+    
+    // Handle date range
+    if ($jenis_periode == 'semua') {
+        $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+    } elseif ($jenis_periode == 'tahunan') {
+        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+        $date_range = $this->get_date_range('tahunan', $tahun_for_range);
+    } else {
+        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+        $date_range = $this->get_date_range($periode, $tahun_for_range);
+    }
+    
+    // Get data dengan filter - GUNAKAN MODEL PERMINTAAN DATA
+    $all_data = $this->M_admin->get_permintaan_data_with_filter($date_range);
+    
+    // Export ke Excel - SESUAIKAN KOLOM PERMINTAAN DATA
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=\"permintaan_data_" . date('Y-m-d') . ".xls\"");
+    header("Cache-Control: max-age=0");
+    
+    echo "<html><head><meta charset=\"UTF-8\"><style>table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #000; padding: 8px; } th { background-color: #f2f2f2; }</style></head><body>";
+    
+    echo "<h2>LAPORAN PERMINTAAN DATA</h2>";
+    echo "<h3>BBWS BRANTAS</h3>";
+    echo "<p><strong>Periode:</strong> " . $date_range['label'] . "</p>";
+    echo "<p><strong>Tanggal Export:</strong> " . date('d/m/Y H:i:s') . "</p>";
+    
+    echo "<table border='1'>";
+    echo "<tr>
+        <th>No</th>
+        <th>Via</th>
+        <th>Status Pemohon</th>
+        <th>Pengirim</th>
+        <th>Tanggal Surat</th>
+        <th>Nomor Surat</th>
+        <th>Perihal</th>
+        <th>Diterima PPID</th>
+        <th>Tindak Lanjut</th>
+        <th>Status</th>
+    </tr>";
+    
+    $no = 1;
+    foreach($all_data as $p) {
+        echo "<tr>
+            <td>{$no}</td>
+            <td>{$p->via}</td>
+            <td>{$p->status_pemohon}</td>
+            <td>{$p->pengirim}</td>
+            <td>{$p->tanggal_surat}</td>
+            <td>{$p->nomor_surat}</td>
+            <td>{$p->perihal}</td>
+            <td>{$p->diterima_ppid}</td>
+            <td>{$p->tindak_lanjut}</td>
+            <td>{$p->status}</td>
+        </tr>";
+        $no++;
+    }
+    echo "</table></body></html>";
+    exit;
+}
 }
