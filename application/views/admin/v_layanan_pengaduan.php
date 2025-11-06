@@ -333,26 +333,26 @@
                 <td class="text-sm font-weight-normal"><?= $p->via; ?></td>
                 <td class="text-sm font-weight-normal"><?= $p->status_pengirim; ?></td>
                 <td class="text-sm font-weight-normal"><?= $p->jenis; ?></td>
-                <td class="text-sm font-weight-normal"><?= $p->pengirim; ?></td>
+                <td class="text-sm font-weight-normal" style="min-width: 250px; white-space: normal;"><?= $p->pengirim; ?></td>
                 <td class="text-sm font-weight-normal">
       <?= date('d F Y', strtotime($p->tanggal)); ?>
     </td>
                 <td class="text-sm font-weight-normal"><?= $p->nomor_surat; ?></td>
-                <td class="text-sm font-weight-normal">
+                <td class="text-sm font-weight-normal" style="min-width: 350px; white-space: normal;">
       <div><?= $p->perihal; ?></div>
       <?php if(!empty($p->bukti_perihal)): ?>
         <a href="<?= $p->bukti_perihal ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
       <?php endif; ?>
     </td>
                 <td class="text-sm font-weight-normal"><?= date('d F Y', strtotime($p->diterima_ppid)); ?></td>
-                <td class="text-sm font-weight-normal">
+                <td class="text-sm font-weight-normal" style="min-width: 350px; white-space: normal;">
       <div><?= $p->tindaklanjut; ?></div>
       <?php if(!empty($p->bukti_tindak_lanjut)): ?>
         <a href="<?= $p->bukti_tindak_lanjut ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
       <?php endif; ?>
     </td>
                 <!-- KOLOM KETERANGAN + BUKTI KETERANGAN -->
-    <td class="text-sm font-weight-normal">
+    <td class="text-sm font-weight-normal" style="min-width: 350px; white-space: normal;">
       <div><?= $p->keterangan; ?></div>
       <?php if(!empty($p->bukti_keterangan)): ?>
         <a href="<?= $p->bukti_keterangan ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
@@ -877,8 +877,7 @@ function openEditForm(button) {
   <script src="<?= base_url();?>assets/Template/assets/js/plugins/orbit-controls.js"></script>
   <script>
     const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
-      searchable: true,
-      fixedHeight: true
+      searchable: true
     });
 
     // Function untuk cetak semua data PENGADUAN

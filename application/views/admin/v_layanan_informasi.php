@@ -364,7 +364,9 @@
                 <td class="text-sm font-weight-normal"><?= $info->jumlah_like; ?></td>
                 <td class="text-sm font-weight-normal"><?= $info->jumlah_komentar; ?></td>
                 <td class="text-sm font-weight-normal"><?= $info->keterangan; ?></td>
-                <td class="text-sm font-weight-normal"><a href="<?= $info->bukti_tautan ?>" target="_blank">Lihat</a></td>
+                <td class="text-sm font-weight-normal">
+  <a href="<?= $info->bukti_tautan ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
+</td>
                 <td>
                   <button type="button" class="btn btn-warning btn-sm btnEdit"
                     data-id="<?= $info->no ?>"

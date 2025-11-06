@@ -12,6 +12,7 @@ class M_layanan_permintaan_data extends CI_Model {
 
     public function get_all()
     {
+        $this->db->order_by('diterima_ppid', 'ASC'); // Tambahkan order by untuk konsistensi
         return $this->db->get($this->table)->result();
     }
 
@@ -35,16 +36,13 @@ class M_layanan_permintaan_data extends CI_Model {
 
     /**
      * Get data dengan filter tanggal
-     * Mirip dengan get_tamu_with_filter() di M_admin
      */
-    public function get_with_filter($date_range)
+    public function get_with_filter($date_range = [])
     {
         $this->db->from($this->table);
         
         // Jika ada filter tanggal
-        if ($date_range['start'] !== null && $date_range['end'] !== null) {
-            // Sesuaikan dengan nama kolom tanggal di tabel layanan_permintaan_data
-            // Asumsi kolomnya adalah 'diterima_ppid' atau 'diterima_ppid'
+        if (!empty($date_range['start']) && !empty($date_range['end'])) {
             $this->db->where('diterima_ppid >=', $date_range['start']);
             $this->db->where('diterima_ppid <=', $date_range['end']);
         }
@@ -55,14 +53,14 @@ class M_layanan_permintaan_data extends CI_Model {
 
     /**
      * Get available years dari data yang ada
-     * Mirip dengan get_available_years() di M_admin
      */
     public function get_available_years()
     {
         $this->db->select('YEAR(diterima_ppid) as tahun');
         $this->db->from($this->table);
+        $this->db->where('diterima_ppid IS NOT NULL');
         $this->db->group_by('YEAR(diterima_ppid)');
-        $this->db->order_by('tahun', 'ASC');
+        $this->db->order_by('tahun', 'DESC');
         
         $result = $this->db->get()->result();
         
@@ -78,7 +76,6 @@ class M_layanan_permintaan_data extends CI_Model {
 
     /**
      * Count total data
-     * Untuk keperluan dashboard seperti di Admin
      */
     public function count_all()
     {
@@ -87,17 +84,21 @@ class M_layanan_permintaan_data extends CI_Model {
 
     /**
      * Count data by status
-     * Untuk keperluan dashboard seperti di Admin
+     * PERHATIAN: Sesuaikan nama kolom status dengan database Anda
      */
     public function count_by_status($status)
     {
-        $this->db->where('status', $status);
+        // Coba kedua kemungkinan nama kolom
+        if ($this->db->field_exists('status_permintaan', $this->table)) {
+            $this->db->where('status_permintaan', $status);
+        } elseif ($this->db->field_exists('status', $this->table)) {
+            $this->db->where('status', $status);
+        }
         return $this->db->count_all_results($this->table);
     }
 
     /**
      * Get data untuk chart/grafik
-     * Contoh: data per bulan dalam tahun tertentu
      */
     public function get_chart_data($tahun = null)
     {
@@ -108,6 +109,7 @@ class M_layanan_permintaan_data extends CI_Model {
         $this->db->select('MONTH(diterima_ppid) as bulan, COUNT(*) as total');
         $this->db->from($this->table);
         $this->db->where('YEAR(diterima_ppid)', $tahun);
+        $this->db->where('diterima_ppid IS NOT NULL');
         $this->db->group_by('MONTH(diterima_ppid)');
         $this->db->order_by('bulan', 'ASC');
         
@@ -119,8 +121,103 @@ class M_layanan_permintaan_data extends CI_Model {
      */
     public function get_recent($limit = 5)
     {
-        $this->db->order_by('diterima_ppid', 'ASC');
+        $this->db->order_by('diterima_ppid', 'DESC');
         $this->db->limit($limit);
         return $this->db->get($this->table)->result();
+    }
+
+    /**
+     * METHOD TAMBAHAN YANG MUNGKIN DIBUTUHKAN
+     */
+
+    /**
+     * Get data dengan filter status dan tanggal
+     */
+    public function get_with_status_filter($status = null, $date_range = [])
+    {
+        $this->db->from($this->table);
+        
+        // Filter status
+        if (!empty($status)) {
+            // Cek nama kolom yang ada
+            if ($this->db->field_exists('status_permintaan', $this->table)) {
+                $this->db->where('status_permintaan', $status);
+            } elseif ($this->db->field_exists('status', $this->table)) {
+                $this->db->where('status', $status);
+            }
+        }
+        
+        // Filter tanggal
+        if (!empty($date_range['start']) && !empty($date_range['end'])) {
+            $this->db->where('diterima_ppid >=', $date_range['start']);
+            $this->db->where('diterima_ppid <=', $date_range['end']);
+        }
+        
+        $this->db->order_by('diterima_ppid', 'ASC');
+        return $this->db->get()->result();
+    }
+
+    /**
+     * Get statistics untuk dashboard
+     */
+    public function get_dashboard_stats()
+    {
+        $stats = [
+            'total' => $this->count_all(),
+            'baru' => $this->count_by_status('baru'),
+            'diproses' => $this->count_by_status('diproses'),
+            'selesai' => $this->count_by_status('selesai'),
+            'ditolak' => $this->count_by_status('ditolak')
+        ];
+        
+        return $stats;
+    }
+
+    /**
+     * Get data by bulan dan tahun
+     */
+    public function get_by_month_year($bulan, $tahun)
+    {
+        $this->db->where('MONTH(diterima_ppid)', $bulan);
+        $this->db->where('YEAR(diterima_ppid)', $tahun);
+        $this->db->order_by('diterima_ppid', 'ASC');
+        return $this->db->get($this->table)->result();
+    }
+
+    /**
+     * Get data dengan search
+     */
+    public function search($keyword)
+    {
+        $this->db->like('pengirim', $keyword);
+        $this->db->or_like('perihal', $keyword);
+        $this->db->or_like('nomor_surat', $keyword);
+        $this->db->order_by('diterima_ppid', 'ASC');
+        return $this->db->get($this->table)->result();
+    }
+
+    /**
+     * Get data untuk pagination
+     */
+    public function get_paginated($limit, $offset)
+    {
+        $this->db->order_by('diterima_ppid', 'ASC');
+        $this->db->limit($limit, $offset);
+        return $this->db->get($this->table)->result();
+    }
+
+    /**
+     * Get total rows untuk pagination
+     */
+    public function count_all_filtered($date_range = [])
+    {
+        $this->db->from($this->table);
+        
+        if (!empty($date_range['start']) && !empty($date_range['end'])) {
+            $this->db->where('diterima_ppid >=', $date_range['start']);
+            $this->db->where('diterima_ppid <=', $date_range['end']);
+        }
+        
+        return $this->db->count_all_results();
     }
 }

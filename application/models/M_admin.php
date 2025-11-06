@@ -109,7 +109,7 @@ class M_admin extends CI_Model {
         $this->db->select('YEAR(timestamp) as tahun');
         $this->db->from('buku_tamu');
         $this->db->group_by('YEAR(timestamp)');
-        $this->db->order_by('tahun', 'DESC');
+        $this->db->order_by('tahun', 'ASC');
         
         $result = $this->db->get()->result();
         
@@ -202,13 +202,13 @@ public function get_kepuasan_tahun_ini($tahun) {
         // Data per tahun
         $this->db->select('YEAR(timestamp) as tahun, COUNT(*) as total');
         $this->db->group_by('YEAR(timestamp)');
-        $this->db->order_by('tahun', 'DESC');
+        $this->db->order_by('tahun', 'ASC');
         $tahun_data = $this->db->get('buku_tamu')->result_array();
         
         // Sample data
         $this->db->select('id, timestamp, nama, pendapat_pelayanan');
         $this->db->limit(5);
-        $this->db->order_by('timestamp', 'DESC');
+        $this->db->order_by('timestamp', 'ASC');
         $sample = $this->db->get('buku_tamu')->result_array();
         
         return [
@@ -225,11 +225,11 @@ public function get_kepuasan_tahun_ini($tahun) {
         // Data per tahun
         $this->db->select('YEAR(diterima_ppid) as tahun, COUNT(*) as total');
         $this->db->group_by('YEAR(diterima_ppid)');
-        $this->db->order_by('tahun', 'DESC');
+        $this->db->order_by('tahun', 'ASC');
         $data_per_tahun = $this->db->get('layanan_permintaan_data')->result_array();
         
         // 5 data terbaru
-        $this->db->order_by('nomor', 'DESC');
+        $this->db->order_by('nomor', 'ASC');
         $this->db->limit(5);
         $data_terbaru = $this->db->get('layanan_permintaan_data')->result_array();
         
@@ -370,24 +370,19 @@ private function hitung_statistik_permintaan_lengkap($tahun) {
     $this->db->where_in('status', ['Dalam Proses', 'proses']);
     $dalam_proses = $this->db->count_all_results('layanan_permintaan_data');
     
-    // Dipenuhi TAHUN TERPILIH
+    // Terpenuhi TAHUN TERPILIH - AMBIL STATUS YANG MENANDAKAN TERPENUHI
     $this->db->where('YEAR(diterima_ppid)', $tahun);
-    $this->db->where('status', 'selesai');
-    $dipenuhi = $this->db->count_all_results('layanan_permintaan_data');
+    $this->db->where_in('status', ['selesai', 'Selesai', 'terpenuhi', 'Terpenuhi', 'dipenuhi', 'Dipenuhi', 'Telah Diterima']);
+    $terpenuhi = $this->db->count_all_results('layanan_permintaan_data');
     
     // Ditolak TAHUN TERPILIH
     $this->db->where('YEAR(diterima_ppid)', $tahun);
     $this->db->where('status', 'Ditolak');
     $ditolak = $this->db->count_all_results('layanan_permintaan_data');
     
-    // Telah Diterima TAHUN TERPILIH
-    $this->db->where('YEAR(diterima_ppid)', $tahun);
-    $this->db->where('status', 'Telah Diterima');
-    $telah_diterima = $this->db->count_all_results('layanan_permintaan_data');
-    
     // Hitung persentase
     $persen_proses = $total_permohonan > 0 ? round(($dalam_proses / $total_permohonan) * 100, 1) : 0;
-    $persen_dipenuhi = $total_permohonan > 0 ? round(($dipenuhi / $total_permohonan) * 100, 1) : 0;
+    $persen_terpenuhi = $total_permohonan > 0 ? round(($terpenuhi / $total_permohonan) * 100, 1) : 0;
     $persen_ditolak = $total_permohonan > 0 ? round(($ditolak / $total_permohonan) * 100, 1) : 0;
     
     // Trend bulanan
@@ -396,11 +391,10 @@ private function hitung_statistik_permintaan_lengkap($tahun) {
     return [
         'total_permohonan' => $total_permohonan,
         'dalam_proses' => $dalam_proses,
-        'dipenuhi' => $dipenuhi,
+        'dipenuhi' => $terpenuhi, // Tetap pakai key 'dipenuhi' untuk kompatibilitas
         'ditolak' => $ditolak,
-        'telah_diterima' => $telah_diterima,
         'persen_proses' => $persen_proses,
-        'persen_dipenuhi' => $persen_dipenuhi,
+        'persen_dipenuhi' => $persen_terpenuhi, // Tetap pakai key 'persen_dipenuhi'
         'persen_ditolak' => $persen_ditolak,
         'trend' => $trend,
         'tahun' => $tahun
@@ -412,8 +406,8 @@ private function hitung_statistik_permintaan_lengkap($tahun) {
  */
 private function get_daftar_permintaan_tahun($tahun) {
     $this->db->where('YEAR(diterima_ppid)', $tahun);
-    $this->db->order_by('diterima_ppid', 'DESC');
-    $this->db->order_by('nomor', 'DESC');
+    $this->db->order_by('diterima_ppid', 'ASC');
+    $this->db->order_by('nomor', 'ASC');
     return $this->db->get('layanan_permintaan_data')->result_array();
 }
 
@@ -428,7 +422,7 @@ private function get_data_permintaan_by_pemohon($tahun = null) {
     $this->db->where('YEAR(diterima_ppid)', $tahun);
     $this->db->select('status_pemohon, COUNT(*) as total');
     $this->db->group_by('status_pemohon');
-    $this->db->order_by('total', 'DESC');
+    $this->db->order_by('total', 'ASC');
     return $this->db->get('layanan_permintaan_data')->result_array();
 }
 
@@ -440,7 +434,7 @@ private function get_data_permintaan_by_channel($tahun = null) {
     $this->db->where('YEAR(diterima_ppid)', $tahun);
     $this->db->select('via, COUNT(*) as total');
     $this->db->group_by('via');
-    $this->db->order_by('total', 'DESC');
+    $this->db->order_by('total', 'ASC');
     return $this->db->get('layanan_permintaan_data')->result_array();
 }
 
@@ -562,7 +556,7 @@ private function get_data_permintaan_by_channel($tahun = null) {
         $this->db->where('YEAR(diterima_ppid)', $tahun);
         $this->db->select('jenis, COUNT(*) as total');
         $this->db->group_by('jenis');
-        $this->db->order_by('total', 'DESC');
+        $this->db->order_by('total', 'ASC');
         return $this->db->get('layanan_pengaduan')->result_array();
     }
 
@@ -577,7 +571,7 @@ private function get_data_permintaan_by_channel($tahun = null) {
         $this->db->where('YEAR(diterima_ppid)', $tahun);
         $this->db->select('via, COUNT(*) as total');
         $this->db->group_by('via');
-        $this->db->order_by('total', 'DESC');
+        $this->db->order_by('total', 'ASC');
         return $this->db->get('layanan_pengaduan')->result_array();
     }
 
@@ -585,8 +579,8 @@ private function get_data_permintaan_by_channel($tahun = null) {
      * Get semua data pengaduan
      */
     public function get_all_pengaduan($limit = null, $offset = null) {
-        $this->db->order_by('diterima_ppid', 'DESC');
-        $this->db->order_by('no', 'DESC');
+        $this->db->order_by('diterima_ppid', 'ASC');
+        $this->db->order_by('no', 'ASC');
         
         if ($limit !== null) {
             $this->db->limit($limit, $offset);
@@ -623,7 +617,7 @@ private function get_data_permintaan_by_channel($tahun = null) {
             $this->db->where('jenis', $filters['jenis']);
         }
         
-        $this->db->order_by('diterima_ppid', 'DESC');
+        $this->db->order_by('diterima_ppid', 'ASC');
         return $this->db->get('layanan_pengaduan')->result_array();
     }
 
@@ -634,7 +628,7 @@ private function get_data_permintaan_by_channel($tahun = null) {
         $this->db->select('YEAR(diterima_ppid) as tahun');
         $this->db->from('layanan_pengaduan');
         $this->db->group_by('YEAR(diterima_ppid)');
-        $this->db->order_by('tahun', 'DESC');
+        $this->db->order_by('tahun', 'ASC');
         
         $result = $this->db->get()->result();
         
@@ -697,7 +691,7 @@ public function get_permintaan_data_with_filter($date_range = null) {
         $this->db->where('tanggal_surat <=', $date_range['end']);
     }
     
-    $this->db->order_by('tanggal_surat', 'DESC');
+    $this->db->order_by('tanggal_surat', 'ASC');
     return $this->db->get()->result();
 }
 }

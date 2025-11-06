@@ -41,28 +41,28 @@ class Pengaduan extends CI_Controller {
 
     // CREATE - simpan data baru
     public function simpan()
-{
-    $data = [
-        'via' => $this->input->post('via'),
-        'status_pengirim' => $this->input->post('status_pengirim'),
-        'jenis' => $this->input->post('jenis'),
-        'pengirim' => $this->input->post('pengirim'),
-        'tanggal' => $this->input->post('tanggal'),
-        'nomor_surat' => $this->input->post('nomor_surat'),
-        'perihal' => $this->input->post('perihal'),
-        'bukti_perihal' => $this->input->post('bukti_perihal'),
-        'diterima_ppid' => $this->input->post('diterima_ppid'),
-        'tindaklanjut' => $this->input->post('tindaklanjut'),
-        'bukti_tindak_lanjut' => $this->input->post('bukti_tindak_lanjut'),
-        'keterangan' => $this->input->post('keterangan'),
-        'bukti_keterangan' => $this->input->post('bukti_keterangan'),
-        'sumber' => $this->input->post('sumber'),
-        'status' => $this->input->post('status')
-    ];
+    {
+        $data = [
+            'via' => $this->input->post('via'),
+            'status_pengirim' => $this->input->post('status_pengirim'),
+            'jenis' => $this->input->post('jenis'),
+            'pengirim' => $this->input->post('pengirim'),
+            'tanggal' => $this->input->post('tanggal'),
+            'nomor_surat' => $this->input->post('nomor_surat'),
+            'perihal' => $this->input->post('perihal'),
+            'bukti_perihal' => $this->input->post('bukti_perihal'),
+            'diterima_ppid' => $this->input->post('diterima_ppid'),
+            'tindaklanjut' => $this->input->post('tindaklanjut'),
+            'bukti_tindak_lanjut' => $this->input->post('bukti_tindak_lanjut'),
+            'keterangan' => $this->input->post('keterangan'),
+            'bukti_keterangan' => $this->input->post('bukti_keterangan'),
+            'sumber' => $this->input->post('sumber'),
+            'status' => $this->input->post('status')
+        ];
 
-    $this->M_layanan_pengaduan->insert($data);
-    redirect('Pengaduan');
-}
+        $this->M_layanan_pengaduan->insert($data);
+        redirect('Pengaduan');
+    }
 
     // UPDATE - tampil form edit
     public function edit($no)
@@ -81,29 +81,29 @@ class Pengaduan extends CI_Controller {
 
     // UPDATE - simpan perubahan
     public function update()
-{
-    $no = $this->input->post('no');
-    $data = [
-        'via' => $this->input->post('via'),
-        'status_pengirim' => $this->input->post('status_pengirim'),
-        'jenis' => $this->input->post('jenis'),
-        'pengirim' => $this->input->post('pengirim'),
-        'tanggal' => $this->input->post('tanggal'),
-        'nomor_surat' => $this->input->post('nomor_surat'),
-        'perihal' => $this->input->post('perihal'),
-        'bukti_perihal' => $this->input->post('bukti_perihal'), // TAMBAH INI
-        'diterima_ppid' => $this->input->post('diterima_ppid'),
-        'tindaklanjut' => $this->input->post('tindaklanjut'),
-        'bukti_tindak_lanjut' => $this->input->post('bukti_tindak_lanjut'), // TAMBAH INI
-        'keterangan' => $this->input->post('keterangan'),
-        'bukti_keterangan' => $this->input->post('bukti_keterangan'), // TAMBAH INI
-        'sumber' => $this->input->post('sumber'),
-        'status' => $this->input->post('status')
-    ];
+    {
+        $no = $this->input->post('no');
+        $data = [
+            'via' => $this->input->post('via'),
+            'status_pengirim' => $this->input->post('status_pengirim'),
+            'jenis' => $this->input->post('jenis'),
+            'pengirim' => $this->input->post('pengirim'),
+            'tanggal' => $this->input->post('tanggal'),
+            'nomor_surat' => $this->input->post('nomor_surat'),
+            'perihal' => $this->input->post('perihal'),
+            'bukti_perihal' => $this->input->post('bukti_perihal'),
+            'diterima_ppid' => $this->input->post('diterima_ppid'),
+            'tindaklanjut' => $this->input->post('tindaklanjut'),
+            'bukti_tindak_lanjut' => $this->input->post('bukti_tindak_lanjut'),
+            'keterangan' => $this->input->post('keterangan'),
+            'bukti_keterangan' => $this->input->post('bukti_keterangan'),
+            'sumber' => $this->input->post('sumber'),
+            'status' => $this->input->post('status')
+        ];
 
-    $this->M_layanan_pengaduan->update($no, $data);
-    redirect('Pengaduan');
-}
+        $this->M_layanan_pengaduan->update($no, $data);
+        redirect('Pengaduan');
+    }
 
     // DELETE
     public function delete($no)
@@ -155,7 +155,6 @@ class Pengaduan extends CI_Controller {
     
     /**
      * Fungsi untuk mendapatkan range tanggal berdasarkan periode
-     * SAMA PERSIS DENGAN YANG DI ADMIN CONTROLLER
      */
     private function get_date_range($periode, $tahun = null)
     {
@@ -221,83 +220,124 @@ class Pengaduan extends CI_Controller {
     }
 
     // 📊 EXPORT EXCEL PENGADUAN
-public function export_excel_pengaduan() {
-    // Ambil parameter filter
-    $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'semua';
-    $periode = $this->input->get('periode') ? $this->input->get('periode') : 'semua';
-    $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : 'semua';
-    
-    // Handle date range
-    if ($jenis_periode == 'semua') {
-        $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
-    } elseif ($jenis_periode == 'tahunan') {
-        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
-        $date_range = $this->get_date_range('tahunan', $tahun_for_range);
-    } else {
-        $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
-        $date_range = $this->get_date_range($periode, $tahun_for_range);
-    }
-    
-    // Query langsung di controller
-    $this->db->from('layanan_pengaduan');
-    
-    if ($date_range['start'] && $date_range['end']) {
-        $this->db->where('tanggal >=', $date_range['start']);
-        $this->db->where('tanggal <=', $date_range['end']);
-    }
-    
-    $this->db->order_by('tanggal', 'ASC');
-    $all_data = $this->db->get()->result();
-    
-    // Export ke Excel
-    header("Content-Type: application/vnd.ms-excel");
-    header("Content-Disposition: attachment; filename=\"pengaduan_" . date('Y-m-d') . ".xls\"");
-    header("Cache-Control: max-age=0");
-    
-    echo "<html><head><meta charset=\"UTF-8\"><style>table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #000; padding: 8px; } th { background-color: #f2f2f2; }</style></head><body>";
-    
-    echo "<h2>LAPORAN PENGADUAN</h2>";
-    echo "<h3>BBWS BRANTAS</h3>";
-    echo "<p><strong>Periode:</strong> " . $date_range['label'] . "</p>";
-    echo "<p><strong>Tanggal Export:</strong> " . date('d/m/Y H:i:s') . "</p>";
-    
-    echo "<table border='1'>";
-    echo "<tr>
-        <th>No</th>
-        <th>Via</th>
-        <th>Status Pengirim</th>
-        <th>Jenis</th>
-        <th>Pengirim</th>
-        <th>Tanggal</th>
-        <th>Nomor Surat</th>
-        <th>Perihal</th>
-        <th>Diterima PPID</th>
-        <th>Tindak Lanjut</th>
-        <th>Keterangan</th>
-        <th>Sumber</th>
-        <th>Status</th>
-    </tr>";
-    
-    $no = 1;
-    foreach($all_data as $p) {
+    public function export_excel_pengaduan() {
+        // Ambil parameter filter
+        $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'semua';
+        $periode = $this->input->get('periode') ? $this->input->get('periode') : 'semua';
+        $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : 'semua';
+        
+        // Handle date range
+        if ($jenis_periode == 'semua') {
+            $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+        } elseif ($jenis_periode == 'tahunan') {
+            $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+            $date_range = $this->get_date_range('tahunan', $tahun_for_range);
+        } else {
+            $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+            $date_range = $this->get_date_range($periode, $tahun_for_range);
+        }
+        
+        // Gunakan model untuk konsistensi
+        $all_data = $this->M_layanan_pengaduan->get_with_filter($date_range);
+        
+        // Export ke Excel
+        header("Content-Type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=\"pengaduan_" . date('Y-m-d') . ".xls\"");
+        header("Cache-Control: max-age=0");
+        
+        echo "<html><head><meta charset=\"UTF-8\"><style>table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #000; padding: 8px; } th { background-color: #f2f2f2; }</style></head><body>";
+        
+        echo "<h2>LAPORAN PENGADUAN</h2>";
+        echo "<h3>BBWS BRANTAS</h3>";
+        echo "<p><strong>Periode:</strong> " . $date_range['label'] . "</p>";
+        echo "<p><strong>Tanggal Export:</strong> " . date('d/m/Y H:i:s') . "</p>";
+        
+        echo "<table border='1'>";
         echo "<tr>
-            <td>{$no}</td>
-            <td>{$p->via}</td>
-            <td>{$p->status_pengirim}</td>
-            <td>{$p->jenis}</td>
-            <td>{$p->pengirim}</td>
-            <td>{$p->tanggal}</td>
-            <td>{$p->nomor_surat}</td>
-            <td>{$p->perihal}</td>
-            <td>{$p->diterima_ppid}</td>
-            <td>{$p->tindaklanjut}</td>
-            <td>{$p->keterangan}</td>
-            <td>{$p->sumber}</td>
-            <td>{$p->status}</td>
+            <th>No</th>
+            <th>Via</th>
+            <th>Status Pengirim</th>
+            <th>Jenis</th>
+            <th>Pengirim</th>
+            <th>Tanggal</th>
+            <th>Nomor Surat</th>
+            <th>Perihal</th>
+            <th>Diterima PPID</th>
+            <th>Tindak Lanjut</th>
+            <th>Keterangan</th>
+            <th>Sumber</th>
+            <th>Status</th>
         </tr>";
-        $no++;
+        
+        $no = 1;
+        foreach($all_data as $p) {
+            echo "<tr>
+                <td>{$no}</td>
+                <td>{$p->via}</td>
+                <td>{$p->status_pengirim}</td>
+                <td>{$p->jenis}</td>
+                <td>{$p->pengirim}</td>
+                <td>" . ($p->tanggal ? date('d/m/Y', strtotime($p->tanggal)) : '') . "</td>
+                <td>{$p->nomor_surat}</td>
+                <td>{$p->perihal}</td>
+                <td>" . ($p->diterima_ppid ? date('d/m/Y', strtotime($p->diterima_ppid)) : '') . "</td>
+                <td>{$p->tindaklanjut}</td>
+                <td>{$p->keterangan}</td>
+                <td>{$p->sumber}</td>
+                <td>{$p->status}</td>
+            </tr>";
+            $no++;
+        }
+        echo "</table></body></html>";
+        exit;
     }
-    echo "</table></body></html>";
+
+    // 📊 EXPORT PDF PENGADUAN
+    public function export_pdf_pengaduan() {
+        // Ambil parameter filter
+        $jenis_periode = $this->input->get('jenis_periode') ? $this->input->get('jenis_periode') : 'semua';
+        $periode = $this->input->get('periode') ? $this->input->get('periode') : 'semua';
+        $tahun = $this->input->get('tahun') ? $this->input->get('tahun') : 'semua';
+        
+        // Handle date range
+        if ($jenis_periode == 'semua') {
+            $date_range = ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+        } elseif ($jenis_periode == 'tahunan') {
+            $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+            $date_range = $this->get_date_range('tahunan', $tahun_for_range);
+        } else {
+            $tahun_for_range = ($tahun == 'semua') ? null : $tahun;
+            $date_range = $this->get_date_range($periode, $tahun_for_range);
+        }
+        
+        // Get data dengan filter
+        $data = [
+            'pengaduan_data' => $this->M_layanan_pengaduan->get_with_filter($date_range),
+            'periode_label' => $date_range['label']
+        ];
+        
+        $this->load->view('admin/export_pengaduan_pdf', $data);
+    }
+
+    // 📊 DASHBOARD STATISTICS
+public function dashboard_stats()
+{
+    $data = [
+        'title' => 'Dashboard Layanan Pengaduan',
+        'total_pengaduan' => $this->M_layanan_pengaduan->count_all(),
+        'pengaduan_baru' => $this->M_layanan_pengaduan->count_by_status('baru'),
+        'pengaduan_diproses' => $this->M_layanan_pengaduan->count_by_status('diproses'),
+        'pengaduan_selesai' => $this->M_layanan_pengaduan->count_by_status('selesai'),
+        'recent_pengaduan' => $this->M_layanan_pengaduan->get_recent(5),
+        'chart_data' => $this->M_layanan_pengaduan->get_chart_data(date('Y'))
+    ];
+    
+    // DEBUG: Cek data chart
+    echo "<pre>";
+    print_r($data['chart_data']);
+    echo "</pre>";
     exit;
+    
+    $this->load->view('admin/v_dashboard_pengaduan', $data);
 }
 }

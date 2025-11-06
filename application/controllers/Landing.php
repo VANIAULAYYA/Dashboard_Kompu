@@ -233,7 +233,8 @@ public function submit() {
         $kategori = $kategori_lainnya;
     }
     
-    $data = array(
+    // Simpan data buku tamu
+    $data_tamu = array(
         'nik' => $this->input->post('nik'),
         'nama'                => $this->input->post('nama'),
         'jenis_kelamin'       => $this->input->post('jenis_kelamin'),
@@ -245,10 +246,21 @@ public function submit() {
         'kritik_saran'        => $this->input->post('kritik_saran')
     );
 
-    $this->M_landing->insert_feedback($data);
+    $this->db->insert('buku_tamu', $data_tamu);
+    $tamu_id = $this->db->insert_id();
     
-    // Redirect atau tampilkan pesan sukses
-    redirect('Landing');
+    // Jika keperluan adalah Permintaan Data/Informasi, redirect ke form permohonan
+    if ($kategori == 'Permintaan Data/Informasi') {
+        // Simpan session untuk data buku tamu
+        $this->session->set_userdata('buku_tamu_data', $data_tamu);
+        $this->session->set_userdata('buku_tamu_id', $tamu_id);
+        
+        // Redirect ke controller Permohonan
+        redirect('permohonan/form_permohonan');
+    }
+    
+    $this->session->set_flashdata('success', 'Data tamu berhasil disimpan');
+    redirect('Admin/rekap_tamu');
 }
 
 public function success_survei() {
@@ -263,89 +275,66 @@ public function success_survei() {
     // LAPORAN
     // ===============================
 
-     public function Survei_Kepuasan_Masyarakat($tahun = null) {
-        if ($tahun === null) {
-            $tahun = date('Y');
-        }
-        
-        // Ambil data
-        $this->db->select('YEAR(tanggal) as tahun');
-        $this->db->from('laporan');
-        $this->db->where('jenis_laporan', 'SKM');
-        $this->db->group_by('YEAR(tanggal)');
-        $this->db->order_by('tahun', 'DESC');
-        $data['tahun_list'] = $this->db->get()->result_array();
-        
-        $this->db->select('*');
-        $this->db->from('laporan');
-        $this->db->where('jenis_laporan', 'SKM');
-        $this->db->where('YEAR(tanggal)', $tahun);
-        $this->db->order_by('tanggal', 'ASC');
-        $dokumen_tahun = $this->db->get()->result_array();
-        
-        // FIX PATH: Gunakan uploads/bukti/
-        foreach ($dokumen_tahun as &$doc) {
-            if (!empty($doc['bukti_file'])) {
-                // Path yang benar: uploads/bukti/namafile
-                $doc['bukti_file'] = 'uploads/bukti/' . $doc['bukti_file'];
-                
-                // Cek jika file exists
-                $file_path = FCPATH . $doc['bukti_file'];
-                $doc['file_exists'] = file_exists($file_path);
-            } else {
-                $doc['file_exists'] = false;
-            }
-        }
-        
-        // Group data dengan AUTO DETECT TRIWULAN
-        $data['triwulan'] = [];
-        $data['semester'] = [];
-        $data['tahunan'] = [];
-        
-        foreach ($dokumen_tahun as $doc) {
-            // AUTO DETECT TRIWULAN dari nama file
-            if ($doc['periode'] == 'Triwulan') {
-                $doc['triwulan_number'] = $this->detect_triwulan($doc['nama_file']);
-                
-                if ($doc['triwulan_number']) {
-                    $data['triwulan'][] = $doc;
-                } else {
-                    // Jika tidak terdetect, masukkan ke triwulan I sebagai default
-                    $doc['triwulan_number'] = 'I';
-                    $data['triwulan'][] = $doc;
-                }
-            }
-            // AUTO DETECT SEMESTER
-            elseif ($doc['periode'] == 'Semester') {
-                $doc['semester_number'] = $this->detect_semester($doc['nama_file']);
-                $data['semester'][] = $doc;
-            }
-            // TAHUNAN
-            elseif ($doc['periode'] == 'Tahunan') {
-                $data['tahunan'][] = $doc;
-            }
-            // Jika periode kosong, coba deteksi dari nama file
-            else {
-                if (preg_match('/(triwulan|tw|q)\s*(i{1,3}|iv|1|2|3|4)/i', $doc['nama_file'])) {
-                    $doc['triwulan_number'] = $this->detect_triwulan($doc['nama_file']);
-                    $data['triwulan'][] = $doc;
-                } 
-                elseif (preg_match('/(semester|sem)\s*(i{1,2}|1|2)/i', $doc['nama_file'])) {
-                    $doc['semester_number'] = $this->detect_semester($doc['nama_file']);
-                    $data['semester'][] = $doc;
-                }
-                elseif (preg_match('/(tahunan|tahun|annual)/i', $doc['nama_file'])) {
-                    $data['tahunan'][] = $doc;
-                }
-            }
-        }
-        
-        $data['current_year'] = $tahun;
-        $data['page_title'] = "Survei Kepuasan Masyarakat";
-        $data['active_menu'] = 'laporan';
-        $data['jenis_laporan'] = 'SKM';
-        $this->load->view('v_laporan', $data);
+    public function Survei_Kepuasan_Masyarakat($tahun = null) {
+    if ($tahun === null) {
+        $tahun = date('Y');
     }
+    
+    // Ambil daftar tahun
+    $this->db->select('YEAR(tanggal) as tahun');
+    $this->db->from('laporan');
+    $this->db->where('jenis_laporan', 'SKM');
+    $this->db->group_by('YEAR(tanggal)');
+    $this->db->order_by('tahun', 'DESC');
+    $data['tahun_list'] = $this->db->get()->result_array();
+    
+    // Ambil data laporan
+    $this->db->select('*');
+    $this->db->from('laporan');
+    $this->db->where('jenis_laporan', 'SKM');
+    $this->db->where('YEAR(tanggal)', $tahun);
+    $this->db->order_by('tanggal', 'ASC');
+    $dokumen_tahun = $this->db->get()->result_array();
+    
+    // Inisialisasi array
+    $data['triwulan'] = [];
+    $data['semester'] = [];
+    $data['tahunan'] = [];
+    
+    // Process setiap dokumen
+    foreach ($dokumen_tahun as &$doc) {
+        // Fix path file
+        if (!empty($doc['bukti_file'])) {
+            $doc['bukti_file'] = 'uploads/bukti/' . $doc['bukti_file'];
+            $file_path = FCPATH . $doc['bukti_file'];
+            $doc['file_exists'] = file_exists($file_path);
+        } else {
+            $doc['file_exists'] = false;
+        }
+        
+        // PERBAIKAN: Kelompokkan berdasarkan periode TANPA DUPLIKASI
+        if ($doc['periode'] == 'Triwulan') {
+            $doc['triwulan_number'] = $this->detect_triwulan($doc['nama_file']);
+            $data['triwulan'][] = $doc;
+        } 
+        elseif ($doc['periode'] == 'Semester') {
+            $doc['semester_number'] = $this->detect_semester($doc['nama_file']);
+            $data['semester'][] = $doc;
+        } 
+        elseif ($doc['periode'] == 'Tahunan') {
+            $data['tahunan'][] = $doc;
+        }
+        // CATATAN: Hilangkan bagian else untuk auto-detect
+        // karena sudah ada kolom periode di database
+    }
+    
+    $data['current_year'] = $tahun;
+    $data['page_title'] = "Survei Kepuasan Masyarakat";
+    $data['active_menu'] = 'laporan';
+    $data['jenis_laporan'] = 'SKM';
+    
+    $this->load->view('v_laporan', $data);
+}
 
     /**
      * Fungsi untuk mendeteksi nomor triwulan dari nama file
@@ -459,6 +448,7 @@ public function success_survei() {
         $this->load->view('v_laporan', $data);
     }
 
+//laporan kompu
     public function laporan_Kompu($tahun = null) {
         if ($tahun === null) {
             $tahun = date('Y');
@@ -509,8 +499,6 @@ public function success_survei() {
         $data['jenis_laporan'] = 'Kompu';
         $this->load->view('v_laporan', $data);
     }
-
-
 
 }
 ?>

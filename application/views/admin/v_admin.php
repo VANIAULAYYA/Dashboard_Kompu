@@ -452,32 +452,32 @@
   </div>
 
   <!-- Card Dipenuhi -->
-  <div class="col-xl-4 col-md-6 mb-4">
-    <a href="<?= base_url('Monev_permintaan') ?>" class="stat-card-link">
-      <div class="card custom-card h-100">
-        <div class="card-body p-3">
-          <div class="row align-items-center h-100">
-            <div class="col-8">
-              <div class="numbers">
-                <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Dipenuhi</p>
-                <h4 class="font-weight-bolder mb-0">
-                  <?= number_format($permintaan['dipenuhi'] ?? 0) ?>
-                  <span class="text-success text-sm">
-                    <?= $permintaan['persen_dipenuhi'] ?? 0 ?>%
-                  </span>
-                </h4>
-              </div>
+<div class="col-xl-4 col-md-6 mb-4">
+  <a href="<?= base_url('Monev_permintaan') ?>" class="stat-card-link">
+    <div class="card custom-card h-100">
+      <div class="card-body p-3">
+        <div class="row align-items-center h-100">
+          <div class="col-8">
+            <div class="numbers">
+              <p class="text-sm mb-0 text-capitalize font-weight-bold opacity-7">Dipenuhi</p>
+              <h4 class="font-weight-bolder mb-0">
+                <?= number_format($permintaan['dipenuhi'] ?? 0) ?>
+                <span class="text-success text-sm">
+                  <?= $permintaan['persen_dipenuhi'] ?? 0 ?>%
+                </span>
+              </h4>
             </div>
-            <div class="col-4 text-end">
-              <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
-                <i class="fas fa-check-circle text-white text-lg opacity-10"></i>
-              </div>
+          </div>
+          <div class="col-4 text-end">
+            <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+              <i class="fas fa-check-circle text-white text-lg opacity-10"></i>
             </div>
           </div>
         </div>
       </div>
-    </a>
-  </div>
+    </div>
+  </a>
+</div>
 
   <!-- Tombol Lihat Detail -->
   <div class="col-12 mt-2 text-end">

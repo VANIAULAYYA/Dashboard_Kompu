@@ -41,21 +41,21 @@ class Informasi extends CI_Controller {
 
     // CREATE - simpan data baru
     public function simpan()
-    {
-        $data = [
-            'kegiatan'         => $this->input->post('kegiatan'),
-            'lokasi'           => $this->input->post('lokasi'),
-            'uraian'           => $this->input->post('uraian'),
-            'tanggal'          => $this->input->post('tanggal'),
-            'jumlah_like'      => 0, // default
-            'jumlah_komentar'  => 0, // default
-            'keterangan'       => $this->input->post('keterangan'),
-            'bukti_tautan'     => $this->input->post('bukti_tautan'),
-        ];
+{
+    $data = [
+        'kegiatan'         => $this->input->post('kegiatan'),
+        'lokasi'           => $this->input->post('lokasi'),
+        'uraian'           => $this->input->post('uraian'),
+        'tanggal'          => $this->input->post('tanggal'),
+        'jumlah_like'      => $this->input->post('jumlah_like'), // ✅ BACA DARI FORM
+        'jumlah_komentar'  => $this->input->post('jumlah_komentar'), // ✅ BACA DARI FORM
+        'keterangan'       => $this->input->post('keterangan'),
+        'bukti_tautan'     => $this->input->post('bukti_tautan'),
+    ];
 
-        $this->M_layanan_informasi->insert($data);
-        redirect('Informasi');
-    }
+    $this->M_layanan_informasi->insert($data);
+    redirect('Informasi');
+}
 
     // UPDATE - tampil form edit
     public function edit($id)

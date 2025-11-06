@@ -42,7 +42,7 @@
     transition: color 0.3s ease;
   }
 
-  /* Hover effect dengan animasi underline */
+  /* Hover effect dengan animasi underline - UNTUK SEMUA MENU */
   .navbar-nav .nav-link:hover {
     color: var(--orange);
   }
@@ -63,42 +63,72 @@
     width: 100%;
   }
 
-  /* === Dropdown konsisten dengan desain #desktop-laporan-dropdown === */
-.navbar .dropdown-menu {
-  min-width: 16rem !important;          /* samakan lebar */
-  padding: 0.5rem 0 !important;         /* padding vertikal */
-  border-radius: 0.25rem !important;    /* rounded halus */
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important; /* shadow */
-  background-color: #ffffff !important; /* background putih */
-  line-height: 2 !important;          /* spasi lebih lega */
-  font-family: 'Poppins', sans-serif !important; /* konsisten font */
-  top: 100% !important;
-  left: -15% !important;
-  right: auto !important;
-  margin-top: 0.5rem;
-  transform: translateX(15%) !important;
-}
+  /* Pastikan dropdown toggle juga dapat underline */
+  .navbar-nav .dropdown-toggle.nav-link:after {
+    content: '' !important;
+    display: block !important;
+    width: 0 !important;
+    height: 2px !important;
+    background: var(--orange) !important;
+    transition: width 0.3s !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+  }
 
-.navbar .dropdown {
-  position: relative; /* biar acuan dropdown tepat ke tombol Laporan */
-}
+  .navbar-nav .dropdown-toggle.nav-link:hover:after {
+    width: 100% !important;
+  }
 
-.navbar .dropdown-item {
-  display: block;
-  padding: 0.25rem 1rem;   /* spacing item */
-  font-size: 0.875rem;     /* ukuran font sama */
-  color: #374151;          /* warna abu Tailwind */
-  font-weight: 500;
-  text-decoration: none;
-  line-height: 2;        /* spasi antar item */
-  border-radius: 0;        /* biar tiap item rata */
-  -webkit-text-stroke: 0.2px;    /* tambahin ketebalan tipis */
-}
+  /* Style dropdown yang sudah ada tetap sama */
+  .navbar .dropdown-menu {
+    min-width: 16rem !important;
+    padding: 0.5rem 0 !important;
+    border-radius: 0.25rem !important;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+    background-color: #ffffff !important;
+    line-height: 2 !important;
+    font-family: 'Poppins', sans-serif !important;
+    top: 100% !important;
+    left: -15% !important;
+    right: auto !important;
+    margin-top: 0.5rem;
+    transform: translateX(15%) !important;
+  }
 
-.navbar .dropdown-item:hover {
-  background-color: #ffedd5; /* hover orange-light */
-  color: #f97316;            /* teks orange */
-}
+  .navbar .dropdown-item {
+    display: block;
+    padding: 0.25rem 1rem;
+    font-size: 0.875rem;
+    color: #374151;
+    font-weight: 500;
+    text-decoration: none;
+    line-height: 2;
+    border-radius: 0;
+    -webkit-text-stroke: 0.2px;
+    transition: all 0.3s ease;
+  }
+
+  .navbar .dropdown-item:hover {
+    background-color: #ffedd5;
+    color: #f97316;
+  }
+
+  .navbar .dropdown-toggle::after {
+    display: none !important;
+  }
+
+  /* Atau jika masih muncul, gunakan selector yang lebih spesifik */
+  .navbar-nav .dropdown-toggle::after {
+    display: none !important;
+    content: none !important;
+    border: none !important;
+  }
+
+  /* Untuk memastikan tidak ada arrow di mana pun */
+  .dropdown-toggle::after {
+    display: none !important;
+  }
 
   /* Hero Section */
   .hero-section {
@@ -353,31 +383,42 @@
         const laporanToggle = document.getElementById('navbarLaporan');
         const laporanIcon = document.getElementById('laporan-icon');
 
-        if (bukuTamuToggle && bukuTamuIcon) {
-            bukuTamuToggle.addEventListener('show.bs.dropdown', () => {
-                bukuTamuIcon.classList.remove('fa-chevron-down');
-                bukuTamuIcon.classList.add('fa-chevron-up');
+        function handleDropdown(toggleElement, iconElement, dropdownId) {
+            if (!toggleElement || !iconElement) {
+                console.warn(`Dropdown elements not found for: ${dropdownId}`);
+                return;
+            }
+
+            const dropdownElement = toggleElement.closest('.dropdown');
+            
+            toggleElement.addEventListener('show.bs.dropdown', () => {
+                iconElement.classList.remove('fa-chevron-down');
+                iconElement.classList.add('fa-chevron-up');
+                console.log(`Dropdown opened: ${dropdownId}`);
             });
 
-            bukuTamuToggle.addEventListener('hide.bs.dropdown', () => {
-                bukuTamuIcon.classList.remove('fa-chevron-up');
-                bukuTamuIcon.classList.add('fa-chevron-down');
+            toggleElement.addEventListener('hide.bs.dropdown', () => {
+                iconElement.classList.remove('fa-chevron-up');
+                iconElement.classList.add('fa-chevron-down');
+                console.log(`Dropdown closed: ${dropdownId}`);
+            });
+
+            // Optional: Handle click outside to close
+            document.addEventListener('click', (event) => {
+                if (!dropdownElement.contains(event.target)) {
+                    iconElement.classList.remove('fa-chevron-up');
+                    iconElement.classList.add('fa-chevron-down');
+                }
             });
         }
 
-        if (laporanToggle && laporanIcon) {
-            laporanToggle.addEventListener('show.bs.dropdown', () => {
-                laporanIcon.classList.remove('fa-chevron-down');
-                laporanIcon.classList.add('fa-chevron-up');
-            });
+        // Initialize both dropdowns
+        handleDropdown(bukuTamuToggle, bukuTamuIcon, 'Buku Tamu');
+        handleDropdown(laporanToggle, laporanIcon, 'Publikasi');
 
-            laporanToggle.addEventListener('hide.bs.dropdown', () => {
-                laporanIcon.classList.remove('fa-chevron-up');
-                laporanIcon.classList.add('fa-chevron-down');
-            });
-        }
+        console.log('Dropdown animations initialized');
     });
-  </script>
+</script>
 
 </body>
 </html>

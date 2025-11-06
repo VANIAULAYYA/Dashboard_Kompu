@@ -11,8 +11,8 @@
       --primary: #4e73df;
       --secondary: #1a1a2e;
       --accent: #5a67d8;
-      --orange: #4e73df;
-      --orange-light: #e3e7f3;
+      --orange: #f97316; /* Diubah ke warna orange yang lebih jelas */
+      --orange-light: #fed7aa;
       --gray: #374151;
       --black: #000000;
       --white: #ffffff;
@@ -29,40 +29,128 @@
 
     /* Navbar Styling */
     .navbar {
-      background-color: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      font-family: 'Poppins', sans-serif;
-    }
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    font-family: 'Poppins', sans-serif;
+  }
 
-    .navbar-nav .nav-link {
-      color: var(--gray);
-      font-size: 1rem;
-      font-weight: 500;
-      margin-left: 0.8rem;
-      margin-right: 0.8rem;
-      position: relative;
-      transition: color 0.3s ease;
-    }
+  .navbar-nav .nav-link {
+    color: var(--gray);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    position: relative;
+    transition: color 0.3s ease;
+    overflow: hidden; /* DITAMBAHKAN: Penting untuk pseudo-element */
+  }
 
-    .navbar-nav .nav-link:hover {
-      color: var(--orange);
-    }
+  /* DIPERBAIKI: Animation underline yang LEBIH SPESIFIK dan KUAT */
+  .navbar-nav .nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--orange) !important;
+    transition: width 0.3s ease !important;
+    z-index: 1;
+  }
 
-    .navbar-nav .nav-link:after {
-      content: '';
-      display: block;
-      width: 0;
-      height: 2px;
-      background: var(--orange);
-      transition: width 0.3s;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-    }
+  /* DIPERBAIKI: Hover effect yang LEBIH KUAT */
+  .navbar-nav .nav-link:hover::before {
+    width: 100% !important;
+  }
 
-    .navbar-nav .nav-link:hover:after {
-      width: 100%;
-    }
+  .navbar-nav .nav-link:hover {
+    color: var(--orange) !important;
+  }
+
+  /* DIPERBAIKI: Khusus untuk dropdown toggle - LEBIH SPESIFIK */
+  .navbar-nav .dropdown-toggle.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--orange) !important;
+    transition: width 0.3s ease !important;
+    z-index: 1;
+  }
+
+  .navbar-nav .dropdown-toggle.nav-link:hover::before {
+    width: 100% !important;
+  }
+
+  /* Active state */
+  .navbar-nav .nav-link.active:not(.dropdown-toggle) {
+    color: var(--orange) !important;
+  }
+
+  .navbar-nav .nav-link.active:not(.dropdown-toggle)::before {
+    width: 100% !important;
+  }
+
+  /* === Dropdown styling === */
+  .navbar .dropdown-menu {
+    min-width: 16rem !important;
+    padding: 0.5rem 0 !important;
+    border-radius: 0.25rem !important;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+    background-color: #ffffff !important;
+    line-height: 2 !important;
+    font-family: 'Poppins', sans-serif !important;
+    border: none;
+    /* HANYA UBAH POSISI UNTUK LURUS */
+    left: 0 !important; /* Pastikan mulai dari kiri */
+    transform: none !important; /* Hapus semua transform */
+  }
+
+  .navbar .dropdown-menu.show {
+    display: block !important;
+  }
+
+  /* Hanya atur margin untuk penyesuaian halus */
+  .navbar-nav .nav-item.dropdown .dropdown-menu {
+    margin-left: 0.8rem !important; /* Sesuai dengan margin nav-link */
+  }
+
+  /* Biarkan styling lainnya tetap sama */
+  .navbar .dropdown-item {
+    display: block;
+    padding: 0.25rem 1rem;
+    font-size: 0.875rem;
+    color: #374151;
+    font-weight: 500;
+    text-decoration: none;
+    line-height: 2;
+    border-radius: 0;
+    -webkit-text-stroke: 0.2px;
+    /* KEMBALIKAN SEPERTI SEMULA - TANPA TRANSITION SMOOTH */
+    transition: none;
+  }
+
+  .navbar .dropdown-item:hover {
+    background-color: #ffedd5;
+    color: #f97316;
+    /* KEMBALIKAN SEPERTI SEMULA - TANPA EFFECT GESER */
+    transform: none;
+  }
+
+  .dropdown-toggle .fa-chevron-down {
+    transition: transform 0.3s ease;
+    font-size: 0.8em;
+  }
+
+  .dropdown.show .dropdown-toggle .fa-chevron-down {
+    transform: rotate(180deg);
+  }
+
+  .navbar .dropdown-toggle::after {
+    display: none !important;
+  }
 
     /* Container Utama */
     .main-container {
@@ -89,7 +177,7 @@
     }
 
     .filter-title {
-      color: var(--orange);
+      color: var(--primary);
       font-size: 1.4em;
       font-weight: bold;
       margin-bottom: 20px;
@@ -120,7 +208,7 @@
     }
 
     .form-select:focus {
-      border-color: var(--orange);
+      border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
     }
 
@@ -135,7 +223,7 @@
       font-weight: bold;
       margin-bottom: 25px;
       padding-bottom: 10px;
-      border-bottom: 3px solid var(--orange);
+      border-bottom: 3px solid var(--primary);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -158,7 +246,7 @@
 
     .period-card:hover {
       transform: translateY(-5px);
-      border-color: var(--orange);
+      border-color: var(--primary);
       box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
     }
 
@@ -614,16 +702,15 @@
   }
   </style>
  
-
-   <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light shadow-sm">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light shadow-sm">
     <div class="container">
         <!-- Logo -->
         <a class="navbar-brand" href="<?php echo base_url(); ?>">
             <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo PU" style="width: 250px; height: auto;">
         </a>
 
-            <!-- Toggler/collapse button (mobile) -->
+        <!-- Toggler/collapse button (mobile) -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -640,7 +727,7 @@
                     <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'tentang' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/tentang'); ?>">Tentang</a>
                 </li>
 
-                <!-- Dropdown Buku Tamu - FIXED -->
+                <!-- Dropdown Buku Tamu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?php echo isset($active_menu) && $active_menu == 'buku_tamu' ? 'active' : ''; ?>" 
                        href="#" id="navbarBukuTamu" role="button" 
@@ -661,7 +748,7 @@
                     <a class="nav-link <?php echo isset($active_menu) && $active_menu == 'layanan' ? 'active' : ''; ?>" href="<?php echo base_url('Landing/layanan'); ?>">Layanan</a>
                 </li>
 
-                <!-- Dropdown Laporan - FIXED -->
+                <!-- Dropdown Publikasi -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?php echo isset($active_menu) && $active_menu == 'laporan' ? 'active' : ''; ?>" 
                        href="#" id="navbarLaporan" role="button" 
@@ -679,7 +766,6 @@
         </div>
     </div>
 </nav>
-
 
   <!-- Hero Section -->
   <section class="hero-section">
@@ -734,21 +820,20 @@
       </div>
     </div>
 
-    <!-- Period Section -->
+    <!-- Triwulan Section - DIPERBAIKI DENGAN STATUS OTOMATIS -->
 <div class="period-section" data-year="<?= $current_year ?>">
   <div class="period-title">
     <i class="fas fa-calendar-alt"></i>
     Laporan Triwulan <?= $current_year ?>
   </div>
 
-  <!-- Triwulan Cards -->
   <div class="period-grid">
     <?php 
     $triwulan_data = [
-        'I' => ['Januari - Maret '.$current_year, '82%'],
-        'II' => ['April - Juni '.$current_year, '87%'], 
-        'III' => ['Juli - September '.$current_year, '-'],
-        'IV' => ['Oktober - Desember '.$current_year, '-']
+        'I' => ['Januari - Maret '.$current_year],
+        'II' => ['April - Juni '.$current_year], 
+        'III' => ['Juli - September '.$current_year],
+        'IV' => ['Oktober - Desember '.$current_year]
     ];
     
     foreach ($triwulan_data as $roman => $info): 
@@ -761,22 +846,12 @@
         }
         
         $is_available = !empty($found_docs);
-        $is_current = ($roman == 'I' && date('n') >= 1 && date('n') <= 3) ||
-                     ($roman == 'II' && date('n') >= 4 && date('n') <= 6) ||
-                     ($roman == 'III' && date('n') >= 7 && date('n') <= 9) ||
-                     ($roman == 'IV' && date('n') >= 10 && date('n') <= 12);
-        
-        $status = $is_available ? 'tersedia' : 
-                 ($is_current ? 'dalam-proses' : 'akan-datang');
-        
-        $status_text = $is_available ? 'Tersedia' : 
-                      ($is_current ? 'Dalam Proses' : 'Akan Datang');
     ?>
     <div class="period-card" data-period="triwulan" data-type="<?= $roman ?>">
         <div class="period-header">
             <h3 class="period-name">Triwulan <?= $roman ?></h3>
-            <span class="period-badge <?= $status ?>">
-                <?= $status_text ?>
+            <span class="period-badge akan-datang">
+                Loading...
             </span>
         </div>
         <div class="period-date"><?= $info[0] ?></div>
@@ -802,17 +877,10 @@
                 </div>
                 <div class="file-actions">
                     <?php if ($doc['file_exists']): ?>
-                    <button class="btn-action view-btn" title="Lihat PDF" 
-                            onclick="showPDF('<?= addslashes($doc['nama_file']) ?>', '<?= base_url($doc['bukti_file']) ?>', 'Triwulan <?= $roman ?> <?= $current_year ?>')">
-                        <i class="fas fa-eye"></i>
-                    </button>
                     <a href="<?= base_url($doc['bukti_file']) ?>" class="btn-action download-btn" download title="Download">
                         <i class="fas fa-download"></i>
                     </a>
                     <?php else: ?>
-                    <button class="btn-action view-btn" title="File tidak tersedia" disabled style="background: #ccc;">
-                        <i class="fas fa-eye"></i>
-                    </button>
                     <button class="btn-action download-btn" title="File tidak tersedia" disabled style="background: #ccc;">
                         <i class="fas fa-download"></i>
                     </button>
@@ -835,23 +903,20 @@
         <?php endif; ?>
               
         <div class="period-stats">
-            <?php if ($is_available && !empty($found_docs[0]['bukti_file'])): ?>
-            <button class="btn-view" onclick="showPDF('<?= addslashes($found_docs[0]['nama_file']) ?>', '<?= base_url($found_docs[0]['bukti_file']) ?>', 'Triwulan <?= $roman ?> <?= $current_year ?>')">
-                <i class="fas fa-eye me-2"></i>Lihat Laporan
+            <button class="btn-view" 
+                    <?php if ($is_available && $found_docs[0]['file_exists']): ?>
+                    onclick="showPDF('<?= addslashes($found_docs[0]['nama_file']) ?>', '<?= base_url($found_docs[0]['bukti_file']) ?>', 'Triwulan <?= $roman ?> <?= $current_year ?>')"
+                    <?php endif; ?>
+                    disabled>
+                <i class="fas fa-clock me-2"></i>Loading...
             </button>
-            <?php else: ?>
-            <button class="btn-view" disabled>
-                <i class="fas fa-<?= $is_current ? 'spinner' : 'clock' ?> me-2"></i>
-                <?= $status_text ?>
-            </button>
-            <?php endif; ?>
         </div>
     </div>
     <?php endforeach; ?>
   </div>
 </div>
 
-<!-- Semester Section -->
+<!-- Semester Section - DIPERBAIKI DENGAN STATUS OTOMATIS -->
 <div class="period-section">
   <div class="period-title">
     <i class="fas fa-calendar-check"></i>
@@ -868,7 +933,6 @@
     foreach ($semester_data as $roman => $info): 
         $found_docs = [];
         
-        // Cari dokumen untuk semester ini
         foreach ($semester as $doc) {
             if (isset($doc['semester_number']) && $doc['semester_number'] == $roman) {
                 $found_docs[] = $doc;
@@ -876,20 +940,12 @@
         }
         
         $is_available = !empty($found_docs);
-        $is_current = ($roman == 'I' && date('n') >= 1 && date('n') <= 6) ||
-                     ($roman == 'II' && date('n') >= 7 && date('n') <= 12);
-        
-        $status = $is_available ? 'tersedia' : 
-                 ($is_current ? 'dalam-proses' : 'akan-datang');
-        
-        $status_text = $is_available ? 'Tersedia' : 
-                      ($is_current ? 'Dalam Proses' : 'Akan Datang');
     ?>
     <div class="period-card" data-period="semester" data-type="<?= $roman ?>">
         <div class="period-header">
             <h3 class="period-name">Semester <?= $roman ?></h3>
-            <span class="period-badge <?= $status ?>">
-                <?= $status_text ?>
+            <span class="period-badge akan-datang">
+                Loading...
             </span>
         </div>
         <div class="period-date"><?= $info[0] ?></div>
@@ -915,17 +971,10 @@
                 </div>
                 <div class="file-actions">
                     <?php if ($doc['file_exists']): ?>
-                    <button class="btn-action view-btn" title="Lihat PDF" 
-                            onclick="showPDF('<?= addslashes($doc['nama_file']) ?>', '<?= base_url($doc['bukti_file']) ?>', 'Semester <?= $roman ?> <?= $current_year ?>')">
-                        <i class="fas fa-eye"></i>
-                    </button>
                     <a href="<?= base_url($doc['bukti_file']) ?>" class="btn-action download-btn" download title="Download">
                         <i class="fas fa-download"></i>
                     </a>
                     <?php else: ?>
-                    <button class="btn-action view-btn" title="File tidak tersedia" disabled style="background: #ccc;">
-                        <i class="fas fa-eye"></i>
-                    </button>
                     <button class="btn-action download-btn" title="File tidak tersedia" disabled style="background: #ccc;">
                         <i class="fas fa-download"></i>
                     </button>
@@ -948,23 +997,20 @@
         <?php endif; ?>
               
         <div class="period-stats">
-            <?php if ($is_available && !empty($found_docs[0]['bukti_file'])): ?>
-            <button class="btn-view" onclick="showPDF('<?= addslashes($found_docs[0]['nama_file']) ?>', '<?= base_url($found_docs[0]['bukti_file']) ?>', 'Semester <?= $roman ?> <?= $current_year ?>')">
-                <i class="fas fa-eye me-2"></i>Lihat Laporan
+            <button class="btn-view" 
+                    <?php if ($is_available && $found_docs[0]['file_exists']): ?>
+                    onclick="showPDF('<?= addslashes($found_docs[0]['nama_file']) ?>', '<?= base_url($found_docs[0]['bukti_file']) ?>', 'Semester <?= $roman ?> <?= $current_year ?>')"
+                    <?php endif; ?>
+                    disabled>
+                <i class="fas fa-clock me-2"></i>Loading...
             </button>
-            <?php else: ?>
-            <button class="btn-view" disabled>
-                <i class="fas fa-<?= $is_current ? 'spinner' : 'clock' ?> me-2"></i>
-                <?= $status_text ?>
-            </button>
-            <?php endif; ?>
         </div>
     </div>
     <?php endforeach; ?>
   </div>
 </div>
 
-<!-- Tahunan Section -->
+<!-- Tahunan Section - DIPERBAIKI DENGAN STATUS OTOMATIS -->
 <div class="period-section">
   <div class="period-title">
     <i class="fas fa-calendar"></i>
@@ -974,19 +1020,12 @@
   <div class="period-grid">
     <?php 
     $is_available = !empty($tahunan);
-    $is_current = (date('n') == 12); // Desember
-    
-    $status = $is_available ? 'tersedia' : 
-             ($is_current ? 'dalam-proses' : 'akan-datang');
-    
-    $status_text = $is_available ? 'Tersedia' : 
-                  ($is_current ? 'Dalam Proses' : 'Akan Datang');
     ?>
     <div class="period-card" data-period="tahunan">
         <div class="period-header">
             <h3 class="period-name">Laporan Tahunan</h3>
-            <span class="period-badge <?= $status ?>">
-                <?= $status_text ?>
+            <span class="period-badge akan-datang">
+                Loading...
             </span>
         </div>
         <div class="period-date">Januari - Desember <?= $current_year ?></div>
@@ -1010,17 +1049,10 @@
                 </div>
                 <div class="file-actions">
                     <?php if ($doc['file_exists']): ?>
-                    <button class="btn-action view-btn" title="Lihat PDF" 
-                            onclick="showPDF('<?= addslashes($doc['nama_file']) ?>', '<?= base_url($doc['bukti_file']) ?>', 'Tahunan <?= $current_year ?>')">
-                        <i class="fas fa-eye"></i>
-                    </button>
                     <a href="<?= base_url($doc['bukti_file']) ?>" class="btn-action download-btn" download title="Download">
                         <i class="fas fa-download"></i>
                     </a>
                     <?php else: ?>
-                    <button class="btn-action view-btn" title="File tidak tersedia" disabled style="background: #ccc;">
-                        <i class="fas fa-eye"></i>
-                    </button>
                     <button class="btn-action download-btn" title="File tidak tersedia" disabled style="background: #ccc;">
                         <i class="fas fa-download"></i>
                     </button>
@@ -1043,16 +1075,13 @@
         <?php endif; ?>
               
         <div class="period-stats">
-            <?php if ($is_available && !empty($tahunan[0]['bukti_file'])): ?>
-            <button class="btn-view" onclick="showPDF('<?= addslashes($tahunan[0]['nama_file']) ?>', '<?= base_url($tahunan[0]['bukti_file']) ?>', 'Tahunan <?= $current_year ?>')">
-                <i class="fas fa-eye me-2"></i>Lihat Laporan
+            <button class="btn-view" 
+                    <?php if ($is_available && $tahunan[0]['file_exists']): ?>
+                    onclick="showPDF('<?= addslashes($tahunan[0]['nama_file']) ?>', '<?= base_url($tahunan[0]['bukti_file']) ?>', 'Tahunan <?= $current_year ?>')"
+                    <?php endif; ?>
+                    disabled>
+                <i class="fas fa-clock me-2"></i>Loading...
             </button>
-            <?php else: ?>
-            <button class="btn-view" disabled>
-                <i class="fas fa-<?= $is_current ? 'spinner' : 'clock' ?> me-2"></i>
-                <?= $status_text ?>
-            </button>
-            <?php endif; ?>
         </div>
     </div>
   </div>
@@ -1121,38 +1150,72 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Script untuk dropdown -->
-  <script>
+<script>
+    // DITAMBAHKAN: Debug dan force styling
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('🔧 Applying forced underline styling...');
+        
+        // Force apply styles dengan JavaScript
+        const dropdownToggles = document.querySelectorAll('.navbar-nav .dropdown-toggle.nav-link');
+        dropdownToggles.forEach(toggle => {
+            // Tambah inline style sebagai backup
+            toggle.style.position = 'relative';
+            toggle.style.overflow = 'hidden';
+            
+            // Buat element untuk underline
+            const underline = document.createElement('div');
+            underline.style.position = 'absolute';
+            underline.style.bottom = '0';
+            underline.style.left = '0';
+            underline.style.width = '0';
+            underline.style.height = '2px';
+            underline.style.background = '#f97316';
+            underline.style.transition = 'width 0.3s ease';
+            underline.style.zIndex = '1';
+            underline.className = 'custom-underline';
+            
+            toggle.appendChild(underline);
+            
+            // Event listeners untuk custom underline
+            toggle.addEventListener('mouseenter', function() {
+                underline.style.width = '100%';
+                this.style.color = '#f97316';
+            });
+            
+            toggle.addEventListener('mouseleave', function() {
+                if (!this.closest('.dropdown').classList.contains('show')) {
+                    underline.style.width = '0';
+                    this.style.color = '';
+                }
+            });
+        });
+
+        console.log('✅ Custom underline applied to:', dropdownToggles.length, 'elements');
+        
+        // Animasi dropdown icon
         const bukuTamuToggle = document.getElementById('navbarBukuTamu');
         const bukuTamuIcon = document.getElementById('buku-tamu-icon');
         const laporanToggle = document.getElementById('navbarLaporan');
         const laporanIcon = document.getElementById('laporan-icon');
 
-        if (bukuTamuToggle && bukuTamuIcon) {
-            bukuTamuToggle.addEventListener('show.bs.dropdown', () => {
-                bukuTamuIcon.classList.remove('fa-chevron-down');
-                bukuTamuIcon.classList.add('fa-chevron-up');
-            });
+        function handleDropdown(toggleElement, iconElement) {
+            if (toggleElement && iconElement) {
+                toggleElement.addEventListener('show.bs.dropdown', () => {
+                    iconElement.classList.remove('fa-chevron-down');
+                    iconElement.classList.add('fa-chevron-up');
+                });
 
-            bukuTamuToggle.addEventListener('hide.bs.dropdown', () => {
-                bukuTamuIcon.classList.remove('fa-chevron-up');
-                bukuTamuIcon.classList.add('fa-chevron-down');
-            });
+                toggleElement.addEventListener('hide.bs.dropdown', () => {
+                    iconElement.classList.remove('fa-chevron-up');
+                    iconElement.classList.add('fa-chevron-down');
+                });
+            }
         }
 
-        if (laporanToggle && laporanIcon) {
-            laporanToggle.addEventListener('show.bs.dropdown', () => {
-                laporanIcon.classList.remove('fa-chevron-down');
-                laporanIcon.classList.add('fa-chevron-up');
-            });
-
-            laporanToggle.addEventListener('hide.bs.dropdown', () => {
-                laporanIcon.classList.remove('fa-chevron-up');
-                laporanIcon.classList.add('fa-chevron-down');
-            });
-        }
+        handleDropdown(bukuTamuToggle, bukuTamuIcon);
+        handleDropdown(laporanToggle, laporanIcon);
     });
-  </script> 
+</script>
 
   <script>
     // Enhanced PDF Viewer Functions
@@ -1313,5 +1376,102 @@ applyFilters();
     });
     
   </script>
+
+  <script>
+// ========== SISTEM STATUS OTOMATIS ==========
+function getStatusByPeriod(periodType, periodNumber, hasFiles = false) {
+  const now = new Date();
+  const currentMonth = now.getMonth() + 1;
+  const currentYear = now.getFullYear();
+  
+  if (hasFiles) {
+    return 'tersedia';
+  }
+  
+  if (periodType === 'triwulan') {
+    const triwulanMonths = {
+      'I': [1, 2, 3],
+      'II': [4, 5, 6],
+      'III': [7, 8, 9],
+      'IV': [10, 11, 12]
+    };
+    
+    const months = triwulanMonths[periodNumber];
+    if (months.includes(currentMonth)) {
+      return 'dalam-proses';
+    }
+    return 'akan-datang';
+  }
+  
+  if (periodType === 'semester') {
+    const semesterMonths = {
+      'I': [1, 2, 3, 4, 5, 6],
+      'II': [7, 8, 9, 10, 11, 12]
+    };
+    
+    const months = semesterMonths[periodNumber];
+    if (months.includes(currentMonth)) {
+      return 'dalam-proses';
+    }
+    return 'akan-datang';
+  }
+  
+  if (periodType === 'tahunan') {
+    return currentMonth >= 1 && currentMonth <= 11 ? 'dalam-proses' : 'akan-datang';
+  }
+  
+  return 'akan-datang';
+}
+
+function updateCardStatus(cardElement, status, hasFiles) {
+  const badge = cardElement.querySelector('.period-badge');
+  const viewButton = cardElement.querySelector('.btn-view');
+  
+  badge.className = `period-badge ${status}`;
+  badge.textContent = status === 'tersedia' ? 'Tersedia' : 
+                     status === 'dalam-proses' ? 'Dalam Proses' : 'Akan Datang';
+  
+  if (status === 'tersedia' && hasFiles) {
+    viewButton.disabled = false;
+    viewButton.innerHTML = '<i class="fas fa-eye me-2"></i>Lihat Laporan';
+  } else if (status === 'dalam-proses') {
+    viewButton.disabled = true;
+    viewButton.innerHTML = '<i class="fas fa-spinner me-2"></i>Dalam Proses';
+  } else {
+    viewButton.disabled = true;
+    viewButton.innerHTML = '<i class="fas fa-clock me-2"></i>Akan Datang';
+  }
+}
+
+function initializeAutoStatus() {
+  // Data status dari PHP (diasumsikan sudah ada di variabel $triwulan, $semester, $tahunan)
+  const currentYear = new Date().getFullYear();
+  
+  // Update Triwulan
+  document.querySelectorAll('.period-card[data-period="triwulan"]').forEach(card => {
+    const periodNumber = card.getAttribute('data-type');
+    const hasFiles = card.querySelector('.file-card:not(.empty)') !== null;
+    const status = getStatusByPeriod('triwulan', periodNumber, hasFiles);
+    updateCardStatus(card, status, hasFiles);
+  });
+  
+  // Update Semester
+  document.querySelectorAll('.period-card[data-period="semester"]').forEach(card => {
+    const periodNumber = card.getAttribute('data-type');
+    const hasFiles = card.querySelector('.file-card:not(.empty)') !== null;
+    const status = getStatusByPeriod('semester', periodNumber, hasFiles);
+    updateCardStatus(card, status, hasFiles);
+  });
+  
+  // Update Tahunan
+  document.querySelectorAll('.period-card[data-period="tahunan"]').forEach(card => {
+    const hasFiles = card.querySelector('.file-card:not(.empty)') !== null;
+    const status = getStatusByPeriod('tahunan', currentYear, hasFiles);
+    updateCardStatus(card, status, hasFiles);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initializeAutoStatus);
+</script>
 </body>
 </html>

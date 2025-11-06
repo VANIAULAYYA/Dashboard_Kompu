@@ -362,7 +362,7 @@
       <div class="card">
         <div class="card-header"><h5 class="mb-0">Tambah Laporan</h5></div>
         <div class="card-body p-4">
-          <form id="formTambah" action="<?= site_url('Laporan/simpan') ?>" method="post" enctype="multipart/form-data">
+          <form id="formTambah" action="<?= site_url('Laporan/simpan_kompu') ?>" method="post" enctype="multipart/form-data">
 
             <div class="mb-3">
               <label>Jenis Laporan</label>
@@ -419,7 +419,7 @@
       <div class="card">
         <div class="card-header"><h5 class="mb-0">Edit Laporan</h5></div>
         <div class="card-body p-4">
-          <form action="<?= site_url('Laporan/update') ?>" method="post" enctype="multipart/form-data">
+          <form action="<?= site_url('Laporan/update_kompu') ?>" method="post" enctype="multipart/form-data">
             
             <input type="hidden" name="id" id="edit_id">
 

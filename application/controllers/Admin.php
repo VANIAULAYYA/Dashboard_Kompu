@@ -131,6 +131,9 @@ private function hitung_grade_mutu($nilai_ikm)
     /**
  * Method untuk mendapatkan statistik permintaan data (untuk dashboard utama) - BERDASARKAN TAHUN BERJALAN
  */
+/**
+ * Method untuk mendapatkan statistik permintaan data (untuk dashboard utama) - BERDASARKAN TAHUN BERJALAN
+ */
 private function hitung_statistik_permintaan_data() {
     $tahun_ini = date('Y');
     
@@ -143,9 +146,9 @@ private function hitung_statistik_permintaan_data() {
     $this->db->where_in('status', ['Dalam Proses', 'proses']);
     $dalam_proses = $this->db->count_all_results('layanan_permintaan_data');
     
-    // Dipenuhi (status: 'selesai') TAHUN INI
+    // TERPENUHI - AMBIL SEMUA STATUS YANG MENANDAKAN TERPENUHI (konsisten dengan method lengkap)
     $this->db->where('YEAR(diterima_ppid)', $tahun_ini);
-    $this->db->where('status', 'selesai');
+    $this->db->where_in('status', ['selesai', 'Selesai', 'terpenuhi', 'Terpenuhi', 'dipenuhi', 'Dipenuhi', 'Telah Diterima']);
     $dipenuhi = $this->db->count_all_results('layanan_permintaan_data');
     
     // Hitung persentase
