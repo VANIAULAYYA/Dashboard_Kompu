@@ -5,7 +5,7 @@
     <style>
         @page {
             size: A4;
-            margin: 2cm 2.5cm;
+            margin: 1.5cm 1.5cm;
         }
         
         body { 
@@ -18,51 +18,53 @@
         }
         
         .header { 
-            display: table;
-            width: 100%;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #000;
-            padding-bottom: 10px;
-        }
-        
-        .logo { 
-            display: table-cell;
-            width: 80px;
-            vertical-align: middle;
-        }
-        
-        .logo img {
-            width: 70px;
-            height: 70px;
-        }
-        
-        .header-text {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-            padding-left: 10px;
-        }
-        
-        .header-text h2 {
-            margin: 0;
-            font-size: 14pt;
-            font-weight: bold;
-            line-height: 1.3;
-        }
-        
-        .header-text h3 {
-            margin: 0;
-            font-size: 12pt;
-            font-weight: normal;
-            line-height: 1.3;
-        }
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        margin-bottom: 15px;
+        position: relative;
+    }
+    
+    .logo { 
+        width: 100px;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        padding-right: 15px;
+    }
+    
+    .logo img {
+        width: 93px;
+        height: 93px;
+        object-fit: fill;
+    }
+    
+    .header-text {
+        flex: 1;
+        text-align: center;
+        padding: 0 20px 15px 20px;
+        border-bottom: 2px solid #000;
+    }
+    
+    .header-text h2 {
+        margin: 0;
+        font-size: 16pt;
+        font-weight: bold;
+        line-height: 1.1;
+    }
+    
+    .header-text h3 {
+        margin: 0;
+        font-size: 11pt;
+        font-weight: normal;
+        line-height: 1.2;
+    }
         
         .form-title {
             text-align: center;
             font-weight: bold;
             font-size: 13pt;
             margin: 20px 0 25px 0;
-            text-decoration: underline;
         }
         
         .info-section {
@@ -110,39 +112,58 @@
         }
         
         .signature-section {
-            margin-top: 40px;
-            width: 100%;
-        }
-        
-        .signature-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        
-        .signature-box {
-            width: 45%;
-            text-align: center;
-        }
-        
-        .signature-title {
-            margin-bottom: 80px;
-            font-size: 12pt;
-            text-align: center;
-        }
-        
-        .signature-name {
-            margin-top: 5px;
-            font-size: 12pt;
-            text-align: center;
-        }
-        
-        .signature-img {
-            max-width: 120px;
-            max-height: 60px;
-            display: block;
-            margin: -75px auto 15px auto;
-        }
+    margin-top: 40px;
+    width: 100%;
+}
+
+.signature-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.signature-box {
+    width: 45%;
+    text-align: center;
+}
+
+.signature-title {
+    margin-bottom: 5px;
+    font-size: 12pt;
+    text-align: center;
+}
+
+.signature-subtitle {
+    margin-bottom: 5px;
+    font-size: 12pt;
+    text-align: center;
+}
+
+.signature-receiver {
+    margin-bottom: 60px;
+    font-size: 11pt;
+    text-align: center;
+    color: #555;
+}
+
+.signature-name {
+    font-size: 12pt;
+    text-align: center;
+}
+
+.signature-img {
+    max-width: 120px;
+    max-height: 60px;
+    display: block;
+    margin: 0 auto;
+}
+
+.signature-line {
+    margin: 20px 0 10px 0;
+    border-bottom: 1px solid #000;
+    width: 200px;
+    display: inline-block;
+}
         
         .keterangan {
             margin-top: 30px;
@@ -166,7 +187,7 @@
             }
             
             @page {
-                margin: 2cm 2.5cm;
+                margin: 1.5cm 1.5cm;
             }
         }
         
@@ -202,20 +223,20 @@
 </head>
 <body>
     <div class="no-print">
-        <button onclick="window.print()" class="btn btn-print">🖨️ Cetak</button>
-        <button onclick="window.close()" class="btn btn-close">❌ Tutup</button>
-    </div>
+    <button onclick="window.print()" class="btn btn-print">🖨️ Cetak</button>
+    <button onclick="closeForm()" class="btn btn-close">❌ Tutup</button>
+</div>
 
     <!-- HEADER -->
     <div class="header">
         <div class="logo">
-            <img src="<?php echo base_url('assets/Pictures/logo-pu.png'); ?>" alt="Logo BBWS Brantas">
+            <img src="<?php echo base_url('assets/logo-pu.jpeg'); ?>" alt="Logo BBWS Brantas">
         </div>
         <div class="header-text">
-            <h2>BBWS BRANTAS</h2>
-            <h3>BBWS BRANTAS</h3>
-            <h3>Jl. Soekarno Hatta No. 100 Malang</h3>
-            <h3>Telp: (0341) 123456, Email: ppid@bbwsbrantas.go.id</h3>
+            <h2><strong>KEMENTERIAN PEKERJAAN UMUM</strong></h2>
+            <h3>DIREKTORAT JENDERAL SUMBER DAYA AIR</h3>
+            <h3><strong>BALAI BESAR WILAYAH SUNGAI BRANTAS</strong></h3>
+            <h3>Jalan Raya Menganti Nomor 312 Wiyung Surabaya 60228 Telp. (031) 7523487, 7523488</h3>
         </div>
     </div>
 
@@ -303,14 +324,14 @@
         <?php endif; ?>
         
         <div class="info-row">
-            <span class="info-label">Tujuan Penggunaan Informasi</span>
-            <span class="info-separator">:</span>
-            <span class="info-value"><?php 
-                $tujuan = $permohonan->tujuan_penggunaan ?? '-';
-                $lines2 = explode("\n", $tujuan);
-                echo $lines2[0];
-            ?></span>
-        </div>
+    <span class="info-label">Tujuan Penggunaan Informasi<br>(Mohon Diperinci)</span>
+    <span class="info-separator">:</span>
+    <span class="info-value"><?php 
+        $tujuan = $permohonan->tujuan_penggunaan ?? '-';
+        $lines2 = explode("\n", $tujuan);
+        echo $lines2[0];
+    ?></span>
+</div>
         <?php if (isset($lines2) && count($lines2) > 1): ?>
         <div class="multiline-value">
             <?php 
@@ -337,31 +358,35 @@
 
     <!-- FOOTER NOTE -->
     <div class="footer-note">
-        <p>Untuk informasi lebih lanjut mengenai prosedur permohonan, <strong>pemohon dapat menghubungi PPID BBWS Brantas</strong> selama jam kerja melalui telepon atau email yang tercantum di atas.</p>
+        <p>Informasi yang diperoleh tidak akan disalahgunakan dan hanya digunakan <strong>sebagaimana mestinya sesuai dengan tujuan permohonan tersebut diatas.</strong> Segala akibat hukum dari informasi ini setelah keluar dari Kantor BBWS Brantas Kementerian PU menjadi tanggung jawab Pemohon/Pengguna Informasi.</p>
     </div>
-
-    <!-- TANDA TANGAN -->
-    <div class="signature-section">
-        <div class="signature-row">
-            <div class="signature-box">
-                <div class="signature-title">Petugas Pelayanan</div>
-                <div class="signature-name">(Penerima Permohonan)</div>
-            </div>
-            
-            <div class="signature-box">
-                <div class="signature-title">Pemohon Informasi</div>
-                <?php if (!empty($permohonan->ttd_data)): ?>
-                    <img src="<?= $permohonan->ttd_data ?>" class="signature-img" alt="Tanda Tangan">
-                <?php endif; ?>
-                <div class="signature-name">(<?= $permohonan->pengirim ?? '________________________' ?>)</div>
-            </div>
+<!-- TANDA TANGAN -->
+<div class="signature-section">
+    <div class="signature-row">
+        <div class="signature-box">
+            <div class="signature-title">Petugas Pelayanan</div>
+            <div class="signature-subtitle">Informasi</div>
+            <div class="signature-receiver">(Penerima Permohonan)</div>
+            <div class="signature-name" style="margin-top: 67px;">(__________________________)</div>
+        </div>
+        
+        <div class="signature-box">
+            <div class="signature-title">Pemohon</div>
+            <div class="signature-title">Informasi</div>
+            <?php if (!empty($permohonan->ttd_data)): ?>
+                <img src="<?= $permohonan->ttd_data ?>" class="signature-img" alt="Tanda Tangan" style="margin-top: 20px;">
+            <?php else: ?>
+                <!-- Kosong, hanya nama saja -->
+            <?php endif; ?>
+            <div class="signature-name" style="margin-top: 27px;">(<?= $permohonan->pengirim ?? '' ?>)</div>
         </div>
     </div>
+</div>
 
     <!-- KETERANGAN -->
     <div class="keterangan">
-        <p><strong>Keterangan:</strong></p>
-        <p>*) Dengan menandatangani formulir ini, saya menyatakan bahwa semua data dan informasi yang saya berikan adalah benar dan sah sesuai dengan ketentuan perundang-undangan yang berlaku mengenai keterbukaan informasi publik.</p>
+        <p>Keterangan:</p>
+        <p>*) Dalam hal informasi publik yang diminta pemohon telah tersedia di situs EPPID Kementerian PU, pemohon dapat mengunduh dan mencetak sendiri dari situs EPPID Kementerian PU. Pelayanan informasi publik tidak dipungut biaya. Namun biaya penggandaan atau perekaman yang timbul ditanggung oleh pemohon informasi publik.</p>
     </div>
 
     <script>
@@ -370,5 +395,26 @@
         //     window.print();
         // }
     </script>
+
+    <script>
+    function closeForm() {
+        // Cek dari URL
+        if (window.location.href.indexOf('Layanan/view_pdf') > -1 || 
+            window.location.href.indexOf('layanan/view_pdf') > -1) {
+            window.location.href = '<?php echo base_url('Layanan'); ?>'; 
+        } 
+        else if (window.location.href.indexOf('permohonan/cetak') > -1) {
+            window.location.href = '<?php echo base_url('Landing'); ?>'; 
+        }
+        else {
+            history.back(); // Default kembali ke halaman sebelumnya
+        }
+    }
+    
+    // Auto print ketika halaman loaded (optional - hapus jika tidak perlu)
+    // window.onload = function() {
+    //     window.print();
+    // }
+</script>
 </body>
 </html>

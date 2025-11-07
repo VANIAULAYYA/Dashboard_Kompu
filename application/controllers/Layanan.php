@@ -20,7 +20,7 @@ class Layanan extends CI_Controller {
     {
         $data = [
             'title' => 'Layanan Permintaan Data',
-            'Layanan' => $this->M_layanan_permintaan_data->get_all(), // GANTI jadi 'Layanan' (huruf besar)
+            'Layanan' => $this->M_layanan_permintaan_data->get_all(),
             'tahun_available' => $this->M_layanan_permintaan_data->get_available_years(),
             'tahun_selected' => date('Y'),
             'jenis_periode' => 'semua',
@@ -39,7 +39,7 @@ class Layanan extends CI_Controller {
         $this->load->view('admin/v_layanan_form', $data);
     }
 
-    // CREATE - simpan data baru
+    // CREATE - simpan data baru DENGAN AUTO GENERATE PDF
     public function simpan()
     {
         $data = [
@@ -56,7 +56,17 @@ class Layanan extends CI_Controller {
             'link_bukti_surat_penyelesaian'    => $this->input->post('link_bukti_surat_penyelesaian'),
         ];
 
-        $this->M_layanan_permintaan_data->insert($data);
+        // 1. Simpan data ke database dan ambil ID-nya
+        $id_permohonan = $this->M_layanan_permintaan_data->insert($data);
+        
+        // 2. Auto generate PDF dokumen
+        $pdf_path = $this->generate_pdf_document($id_permohonan);
+        
+        // 3. Update database dengan path PDF
+        $update_data = ['pdf_path' => $pdf_path];
+        $this->M_layanan_permintaan_data->update($id_permohonan, $update_data);
+
+        $this->session->set_flashdata('success', 'Data berhasil disimpan dan dokumen PDF telah dibuat.');
         redirect('Layanan');
     }
 
@@ -65,16 +75,11 @@ class Layanan extends CI_Controller {
     {
         $data = [
             'title' => 'Edit Layanan Permintaan Data',
-            'Layanan' => $this->M_layanan_permintaan_data->get_by_id($nomor) // GANTI jadi 'Layanan'
+            'Layanan' => $this->M_layanan_permintaan_data->get_by_id($nomor)
         ];
 
-        // Debug dulu
         if (!$data['Layanan']) {
-            echo "<h3>Data tidak ditemukan untuk nomor: " . $nomor . "</h3>";
-            echo "<pre>";
-            print_r($this->db->last_query());
-            echo "</pre>";
-            exit;
+            show_error('Data tidak ditemukan');
         }
 
         $this->load->view('admin/v_layanan_edit', $data);
@@ -100,6 +105,8 @@ class Layanan extends CI_Controller {
         ];
 
         $this->M_layanan_permintaan_data->update($nomor, $data);
+        
+        $this->session->set_flashdata('success', 'Data berhasil diupdate.');
         redirect('Layanan');
     }
 
@@ -107,7 +114,53 @@ class Layanan extends CI_Controller {
     public function delete($nomor)
     {
         $this->M_layanan_permintaan_data->delete($nomor);
+        $this->session->set_flashdata('success', 'Data berhasil dihapus.');
         redirect('Layanan');
+    }
+
+    // ========= FUNCTION AUTO GENERATE PDF =========
+private function generate_pdf_document($id_permohonan) 
+{
+    $data['permohonan'] = $this->M_layanan_permintaan_data->get_by_id($id_permohonan);
+    
+    // ✅ BENAR: GUNAKAN 'cetak_formulir' YANG SAMA
+    $html_content = $this->load->view('cetak_formulir', $data, TRUE);
+    
+    $filename = 'formulir_permohonan_' . $id_permohonan . '_' . date('YmdHis') . '.html';
+    $filepath = 'uploads/documents/' . $filename;
+    
+    file_put_contents(FCPATH . $filepath, $html_content);
+    
+    return $filepath;
+}
+
+
+    // Function untuk view PDF
+    public function view_pdf($id) 
+{
+    $this->session->set_userdata('pdf_source', 'admin'); // ✅ TANDAI DARI ADMIN
+    $permohonan = $this->M_layanan_permintaan_data->get_by_id($id);
+    
+    if ($permohonan && !empty($permohonan->pdf_path)) {
+        redirect(base_url($permohonan->pdf_path));
+    } else {
+        show_error('Dokumen tidak ditemukan');
+    }
+}
+
+    // Function untuk download PDF
+    public function download_pdf($id) 
+    {
+        $permohonan = $this->M_layanan_permintaan_data->get_by_id($id);
+        
+        if ($permohonan && !empty($permohonan->pdf_path) && file_exists(FCPATH . $permohonan->pdf_path)) {
+            header('Content-Type: text/html');
+            header('Content-Disposition: attachment; filename="formulir_permohonan_' . $id . '.html"');
+            readfile(FCPATH . $permohonan->pdf_path);
+            exit;
+        } else {
+            show_error('File dokumen tidak ditemukan');
+        }
     }
 
     // ========= HALAMAN LAYANAN DENGAN FILTER =========
@@ -233,7 +286,7 @@ class Layanan extends CI_Controller {
             $date_range = $this->get_date_range($periode, $tahun_for_range);
         }
         
-        // Get data dengan filter - GUNAKAN MODEL LAYANAN PERMINTAAN DATA
+        // Get data dengan filter
         $data = [
             'permintaan_data' => $this->M_layanan_permintaan_data->get_with_filter($date_range),
             'periode_label' => $date_range['label']
@@ -260,7 +313,7 @@ class Layanan extends CI_Controller {
             $date_range = $this->get_date_range($periode, $tahun_for_range);
         }
         
-        // Get data dengan filter - GUNAKAN MODEL LAYANAN PERMINTAAN DATA
+        // Get data dengan filter
         $all_data = $this->M_layanan_permintaan_data->get_with_filter($date_range);
         
         // Export ke Excel
