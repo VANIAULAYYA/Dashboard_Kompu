@@ -120,9 +120,14 @@ class Permohonan extends CI_Controller {
         return $filepath;
     }
 
-    // Di Controller Permohonan - function cetak_permohonan
+    // ✅ MODIFIKASI function cetak_permohonan
 public function cetak_permohonan($nomor_permohonan) {
-    $this->session->set_userdata('pdf_source', 'user'); // ✅ TANDAI DARI USER
+    // Simpan URL return dari referer
+    if ($this->input->server('HTTP_REFERER')) {
+        $this->session->set_userdata('pdf_return_url', $this->input->server('HTTP_REFERER'));
+    }
+    
+    $this->session->set_userdata('pdf_source', 'user'); // Tandai dari user
     $this->load->model('M_permohonan');
     $data['permohonan'] = $this->M_permohonan->get_permohonan_for_cetak($nomor_permohonan);
     
@@ -161,4 +166,18 @@ public function cetak_permohonan($nomor_permohonan) {
         $this->session->unset_userdata('buku_tamu_id');
         redirect('Landing');
     }
+
+    // ✅ TAMBAHKAN FUNCTION INI untuk handle tombol tutup dari landing
+public function back()
+{
+    $return_url = $this->session->userdata('pdf_return_url');
+    $this->session->unset_userdata('pdf_return_url');
+    
+    if ($return_url) {
+        redirect($return_url);
+    } else {
+        // Fallback ke landing
+        redirect('Landing');
+    }
+}
 }

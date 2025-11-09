@@ -330,7 +330,7 @@
       <?= date('d F Y', strtotime($p->tanggal_surat)); ?>
     </td>
                   <td class="text-sm font-weight-normal"><?= $p->nomor_surat; ?></td>
-                  <td class="text-sm font-weight-normal"><?= $p->perihal; ?></td>
+                  <td class="text-sm font-weight-normal" style="min-width: 300px; white-space: normal;"><?= $p->perihal; ?></td>
                   <td class="text-sm font-weight-normal"><?= date('d F Y', strtotime($p->diterima_ppid)); ?></td>
                   <td class="text-sm font-weight-normal">
   <a href="<?= $p->link_bukti_surat ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
@@ -343,15 +343,16 @@
   <a href="<?= $p->link_bukti_surat_penyelesaian ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat Bukti</a>
 </td>
 <td class="text-sm font-weight-normal">
-                                    <?php if (!empty($p->pdf_path)): ?>
-                                        <a href="<?= base_url($p->pdf_path) ?>" target="_blank" 
-                                           class="btn btn-sm btn-danger">
-                                            <i class="fas fa-file-pdf"></i> PDF
-                                        </a>
-                                    <?php else: ?>
-                                        <span class="text-muted">-</span>
-                                    <?php endif; ?>
-                                </td>
+    <?php if (!empty($p->pdf_path)): ?>
+        <a href="<?= base_url('Layanan/view_pdf/' . $p->nomor . '?return=' . urlencode(current_url())); ?>" 
+           target="_blank" 
+           class="btn btn-sm btn-danger">
+            <i class="fas fa-file-pdf"></i> PDF
+        </a>
+    <?php else: ?>
+        <span class="text-muted">-</span>
+    <?php endif; ?>
+</td>
                   <td>
   <button type="button" class="btn btn-warning btn-sm btnEdit"
   data-id="<?= htmlspecialchars($p->nomor, ENT_QUOTES) ?>"
@@ -794,7 +795,7 @@ document.querySelectorAll("input, textarea").forEach(function(el){
   <script>
     const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
       searchable: true,
-      fixedHeight: true
+      fixedHeight: false
     });
 
     // Function untuk cetak semua data PERMINTAAN DATA

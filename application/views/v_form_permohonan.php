@@ -406,7 +406,7 @@ footer {
 <section class="hero-section">
   <div class="container text-center">
     <h1 class="display-4 fw-bold mb-3">FORMULIR PERMOHONAN INFORMASI</h1>
-    <p class="lead mb-0">LAMPU PETROMAK BBWS BRANTAS</p>
+    <p class="lead mb-0">SBBWS BRANTAS</p>
   </div>
 </section>
 
@@ -543,7 +543,7 @@ footer {
 
             <div class="alert alert-info mt-3">
                 <small>
-                    <strong>Keterangan:</strong> Dengan menandatangani formulir ini, saya menyatakan bahwa semua data dan informasi yang saya berikan adalah benar dan sah sesuai dengan ketentuan perundang-undangan yang berlaku mengenai keterbukaan informasi publik.
+                    <strong>Keterangan:</strong> Dengan menandatangani formulir ini, saya menyatakan bahwa seluruh data yang diberikan adalah benar dan sah. Saya bersedia mempertanggungjawabkan serta diproses sesuai peraturan perundang-undangan apabila informasi yang diterima disalahgunakan atau digunakan untuk hal-hal yang menyimpang dari tujuan permohonan.
                 </small>
             </div>
 

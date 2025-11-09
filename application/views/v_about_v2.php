@@ -322,7 +322,7 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <h1 class="display-4 fw-bold mb-3">TENTANG</h1>
-    <p class="lead mb-4">LAMPU PETROMAK BBWS BRANTAS</p>
+    <p class="lead mb-4">BBWS BRANTAS</p>
   </section>
 
   <!-- Full Width Slideshow -->

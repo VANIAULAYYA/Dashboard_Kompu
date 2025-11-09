@@ -489,16 +489,15 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="mb-3">
                 <label>Diterima PPID <span class="text-danger">*</span></label>
                 <input type="date" name="diterima_ppid" class="form-control" required>
               </div>
-              <div class="col-md-6 mb-3">
+
+              <div class="mb-3">
                 <label>Tindak Lanjut <span class="text-danger">*</span></label>
                 <textarea name="tindaklanjut" class="form-control" placeholder="Tuliskan tindak lanjut" rows="3" required></textarea>
               </div>
-            </div>
 
             <div class="mb-3">
               <label>Bukti Dokumen Tindak Lanjut <span class="text-danger">*</span></label>
@@ -623,17 +622,16 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="mb-3">
                 <label>Diterima PPID <span class="text-danger">*</span></label>
                 <input type="date" name="diterima_ppid" id="edit_diterima_ppid" class="form-control" required>
               </div>
-              <div class="col-md-6 mb-3">
+
+              <div class="mb-3">
                 <label>Tindak Lanjut <span class="text-danger">*</span></label>
                 <textarea name="tindaklanjut" id="edit_tindaklanjut" class="form-control" 
                           placeholder="Tuliskan tindak lanjut" rows="3" required></textarea>
               </div>
-            </div>
 
             <div class="mb-3">
               <label>Bukti Dokumen Tindak Lanjut <span class="text-danger">*</span></label>

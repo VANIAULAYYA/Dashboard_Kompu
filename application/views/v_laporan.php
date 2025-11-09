@@ -771,7 +771,7 @@
   <section class="hero-section">
     <div class="container text-center">
       <h1 class="display-4 fw-bold mb-3"><?= $page_title ?></h1>
-      <p class="lead mb-0">LAMPU PETROMAK BBWS BRANTAS</p>
+      <p class="lead mb-0">BBWS BRANTAS</p>
     </div>
   </section>
 

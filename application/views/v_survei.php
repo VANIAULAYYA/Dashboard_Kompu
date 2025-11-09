@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE/dist/css/adminlte.min.css'); ?>">
-    <title>Buku Tamu</title>
+    <title>FORMULIR SURVEI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -746,7 +746,7 @@ footer {
 <section class="hero-section">
   <div class="container text-center">
     <h1 class="display-4 fw-bold mb-3">FORMULIR SURVEI</h1>
-    <p class="lead mb-0">LAMPU PETROMAK BBWS BRANTAS</p>
+    <p class="lead mb-0">BBWS BRANTAS</p>
   </div>
 </section>
 

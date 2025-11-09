@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE/dist/css/adminlte.min.css'); ?>">
-    <title>Buku Tamu</title>
+    <title>FORMULIR BUKU TAMU</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -406,7 +406,7 @@ footer {
 <section class="hero-section">
   <div class="container text-center">
     <h1 class="display-4 fw-bold mb-3">FORMULIR BUKU TAMU</h1>
-    <p class="lead mb-0">LAMPU PETROMAK BBWS BRANTAS</p>
+    <p class="lead mb-0">BBWS BRANTAS</p>
   </div>
 </section>
 
@@ -415,9 +415,12 @@ footer {
         <form action="<?php echo site_url('Landing/submit'); ?>" method="post">
             <!-- KOLOM BARU: NIK -->
             <div class="form-group">
-                <label for="nik">NIK (Nomor Induk Kependudukan)</label>
-                <input type="text" class="form-control" name="nik" placeholder="Masukkan NIK 16 digit" maxlength="16" required>
-            </div>
+    <label for="nik">NIK (Nomor Induk Kependudukan)</label>
+    <input type="text" class="form-control" name="nik" placeholder="Masukkan NIK 16 digit" 
+           maxlength="16" required 
+           oninput="validateNumber(this)"
+           onkeydown="blockNonNumbers(event)" required>
+</div>
 
             <div class="form-group">
                 <label for="nama">Nama</label>
@@ -435,23 +438,25 @@ footer {
             
             <div class="form-group">
                 <label for="asal_instansi">Asal Instansi/Pribadi</label>
-                <input type="text" class="form-control" name="asal_instansi" placeholder="Masukkan asal instansi/pribadi Anda">
+                <input type="text" class="form-control" name="asal_instansi" placeholder="Masukkan asal instansi/atas nama pribadi" required>
             </div>
             
             <div class="form-group">
-                <label for="no_handphone">No. Handphone yang bisa dihubungi</label>
-                <input type="text" class="form-control" name="no_handphone" placeholder="Masukkan no. handphone Anda">
-            </div>
+    <label for="no_handphone">No. Handphone yang bisa dihubungi</label>
+    <input type="text" class="form-control" name="no_handphone" placeholder="Masukkan no. handphone Anda"
+           oninput="validateNumber(this)"
+           onkeydown="blockNonNumbers(event)" required>
+</div>
 
             <!-- KOLOM BARU: EMAIL -->
             <div class="form-group">
                 <label for="email">Alamat Email</label>
-                <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email Anda">
+                <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email Anda" required>
             </div>
             
             <div class="form-group">
                 <label for="keperluan" class="block font-semibold mb-2">Keperluan</label>
-                <select id="keperluan" name="keperluan" required class="form-control" onchange="toggleOtherInput()">
+                <select id="keperluan" name="keperluan" required class="form-control" onchange="toggleOtherInput()" required>
                     <option value="">-- Pilih Keperluan --</option>
                     <option value="Menemui Pejabat/Staff">Menemui Pejabat/Staff</option>
                     <option value="Rekomendasi Teknis (Rekomtek)">Rekomendasi Teknis (Rekomtek)</option>
@@ -463,7 +468,7 @@ footer {
             
             <div class="form-group" id="otherInput" style="display: none;">
                 <label for="otherText" class="block font-semibold mb-2">Tuliskan lebih lanjut:</label>
-                <input type="text" class="form-control" id="otherText" name="kategori_lainnya" placeholder="Berikan detail Keperluan">
+                <input type="text" class="form-control" id="otherText" name="kategori_lainnya" placeholder="Berikan detail Keperluan" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -560,6 +565,36 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleOtherInput();
 });
     </script>
+
+<script>
+function validateNumber(input) {
+    const originalValue = input.value;
+    const numbersOnly = originalValue.replace(/[^0-9]/g, '');
+    
+    if (originalValue !== numbersOnly) {
+        alert('Hanya boleh mengisi angka!');
+        input.value = numbersOnly;
+    }
+}
+
+function blockNonNumbers(event) {
+    // Allow: backspace, delete, tab, escape, enter
+    if ([8, 9, 13, 27, 46].includes(event.keyCode) || 
+        // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+        (event.ctrlKey && [65, 67, 86, 88].includes(event.keyCode)) ||
+        // Allow: home, end, left, right
+        (event.keyCode >= 35 && event.keyCode <= 39)) {
+        return;
+    }
+    
+    // Block everything that is not a number
+    if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+        alert('Hanya boleh mengisi angka!');
+        event.preventDefault();
+    }
+}
+</script>
+
 <script src="<?php echo base_url('assets/AdminLTE/dist/js/adminlte.min.js'); ?>"></script>
 </body>
 </html>

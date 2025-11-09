@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Cetak Permohonan Informasi</title>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm 1.5cm;
+        }
+        
+        body { 
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            font-size: 12pt;
+            color: #000;
+        }
+        
+        .header { 
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        margin-bottom: 15px;
+        position: relative;
+    }
+    
+    .logo { 
+        width: 100px;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        padding-right: 15px;
+    }
+    
+    .logo img {
+        width: 93px;
+        height: 93px;
+        object-fit: fill;
+    }
+    
+    .header-text {
+        flex: 1;
+        text-align: center;
+        padding: 0 20px 15px 20px;
+        border-bottom: 2px solid #000;
+    }
+    
+    .header-text h2 {
+        margin: 0;
+        font-size: 16pt;
+        font-weight: bold;
+        line-height: 1.1;
+    }
+    
+    .header-text h3 {
+        margin: 0;
+        font-size: 11pt;
+        font-weight: normal;
+        line-height: 1.2;
+    }
+        
+        .form-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 13pt;
+            margin: 20px 0 25px 0;
+        }
+        
+        .info-section {
+            margin-bottom: 8px;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 3px;
+            line-height: 1.5;
+        }
+        
+        .info-label {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        
+        .info-separator {
+            width: 15px;
+            flex-shrink: 0;
+        }
+        
+        .info-value {
+            flex: 1;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            text-decoration: underline;
+            margin: 20px 0 10px 0;
+            font-size: 12pt;
+        }
+        
+        .multiline-value {
+            margin-left: 265px;
+            margin-top: -3px;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        
+        .footer-note {
+            margin-top: 15px;
+            text-align: justify;
+            line-height: 1.5;
+        }
+        
+        .signature-section {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.signature-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.signature-box {
+    width: 45%;
+    text-align: center;
+}
+
+.signature-title {
+    margin-bottom: 5px;
+    font-size: 12pt;
+    text-align: center;
+}
+
+.signature-subtitle {
+    margin-bottom: 5px;
+    font-size: 12pt;
+    text-align: center;
+}
+
+.signature-receiver {
+    margin-bottom: 60px;
+    font-size: 11pt;
+    text-align: center;
+    color: #555;
+}
+
+.signature-name {
+    font-size: 12pt;
+    text-align: center;
+}
+
+.signature-img {
+    max-width: 120px;
+    max-height: 60px;
+    display: block;
+    margin: 0 auto;
+}
+
+.signature-line {
+    margin: 20px 0 10px 0;
+    border-bottom: 1px solid #000;
+    width: 200px;
+    display: inline-block;
+}
+        
+        .keterangan {
+            margin-top: 30px;
+            font-size: 11pt;
+            text-align: justify;
+            line-height: 1.5;
+        }
+        
+        .keterangan p {
+            margin: 5px 0;
+        }
+        
+        @media print {
+            .no-print { 
+                display: none !important; 
+            }
+            
+            body { 
+                margin: 0;
+                padding: 0;
+            }
+            
+            @page {
+                margin: 1.5cm 1.5cm;
+            }
+        }
+        
+        .no-print {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .btn {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+.btn-print {
+    background: #007bff;
+    color: white;
+}
+
+.btn-print:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+}
+
+.btn-close {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-close:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220,53,69,0.3);
+}
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+    </style>
+</head>
+<body>
+    <div class="no-print">
+    <button onclick="window.print()" class="btn btn-print">
+        <i class="fas fa-print"></i> Cetak
+    </button>
+    <button onclick="closeForm()" class="btn btn-close">
+        <i class="fas fa-times"></i> Tutup
+    </button>
+</div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">
+            <img src="http://localhost/dashboard_kompu/assets/logo-pu.jpeg" alt="Logo BBWS Brantas">
+        </div>
+        <div class="header-text">
+            <h2><strong>KEMENTERIAN PEKERJAAN UMUM</strong></h2>
+            <h3>DIREKTORAT JENDERAL SUMBER DAYA AIR</h3>
+            <h3><strong>BALAI BESAR WILAYAH SUNGAI BRANTAS</strong></h3>
+            <h3>Jalan Raya Menganti Nomor 312 Wiyung Surabaya 60228 Telp. (031) 7523487, 7523488</h3>
+        </div>
+    </div>
+
+    <!-- JUDUL -->
+    <div class="form-title">
+        FORMULIR PERMOHONAN INFORMASI
+    </div>
+
+    <!-- INFO DASAR -->
+    <div class="info-row">
+    <span class="info-label">Nomor Pendaftaran</span>
+    <span class="info-separator">:</span>
+    <span class="value">
+        112    </span>
+</div>
+        <div class="info-row">
+            <span class="info-label">Tanggal</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">07 November 2025</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Cara Penyampaian Permintaan</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">Langsung</span>
+        </div>
+    </div>
+
+    <!-- DATA PEMOHON -->
+    <div class="section-title">DATA PEMOHON INFORMASI</div>
+    
+    <div class="info-section">
+        <div class="info-row">
+            <span class="info-label">Jenis Pemohon</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">Media</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Nama</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">fhfmh</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Nomor Identitas</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">nhnhfh</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Alamat</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">mgjm</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Nomor Telepon</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">n hm</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Email</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">fgs@gmail.com</span>
+        </div>
+    </div>
+
+    <!-- PENGAJUAN PERMOHONAN -->
+    <div class="section-title">PENGAJUAN PERMOHONAN INFORMASI</div>
+    
+    <div class="info-section">
+        <div class="info-row">
+            <span class="info-label">Rincian Informasi yang Dibutuhkan</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">mjgm</span>
+        </div>
+                
+        <div class="info-row">
+    <span class="info-label">Tujuan Penggunaan Informasi<br>(Mohon Diperinci)</span>
+    <span class="info-separator">:</span>
+    <span class="info-value">gjmgjm</span>
+</div>
+                
+        <div class="info-row">
+            <span class="info-label">Cara Memperoleh Informasi</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">Melihat/membaca/mendengarkan/mencatat</span>
+        </div>
+        
+        <div class="info-row">
+            <span class="info-label">Cara Mendapatkan Salinan Informasi</span>
+            <span class="info-separator">:</span>
+            <span class="info-value">Diambil Langsung</span>
+        </div>
+    </div>
+
+    <!-- FOOTER NOTE -->
+    <div class="footer-note">
+        <p>Informasi yang diperoleh tidak akan disalahgunakan dan hanya digunakan <strong>sebagaimana mestinya sesuai dengan tujuan permohonan tersebut diatas.</strong> Segala akibat hukum dari informasi ini setelah keluar dari Kantor BBWS Brantas Kementerian PU menjadi tanggung jawab Pemohon/Pengguna Informasi.</p>
+    </div>
+<!-- TANDA TANGAN -->
+<div class="signature-section">
+    <div class="signature-row">
+        <div class="signature-box">
+            <div class="signature-title">Petugas Pelayanan</div>
+            <div class="signature-subtitle">Informasi</div>
+            <div class="signature-receiver">(Penerima Permohonan)</div>
+            <div class="signature-name" style="margin-top: 67px;">(__________________________)</div>
+        </div>
+        
+        <div class="signature-box">
+            <div class="signature-title">Pemohon</div>
+            <div class="signature-title">Informasi</div>
+                            <img src="data:image/png;base64,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" class="signature-img" alt="Tanda Tangan" style="margin-top: 20px;">
+                        <div class="signature-name" style="margin-top: 27px;">(fhfmh)</div>
+        </div>
+    </div>
+</div>
+
+    <!-- KETERANGAN -->
+    <div class="keterangan">
+        <p>Keterangan:</p>
+        <p>*) Dalam hal informasi publik yang diminta pemohon telah tersedia di situs EPPID Kementerian PU, pemohon dapat mengunduh dan mencetak sendiri dari situs EPPID Kementerian PU. Pelayanan informasi publik tidak dipungut biaya. Namun biaya penggandaan atau perekaman yang timbul ditanggung oleh pemohon informasi publik.</p>
+    </div>
+
+    <script>
+        // Auto print ketika halaman loaded (optional - hapus jika tidak perlu)
+        // window.onload = function() {
+        //     window.print();
+        // }
+    </script>
+
+    <script>
+    function closeForm() {
+    // Cek apakah dari Admin (Layanan/view_pdf)
+    if (window.location.href.indexOf('Layanan/view_pdf') > -1 || 
+        window.location.href.indexOf('layanan/view_pdf') > -1) {
+        // Redirect ke fungsi back di controller yang sudah menyimpan URL sebelumnya
+        window.location.href = 'http://localhost/dashboard_kompu/Layanan/back';
+    } 
+    // Cek apakah dari Landing (permohonan/cetak)
+    else if (window.location.href.indexOf('permohonan/cetak') > -1) {
+        window.location.href = 'http://localhost/dashboard_kompu/Landing';
+    }
+    // Fallback: kembali ke halaman sebelumnya
+    else {
+        if (document.referrer) {
+            window.location.href = document.referrer;
+        } else {
+            history.back();
+        }
+    }
+}
+</script>
+</body>
+</html>

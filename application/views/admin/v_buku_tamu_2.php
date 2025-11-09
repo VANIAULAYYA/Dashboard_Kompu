@@ -317,10 +317,10 @@
                   <td class="text-sm font-weight-normal"><?= $no++; ?></td>
                   <td class="text-sm font-weight-normal"><?= $t->nama; ?></td>
                   <td class="text-sm font-weight-normal"><?= ($t->jenis_kelamin=="L") ? "Laki-Laki":"Perempuan"; ?></td>
-                  <td class="text-sm font-weight-normal"><?= $t->asal_instansi; ?></td>
+                  <td class="text-sm font-weight-normal" style="min-width: 300px; white-space: normal;"><?= $t->asal_instansi; ?></td>
                   <td class="text-sm font-weight-normal"><?= $t->no_handphone; ?></td>
-                  <td class="text-sm font-weight-normal"><?= $t->keperluan; ?></td>
-                  <td class="text-sm font-weight-normal"><?= $t->kritik_saran; ?></td>
+                  <td class="text-sm font-weight-normal" style="min-width: 300px; white-space: normal;"><?= $t->keperluan; ?></td>
+                  <td class="text-sm font-weight-normal" style="min-width: 300px; white-space: normal;"><?= $t->kritik_saran; ?></td>
                   <td>
                     <button type="button" class="btn btn-warning btn-sm btnEdit"
                       data-id="<?= $t->id ?>"
@@ -778,7 +778,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <script>
     const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
       searchable: true,
-      fixedHeight: true
+      fixedHeight: false
     });
   </script>
   <script>

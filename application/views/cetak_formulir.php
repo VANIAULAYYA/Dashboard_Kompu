@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Cetak Permohonan Informasi</title>
+
     <style>
         @page {
             size: A4;
@@ -9,13 +12,13 @@
         }
         
         body { 
-            font-family: 'Times New Roman', Times, serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-            font-size: 12pt;
-            color: #000;
-        }
+        font-family: Arial, sans-serif; /* GANTI DI SINI */
+        margin: 0;
+        padding: 0;
+        line-height: 1.5;
+        font-size: 12pt;
+        color: #000;
+    }
         
         .header { 
         display: flex;
@@ -34,8 +37,8 @@
     }
     
     .logo img {
-        width: 93px;
-        height: 93px;
+        width: 112px;
+        height: 112px;
         object-fit: fill;
     }
     
@@ -48,14 +51,21 @@
     
     .header-text h2 {
         margin: 0;
-        font-size: 16pt;
-        font-weight: bold;
+        font-size: 18pt;
+        font-weight: normal;
         line-height: 1.1;
     }
     
     .header-text h3 {
         margin: 0;
-        font-size: 11pt;
+        font-size: 12pt;
+        font-weight: normal;
+        line-height: 1.2;
+    }
+    
+    .header-text h4 {
+        margin: 0;
+        font-size: 7pt;
         font-weight: normal;
         line-height: 1.2;
     }
@@ -128,13 +138,13 @@
 }
 
 .signature-title {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     font-size: 12pt;
     text-align: center;
 }
 
 .signature-subtitle {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     font-size: 12pt;
     text-align: center;
 }
@@ -202,55 +212,93 @@
         }
         
         .btn {
-            padding: 8px 15px;
-            margin: 0 3px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 12pt;
-        }
-        
-        .btn-print {
-            background: #007bff;
-            color: white;
-        }
-        
-        .btn-close {
-            background: #dc3545;
-            color: white;
-        }
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+.btn-print {
+    background: #007bff;
+    color: white;
+}
+
+.btn-print:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+}
+
+.btn-close {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-close:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220,53,69,0.3);
+}
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
     </style>
 </head>
 <body>
     <div class="no-print">
-    <button onclick="window.print()" class="btn btn-print">🖨️ Cetak</button>
-    <button onclick="closeForm()" class="btn btn-close">❌ Tutup</button>
+    <button onclick="window.print()" class="btn btn-print">
+        <i class="fas fa-print"></i> Cetak
+    </button>
+    <button onclick="closeForm()" class="btn btn-close">
+        <i class="fas fa-times"></i> Tutup
+    </button>
 </div>
 
     <!-- HEADER -->
-    <div class="header">
-        <div class="logo">
-            <img src="<?php echo base_url('assets/logo-pu.jpeg'); ?>" alt="Logo BBWS Brantas">
-        </div>
-        <div class="header-text">
-            <h2><strong>KEMENTERIAN PEKERJAAN UMUM</strong></h2>
-            <h3>DIREKTORAT JENDERAL SUMBER DAYA AIR</h3>
-            <h3><strong>BALAI BESAR WILAYAH SUNGAI BRANTAS</strong></h3>
-            <h3>Jalan Raya Menganti Nomor 312 Wiyung Surabaya 60228 Telp. (031) 7523487, 7523488</h3>
-        </div>
+<div class="header">
+    <div class="logo">
+        <img src="<?php echo base_url('assets/logo-pu.jpeg'); ?>" alt="Logo BBWS Brantas">
     </div>
+    <div class="header-text">
+        <h2>KEMENTERIAN PEKERJAAN UMUM</h2>
+        <h3>DIREKTORAT JENDERAL SUMBER DAYA AIR</h3>
+        <h3>BALAI BESAR WILAYAH SUNGAI BRANTAS</h3>
+        <h3><strong>SATUAN KERJA BALAI BESAR WILAYAH SUNGAI BRANTAS</strong></h3>
+        <h4>Jalan Raya Menganti Nomor 312 Wiyung Surabaya 60228 Telp. (031) 7523487, 7523488</h4>
+    </div>
+</div>
 
     <!-- JUDUL -->
     <div class="form-title">
         FORMULIR PERMOHONAN INFORMASI
     </div>
 
-    <!-- INFO DASAR -->
-    <div class="info-row">
+   <!-- INFO DASAR -->
+<div class="info-row">
     <span class="info-label">Nomor Pendaftaran</span>
     <span class="info-separator">:</span>
-    <span class="value"><?= $permohonan->buku_tamu_id ?? $buku_tamu_id ?? '' ?></span>
+    <span class="value">
+        <?php
+        // SELALU tampilkan buku_tamu_id jika ada
+        if (isset($permohonan->buku_tamu_id) && !empty($permohonan->buku_tamu_id)) {
+            echo $permohonan->buku_tamu_id; // Akan tampil 511 (dari kedua sumber)
+        }
+        // Hanya fallback ke nomor jika benar-benar tidak ada buku_tamu_id
+        else {
+            echo $permohonan->nomor ?? '-';
+        }
+        ?>
+    </span>
 </div>
+
         <div class="info-row">
             <span class="info-label">Tanggal</span>
             <span class="info-separator">:</span>
@@ -358,7 +406,7 @@
 
     <!-- FOOTER NOTE -->
     <div class="footer-note">
-        <p>Informasi yang diperoleh tidak akan disalahgunakan dan hanya digunakan <strong>sebagaimana mestinya sesuai dengan tujuan permohonan tersebut diatas.</strong> Segala akibat hukum dari informasi ini setelah keluar dari Kantor BBWS Brantas Kementerian PU menjadi tanggung jawab Pemohon/Pengguna Informasi.</p>
+        <p>Informasi yang diperoleh tidak akan disalahgunakan dan hanya digunakan <strong>sebagaimana mestinya sesuai dengan tujuan permohonan tersebut diatas.</strong> Segala akibat hukum dari informasi ini setelah keluar dari BBWS Brantas - Kementerian Pekerjaan Umum menjadi tanggung jawab Pemohon/Pengguna Informasi.</p>
     </div>
 <!-- TANDA TANGAN -->
 <div class="signature-section">
@@ -398,23 +446,25 @@
 
     <script>
     function closeForm() {
-        // Cek dari URL
-        if (window.location.href.indexOf('Layanan/view_pdf') > -1 || 
-            window.location.href.indexOf('layanan/view_pdf') > -1) {
-            window.location.href = '<?php echo base_url('Layanan'); ?>'; 
-        } 
-        else if (window.location.href.indexOf('permohonan/cetak') > -1) {
-            window.location.href = '<?php echo base_url('Landing'); ?>'; 
-        }
-        else {
-            history.back(); // Default kembali ke halaman sebelumnya
+    // Cek apakah dari Admin (Layanan/view_pdf)
+    if (window.location.href.indexOf('Layanan/view_pdf') > -1 || 
+        window.location.href.indexOf('layanan/view_pdf') > -1) {
+        // Redirect ke fungsi back di controller yang sudah menyimpan URL sebelumnya
+        window.location.href = '<?php echo base_url('Layanan/back'); ?>';
+    } 
+    // Cek apakah dari Landing (permohonan/cetak)
+    else if (window.location.href.indexOf('permohonan/cetak') > -1) {
+        window.location.href = '<?php echo base_url('Landing'); ?>';
+    }
+    // Fallback: kembali ke halaman sebelumnya
+    else {
+        if (document.referrer) {
+            window.location.href = document.referrer;
+        } else {
+            history.back();
         }
     }
-    
-    // Auto print ketika halaman loaded (optional - hapus jika tidak perlu)
-    // window.onload = function() {
-    //     window.print();
-    // }
+}
 </script>
 </body>
 </html>

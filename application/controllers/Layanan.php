@@ -123,29 +123,29 @@ private function generate_pdf_document($id_permohonan)
 {
     $data['permohonan'] = $this->M_layanan_permintaan_data->get_by_id($id_permohonan);
     
-    // ✅ BENAR: GUNAKAN 'cetak_formulir' YANG SAMA
+    // ✅ Load view dengan encoding UTF-8
     $html_content = $this->load->view('cetak_formulir', $data, TRUE);
     
     $filename = 'formulir_permohonan_' . $id_permohonan . '_' . date('YmdHis') . '.html';
     $filepath = 'uploads/documents/' . $filename;
     
+    // ✅ Simpan dengan encoding UTF-8
     file_put_contents(FCPATH . $filepath, $html_content);
     
     return $filepath;
 }
 
-
-    // Function untuk view PDF
-    public function view_pdf($id) 
-{
-    $this->session->set_userdata('pdf_source', 'admin'); // ✅ TANDAI DARI ADMIN
-    $permohonan = $this->M_layanan_permintaan_data->get_by_id($id);
+// Di Controller sebelum load view
+public function view_pdf($id) {
+    $this->load->model('M_layanan_permintaan_data', 'layanan_model');
+    $data['permohonan'] = $this->layanan_model->get_by_id($id);
     
-    if ($permohonan && !empty($permohonan->pdf_path)) {
-        redirect(base_url($permohonan->pdf_path));
-    } else {
-        show_error('Dokumen tidak ditemukan');
+    // Jika dari Layanan Permintaan, generate buku_tamu_id
+    if ($data['permohonan'] && !isset($data['permohonan']->buku_tamu_id)) {
+        $data['permohonan']->buku_tamu_id = 'BT-' . date('Y') . '-' . str_pad($data['permohonan']->nomor, 3, '0', STR_PAD_LEFT);
     }
+    
+    $this->load->view('cetak_formulir', $data);
 }
 
     // Function untuk download PDF
@@ -377,4 +377,17 @@ private function generate_pdf_document($id_permohonan)
         
         $this->load->view('admin/v_dashboard_layanan', $data);
     }
+
+    // Tambahkan di bawah fungsi download_pdf
+public function back()
+{
+    $return_url = $this->session->userdata('pdf_return_url');
+    $this->session->unset_userdata('pdf_return_url');
+    
+    if ($return_url) {
+        redirect($return_url);
+    } else {
+        redirect('Layanan'); // Fallback ke index
+    }
+}
 }

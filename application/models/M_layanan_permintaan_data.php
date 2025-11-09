@@ -16,10 +16,26 @@ class M_layanan_permintaan_data extends CI_Model {
         return $this->db->get($this->table)->result();
     }
 
-    public function get_by_id($nomor)
-    {
-        return $this->db->get_where($this->table, ['nomor' => $nomor])->row();
+    public function get_by_id($nomor) {
+    $permohonan = $this->db->get_where($this->table, ['nomor' => $nomor])->row();
+    
+    if ($permohonan) {
+        // CARI BUKU TAMU BERDASARKAN NAMA & TELEPON
+        $this->db->where('nama', $permohonan->pengirim);
+        $this->db->where('no_handphone', $permohonan->nomor_telepon);
+        $buku_tamu = $this->db->get('buku_tamu')->row();
+        
+        if ($buku_tamu) {
+            // JIKA DITEMUKAN, PAKAI ID BUKU TAMU
+            $permohonan->buku_tamu_id = $buku_tamu->id;
+        } else {
+            // JIKA TIDAK DITEMUKAN, PAKAI NOMOR
+            $permohonan->buku_tamu_id = $permohonan->nomor;
+        }
     }
+    
+    return $permohonan;
+}
 
     public function update($nomor, $data)
     {
@@ -220,4 +236,14 @@ class M_layanan_permintaan_data extends CI_Model {
         
         return $this->db->count_all_results();
     }
+    
+// Di Model M_layanan_permintaan_data, tambahkan:
+public function get_with_buku_tamu_id($id) {
+    $data = $this->get_by_id($id);
+    if ($data && empty($data->buku_tamu_id)) {
+        // Generate jika kosong
+        $data->buku_tamu_id = 'BT-' . date('Y', strtotime($data->diterima_ppid)) . '-' . str_pad($data->nomor, 3, '0', STR_PAD_LEFT);
+    }
+    return $data;
+}
 }

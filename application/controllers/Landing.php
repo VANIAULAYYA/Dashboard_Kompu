@@ -224,7 +224,7 @@ public function Survei() {
     $this->load->view('v_survei', $data);
 }
 
-// Method submit buku tamu (tetap sama)
+// Method submit buku tamu
 public function submit() {
     $kategori_lainnya = $this->input->post('kategori_lainnya');
     $kategori = $this->input->post('keperluan'); 
@@ -260,7 +260,7 @@ public function submit() {
     }
     
     $this->session->set_flashdata('success', 'Data tamu berhasil disimpan');
-    redirect('Admin/rekap_tamu');
+    redirect('Landing'); // GANTI INI
 }
 
 public function success_survei() {
