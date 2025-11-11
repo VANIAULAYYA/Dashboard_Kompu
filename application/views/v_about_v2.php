@@ -365,7 +365,7 @@
 
       <!-- Audio Element -->
     <audio id="background-audio" loop>
-        <source src="<?php echo base_url('assets/audio2.mp3'); ?>" type="audio/mpeg">
+        <source src="<?php echo base_url('assets/audionew.mp3'); ?>" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
 
