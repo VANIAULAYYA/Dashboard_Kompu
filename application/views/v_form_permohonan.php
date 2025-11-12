@@ -406,7 +406,7 @@ footer {
 <section class="hero-section">
   <div class="container text-center">
     <h1 class="display-4 fw-bold mb-3">FORMULIR PERMOHONAN INFORMASI</h1>
-    <p class="lead mb-0">SBBWS BRANTAS</p>
+    <p class="lead mb-0">BBWS BRANTAS</p>
   </div>
 </section>
 
@@ -537,7 +537,7 @@ footer {
             </div>
             <input type="hidden" name="tanda_tangan" id="tanda_tangan_data">
         </div>
-        <small class="text-muted">Gunakan mouse/touch untuk menandatangani di area above</small>
+        <small class="text-muted">Sentuh di area yang telah disediakan untuk menandatangani formulir</small>
     </div>
 </div>
 
