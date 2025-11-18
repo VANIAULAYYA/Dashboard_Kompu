@@ -326,10 +326,10 @@
                   <td class="text-sm font-weight-normal"><?= $no++; ?></td>
                   <td class="text-sm font-weight-normal"><?= $t->nama; ?></td>
                   <td class="text-sm font-weight-normal"><?= ($t->jenis_kelamin=="L") ? "Laki-Laki":"Perempuan"; ?></td>
-                  <td class="text-sm font-weight-normal"><?= $t->asal_instansi; ?></td>
+                  <td class="text-sm font-weight-normal" style="min-width: 350px; white-space: normal;"><?= $t->asal_instansi; ?></td>
                   <td class="text-sm font-weight-normal"><?= $t->no_handphone; ?></td>
                   <td class="text-sm font-weight-normal"><?= $t->keperluan; ?></td>
-                  <td class="text-sm font-weight-normal"><?= $t->kritik_saran; ?></td>
+                  <td class="text-sm font-weight-normal" style="min-width: 350px; white-space: normal;"><?= $t->kritik_saran; ?></td>
                   <td class="text-sm font-weight-normal"><?= $t->pendapat_pelayanan; ?></td>
                   <td class="text-sm font-weight-normal"><?= $t->pemahaman_prosedur; ?></td>
                   <td class="text-sm font-weight-normal"><?= $t->pendapat_kecepatan; ?></td>

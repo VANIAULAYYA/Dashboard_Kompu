@@ -54,7 +54,6 @@ class Permohonan extends CI_Controller {
             'status_pemohon' => $this->input->post('jenis_pemohon'),
             'pengirim' => $buku_tamu['nama'],
             'tanggal_surat' => date('Y-m-d'),
-            'nomor_surat' => $this->M_permohonan->generate_nomor_pendaftaran(),
             'perihal' => $this->input->post('uraian_informasi'),
             'diterima_ppid' => date('Y-m-d'),
             'status' => 'pending',
@@ -73,26 +72,20 @@ class Permohonan extends CI_Controller {
         $this->db->insert('layanan_permintaan_data', $data);
         $insert_id = $this->db->insert_id();
 
-        if ($insert_id) {
-            // ========== ✅ TAMBAHKAN AUTO GENERATE PDF DI SINI ==========
-            $pdf_path = $this->generate_pdf_document($insert_id);
-            
-            // Update database dengan path PDF
-            $this->db->where('nomor', $insert_id);
-            $this->db->update('layanan_permintaan_data', ['pdf_path' => $pdf_path]);
-            // ============================================================
-            
-            // Hapus session setelah berhasil disimpan
-            $this->session->unset_userdata('buku_tamu_data');
-            $this->session->unset_userdata('buku_tamu_id');
-            
-            // Redirect ke halaman cetak
-            redirect('permohonan/cetak_permohonan/' . $insert_id);
-        } else {
-            $this->session->set_flashdata('error', 'Gagal menyimpan permohonan informasi');
-            redirect('permohonan/form_permohonan');
-        }
+         if ($insert_id) {
+        // ✅ UPDATE nomor_surat SETELAH insert
+        $this->db->where('nomor', $insert_id);
+        $this->db->update('layanan_permintaan_data', [
+            'nomor_surat' => $insert_id // Atau format lain sesuai kebutuhan
+        ]);
+        
+        $pdf_path = $this->generate_pdf_document($insert_id);
+        $this->db->where('nomor', $insert_id);
+        $this->db->update('layanan_permintaan_data', ['pdf_path' => $pdf_path]);
+        
+        redirect('permohonan/cetak_permohonan/' . $insert_id);
     }
+}
 
     // ========== ✅ TAMBAHKAN FUNCTION INI ==========
     private function generate_pdf_document($id_permohonan) 

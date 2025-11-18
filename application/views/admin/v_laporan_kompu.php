@@ -301,7 +301,7 @@
       <td class="text-sm font-weight-normal"><?= $row->nama_file ?></td>
       <td class="text-sm font-weight-normal">
   <?php if($row->bukti_file): ?>
-    <a href="<?= base_url('uploads/bukti/'.$row->bukti_file) ?>" target="_blank">Lihat</a>
+    <a href="<?= base_url('uploads/bukti/'.$row->bukti_file) ?>" target="_blank" style="color: #007bff !important; text-decoration: underline !important;">Lihat</a>
   <?php else: ?>
     -
   <?php endif; ?>

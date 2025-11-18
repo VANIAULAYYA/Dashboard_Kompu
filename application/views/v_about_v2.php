@@ -329,7 +329,7 @@
   <div class="slideshow-wrapper">
     <!-- Slides -->
     <div class="slide active">
-      <img src="<?php echo base_url('assets/Pictures/Slide/1.png'); ?>" alt="Slide 1">
+      <img src="<?php echo base_url('assets/Pictures/Slide/7.jpg'); ?>" alt="Slide 1">
     </div>
     <div class="slide">
       <img src="<?php echo base_url('assets/Pictures/Slide/2.png'); ?>" alt="Slide 2">

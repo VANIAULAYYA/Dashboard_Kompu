@@ -451,7 +451,7 @@ footer {
             <!-- KOLOM BARU: EMAIL -->
             <div class="form-group">
                 <label for="email">Alamat Email</label>
-                <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email Anda" required>
+                <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email Anda">
             </div>
             
             <div class="form-group">
