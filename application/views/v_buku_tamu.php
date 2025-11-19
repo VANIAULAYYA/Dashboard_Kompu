@@ -435,6 +435,42 @@ footer {
                     <option value="P">Perempuan</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="pendidikan">Pendidikan</label>
+                <select class="form-control" id="pendidikan" name="pendidikan" required>
+                    <option value="">-- Pilih Pendidikan --</option>
+                    <option value="SD">SD</option>
+                    <option value="SMP">SMP</option>
+                    <option value="SMA">SMA</option>
+                    <option value="D3/S1">D3/S1</option>
+                    <option value="S2/S3">S2/S3</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="pekerjaan">Pekerjaan</label>
+                <select class="form-control" id="pekerjaan" name="pekerjaan" required>
+                    <option value="">-- Pilih Pekerjaan --</option>
+                    <option value="PNS/ASN">PNS/ASN</option>
+                    <option value="TNI/POLRI">TNI/POLRI</option>
+                    <option value="SWASTA">SWASTA</option>
+                    <option value="WIRASWASTA">WIRASWASTA</option>
+                    <option value="PETANI/PETERNAK">PETANI/PETERNAK</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="usia">Usia</label>
+                <select class="form-control" id="usia" name="usia" required>
+                    <option value="">-- Pilih Usia --</option>
+                    <option value="Kurang dari 20">< 20</option>
+                    <option value="20-30">20-30</option>
+                    <option value="31-40">31-40</option>
+                    <option value="41-50">41-50</option>
+                    <option value="Lebih dari 50">> 50</option>
+                </select>
+            </div>
             
             <div class="form-group">
                 <label for="asal_instansi">Asal Instansi/Pribadi</label>
@@ -451,7 +487,7 @@ footer {
             <!-- KOLOM BARU: EMAIL -->
             <div class="form-group">
                 <label for="email">Alamat Email</label>
-                <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email Anda">
+                <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email Anda" >
             </div>
             
             <div class="form-group">

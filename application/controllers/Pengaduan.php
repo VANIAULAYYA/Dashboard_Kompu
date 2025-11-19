@@ -157,67 +157,67 @@ class Pengaduan extends CI_Controller {
      * Fungsi untuk mendapatkan range tanggal berdasarkan periode
      */
     private function get_date_range($periode, $tahun = null)
-    {
-        if ($tahun === null) {
-            $tahun = date('Y');
-        }
-        
-        $tahun = intval($tahun);
-        
-        switch ($periode) {
-            // Bulanan
-            case 'januari': 
-                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-01-31', 'label' => 'Januari '.$tahun];
-            case 'februari': 
-                $end_day = date('t', strtotime($tahun.'-02-01'));
-                return ['start' => $tahun.'-02-01', 'end' => $tahun.'-02-'.$end_day, 'label' => 'Februari '.$tahun];
-            case 'maret': 
-                return ['start' => $tahun.'-03-01', 'end' => $tahun.'-03-31', 'label' => 'Maret '.$tahun];
-            case 'april': 
-                return ['start' => $tahun.'-04-01', 'end' => $tahun.'-04-30', 'label' => 'April '.$tahun];
-            case 'mei': 
-                return ['start' => $tahun.'-05-01', 'end' => $tahun.'-05-31', 'label' => 'Mei '.$tahun];
-            case 'juni': 
-                return ['start' => $tahun.'-06-01', 'end' => $tahun.'-06-30', 'label' => 'Juni '.$tahun];
-            case 'juli': 
-                return ['start' => $tahun.'-07-01', 'end' => $tahun.'-07-31', 'label' => 'Juli '.$tahun];
-            case 'agustus': 
-                return ['start' => $tahun.'-08-01', 'end' => $tahun.'-08-31', 'label' => 'Agustus '.$tahun];
-            case 'september': 
-                return ['start' => $tahun.'-09-01', 'end' => $tahun.'-09-30', 'label' => 'September '.$tahun];
-            case 'oktober': 
-                return ['start' => $tahun.'-10-01', 'end' => $tahun.'-10-31', 'label' => 'Oktober '.$tahun];
-            case 'november': 
-                return ['start' => $tahun.'-11-01', 'end' => $tahun.'-11-30', 'label' => 'November '.$tahun];
-            case 'desember': 
-                return ['start' => $tahun.'-12-01', 'end' => $tahun.'-12-31', 'label' => 'Desember '.$tahun];
-                
-            // Triwulan
-            case 'triwulan1': 
-                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-03-31', 'label' => 'Triwulan I (Jan-Mar) '.$tahun];
-            case 'triwulan2': 
-                return ['start' => $tahun.'-04-01', 'end' => $tahun.'-06-30', 'label' => 'Triwulan II (Apr-Jun) '.$tahun];
-            case 'triwulan3': 
-                return ['start' => $tahun.'-07-01', 'end' => $tahun.'-09-30', 'label' => 'Triwulan III (Jul-Sep) '.$tahun];
-            case 'triwulan4': 
-                return ['start' => $tahun.'-10-01', 'end' => $tahun.'-12-31', 'label' => 'Triwulan IV (Okt-Des) '.$tahun];
-                
-            // Semester
-            case 'semester1': 
-                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-06-30', 'label' => 'Semester I (Jan-Jun) '.$tahun];
-            case 'semester2': 
-                return ['start' => $tahun.'-07-01', 'end' => $tahun.'-12-31', 'label' => 'Semester II (Jul-Des) '.$tahun];
-                
-            // Tahunan
-            case 'tahunan': 
-                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-12-31', 'label' => 'Tahunan '.$tahun];
-                
-            // Semua Data
-            case 'semua':
-            default:
-                return ['start' => null, 'end' => null, 'label' => 'Semua Data'];
-        }
+{
+    if ($tahun === null) {
+        $tahun = date('Y');
     }
+    
+    $tahun = intval($tahun);
+    
+    switch ($periode) {
+        // Bulanan - DITAMBAH WAKTU
+        case 'januari': 
+            return ['start' => $tahun.'-01-01', 'end' => $tahun.'-01-31 23:59:59', 'label' => 'Januari '.$tahun];
+        case 'februari': 
+            $end_day = date('t', strtotime($tahun.'-02-01'));
+            return ['start' => $tahun.'-02-01', 'end' => $tahun.'-02-'.$end_day.' 23:59:59', 'label' => 'Februari '.$tahun];
+        case 'maret': 
+            return ['start' => $tahun.'-03-01', 'end' => $tahun.'-03-31 23:59:59', 'label' => 'Maret '.$tahun];
+        case 'april': 
+            return ['start' => $tahun.'-04-01', 'end' => $tahun.'-04-30 23:59:59', 'label' => 'April '.$tahun];
+        case 'mei': 
+            return ['start' => $tahun.'-05-01', 'end' => $tahun.'-05-31 23:59:59', 'label' => 'Mei '.$tahun];
+        case 'juni': 
+            return ['start' => $tahun.'-06-01', 'end' => $tahun.'-06-30 23:59:59', 'label' => 'Juni '.$tahun];
+        case 'juli': 
+            return ['start' => $tahun.'-07-01', 'end' => $tahun.'-07-31 23:59:59', 'label' => 'Juli '.$tahun];
+        case 'agustus': 
+            return ['start' => $tahun.'-08-01', 'end' => $tahun.'-08-31 23:59:59', 'label' => 'Agustus '.$tahun];
+        case 'september': 
+            return ['start' => $tahun.'-09-01', 'end' => $tahun.'-09-30 23:59:59', 'label' => 'September '.$tahun];
+        case 'oktober': 
+            return ['start' => $tahun.'-10-01', 'end' => $tahun.'-10-31 23:59:59', 'label' => 'Oktober '.$tahun];
+        case 'november': 
+            return ['start' => $tahun.'-11-01', 'end' => $tahun.'-11-30 23:59:59', 'label' => 'November '.$tahun];
+        case 'desember': 
+            return ['start' => $tahun.'-12-01', 'end' => $tahun.'-12-31 23:59:59', 'label' => 'Desember '.$tahun];
+            
+        // Triwulan - DITAMBAH WAKTU
+        case 'triwulan1': 
+            return ['start' => $tahun.'-01-01', 'end' => $tahun.'-03-31 23:59:59', 'label' => 'Triwulan I (Jan-Mar) '.$tahun];
+        case 'triwulan2': 
+            return ['start' => $tahun.'-04-01', 'end' => $tahun.'-06-30 23:59:59', 'label' => 'Triwulan II (Apr-Jun) '.$tahun];
+        case 'triwulan3': 
+            return ['start' => $tahun.'-07-01', 'end' => $tahun.'-09-30 23:59:59', 'label' => 'Triwulan III (Jul-Sep) '.$tahun];
+        case 'triwulan4': 
+            return ['start' => $tahun.'-10-01', 'end' => $tahun.'-12-31 23:59:59', 'label' => 'Triwulan IV (Okt-Des) '.$tahun];
+            
+        // Semester - DITAMBAH WAKTU
+        case 'semester1': 
+            return ['start' => $tahun.'-01-01', 'end' => $tahun.'-06-30 23:59:59', 'label' => 'Semester I (Jan-Jun) '.$tahun];
+        case 'semester2': 
+            return ['start' => $tahun.'-07-01', 'end' => $tahun.'-12-31 23:59:59', 'label' => 'Semester II (Jul-Des) '.$tahun];
+            
+        // Tahunan - DITAMBAH WAKTU
+        case 'tahunan': 
+            return ['start' => $tahun.'-01-01', 'end' => $tahun.'-12-31 23:59:59', 'label' => 'Tahunan '.$tahun];
+            
+        // Semua Data
+        case 'semua':
+        default:
+            return ['start' => null, 'end' => null, 'label' => 'Semua Data'];
+    }
+}
 
     // 📊 EXPORT EXCEL PENGADUAN
     public function export_excel_pengaduan() {

@@ -206,67 +206,89 @@ public function view_pdf($id) {
      * Helper function untuk generate date range
      */
     private function get_date_range($periode, $tahun = null)
-    {
-        if ($tahun === null) {
-            $tahun = date('Y');
-        }
-        
-        switch ($periode) {
-            case 'triwulan1':
-                $start = $tahun . '-01-01';
-                $end = $tahun . '-03-31';
-                $label = 'Triwulan I (' . $tahun . ')';
-                break;
-                
-            case 'triwulan2':
-                $start = $tahun . '-04-01';
-                $end = $tahun . '-06-30';
-                $label = 'Triwulan II (' . $tahun . ')';
-                break;
-                
-            case 'triwulan3':
-                $start = $tahun . '-07-01';
-                $end = $tahun . '-09-30';
-                $label = 'Triwulan III (' . $tahun . ')';
-                break;
-                
-            case 'triwulan4':
-                $start = $tahun . '-10-01';
-                $end = $tahun . '-12-31';
-                $label = 'Triwulan IV (' . $tahun . ')';
-                break;
-                
-            case 'tahunan':
-                $start = $tahun . '-01-01';
-                $end = $tahun . '-12-31';
-                $label = 'Tahun ' . $tahun;
-                break;
-                
-            case 'semester1':
-                $start = $tahun . '-01-01';
-                $end = $tahun . '-06-30';
-                $label = 'Semester I (' . $tahun . ')';
-                break;
-                
-            case 'semester2':
-                $start = $tahun . '-07-01';
-                $end = $tahun . '-12-31';
-                $label = 'Semester II (' . $tahun . ')';
-                break;
-                
-            default:
-                $start = $tahun . '-01-01';
-                $end = $tahun . '-12-31';
-                $label = 'Tahun ' . $tahun;
-                break;
-        }
-        
-        return [
-            'start' => $start,
-            'end' => $end,
-            'label' => $label
-        ];
+{
+    if ($tahun === null) {
+        $tahun = date('Y');
     }
+    
+    switch ($periode) {
+        // === TAMBAHKAN BULANAN ===
+        case 'januari': 
+            return ['start' => $tahun.'-01-01', 'end' => $tahun.'-01-31 23:59:59', 'label' => 'Januari '.$tahun];
+        case 'februari': 
+            $end_day = date('t', strtotime($tahun.'-02-01'));
+            return ['start' => $tahun.'-02-01', 'end' => $tahun.'-02-'.$end_day.' 23:59:59', 'label' => 'Februari '.$tahun];
+        case 'maret': 
+            return ['start' => $tahun.'-03-01', 'end' => $tahun.'-03-31 23:59:59', 'label' => 'Maret '.$tahun];
+        case 'april': 
+            return ['start' => $tahun.'-04-01', 'end' => $tahun.'-04-30 23:59:59', 'label' => 'April '.$tahun];
+        case 'mei': 
+            return ['start' => $tahun.'-05-01', 'end' => $tahun.'-05-31 23:59:59', 'label' => 'Mei '.$tahun];
+        case 'juni': 
+            return ['start' => $tahun.'-06-01', 'end' => $tahun.'-06-30 23:59:59', 'label' => 'Juni '.$tahun];
+        case 'juli': 
+            return ['start' => $tahun.'-07-01', 'end' => $tahun.'-07-31 23:59:59', 'label' => 'Juli '.$tahun];
+        case 'agustus': 
+            return ['start' => $tahun.'-08-01', 'end' => $tahun.'-08-31 23:59:59', 'label' => 'Agustus '.$tahun];
+        case 'september': 
+            return ['start' => $tahun.'-09-01', 'end' => $tahun.'-09-30 23:59:59', 'label' => 'September '.$tahun];
+        case 'oktober': 
+            return ['start' => $tahun.'-10-01', 'end' => $tahun.'-10-31 23:59:59', 'label' => 'Oktober '.$tahun];
+        case 'november': 
+            return ['start' => $tahun.'-11-01', 'end' => $tahun.'-11-30 23:59:59', 'label' => 'November '.$tahun];
+        case 'desember': 
+            return ['start' => $tahun.'-12-01', 'end' => $tahun.'-12-31 23:59:59', 'label' => 'Desember '.$tahun];
+            
+        // === YANG SUDAH ADA ===
+        case 'triwulan1':
+            $start = $tahun . '-01-01';
+            $end = $tahun . '-03-31 23:59:59';
+            $label = 'Triwulan I (' . $tahun . ')';
+            break;
+            
+        case 'triwulan2':
+            $start = $tahun . '-04-01';
+            $end = $tahun . '-06-30 23:59:59';
+            $label = 'Triwulan II (' . $tahun . ')';
+            break;
+            
+        case 'triwulan3':
+            $start = $tahun . '-07-01';
+            $end = $tahun . '-09-30 23:59:59';
+            $label = 'Triwulan III (' . $tahun . ')';
+            break;
+            
+        case 'triwulan4':
+            $start = $tahun . '-10-01';
+            $end = $tahun . '-12-31 23:59:59';
+            $label = 'Triwulan IV (' . $tahun . ')';
+            break;
+            
+        case 'tahunan':
+            $start = $tahun . '-01-01';
+            $end = $tahun . '-12-31 23:59:59';
+            $label = 'Tahun ' . $tahun;
+            break;
+            
+        case 'semester1':
+            $start = $tahun . '-01-01';
+            $end = $tahun . '-06-30 23:59:59';
+            $label = 'Semester I (' . $tahun . ')';
+            break;
+            
+        case 'semester2':
+            $start = $tahun . '-07-01';
+            $end = $tahun . '-12-31 23:59:59';
+            $label = 'Semester II (' . $tahun . ')';
+            break;
+        }
+        
+    return [
+        'start' => $start,
+        'end' => $end,
+        'label' => $label
+    ];
+}
 
     // 📊 EXPORT PDF PERMINTAAN DATA
     public function export_permintaan_data() {

@@ -5,6 +5,17 @@ class M_monev_pengaduan extends CI_Model {
     private $table = 'layanan_pengaduan';
     
     private function apply_filter($filter) {
+    // ✅✅✅ TAMBAHKAN: DUKUNG KEDUA FORMAT - date_range DAN filter lama
+    if (isset($filter['start']) || isset($filter['end'])) {
+        // Format baru: date_range (dari controller)
+        if ($filter['start'] && $filter['end']) {
+            $this->db->where('diterima_ppid >=', $filter['start']);
+            $this->db->where('diterima_ppid <=', $filter['end']);
+        }
+        return; // ⬅️ KELUAR, jangan eksekusi kode lama
+    }
+    
+    // ⬇️ Format lama: filter dengan jenis_periode, periode, tahun (untuk kompatibilitas)
     $jenis = $filter['jenis_periode'] ?? 'bulanan';
     $periode = $filter['periode'] ?? '';
     $tahun = $filter['tahun'] ?? date('Y');
@@ -31,28 +42,28 @@ class M_monev_pengaduan extends CI_Model {
             }
             break;
             
-            case 'triwulan':
-                $triwulan_map = [
-                    'triwulan1' => [1, 2, 3],
-                    'triwulan2' => [4, 5, 6],
-                    'triwulan3' => [7, 8, 9],
-                    'triwulan4' => [10, 11, 12]
-                ];
-                
-                if (isset($triwulan_map[$periode])) {
-                    $this->db->where_in('MONTH(diterima_ppid)', $triwulan_map[$periode]);
-                }
-                break;
+        case 'triwulan':
+            $triwulan_map = [
+                'triwulan1' => [1, 2, 3],
+                'triwulan2' => [4, 5, 6],
+                'triwulan3' => [7, 8, 9],
+                'triwulan4' => [10, 11, 12]
+            ];
             
-            case 'semester':
-                if ($periode == 'semester1') {
-                    $this->db->where_in('MONTH(diterima_ppid)', [1, 2, 3, 4, 5, 6]);
-                } elseif ($periode == 'semester2') {
-                    $this->db->where_in('MONTH(diterima_ppid)', [7, 8, 9, 10, 11, 12]);
-                }
-                break;
-        }
+            if (isset($triwulan_map[$periode])) {
+                $this->db->where_in('MONTH(diterima_ppid)', $triwulan_map[$periode]);
+            }
+            break;
+        
+        case 'semester':
+            if ($periode == 'semester1') {
+                $this->db->where_in('MONTH(diterima_ppid)', [1, 2, 3, 4, 5, 6]);
+            } elseif ($periode == 'semester2') {
+                $this->db->where_in('MONTH(diterima_ppid)', [7, 8, 9, 10, 11, 12]);
+            }
+            break;
     }
+}
     
     public function get_available_years() {
         $this->db->distinct();
@@ -171,29 +182,23 @@ class M_monev_pengaduan extends CI_Model {
         $status = strtolower(trim($row->status_pengirim));
         $jumlah = (int)$row->jumlah;
         
-        $categorized = false;
-        
+        // ✅ PERBAIKI: PAKAI ELSEIF UNTUK URUTAN YANG BENAR
         if (strpos($status, 'mahasiswa') !== false) {
             $result['mahasiswa'] += $jumlah;
-            $categorized = true;
         } 
-        if (!$categorized && strpos($status, 'media') !== false) {
+        elseif (strpos($status, 'media') !== false) {
             $result['media'] += $jumlah;
-            $categorized = true;
         }
-        if (!$categorized && (strpos($status, 'instansi') !== false || strpos($status, 'perusahaan') !== false)) {
+        elseif (strpos($status, 'instansi') !== false || strpos($status, 'perusahaan') !== false) {
             $result['instansi'] += $jumlah;
-            $categorized = true;
         }
-        if (!$categorized && strpos($status, 'lsm') !== false) {
+        elseif (strpos($status, 'lsm') !== false) {
             $result['lsm'] += $jumlah;
-            $categorized = true;
         }
-        if (!$categorized && (strpos($status, 'pribadi') !== false || strpos($status, 'perorangan') !== false)) {
+        elseif (strpos($status, 'pribadi') !== false || strpos($status, 'perorangan') !== false || strpos($status, 'perseorangan') !== false) {
             $result['perseorangan'] += $jumlah;
-            $categorized = true;
         }
-        if (!$categorized) {
+        else {
             $result['lainnya'] += $jumlah;
         }
     }
@@ -267,13 +272,57 @@ public function get_detail_status_pengirim($status_index, $filter) {
     }
     
     $status_key = $status_keys[$status_index];
-    $status_name = $this->get_status_pengirim_label($status_key);
     
-    // Query data berdasarkan status_pengirim
+    // ✅ PERBAIKI: Jangan pakai label, tapi cari semua variasi status_pengirim yang termasuk kategori ini
+    $this->db->select('DISTINCT(status_pengirim)');
+    $this->db->from($this->table);
+    $this->apply_filter($filter);
+    $this->db->where('status_pengirim IS NOT NULL');
+    $this->db->where('status_pengirim !=', '');
+    $status_variations_query = $this->db->get();
+    
+    $status_values = [];
+    foreach ($status_variations_query->result() as $row) {
+        $status = trim($row->status_pengirim);
+        $status_lower = strtolower($status);
+        
+        // Kategorisasi manual seperti di get_status_pengirim()
+        if ($status_key == 'perseorangan' && (
+            strpos($status_lower, 'perseorangan') !== false ||
+            strpos($status_lower, 'perorangan') !== false ||
+            strpos($status_lower, 'pribadi') !== false
+        )) {
+            $status_values[] = $status; // Simpan value asli dari database
+        }
+        elseif ($status_key == 'mahasiswa' && strpos($status_lower, 'mahasiswa') !== false) {
+            $status_values[] = $status;
+        }
+        elseif ($status_key == 'media' && strpos($status_lower, 'media') !== false) {
+            $status_values[] = $status;
+        }
+        elseif ($status_key == 'instansi' && (
+            strpos($status_lower, 'instansi') !== false ||
+            strpos($status_lower, 'perusahaan') !== false
+        )) {
+            $status_values[] = $status;
+        }
+        elseif ($status_key == 'lsm' && strpos($status_lower, 'lsm') !== false) {
+            $status_values[] = $status;
+        }
+    }
+    
+    if (empty($status_values)) {
+        return [
+            'success' => false, 
+            'error' => 'Tidak ada data untuk kategori ' . $this->get_status_pengirim_label($status_key)
+        ];
+    }
+    
+    // Query data berdasarkan status_pengirim yang terkategori
     $this->db->select('jenis, COUNT(*) as jumlah');
     $this->db->from($this->table);
     $this->apply_filter($filter);
-    $this->db->where('status_pengirim LIKE "%' . $status_name . '%"');
+    $this->db->where_in('status_pengirim', $status_values); // ✅ PAKAI where_in dengan array values
     $this->db->group_by('jenis');
     $query = $this->db->get();
     
@@ -299,7 +348,7 @@ public function get_detail_status_pengirim($status_index, $filter) {
     
     return [
         'success' => true,
-        'status_pengirim' => $status_name,
+        'status_pengirim' => $this->get_status_pengirim_label($status_key),
         'distribusi' => $distribusi,
         'statistik' => [
             'total_permohonan' => $total,
@@ -309,6 +358,7 @@ public function get_detail_status_pengirim($status_index, $filter) {
         ]
     ];
 }
+
 
 public function get_detail_status_permohonan($status_key, $filter)
 {

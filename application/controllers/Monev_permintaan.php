@@ -23,15 +23,14 @@ class Monev_permintaan extends CI_Controller {
         $periode = $this->input->get('periode');
         $tahun = $this->input->get('tahun');
         
-        // ⚡⚡⚡ UBAH INI - SET DEFAULT KE 'SEMUA' ⚡⚡⚡
-    // Set default values jika tidak ada parameter (first time access)
-    if (empty($jenis_periode)) {
-        $jenis_periode = 'semua';  // GANTI dari 'bulanan' jadi 'semua'
-    }
-    
-    if (empty($tahun)) {
-        $tahun = 'semua';  // GANTI dari date('Y') jadi 'semua'
-    }
+        // Set default values jika tidak ada parameter (first time access)
+        if (empty($jenis_periode)) {
+            $jenis_periode = 'semua';
+        }
+        
+        if (empty($tahun)) {
+            $tahun = 'semua';
+        }
         
         // Set default periode berdasarkan jenis_periode
         if (empty($periode) && $jenis_periode != 'semua') {
@@ -68,47 +67,109 @@ class Monev_permintaan extends CI_Controller {
             $periode = 'semua';
         }
 
-    // Ambil data berdasarkan filter
-    $filter = [
-        'jenis_periode' => $jenis_periode,
-        'periode' => $periode,
-        'tahun' => $tahun
-    ];
-    
-    // Data untuk view
-    $data['jenis_periode'] = $jenis_periode;
-    $data['periode_selected'] = $periode;
-    $data['tahun_selected'] = $tahun;
-    
-    // Ambil daftar tahun yang tersedia
-    $data['tahun_available'] = $this->M_monev_permintaan->get_available_years();
-    
-    // Jika tidak ada tahun tersedia, set default
-    if (empty($data['tahun_available'])) {
-        $data['tahun_available'] = [date('Y')];
+        // Data untuk view
+        $data['jenis_periode'] = $jenis_periode;
+        $data['periode_selected'] = $periode;
+        $data['tahun_selected'] = $tahun;
+        
+        // Ambil daftar tahun yang tersedia
+        $data['tahun_available'] = $this->M_monev_permintaan->get_available_years();
+        
+        // Jika tidak ada tahun tersedia, set default
+        if (empty($data['tahun_available'])) {
+            $data['tahun_available'] = [date('Y')];
+        }
+        
+        // Generate label periode
+        $data['periode_label'] = $this->generate_periode_label($jenis_periode, $periode, $tahun);
+        
+        // ✅ PAKAI DATE RANGE DENGAN WAKTU
+        $date_range = $this->get_date_range_with_time($periode, $tahun);
+        
+        // Top Cards Data
+        $data['total_permohonan'] = $this->M_monev_permintaan->get_total_permohonan($date_range);
+        $data['dalam_proses'] = $this->M_monev_permintaan->get_dalam_proses($date_range);
+        $data['dipenuhi'] = $this->M_monev_permintaan->get_dipenuhi($date_range);
+        $data['ditolak'] = $this->M_monev_permintaan->get_ditolak($date_range);
+        
+        // Status Permohonan (untuk grafik donut pertama)
+        $data['status_permohonan'] = $this->M_monev_permintaan->get_status_permohonan($date_range);
+        
+        // Via Permohonan (tabel)
+        $data['via_permohonan'] = $this->M_monev_permintaan->get_via_permohonan($date_range);
+        
+        // Status Pemohon (untuk grafik donut kedua)
+        $data['status_pemohon'] = $this->M_monev_permintaan->get_status_pemohon($date_range);
+        
+        // Load view
+        $this->load->view('admin/v_monev_permintaan_data', $data);
     }
     
-    // Generate label periode
-    $data['periode_label'] = $this->generate_periode_label($jenis_periode, $periode, $tahun);
-    
-    // Top Cards Data - TAMBAHKAN DITOLAK
-    $data['total_permohonan'] = $this->M_monev_permintaan->get_total_permohonan($filter);
-    $data['dalam_proses'] = $this->M_monev_permintaan->get_dalam_proses($filter);
-    $data['dipenuhi'] = $this->M_monev_permintaan->get_dipenuhi($filter);
-    $data['ditolak'] = $this->M_monev_permintaan->get_ditolak($filter); // TAMBAH INI
-    
-    // Status Permohonan (untuk grafik donut pertama) - SUDAH UPDATE OTOMATIS
-    $data['status_permohonan'] = $this->M_monev_permintaan->get_status_permohonan($filter);
-    
-    // Via Permohonan (tabel)
-    $data['via_permohonan'] = $this->M_monev_permintaan->get_via_permohonan($filter);
-    
-    // Status Pemohon (untuk grafik donut kedua)
-    $data['status_pemohon'] = $this->M_monev_permintaan->get_status_pemohon($filter);
-    
-    // Load view
-    $this->load->view('admin/v_monev_permintaan_data', $data);
-}
+    /**
+     * Fungsi untuk generate date range DENGAN WAKTU
+     */
+    private function get_date_range_with_time($periode, $tahun = null)
+    {
+        if ($tahun === null || $tahun == 'semua') {
+            $tahun = date('Y');
+        }
+        
+        $tahun = intval($tahun);
+        
+        switch ($periode) {
+            // Bulanan - DITAMBAH WAKTU
+            case 'januari': 
+                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-01-31 23:59:59'];
+            case 'februari': 
+                $end_day = date('t', strtotime($tahun.'-02-01'));
+                return ['start' => $tahun.'-02-01', 'end' => $tahun.'-02-'.$end_day.' 23:59:59'];
+            case 'maret': 
+                return ['start' => $tahun.'-03-01', 'end' => $tahun.'-03-31 23:59:59'];
+            case 'april': 
+                return ['start' => $tahun.'-04-01', 'end' => $tahun.'-04-30 23:59:59'];
+            case 'mei': 
+                return ['start' => $tahun.'-05-01', 'end' => $tahun.'-05-31 23:59:59'];
+            case 'juni': 
+                return ['start' => $tahun.'-06-01', 'end' => $tahun.'-06-30 23:59:59'];
+            case 'juli': 
+                return ['start' => $tahun.'-07-01', 'end' => $tahun.'-07-31 23:59:59'];
+            case 'agustus': 
+                return ['start' => $tahun.'-08-01', 'end' => $tahun.'-08-31 23:59:59'];
+            case 'september': 
+                return ['start' => $tahun.'-09-01', 'end' => $tahun.'-09-30 23:59:59'];
+            case 'oktober': 
+                return ['start' => $tahun.'-10-01', 'end' => $tahun.'-10-31 23:59:59'];
+            case 'november': 
+                return ['start' => $tahun.'-11-01', 'end' => $tahun.'-11-30 23:59:59'];
+            case 'desember': 
+                return ['start' => $tahun.'-12-01', 'end' => $tahun.'-12-31 23:59:59'];
+                
+            // Triwulan - DITAMBAH WAKTU
+            case 'triwulan1': 
+                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-03-31 23:59:59'];
+            case 'triwulan2': 
+                return ['start' => $tahun.'-04-01', 'end' => $tahun.'-06-30 23:59:59'];
+            case 'triwulan3': 
+                return ['start' => $tahun.'-07-01', 'end' => $tahun.'-09-30 23:59:59'];
+            case 'triwulan4': 
+                return ['start' => $tahun.'-10-01', 'end' => $tahun.'-12-31 23:59:59'];
+                
+            // Semester - DITAMBAH WAKTU
+            case 'semester1': 
+                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-06-30 23:59:59'];
+            case 'semester2': 
+                return ['start' => $tahun.'-07-01', 'end' => $tahun.'-12-31 23:59:59'];
+                
+            // Tahunan - DITAMBAH WAKTU
+            case 'tahunan': 
+                return ['start' => $tahun.'-01-01', 'end' => $tahun.'-12-31 23:59:59'];
+                
+            // Semua Data
+            case 'semua':
+            default:
+                return ['start' => null, 'end' => null];
+        }
+    }
     
     /**
      * Generate label periode untuk ditampilkan di header
