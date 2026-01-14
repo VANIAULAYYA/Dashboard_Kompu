@@ -405,12 +405,18 @@ public function success_survei() {
             $tahun = date('Y');
         }
         
-        $this->db->select('YEAR(tanggal) as tahun');
-        $this->db->from('laporan');
-        $this->db->where('jenis_laporan', 'PPID');
-        $this->db->group_by('YEAR(tanggal)');
-        $this->db->order_by('tahun', 'DESC');
-        $data['tahun_list'] = $this->db->get()->result_array();
+        // $this->db->select('YEAR(tanggal) as tahun');
+        // $this->db->from('laporan');
+        // $this->db->where('jenis_laporan', 'PPID');
+        // $this->db->group_by('YEAR(tanggal)');
+        // $this->db->order_by('tahun', 'DESC');
+        // $data['tahun_list'] = $this->db->get()->result_array();
+        $startYear = 2024;
+        $endYear   = (int) date('Y');
+        $data['tahun_list'] = array_map(
+        fn($y) => ['tahun' => $y],
+        range($startYear, $endYear)
+        );
         
         $this->db->select('*');
         $this->db->from('laporan');
